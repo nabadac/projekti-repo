@@ -1,0 +1,885 @@
+<title>Kolnik Logistika</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kolnik d.o.o. – gradska dostava i međunarodna špedicija iz Svete Nedelje.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-bleed bands alternating night-ink and cold paper, hairline grid cells,
+   square controls with a separate arrow block. Route-map hero radiating from Sveta Nedelja. */
+:root{
+  --ink:#0D1830;        /* asphalt at night */
+  --ink-2:#15244A;
+  --ink-line:rgba(205,216,240,.14);
+  --paper:#EDF0F4;      /* cold concrete */
+  --paper-2:#DDE3EC;
+  --line:rgba(13,24,48,.15);
+  --fg:#0D1830;
+  --muted:#56627C;
+  --on-ink:#E9EEF8;
+  --on-ink-muted:#93A0BC;
+  --amber:#FFB21C;      /* reflective road-sign amber */
+  --amber-ink:#1A1300;
+  --cobalt:#3D63FF;     /* route lines, live state */
+  --ok:#1E9E6A;
+  --warn:#E58A00;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --wrap:1320px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:700px){.wrap{padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}}
+
+.display{font-family:var(--f-display);font-stretch:118%;font-weight:600;letter-spacing:-.025em;line-height:1.02;text-wrap:balance;margin:0}
+.h1{font-size:clamp(2.6rem,7vw,5.6rem)}
+.h2{font-size:clamp(2rem,4.4vw,3.6rem)}
+.h3{font-size:clamp(1.25rem,2vw,1.6rem);letter-spacing:-.015em}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 18px;color:var(--muted)}
+.on-ink .eyebrow{color:var(--on-ink-muted)}
+.lede{font-size:1.125rem;max-width:58ch;color:var(--muted);margin:0}
+section{position:relative}
+.band{padding-block:clamp(72px,10vw,128px)}
+.on-ink{background:var(--ink);color:var(--on-ink)}
+
+/* Buttons: label block + arrow block */
+.btn{display:inline-flex;align-items:stretch;gap:4px;text-decoration:none;cursor:pointer;border:0;background:none;padding:0}
+.btn span{display:flex;align-items:center;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.btn .lbl{padding:0 20px;height:48px;background:var(--amber);color:var(--amber-ink)}
+.btn .arr{width:48px;justify-content:center;background:var(--amber);color:var(--amber-ink);transition:transform .2s}
+.btn:hover .arr{transform:translateX(4px)}
+.btn-line{display:inline-flex;align-items:center;height:44px;padding:0 18px;border:1px solid currentColor;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;background:none;cursor:pointer;transition:background .2s,color .2s}
+.btn-line:hover{background:var(--fg);color:var(--paper)}
+.on-ink .btn-line:hover{background:var(--on-ink);color:var(--ink)}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(13,24,48,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--on-ink);border-bottom:1px solid var(--ink-line)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.3rem;letter-spacing:-.03em}
+.logo svg{width:30px;height:30px;flex:none}
+.nav-links{display:flex;gap:26px;margin-left:auto;list-style:none;padding:0;margin-block:0}
+.nav-links a{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--on-ink-muted);transition:color .2s}
+.nav-links a:hover{color:var(--on-ink)}
+.nav-right{display:flex;align-items:center;gap:14px;margin-left:24px}
+.lang{display:flex;border:1px solid var(--ink-line)}
+.lang button{background:none;border:0;padding:6px 9px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;color:var(--on-ink-muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--on-ink);color:var(--ink)}
+.nav .btn-line{height:36px;font-size:.68rem}
+@media (max-width:980px){.nav-links{display:none}.nav-right{margin-left:auto}}
+@media (max-width:560px){.nav .btn-line{display:none}.nav .wrap{gap:12px}}
+
+/* HERO */
+.hero{background:var(--ink);color:var(--on-ink);overflow:hidden;padding-block:clamp(56px,8vw,96px) clamp(40px,5vw,64px)}
+.hero-map{position:absolute;inset:0;pointer-events:none}
+.hero-map svg{position:absolute;right:-4%;top:50%;transform:translateY(-52%);height:118%;width:auto;min-height:520px}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 18%,rgba(13,24,48,.72) 46%,rgba(13,24,48,0) 75%),linear-gradient(0deg,var(--ink) 0,rgba(13,24,48,0) 30%);pointer-events:none}
+.hero .wrap{position:relative;z-index:2;display:grid;gap:28px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-muted)}
+.hero-meta b{color:var(--amber);font-weight:500}
+.hero h1{max-width:13ch;margin-top:clamp(100px,16vw,200px)}
+.hero-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px}
+.hero-row p{margin:0;font-size:1.125rem;max-width:54ch;color:var(--on-ink-muted)}
+.route{fill:none;stroke:var(--cobalt);stroke-width:1.6;stroke-dasharray:4 7;animation:dash 2.6s linear infinite}
+.route.main{stroke:var(--amber);stroke-width:2;stroke-dasharray:none;animation:none}
+.route-run{fill:none;stroke:var(--amber);stroke-width:2.4;stroke-linecap:round}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.city circle{fill:var(--on-ink)}
+.city text{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;fill:var(--on-ink-muted);text-transform:uppercase}
+.hub .pulse{fill:none;stroke:var(--amber);stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{from{transform:scale(.4);opacity:1}to{transform:scale(2.4);opacity:0}}
+
+/* COVERAGE GRID */
+.coverage{background:var(--ink-2);color:var(--on-ink);padding-block:40px 56px}
+.coverage .eyebrow{text-align:center;margin-bottom:24px}
+.cells{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--ink-line);border-left:1px solid var(--ink-line)}
+.cell{border-right:1px solid var(--ink-line);border-bottom:1px solid var(--ink-line);padding:18px 16px;display:grid;gap:6px;min-width:0;transition:background .2s}
+.cell:hover{background:rgba(255,178,28,.06)}
+.cell .cc{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.5rem;letter-spacing:-.02em}
+.cell .city-n{font-size:.9rem;color:var(--on-ink)}
+.cell .days{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+@media (max-width:900px){.cells{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:480px){.cells{grid-template-columns:repeat(2,1fr)}}
+
+/* PROBLEM */
+.problem .display{text-align:center;max-width:18ch;margin:0 auto}
+.pains{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;border-top:1px solid var(--line)}
+.pain{padding:28px 24px 0 0;display:grid;gap:12px;align-content:start}
+.pain+.pain{padding-left:24px;border-left:1px solid var(--line)}
+.pain .k{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.pain p{margin:0;font-size:1.2rem;line-height:1.4;font-weight:500;text-wrap:balance}
+@media (max-width:760px){.pains{grid-template-columns:1fr}.pain+.pain{padding-left:0;border-left:0;border-top:1px solid var(--line)}.pain{padding-bottom:24px}}
+
+.runline{margin-top:72px;border:1px solid var(--line);background:#F7F9FB;padding:28px clamp(16px,3vw,32px) 32px}
+.runline-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-bottom:36px}
+.runline-head h3{margin:0;font-family:var(--f-display);font-stretch:112%;font-weight:600;font-size:1.15rem;letter-spacing:-.01em}
+.runline-head span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.track-scroll{overflow-x:auto;padding-bottom:6px}
+.track{position:relative;min-width:720px;height:150px}
+.track .road{position:absolute;left:0;right:0;top:56px;height:14px;background:var(--fg);border-radius:2px}
+.track .road::after{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:repeating-linear-gradient(90deg,var(--amber) 0 18px,transparent 18px 34px)}
+.stop{position:absolute;top:0;transform:translateX(-50%);display:grid;justify-items:center;width:130px;text-align:center}
+.stop .t{font-family:var(--f-mono);font-size:.78rem;font-weight:500}
+.stop .tick{width:1px;height:22px;background:var(--fg);margin:6px 0 34px}
+.stop .n{font-size:.85rem;font-weight:600;line-height:1.25}
+.stop .d{font-size:.78rem;color:var(--muted);line-height:1.3}
+.truck-dot{position:absolute;top:44px;left:0;width:38px;height:22px;transform:translateX(-50%);animation:drive 14s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes drive{0%{left:7%}100%{left:93%}}
+
+/* SERVICES (dark) */
+.services{background:#060D1E}
+.svc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,6vw,96px);align-items:start}
+.svc-list{list-style:none;padding:0;margin:56px 0 0;display:grid}
+.svc-item button{display:grid;gap:6px;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;padding:16px 0 16px 20px;cursor:pointer;color:var(--on-ink-muted)}
+.svc-item button .tt{font-weight:600;font-size:1.05rem}
+.svc-item button .dd{display:none;font-size:.95rem;line-height:1.5;color:var(--on-ink-muted);max-width:48ch}
+.svc-item.on button{border-left-color:var(--amber);color:var(--on-ink)}
+.svc-item.on .dd{display:block}
+.svc-item button:hover{color:var(--on-ink)}
+.board{border:1px solid var(--ink-line);background:var(--ink);font-size:.9rem}
+.board-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ink-line);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-muted)}
+.live{display:inline-flex;align-items:center;gap:8px;color:var(--on-ink)}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(30,158,106,.25)}
+.ship{display:grid;grid-template-columns:auto 1fr auto;gap:4px 16px;padding:16px 18px;border-bottom:1px solid var(--ink-line);align-items:center}
+.ship:last-child{border-bottom:0}
+.ship .id{font-family:var(--f-mono);font-size:.72rem;color:var(--on-ink-muted);grid-row:span 2}
+.ship .rt{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ship .meta{font-family:var(--f-mono);font-size:.72rem;color:var(--on-ink-muted)}
+.pill{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border:1px solid currentColor;white-space:nowrap;justify-self:end}
+.pill.go{color:#8FB0FF}.pill.wait{color:var(--amber)}.pill.done{color:#5FD3A0}.pill.load{color:var(--on-ink-muted)}
+.bar{grid-column:2 / 4;height:3px;background:var(--ink-line);position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--cobalt)}
+@media (max-width:900px){.svc-grid{grid-template-columns:1fr}.svc-list{margin-top:32px}}
+
+/* STATS */
+.stats{background:var(--ink-2);color:var(--on-ink)}
+.stats .row{display:grid;grid-template-columns:repeat(5,1fr)}
+.stat{padding:28px 20px 26px;border-right:1px solid var(--ink-line);display:grid;gap:42px;min-width:0}
+.stat:first-child{padding-left:0}
+.stat:last-child{border-right:0}
+.stat .v{font-family:var(--f-display);font-stretch:118%;font-weight:600;font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:.5em;color:var(--amber);margin-left:2px}
+.stat .l{font-size:.88rem;color:var(--on-ink-muted);line-height:1.35}
+@media (max-width:900px){.stats .row{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--ink-line);padding-left:0}.stat:nth-child(2n){border-right:0;padding-left:20px}.stat:last-child{grid-column:1/-1;border-bottom:0}}
+
+/* SEGMENTS */
+.seg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--line);margin-top:56px}
+.seg-tabs{display:grid;grid-template-rows:1fr auto}
+.seg-tab{display:grid;align-content:space-between;gap:20px;text-align:left;background:var(--paper-2);border:0;border-left:3px solid transparent;padding:22px 24px;cursor:pointer}
+.seg-tab+.seg-tab{border-top:1px solid var(--line)}
+.seg-tab .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.seg-tab .tt{font-weight:600;font-size:1.05rem}
+.seg-tab .num{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.seg-tab .dd{display:none;margin:0;color:var(--muted);max-width:52ch}
+.seg-tab[aria-selected="true"]{background:#F7F9FB;border-left-color:var(--cobalt);min-height:260px;align-content:end}
+.seg-tab[aria-selected="true"] .dd{display:block}
+.seg-tab[aria-selected="true"] .top{order:-1}
+.seg-pic{background:#3A4152;min-height:340px;position:relative;overflow:hidden}
+.seg-pic svg{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:820px){.seg{grid-template-columns:1fr}.seg-pic{min-height:260px}}
+
+/* FLEET carousel */
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;border:1px solid var(--fg);background:none;cursor:pointer;display:grid;place-items:center}
+.arrows button:hover{background:var(--fg);color:var(--paper)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,calc((100% - 2px) / 3));overflow-x:auto;scroll-snap-type:x mandatory;margin-top:48px;border-left:1px solid var(--line);scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.vcard{scroll-snap-align:start;border-right:1px solid var(--line);padding:0 24px 8px;display:grid;gap:18px;align-content:start;min-width:0}
+.vcard:first-child{border-left:3px solid var(--cobalt);margin-left:-1px}
+.vcard .sil{height:120px;display:flex;align-items:flex-end;color:var(--fg)}
+.vcard .sil svg{height:100%;width:auto;max-width:100%}
+.vcard h3{margin:0;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.specs{display:flex;flex-wrap:wrap;gap:6px}
+.specs span{font-family:var(--f-mono);font-size:.72rem;padding:3px 7px;background:var(--paper-2)}
+.vcard p{margin:0;color:var(--muted);font-size:.95rem}
+@media (max-width:900px){.rail{grid-auto-columns:minmax(260px,78%)}}
+.ticks{height:28px;margin-top:56px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 14px)}
+
+/* PROCESS */
+.process{background:var(--paper-2)}
+.steps{margin-top:48px;border:1px solid var(--line);background:var(--paper)}
+.step-tabs{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line);overflow-x:auto}
+.step-tabs button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 18px;background:var(--paper-2);border:0;border-top:3px solid transparent;cursor:pointer;text-align:left;min-width:150px}
+.step-tabs button+button{border-left:1px solid var(--line)}
+.step-tabs .num{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.step-tabs button[aria-selected="true"]{background:var(--paper);border-top-color:var(--cobalt);font-weight:600}
+.step-body{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);min-height:380px}
+.step-copy{padding:32px 28px;display:grid;align-content:end;gap:16px;background:#F7F9FB;border-right:1px solid var(--line)}
+.step-copy h3{margin:0}
+.step-copy p{margin:0;color:var(--muted)}
+.step-copy .btn-line{justify-self:start;margin-top:8px}
+.step-vis{display:grid;place-items:center;padding:32px;background:var(--paper-2)}
+.doc{width:min(100%,420px);background:#FFFFFF;border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(13,24,48,.45)}
+.doc-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--ink);color:var(--on-ink);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.doc-head b{color:var(--amber);font-weight:500}
+.doc-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:12px 18px;border-bottom:1px dashed var(--line);font-size:.92rem}
+.doc-row:last-child{border-bottom:0}
+.doc-row dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.doc-row dd{margin:0;font-weight:500;min-width:0;overflow-wrap:anywhere}
+.stamp{display:inline-block;margin:6px 18px 16px;padding:4px 10px;border:2px solid var(--ok);color:var(--ok);font-family:var(--f-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;transform:rotate(-3deg)}
+@media (max-width:820px){.step-body{grid-template-columns:1fr}.step-copy{border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:420px){.doc-row{grid-template-columns:1fr;gap:2px}}
+
+/* DOCS grid */
+.docs-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,80px)}
+.docs-grid .left{display:grid;align-content:space-between;gap:32px}
+.dcells{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.dcell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 18px 18px;display:grid;gap:22px;align-content:space-between;min-height:118px;position:relative;background:#F7F9FB;min-width:0}
+.dcell::after{content:"";position:absolute;left:18px;right:18px;bottom:10px;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 6px)}
+.dcell .code{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.3rem;letter-spacing:-.02em}
+.dcell .what{font-size:.82rem;color:var(--muted);line-height:1.35;margin-bottom:8px}
+.dcell.hl .code{color:var(--cobalt)}
+@media (max-width:900px){.docs-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.dcells{grid-template-columns:repeat(2,1fr)}}
+
+/* CTA + FOOTER */
+.cta{background:var(--amber);color:var(--amber-ink);padding-block:clamp(64px,8vw,104px)}
+.cta .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px}
+.cta .display{max-width:16ch}
+.cta p{margin:16px 0 0;font-size:1.1rem;max-width:46ch}
+.cta .btn .lbl,.cta .btn .arr{background:var(--ink);color:var(--on-ink)}
+footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:hidden}
+.mark{display:flex;align-items:center;gap:clamp(16px,3vw,40px);margin-bottom:56px}
+.mark svg{width:clamp(64px,13vw,170px);height:auto;flex:none}
+.mark .word{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(4rem,17vw,15rem);letter-spacing:-.06em;line-height:.8;color:#7D8AA8}
+.fcols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:32px}
+.fcols h4{margin:0 0 14px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--on-ink-muted)}
+.fcols p{margin:0;color:var(--on-ink-muted);line-height:1.7}
+.fcols .tag{font-size:1.15rem;color:var(--on-ink);max-width:28ch;line-height:1.45}
+.copyable{user-select:all}
+.flinks{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 24px;margin-top:56px;padding-top:24px;border-top:1px solid var(--ink-line);list-style:none;padding-left:0}
+.flinks a{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--on-ink-muted)}
+.flinks a:hover{color:var(--on-ink)}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;font-size:.8rem;color:var(--on-ink-muted)}
+@media (max-width:820px){.fcols{grid-template-columns:1fr}}
+
+/* Floating quick quote */
+.fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--paper);color:var(--fg);border:1px solid var(--fg);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 30px -12px rgba(6,13,30,.5)}
+.fab::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.modal{position:fixed;inset:0;z-index:70;background:rgba(6,13,30,.6);display:grid;place-items:center;padding:16px}
+.sheet{width:min(100%,460px);background:var(--paper);color:var(--fg);border-top:4px solid var(--amber);padding:28px 24px 24px;display:grid;gap:16px;max-height:calc(100% - 16px);overflow:auto}
+.sheet-head{display:flex;justify-content:space-between;align-items:start;gap:16px}
+.sheet-head h3{margin:0}
+.x-btn{background:none;border:1px solid var(--line);width:36px;height:36px;cursor:pointer;font-size:1.2rem;line-height:1;flex:none}
+.sheet form{display:grid;gap:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:6px}
+.field label{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field input{height:44px;padding:0 12px;border:1px solid var(--line);background:#FFFFFF;color:var(--fg);font:inherit;border-radius:0}
+.field input:focus{outline:2px solid var(--cobalt);outline-offset:-1px}
+.sheet .btn{justify-self:start;margin-top:6px}
+.note{margin:0;font-size:.88rem;color:var(--ok);font-weight:500}
+@media (max-width:420px){.two{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Kolnik">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="#FFB21C"/><path d="M8 31 13 1M24 31 19 1" stroke="#0D1830" stroke-width="2.4" fill="none"/><path d="M16 4v5M16 13.5v5M16 23v5" stroke="#0D1830" stroke-width="2.4"/></svg>
+      kolnik
+    </a>
+    <ul class="nav-links">
+      <li><a href="#usluge" data-i18n="nav.services">Usluge</a></li>
+      <li><a href="#vozni-park" data-i18n="nav.fleet">Vozni park</a></li>
+      <li><a href="#mreza" data-i18n="nav.network">Mreža</a></li>
+      <li><a href="#proces" data-i18n="nav.process">Kako radimo</a></li>
+      <li><a href="#kontakt" data-i18n="nav.about">Kontakt</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Jezik">
+        <button type="button" data-lang="hr" aria-pressed="true">HR</button>
+        <button type="button" data-lang="sl" aria-pressed="false">SL</button>
+        <button type="button" data-lang="sr" aria-pressed="false">SR</button>
+      </div>
+      <button type="button" class="btn-line js-quote" data-i18n="cta.quote">Zatražite ponudu</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-map" aria-hidden="true"><svg id="map"></svg></div>
+  <div class="wrap">
+    <div class="hero-meta"><span><b>●</b> Hub · Sveta Nedelja</span><span>45.80° N · 15.78° E</span><span data-i18n="hero.meta">10 km od Zagreba · A3 čvor</span></div>
+    <h1 class="display h1" data-i18n="hero.title">Roba na putu. Na vrijeme.</h1>
+    <div class="hero-row">
+      <p data-i18n="hero.sub">Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Europe.</p>
+      <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="coverage" id="mreza">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="cov.title">Redovne linije iz Svete Nedelje · tranzitno vrijeme</p>
+    <div class="cells" id="cells"></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="band problem">
+  <div class="wrap">
+    <h2 class="display h2" data-i18n="pr.title">Kad dostava kasni, kasni cijeli vaš posao</h2>
+    <div class="pains">
+      <div class="pain"><span class="k">01</span><p data-i18n="pr.1">Kupac čeka, a nitko ne zna gdje je kamion.</p></div>
+      <div class="pain"><span class="k">02</span><p data-i18n="pr.2">Granice, CMR i carinski papiri pojedu dan koji niste imali.</p></div>
+      <div class="pain"><span class="k">03</span><p data-i18n="pr.3">Pola šlepera vozi prazno, a vi plaćate cijeli.</p></div>
+    </div>
+
+    <div class="runline">
+      <div class="runline-head">
+        <h3 data-i18n="run.title">Jedna linija, jedan dan: Sveta Nedelja → München</h3>
+        <span data-i18n="run.meta">FTL · 33 palete · 548 km</span>
+      </div>
+      <div class="track-scroll">
+        <div class="track" id="track">
+          <div class="road"></div>
+          <svg class="truck-dot" viewBox="0 0 38 22" aria-hidden="true"><rect x="0" y="2" width="26" height="14" fill="#FFB21C"/><path d="M27 6h6l4 5v5H27z" fill="#3D63FF"/><circle cx="7" cy="18" r="3.4" fill="#0D1830"/><circle cx="20" cy="18" r="3.4" fill="#0D1830"/><circle cx="32" cy="18" r="3.4" fill="#0D1830"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="band on-ink services" id="usluge">
+  <div class="wrap svc-grid">
+    <div>
+      <p class="eyebrow" data-i18n="svc.eyebrow">Usluge</p>
+      <h2 class="display h2" data-i18n="svc.title">Od palete u Zagrebu do punog šlepera za Rotterdam</h2>
+      <ul class="svc-list" id="svcList"></ul>
+    </div>
+    <div class="board" aria-label="Primjer ploče pošiljaka">
+      <div class="board-head"><span data-i18n="board.title">Pošiljke danas · primjer</span><span class="live">GPS</span></div>
+      <div id="ships"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap"><div class="row" id="stats"></div></div>
+</section>
+
+<!-- SEGMENTS -->
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="seg.eyebrow">Za koga vozimo</p>
+    <h2 class="display h2" style="max-width:20ch" data-i18n="seg.title">Jedan partner za zadnji kilometar i za dvije tisuće kilometara</h2>
+    <div class="seg">
+      <div class="seg-tabs" role="tablist">
+        <button class="seg-tab" role="tab" aria-selected="true" data-seg="0"><span class="top"><span class="tt" data-i18n="seg.a">Trgovina i e-commerce</span><span class="num">01</span></span><p class="dd" data-i18n="seg.a.d"></p></button>
+        <button class="seg-tab" role="tab" aria-selected="false" data-seg="1"><span class="top"><span class="tt" data-i18n="seg.b">Industrija i proizvodnja</span><span class="num">02</span></span><p class="dd" data-i18n="seg.b.d"></p></button>
+      </div>
+      <div class="seg-pic" aria-hidden="true"><svg id="aerial" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice"></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="band" id="vozni-park" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-i18n="fl.eyebrow">Vozni park</p><h2 class="display h2" data-i18n="fl.title">Vozilo za svaku pošiljku</h2></div>
+      <div class="arrows"><button type="button" id="prev" aria-label="Prethodno">←</button><button type="button" id="next" aria-label="Sljedeće">→</button></div>
+    </div>
+    <div class="rail" id="rail"></div>
+    <div class="ticks" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="band process" id="proces">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-i18n="pc.eyebrow">Kako radimo</p><h2 class="display h2" data-i18n="pc.title">Od upita do potpisanog CMR-a</h2></div>
+      <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
+    </div>
+    <div class="steps">
+      <div class="step-tabs" role="tablist" id="stepTabs"></div>
+      <div class="step-body">
+        <div class="step-copy"><h3 class="display h3" id="stepH"></h3><p id="stepP"></p><button type="button" class="btn-line js-quote" id="stepB"></button></div>
+        <div class="step-vis"><div class="doc" id="stepDoc"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section class="band">
+  <div class="wrap docs-grid">
+    <div class="left">
+      <div><p class="eyebrow" data-i18n="dc.eyebrow">Dokumenti i standardi</p><h2 class="display h2" data-i18n="dc.title">Papiri koje rješavamo umjesto vas</h2></div>
+      <a class="btn-line" href="#kontakt" data-i18n="dc.btn" style="justify-self:start">Pitajte carinskog referenta</a>
+    </div>
+    <div class="dcells" id="dcells"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <div><h2 class="display h2" data-i18n="cta.title">Vaša sljedeća tura kreće iz Svete Nedelje</h2><p data-i18n="cta.sub">Pošaljite relaciju i dobit ćete ponudu u dva sata, radnim danom.</p></div>
+    <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
+  </div>
+</section>
+</main>
+
+<footer id="kontakt">
+  <div class="wrap">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFB21C"/><path d="M8 31 13 1M24 31 19 1" stroke="#060D1E" stroke-width="2.4" fill="none"/><path d="M16 4v5M16 13.5v5M16 23v5" stroke="#060D1E" stroke-width="2.4"/></svg>
+      <span class="word">kolnik</span>
+    </div>
+    <div class="fcols">
+      <p class="tag" data-i18n="ft.tag">Gradska dostava i međunarodna špedicija iz Svete Nedelje.</p>
+      <div>
+        <h4 data-i18n="ft.contact">Kontakt</h4>
+        <p>Kolnik d.o.o.<br>Industrijska ulica 12<br>10431 Sveta Nedelja, <span data-i18n="ft.country">Hrvatska</span></p>
+        <p style="margin-top:12px"><span class="copyable">dispecer@kolnik.hr</span><br><span class="copyable">+385 1 000 0000</span></p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.hours">Dispečer</h4>
+        <p data-i18n="ft.hours.d">0–24, 7 dana u tjednu<br>Ured: pon–pet 7–17 h</p>
+      </div>
+    </div>
+    <ul class="flinks">
+      <li><a href="#usluge" data-i18n="nav.services">Usluge</a></li>
+      <li><a href="#vozni-park" data-i18n="nav.fleet">Vozni park</a></li>
+      <li><a href="#mreza" data-i18n="nav.network">Mreža</a></li>
+      <li><a href="#proces" data-i18n="nav.process">Kako radimo</a></li>
+      <li><a href="#top" data-i18n="ft.career">Karijere · vozači C+E</a></li>
+      <li><a href="#top" data-i18n="ft.privacy">Privatnost</a></li>
+      <li><a href="#top" data-i18n="ft.terms">Opći uvjeti</a></li>
+    </ul>
+    <div class="legal"><span data-i18n="ft.rights">© 2026 Kolnik d.o.o. Sva prava pridržana.</span><span>OIB 00000000000 · EU licencija za prijevoz</span></div>
+  </div>
+</footer>
+
+<button type="button" class="fab js-quote" data-i18n="fab">Brzi upit</button>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="sheet-head"><h3 class="display h3" id="mTitle" data-i18n="m.title">Brzi upit za prijevoz</h3><button type="button" class="x-btn" id="mClose" aria-label="Zatvori">×</button></div>
+    <form id="qform">
+      <div class="two">
+        <div class="field"><label for="q-from" data-i18n="m.from">Utovar</label><input id="q-from" value="Sveta Nedelja" required></div>
+        <div class="field"><label for="q-to" data-i18n="m.to">Istovar</label><input id="q-to" placeholder="München" required></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="q-pal" data-i18n="m.pal">Broj paleta</label><input id="q-pal" type="number" min="1" max="66" value="12" inputmode="numeric"></div>
+        <div class="field"><label for="q-kg" data-i18n="m.kg">Težina (kg)</label><input id="q-kg" type="number" min="1" value="6400" inputmode="numeric"></div>
+      </div>
+      <div class="field"><label for="q-mail">E-mail</label><input id="q-mail" type="email" required placeholder="ime@tvrtka.hr"></div>
+      <button type="submit" class="btn"><span class="lbl" data-i18n="m.send">Pošalji upit</span><span class="arr" aria-hidden="true">→</span></button>
+      <p class="note" id="qnote" hidden data-i18n="m.ok"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+const I18N = {
+hr:{
+ "nav.services":"Usluge","nav.fleet":"Vozni park","nav.network":"Mreža","nav.process":"Kako radimo","nav.about":"Kontakt",
+ "cta.quote":"Zatražite ponudu",
+ "hero.meta":"10 km od Zagreba · čvor A3","hero.title":"Roba na putu. Na vrijeme.",
+ "hero.sub":"Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Europe.",
+ "cov.title":"Redovne linije iz Svete Nedelje · tranzitno vrijeme",
+ "pr.title":"Kad dostava kasni, kasni cijeli vaš posao",
+ "pr.1":"Kupac čeka, a nitko ne zna gdje je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate cijeli.",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → München","run.meta":"FTL · 33 palete · 548 km",
+ "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Rotterdam",
+ "board.title":"Pošiljke danas · primjer",
+ "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za zadnji kilometar i za dvije tisuće kilometara",
+ "seg.a":"Trgovina i e-commerce","seg.a.d":"Dnevne rute po Zagrebu, Velikoj Gorici, Samoboru i Zaprešiću. Hidraulična rampa, dostava na kat i povrat ambalaže.",
+ "seg.b":"Industrija i proizvodnja","seg.b.d":"Puni šleperi prema tvornicama u Njemačkoj, Austriji i Italiji. Fiksni termini utovara i povratni teret iz EU.",
+ "fl.eyebrow":"Vozni park","fl.title":"Vozilo za svaku pošiljku",
+ "pc.eyebrow":"Kako radimo","pc.title":"Od upita do potpisanog CMR-a",
+ "dc.eyebrow":"Dokumenti i standardi","dc.title":"Papiri koje rješavamo umjesto vas","dc.btn":"Pitajte carinskog referenta",
+ "cta.title":"Vaša sljedeća tura kreće iz Svete Nedelje","cta.sub":"Pošaljite relaciju i dobit ćete ponudu u dva sata, radnim danom.",
+ "ft.tag":"Gradska dostava i međunarodna špedicija iz Svete Nedelje.","ft.contact":"Kontakt","ft.country":"Hrvatska","ft.hours":"Dispečer",
+ "ft.hours.d":"0–24, 7 dana u tjednu<br>Ured: pon–pet 7–17 h","ft.career":"Karijere · vozači C+E","ft.privacy":"Privatnost","ft.terms":"Opći uvjeti",
+ "ft.rights":"© 2026 Kolnik d.o.o. Sva prava pridržana.",
+ "fab":"Brzi upit","m.title":"Brzi upit za prijevoz","m.from":"Utovar","m.to":"Istovar","m.pal":"Broj paleta","m.kg":"Težina (kg)","m.send":"Pošalji upit",
+ "m.ok":"Upit je zabilježen. Ovo je demo stranica pa se ništa ne šalje.",
+ day1:"dan",dayN:"dana"
+},
+sl:{
+ "nav.services":"Storitve","nav.fleet":"Vozni park","nav.network":"Mreža","nav.process":"Kako delamo","nav.about":"Kontakt",
+ "cta.quote":"Zahtevajte ponudbo",
+ "hero.meta":"10 km od Zagreba · priključek A3","hero.title":"Blago na poti. Pravočasno.",
+ "hero.sub":"Mestna dostava in mednarodna špedicija iz Svete Nedelje pri Zagrebu. Vozimo po Hrvaški, Sloveniji, Srbiji in še 16 državah Evrope.",
+ "cov.title":"Redne linije iz Svete Nedelje · čas prevoza",
+ "pr.title":"Ko dostava zamuja, zamuja ves vaš posel",
+ "pr.1":"Kupec čaka, nihče pa ne ve, kje je tovornjak.","pr.2":"Meje, CMR in carinski papirji pojedo dan, ki ga niste imeli.","pr.3":"Pol polpriklopnika vozi prazno, vi pa plačate celega.",
+ "run.title":"Ena linija, en dan: Sveta Nedelja → München","run.meta":"FTL · 33 palet · 548 km",
+ "svc.eyebrow":"Storitve","svc.title":"Od palete v Zagrebu do polnega polpriklopnika za Rotterdam",
+ "board.title":"Pošiljke danes · primer",
+ "seg.eyebrow":"Za koga vozimo","seg.title":"En partner za zadnji kilometer in za dva tisoč kilometrov",
+ "seg.a":"Trgovina in e-trgovina","seg.a.d":"Dnevne poti po Zagrebu, Veliki Gorici, Samoboru in Zaprešiću. Hidravlična dvižna rampa, dostava v nadstropje in vračilo embalaže.",
+ "seg.b":"Industrija in proizvodnja","seg.b.d":"Polni polpriklopniki do tovarn v Nemčiji, Avstriji in Italiji. Fiksni termini nakladanja in povratni tovor iz EU.",
+ "fl.eyebrow":"Vozni park","fl.title":"Vozilo za vsako pošiljko",
+ "pc.eyebrow":"Kako delamo","pc.title":"Od povpraševanja do podpisanega CMR",
+ "dc.eyebrow":"Dokumenti in standardi","dc.title":"Papirji, ki jih uredimo namesto vas","dc.btn":"Vprašajte carinskega referenta",
+ "cta.title":"Vaša naslednja tura štarta v Sveti Nedelji","cta.sub":"Pošljite relacijo in ponudbo prejmete v dveh urah ob delavnikih.",
+ "ft.tag":"Mestna dostava in mednarodna špedicija iz Svete Nedelje.","ft.contact":"Kontakt","ft.country":"Hrvaška","ft.hours":"Dispečer",
+ "ft.hours.d":"0–24, 7 dni v tednu<br>Pisarna: pon–pet 7–17 h","ft.career":"Kariera · vozniki C+E","ft.privacy":"Zasebnost","ft.terms":"Splošni pogoji",
+ "ft.rights":"© 2026 Kolnik d.o.o. Vse pravice pridržane.",
+ "fab":"Hitro povpraševanje","m.title":"Hitro povpraševanje za prevoz","m.from":"Nakladanje","m.to":"Razkladanje","m.pal":"Število palet","m.kg":"Teža (kg)","m.send":"Pošlji povpraševanje",
+ "m.ok":"Povpraševanje je zabeleženo. To je demo stran, zato se nič ne pošlje.",
+ day1:"dan",dayN:"dni"
+},
+sr:{
+ "nav.services":"Usluge","nav.fleet":"Vozni park","nav.network":"Mreža","nav.process":"Kako radimo","nav.about":"Kontakt",
+ "cta.quote":"Zatražite ponudu",
+ "hero.meta":"10 km od Zagreba · petlja A3","hero.title":"Roba na putu. Na vreme.",
+ "hero.sub":"Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Evrope.",
+ "cov.title":"Redovne linije iz Svete Nedelje · vreme tranzita",
+ "pr.title":"Kad dostava kasni, kasni ceo vaš posao",
+ "pr.1":"Kupac čeka, a niko ne zna gde je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate ceo.",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → Minhen","run.meta":"FTL · 33 palete · 548 km",
+ "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Roterdam",
+ "board.title":"Pošiljke danas · primer",
+ "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za poslednji kilometar i za dve hiljade kilometara",
+ "seg.a":"Trgovina i e-commerce","seg.a.d":"Dnevne rute po Zagrebu, Velikoj Gorici, Samoboru i Zaprešiću. Hidraulična rampa, dostava na sprat i povrat ambalaže.",
+ "seg.b":"Industrija i proizvodnja","seg.b.d":"Puni šleperi ka fabrikama u Nemačkoj, Austriji i Italiji. Fiksni termini utovara i povratni teret iz EU.",
+ "fl.eyebrow":"Vozni park","fl.title":"Vozilo za svaku pošiljku",
+ "pc.eyebrow":"Kako radimo","pc.title":"Od upita do potpisanog CMR-a",
+ "dc.eyebrow":"Dokumenta i standardi","dc.title":"Papiri koje rešavamo umesto vas","dc.btn":"Pitajte carinskog referenta",
+ "cta.title":"Vaša sledeća tura kreće iz Svete Nedelje","cta.sub":"Pošaljite relaciju i dobićete ponudu za dva sata, radnim danom.",
+ "ft.tag":"Gradska dostava i međunarodna špedicija iz Svete Nedelje.","ft.contact":"Kontakt","ft.country":"Hrvatska","ft.hours":"Dispečer",
+ "ft.hours.d":"0–24, 7 dana u nedelji<br>Kancelarija: pon–pet 7–17 h","ft.career":"Karijera · vozači C+E","ft.privacy":"Privatnost","ft.terms":"Opšti uslovi",
+ "ft.rights":"© 2026 Kolnik d.o.o. Sva prava zadržana.",
+ "fab":"Brzi upit","m.title":"Brzi upit za prevoz","m.from":"Utovar","m.to":"Istovar","m.pal":"Broj paleta","m.kg":"Težina (kg)","m.send":"Pošalji upit",
+ "m.ok":"Upit je zabeležen. Ovo je demo stranica pa se ništa ne šalje.",
+ day1:"dan",dayN:"dana"
+}};
+
+// Lines from the hub: [code, {hr,sl,sr}, transit days, lon, lat]
+const CITIES = [
+ ["SI",{hr:"Ljubljana",sl:"Ljubljana",sr:"Ljubljana"},1,14.51,46.05],
+ ["RS",{hr:"Beograd",sl:"Beograd",sr:"Beograd"},1,20.46,44.82],
+ ["AT",{hr:"Beč",sl:"Dunaj",sr:"Beč"},1,16.37,48.21],
+ ["HU",{hr:"Budimpešta",sl:"Budimpešta",sr:"Budimpešta"},1,19.04,47.50],
+ ["DE",{hr:"München",sl:"München",sr:"Minhen"},1,11.58,48.14],
+ ["IT",{hr:"Milano",sl:"Milano",sr:"Milano"},2,9.19,45.46],
+ ["BA",{hr:"Sarajevo",sl:"Sarajevo",sr:"Sarajevo"},1,18.41,43.86],
+ ["SK",{hr:"Bratislava",sl:"Bratislava",sr:"Bratislava"},1,17.11,48.15],
+ ["CZ",{hr:"Prag",sl:"Praga",sr:"Prag"},2,14.42,50.08],
+ ["PL",{hr:"Varšava",sl:"Varšava",sr:"Varšava"},2,21.01,52.23],
+ ["NL",{hr:"Rotterdam",sl:"Rotterdam",sr:"Roterdam"},3,4.48,51.92],
+ ["FR",{hr:"Lyon",sl:"Lyon",sr:"Lion"},2,4.84,45.76]
+];
+const EXTRA = [["Frankfurt",8.68,50.11],["Hamburg",9.99,53.55],["Skopje",21.43,42.00],["Sofija",23.32,42.70],["Zürich",8.54,47.37]];
+const HUB = [15.78,45.80];
+
+const RUN = [
+ {p:7, t:"05:30", n:{hr:"Utovar",sl:"Nakladanje",sr:"Utovar"}, d:{hr:"Sveta Nedelja",sl:"Sveta Nedelja",sr:"Sveta Nedelja"}},
+ {p:24,t:"06:05", n:{hr:"Bregana",sl:"Obrežje",sr:"Bregana"}, d:{hr:"Schengen, bez zadržavanja",sl:"Schengen, brez zadrževanja",sr:"Šengen, bez zadržavanja"}},
+ {p:41,t:"07:40", n:{hr:"Ljubljana",sl:"Ljubljana",sr:"Ljubljana"}, d:{hr:"Obilaznica",sl:"Obvoznica",sr:"Obilaznica"}},
+ {p:58,t:"08:55", n:{hr:"Karavanke",sl:"Karavanke",sr:"Karavanke"}, d:{hr:"Tunel, AT vinjeta GO-Box",sl:"Predor, AT GO-Box",sr:"Tunel, AT GO-Box"}},
+ {p:76,t:"12:30", n:{hr:"Salzburg",sl:"Salzburg",sr:"Salcburg"}, d:{hr:"Pauza 45 min",sl:"Odmor 45 min",sr:"Pauza 45 min"}},
+ {p:93,t:"14:10", n:{hr:"Istovar",sl:"Razkladanje",sr:"Istovar"}, d:{hr:"München, rampa 7",sl:"München, rampa 7",sr:"Minhen, rampa 7"}}
+];
+
+const SERVICES = {
+ hr:[["Gradska dostava","Kamioni od 3,5 do 12 t za Zagreb i okolicu. Dostava isti dan za narudžbe do 11 sati."],
+     ["Međunarodna špedicija (FTL)","Tegljači s ceradom 13,6 m, 33 palete, do 24 t. Izravno do istovara, bez pretovara."],
+     ["Zbirni prijevoz (LTL)","Plaćate samo svoje palete i LDM. Zbirne linije svaki tjedan prema SI, AT, DE i RS."],
+     ["Carina i dokumentacija","Izvozne deklaracije, T1 tranzit i EUR.1 za Srbiju i BiH rješavamo prije utovara."]],
+ sl:[["Mestna dostava","Tovornjaki od 3,5 do 12 t za Zagreb in okolico. Dostava isti dan za naročila do 11. ure."],
+     ["Mednarodna špedicija (FTL)","Vlačilci s ponjavo 13,6 m, 33 palet, do 24 t. Neposredno do razkladanja, brez prekladanja."],
+     ["Zbirni prevoz (LTL)","Plačate le svoje palete in LDM. Zbirne linije vsak teden v SI, AT, DE in RS."],
+     ["Carina in dokumentacija","Izvozne deklaracije, tranzit T1 in EUR.1 za Srbijo in BiH uredimo pred nakladanjem."]],
+ sr:[["Gradska dostava","Kamioni od 3,5 do 12 t za Zagreb i okolinu. Dostava istog dana za porudžbine do 11 časova."],
+     ["Međunarodna špedicija (FTL)","Tegljači sa ceradom 13,6 m, 33 palete, do 24 t. Direktno do istovara, bez pretovara."],
+     ["Zbirni prevoz (LTL)","Plaćate samo svoje palete i LDM. Zbirne linije svake nedelje ka SI, AT, DE i RS."],
+     ["Carina i dokumentacija","Izvozne deklaracije, T1 tranzit i EUR.1 za Srbiju i BiH rešavamo pre utovara."]]
+};
+
+const SHIPS = [
+ {id:"KN-24817",rt:"Sveta Nedelja → München",meta:"FTL · 33 pal · ETA 14:10",st:"go",pr:62},
+ {id:"KN-24822",rt:"Sveta Nedelja → Beograd",meta:"FTL · 21 t · Batrovci",st:"wait",pr:71},
+ {id:"KN-24826",rt:"Zagreb, Dubrava · 14 stop",meta:"7,5 t · 9/14",st:"go",pr:64},
+ {id:"KN-24830",rt:"Sveta Nedelja → Ljubljana",meta:"LTL · 6 pal",st:"done",pr:100},
+ {id:"KN-24835",rt:"Sveta Nedelja → Lyon",meta:"FTL · 30 pal · rampa 3",st:"load",pr:8}
+];
+const ST = {
+ hr:{go:"Na cesti",wait:"Carina",done:"Isporučeno",load:"Utovar"},
+ sl:{go:"Na cesti",wait:"Carina",done:"Dostavljeno",load:"Nakladanje"},
+ sr:{go:"Na putu",wait:"Carina",done:"Isporučeno",load:"Utovar"}
+};
+
+const STATS = {
+ hr:[["64","","vozila u voznom parku"],["19","","zemalja s redovnim linijama"],["98,6","%","isporuka u dogovorenom terminu"],["2.400","+","paleta tjedno"],["24","/7","dispečer na telefonu"]],
+ sl:[["64","","vozil v voznem parku"],["19","","držav z rednimi linijami"],["98,6","%","dostav v dogovorjenem terminu"],["2.400","+","palet na teden"],["24","/7","dispečer na telefonu"]],
+ sr:[["64","","vozila u voznom parku"],["19","","zemalja sa redovnim linijama"],["98,6","%","isporuka u dogovorenom terminu"],["2.400","+","paleta nedeljno"],["24","/7","dispečer na telefonu"]]
+};
+
+// Side-profile silhouettes: box length, box height, cab type, axles under box
+const FLEET = [
+ {svg:{L:70,H:40,cab:"van",ax:[18,58]}, specs:["3,5 t","1,2 t","12 m³","4 EUR"],
+  n:{hr:"Dostavni kombi",sl:"Dostavno vozilo",sr:"Dostavni kombi"},
+  d:{hr:"Hitne gradske dostave i dijelovi za servise, isti dan.",sl:"Nujne mestne dostave in rezervni deli za servise, isti dan.",sr:"Hitne gradske dostave i delovi za servise, istog dana."}},
+ {svg:{L:100,H:56,cab:"rigid",ax:[22,86]}, specs:["7,5 t","3 t","18 m³","8 EUR"],
+  n:{hr:"Kamion s rampom",sl:"Tovornjak z dvižno rampo",sr:"Kamion sa rampom"},
+  d:{hr:"Trgovine bez utovarne rampe: hidraulična rampa do 1.000 kg.",sl:"Trgovine brez nakladalne rampe: hidravlična rampa do 1.000 kg.",sr:"Prodavnice bez utovarne rampe: hidraulična rampa do 1.000 kg."}},
+ {svg:{L:140,H:62,cab:"rigid",ax:[28,118]}, specs:["12 t","6 t","15 EUR"],
+  n:{hr:"Kamion s ceradom",sl:"Tovornjak s ponjavo",sr:"Kamion sa ceradom"},
+  d:{hr:"Bočni i gornji utovar viličarom za građevinski materijal.",sl:"Bočno in zgornje nakladanje z viličarjem za gradbeni material.",sr:"Bočni i gornji utovar viljuškarom za građevinski materijal."}},
+ {svg:{L:140,H:62,cab:"rigid",ax:[28,118],reefer:true}, specs:["12 t","+2…+8 °C","ATP","14 EUR"],
+  n:{hr:"Hladnjača",sl:"Hladilnik",sr:"Hladnjača"},
+  d:{hr:"Hrana i lijekovi s ispisom temperature uz svaki CMR.",sl:"Hrana in zdravila z izpisom temperature ob vsakem CMR.",sr:"Hrana i lekovi sa ispisom temperature uz svaki CMR."}},
+ {svg:{L:230,H:70,cab:"tractor",ax:[180,198,216]}, specs:["13,6 m","24 t","33 EUR","Euro 6"],
+  n:{hr:"Tegljač s ceradom",sl:"Vlačilec s ponjavo",sr:"Tegljač sa ceradom"},
+  d:{hr:"Standard za međunarodne linije prema EU, Srbiji i BiH.",sl:"Standard za mednarodne linije v EU, Srbijo in BiH.",sr:"Standard za međunarodne linije ka EU, Srbiji i BiH."}},
+ {svg:{L:230,H:80,cab:"tractor",ax:[180,198,216],mega:true}, specs:["100 m³","3 m","24 t","Euro 6"],
+  n:{hr:"Mega prikolica",sl:"Mega polpriklopnik",sr:"Mega prikolica"},
+  d:{hr:"Unutarnja visina 3 m za lagan i voluminozan teret, npr. automobilsku industriju.",sl:"Notranja višina 3 m za lahek in voluminozen tovor, npr. avtomobilsko industrijo.",sr:"Unutrašnja visina 3 m za lak i voluminozan teret, npr. automobilsku industriju."}}
+];
+
+const LBL = {
+ hr:{route:"Relacija",cargo:"Teret",price:"Cijena",slot:"Termin",veh:"Vozilo",photo:"Fotografije",pos:"Pozicija",eta:"ETA",link:"Praćenje",border:"Granica",docs:"Dokumenti",wait:"Čekanje",sign:"Potpis",pod:"POD",inv:"Račun"},
+ sl:{route:"Relacija",cargo:"Tovor",price:"Cena",slot:"Termin",veh:"Vozilo",photo:"Fotografije",pos:"Položaj",eta:"ETA",link:"Sledenje",border:"Meja",docs:"Dokumenti",wait:"Čakanje",sign:"Podpis",pod:"POD",inv:"Račun"},
+ sr:{route:"Relacija",cargo:"Teret",price:"Cena",slot:"Termin",veh:"Vozilo",photo:"Fotografije",pos:"Pozicija",eta:"ETA",link:"Praćenje",border:"Granica",docs:"Dokumenta",wait:"Čekanje",sign:"Potpis",pod:"POD",inv:"Faktura"}
+};
+const STEPS = [
+ {tab:{hr:"Upit",sl:"Povpraševanje",sr:"Upit"},
+  h:{hr:"Ponuda u dva sata",sl:"Ponudba v dveh urah",sr:"Ponuda za dva sata"},
+  p:{hr:"Pošaljete relaciju, broj paleta i težinu. Dispečer vam vraća fiksnu cijenu i termin utovara, bez skrivenih doplata za cestarine.",sl:"Pošljete relacijo, število palet in težo. Dispečer vam vrne fiksno ceno in termin nakladanja, brez skritih doplačil za cestnine.",sr:"Pošaljete relaciju, broj paleta i težinu. Dispečer vam vraća fiksnu cenu i termin utovara, bez skrivenih doplata za putarine."},
+  b:{hr:"Zatražite ponudu",sl:"Zahtevajte ponudbo",sr:"Zatražite ponudu"},
+  doc:["PONUDA 2026-1184",[["route","Sveta Nedelja → Lyon"],["cargo","22 EUR · 14,2 t · 9 LDM"],["price","1.840 € + PDV"],["slot","čet 06:00–06:30"]],null]},
+ {tab:{hr:"Utovar",sl:"Nakladanje",sr:"Utovar"},
+  h:{hr:"Utovar na minutu",sl:"Nakladanje na minuto",sr:"Utovar u minut"},
+  p:{hr:"Vozač stiže u dogovorenom prozoru od 30 minuta. Teret osiguravamo trakama i kutnicima, a fotografije utovara dobivate odmah.",sl:"Voznik pride v dogovorjenem 30-minutnem oknu. Tovor zavarujemo s pasovi in kotniki, fotografije nakladanja pa prejmete takoj.",sr:"Vozač stiže u dogovorenom prozoru od 30 minuta. Teret obezbeđujemo trakama i ugaonicima, a fotografije utovara dobijate odmah."},
+  b:{hr:"Rezervirajte termin",sl:"Rezervirajte termin",sr:"Rezervišite termin"},
+  doc:["UTOVAR · RAMPA 3",[["veh","ZG 4471-KN · 13,6 m"],["slot","06:00 → 06:12"],["cargo","22 / 22 EUR · 8 traka"],["photo","4 × JPG"]],"OK"]},
+ {tab:{hr:"Na cesti",sl:"Na cesti",sr:"Na putu"},
+  h:{hr:"Uživo na karti",sl:"V živo na zemljevidu",sr:"Uživo na mapi"},
+  p:{hr:"Svako vozilo ima GPS. Pošiljku pratite preko poveznice, a ETA se ažurira svakih pet minuta.",sl:"Vsako vozilo ima GPS. Pošiljko spremljate prek povezave, ETA pa se posodobi vsakih pet minut.",sr:"Svako vozilo ima GPS. Pošiljku pratite preko linka, a ETA se ažurira na svakih pet minuta."},
+  b:{hr:"Pratite pošiljku",sl:"Sledite pošiljki",sr:"Pratite pošiljku"},
+  doc:["KN-24835 · GPS",[["pos","A4 · Brescia, 87 km/h"],["eta","19:40 (+0 min)"],["link","kolnik.hr/t/24835"]],null]},
+ {tab:{hr:"Granica",sl:"Meja",sr:"Granica"},
+  h:{hr:"Granica bez čekanja na papire",sl:"Meja brez čakanja na papirje",sr:"Granica bez čekanja na papire"},
+  p:{hr:"Za Srbiju, BiH i Švicarsku carinske papire pripremamo dan ranije. Vozač na Bajakovu ne čeka na dokumente.",sl:"Za Srbijo, BiH in Švico carinske dokumente pripravimo dan prej. Voznik na Bajakovem ne čaka na dokumente.",sr:"Za Srbiju, BiH i Švajcarsku carinske papire pripremamo dan ranije. Vozač na Batrovcima ne čeka na dokumenta."},
+  b:{hr:"Carinske usluge",sl:"Carinske storitve",sr:"Carinske usluge"},
+  doc:["HR → RS · NCTS",[["border","Bajakovo / Batrovci"],["docs","EX-A · T1 · EUR.1 · CMR"],["wait","35 min"]],"T1 OK"]},
+ {tab:{hr:"Istovar",sl:"Razkladanje",sr:"Istovar"},
+  h:{hr:"Dokaz o isporuci isti sat",sl:"Dokazilo o dostavi v eni uri",sr:"Dokaz o isporuci za sat vremena"},
+  p:{hr:"Potpisani CMR i fotografija istovara stižu vam e-mailom u roku od sat vremena. Račun ide isti dan.",sl:"Podpisan CMR in fotografija razkladanja prispeta po e-pošti v eni uri. Račun pride isti dan.",sr:"Potpisani CMR i fotografija istovara stižu vam mejlom u roku od sat vremena. Faktura ide istog dana."},
+  b:{hr:"Kontaktirajte nas",sl:"Kontaktirajte nas",sr:"Kontaktirajte nas"},
+  doc:["CMR 0047712",[["sign","M. Weber, 14:16"],["pod","PDF · 2 str."],["inv","R-2026-3391"]],"POD"]}
+];
+
+const DOCS = [
+ ["CMR",{hr:"Međunarodni tovarni list",sl:"Mednarodni tovorni list",sr:"Međunarodni tovarni list"}],
+ ["e-CMR",{hr:"Digitalni tovarni list",sl:"Digitalni tovorni list",sr:"Digitalni tovarni list"}],
+ ["T1 / T2",{hr:"Tranzit kroz NCTS",sl:"Tranzit prek NCTS",sr:"Tranzit kroz NCTS"}],
+ ["EUR.1",{hr:"Povlašteno podrijetlo za RS i BiH",sl:"Preferencialno poreklo za RS in BiH",sr:"Povlašćeno poreklo za RS i BiH"}],
+ ["EX-A",{hr:"Izvozna carinska deklaracija",sl:"Izvozna carinska deklaracija",sr:"Izvozna carinska deklaracija"}],
+ ["ADR",{hr:"Opasne tvari, vozači s certifikatom",sl:"Nevarno blago, vozniki s certifikatom",sr:"Opasne materije, vozači sa sertifikatom"}],
+ ["ATP",{hr:"Hladni lanac za hranu",sl:"Hladna veriga za hrano",sr:"Hladni lanac za hranu"}],
+ ["CMR+",{hr:"Osiguranje tereta do 400.000 €",sl:"Zavarovanje tovora do 400.000 €",sr:"Osiguranje tereta do 400.000 €"}],
+ ["Euro 6",{hr:"Svi tegljači mlađi od 5 godina",sl:"Vsi vlačilci mlajši od 5 let",sr:"Svi tegljači mlađi od 5 godina"}]
+];
+
+let LANG = "hr";
+try{ const s = localStorage.getItem("kolnik-lang"); if(I18N[s]) LANG = s; }catch(e){}
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Hero map ---------- */
+function drawMap(){
+  const k = 34, cos = Math.cos(47*Math.PI/180);
+  const P = (lon,lat) => [ (lon-1)*cos*k, (55.5-lat)*k ];
+  const W = (25-1)*cos*k, H = (55.5-40.5)*k;
+  const svg = $("#map");
+  svg.setAttribute("viewBox", `0 0 ${W.toFixed(0)} ${H.toFixed(0)}`);
+  let g = "";
+  // graticule dots
+  for(let lon=1; lon<=25; lon+=0.5) for(let lat=41; lat<=55.5; lat+=0.5){
+    const [x,y]=P(lon,lat); g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="0.9" fill="rgba(147,160,188,.22)"/>`;
+  }
+  const [hx,hy] = P(...HUB);
+  const all = CITIES.map(c=>[c[1][LANG],c[3],c[4],true]).concat(EXTRA.map(e=>[e[0],e[1],e[2],false]));
+  all.forEach(([name,lon,lat],i)=>{
+    const [x,y]=P(lon,lat);
+    const mx=(hx+x)/2, my=(hy+y)/2, dx=x-hx, dy=y-hy;
+    const cx = mx - dy*0.18, cy = my + dx*0.18;
+    const main = name==="München"||name==="Minhen";
+    g += `<path class="route${main?' main':''}" d="M${hx.toFixed(1)} ${hy.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}" style="animation-delay:${(-i*0.3).toFixed(1)}s"/>`;
+    g += `<g class="city"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/><text x="${(x+7).toFixed(1)}" y="${(y+3.5).toFixed(1)}">${esc(name)}</text></g>`;
+  });
+  g += `<g class="hub"><circle class="pulse" cx="${hx}" cy="${hy}" r="10"/><circle cx="${hx}" cy="${hy}" r="5.5" fill="#FFB21C"/><text x="${hx+12}" y="${hy+18}" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1" fill="#FFB21C">SVETA NEDELJA</text></g>`;
+  svg.innerHTML = g;
+}
+
+/* ---------- Aerial yard (segments) ---------- */
+function drawAerial(mode){
+  const s = [];
+  s.push(`<rect width="600" height="400" fill="#454C5C"/>`);
+  // building with solar roof
+  s.push(`<rect x="0" y="250" width="600" height="150" fill="#C9CFD8"/>`);
+  for(let x=14; x<590; x+=26) for(let y=266; y<392; y+=20) if((x*7+y)%9!==0) s.push(`<rect x="${x}" y="${y}" width="22" height="16" fill="#25335C"/>`);
+  // dock doors
+  for(let x=20; x<590; x+=38) s.push(`<rect x="${x}" y="244" width="26" height="6" fill="#FFB21C"/>`);
+  // lane markings
+  s.push(`<rect x="0" y="78" width="600" height="3" fill="#E9EEF8" opacity=".75"/>`);
+  for(let x=0; x<600; x+=40) s.push(`<rect x="${x}" y="36" width="22" height="3" fill="#E9EEF8" opacity=".6"/>`);
+  if(mode===1){
+    // semi-trailers backed into docks
+    [0,1,2,4,5,7,8,9,11,12,14].forEach(i=>{
+      const x=20+i*38, len=150;
+      s.push(`<rect x="${x}" y="${244-len}" width="26" height="${len}" fill="#F1F3F7"/>`);
+      for(let y=244-len+8; y<240; y+=12) s.push(`<rect x="${x+2}" y="${y}" width="22" height="1" fill="#C9CFD8"/>`);
+      if(i%3===0) s.push(`<rect x="${x+1}" y="${244-len-20}" width="24" height="18" fill="${i%2?'#3D63FF':'#0D1830'}"/>`);
+    });
+    s.push(`<rect x="210" y="8" width="160" height="24" fill="#F1F3F7"/><rect x="370" y="9" width="20" height="22" fill="#FFB21C"/>`);
+  } else {
+    // vans and rigid trucks at the city depot
+    [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14].forEach(i=>{
+      const x=20+i*38, len = i%4===0 ? 92 : 56;
+      if(i===6||i===10) return;
+      s.push(`<rect x="${x}" y="${244-len}" width="26" height="${len}" fill="#F1F3F7"/>`);
+      s.push(`<rect x="${x+2}" y="${244-len-14}" width="22" height="14" fill="${i%4===0?'#0D1830':'#FFB21C'}"/>`);
+    });
+    for(let i=0;i<4;i++) s.push(`<rect x="${60+i*130}" y="12" width="60" height="22" fill="#F1F3F7"/><rect x="${120+i*130}" y="13" width="12" height="20" fill="#FFB21C"/>`);
+  }
+  $("#aerial").innerHTML = s.join("");
+}
+
+/* ---------- Vehicle silhouettes ---------- */
+function vehicle({L,H,cab,ax,reefer,mega}){
+  const ground = 100, r = 8;
+  const parts = [];
+  const boxY = ground - r*2 - 4 - H;
+  if(cab==="van"){
+    parts.push(`<path d="M0 ${ground-14} V${boxY+6} Q0 ${boxY} 6 ${boxY} H${L} L${L+22} ${boxY+22} V${ground-14} Z" fill="currentColor"/>`);
+    parts.push(`<path d="M${L+2} ${boxY+5} L${L+17} ${boxY+21} H${L+2} Z" fill="#DDE3EC"/>`);
+    return wrap(parts, L+24, ax, ground, r);
+  }
+  if(cab==="tractor"){
+    const tH = mega ? H : H;
+    parts.push(`<rect x="0" y="${boxY}" width="${L-56}" height="${tH}" fill="currentColor"/>`);
+    parts.push(`<rect x="0" y="${boxY+tH}" width="${L-56}" height="4" fill="currentColor" opacity=".5"/>`);
+    if(mega) parts.push(`<rect x="0" y="${boxY+tH-10}" width="${L-56}" height="2" fill="#FFB21C"/>`);
+    const cx = L-50;
+    parts.push(`<path d="M${cx} ${ground-14} V${boxY+10} Q${cx} ${boxY+4} ${cx+6} ${boxY+4} H${cx+38} Q${cx+44} ${boxY+4} ${cx+44} ${boxY+14} V${ground-14} Z" fill="currentColor"/>`);
+    parts.push(`<rect x="${cx+28}" y="${boxY+12}" width="12" height="18" fill="#DDE3EC"/>`);
+    return wrap(parts, L-6, ax.concat([cx+12, cx+34]).map(v=>v), ground, r);
+  }
+  parts.push(`<rect x="0" y="${boxY}" width="${L}" height="${H}" fill="currentColor"/>`);
+  if(reefer) parts.push(`<rect x="2" y="${boxY-8}" width="16" height="8" fill="currentColor"/><rect x="${L-30}" y="${boxY+6}" width="24" height="3" fill="#3D63FF"/>`);
+  const cx = L+4;
+  parts.push(`<path d="M${cx} ${ground-14} V${boxY+12} Q${cx} ${boxY+8} ${cx+5} ${boxY+8} H${cx+24} Q${cx+30} ${boxY+8} ${cx+32} ${boxY+20} V${ground-14} Z" fill="currentColor"/>`);
+  parts.push(`<rect x="${cx+18}" y="${boxY+14}" width="10" height="14" fill="#DDE3EC"/>`);
+  return wrap(parts, cx+34, ax.concat([cx+16]), ground, r);
+}
+function wrap(parts,w,ax,ground,r){
+  ax.forEach(x=>parts.push(`<circle cx="${x}" cy="${ground-r-1}" r="${r}" fill="currentColor"/><circle cx="${x}" cy="${ground-r-1}" r="3" fill="#DDE3EC"/>`));
+  parts.push(`<rect x="-4" y="${ground}" width="${w+8}" height="1" fill="currentColor" opacity=".35"/>`);
+  return `<svg viewBox="-4 0 ${w+8} 104" aria-hidden="true">${parts.join("")}</svg>`;
+}
+
+/* ---------- Render all language-dependent parts ---------- */
+let svcOn = 1, segOn = 0, stepOn = 0;
+
+function render(){
+  const T = I18N[LANG];
+  document.documentElement.lang = LANG === "sr" ? "sr-Latn" : LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=T[el.dataset.i18n]; if(v!=null) el.innerHTML=v; });
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===LANG)));
+
+  $("#cells").innerHTML = CITIES.map(c=>`<div class="cell"><span class="cc">${c[0]}</span><span class="city-n">${esc(c[1][LANG])}</span><span class="days">${c[2]===3?'2–3':c[2]} ${c[2]===1?T.day1:T.dayN}</span></div>`).join("");
+
+  const track = $("#track");
+  track.querySelectorAll(".stop").forEach(n=>n.remove());
+  RUN.forEach(s=>{
+    const d=document.createElement("div"); d.className="stop"; d.style.left=s.p+"%";
+    d.innerHTML=`<span class="t">${s.t}</span><span class="tick"></span><span class="n">${esc(s.n[LANG])}</span><span class="d">${esc(s.d[LANG])}</span>`;
+    track.appendChild(d);
+  });
+
+  $("#svcList").innerHTML = SERVICES[LANG].map((s,i)=>`<li class="svc-item${i===svcOn?' on':''}"><button type="button" data-svc="${i}" aria-expanded="${i===svcOn}"><span class="tt">${esc(s[0])}</span><span class="dd">${esc(s[1])}</span></button></li>`).join("");
+
+  $("#ships").innerHTML = SHIPS.map(s=>`<div class="ship"><span class="id">${s.id}</span><span class="rt">${esc(s.rt)}</span><span class="pill ${s.st}">${ST[LANG][s.st]}</span><span class="meta" style="grid-column:2">${esc(s.meta)}</span><span></span><span class="bar"><i style="width:${s.pr}%"></i></span></div>`).join("");
+
+  $("#stats").innerHTML = STATS[LANG].map(s=>`<div class="stat"><span class="v">${s[0]}<small>${s[1]}</small></span><span class="l">${esc(s[2])}</span></div>`).join("");
+
+  $("#rail").innerHTML = FLEET.map(v=>`<article class="vcard"><div class="sil">${vehicle(v.svg)}</div><h3>${esc(v.n[LANG])}</h3><div class="specs">${v.specs.map(x=>`<span>${esc(x)}</span>`).join("")}</div><p>${esc(v.d[LANG])}</p></article>`).join("");
+
+  $("#stepTabs").innerHTML = STEPS.map((s,i)=>`<button type="button" role="tab" aria-selected="${i===stepOn}" data-step="${i}"><span>${esc(s.tab[LANG])}</span><span class="num">0${i+1}</span></button>`).join("");
+  renderStep();
+
+  $("#dcells").innerHTML = DOCS.map((d,i)=>`<div class="dcell${i===2||i===3?' hl':''}"><span class="code">${esc(d[0])}</span><span class="what">${esc(d[1][LANG])}</span></div>`).join("");
+
+  drawMap();
+}
+
+function renderStep(){
+  const s = STEPS[stepOn], L = LBL[LANG];
+  $("#stepH").textContent = s.h[LANG];
+  $("#stepP").textContent = s.p[LANG];
+  $("#stepB").textContent = s.b[LANG];
+  const [head, rows, stamp] = s.doc;
+  $("#stepDoc").innerHTML = `<div class="doc-head"><span>${esc(head)}</span><b>KOLNIK</b></div><dl style="margin:0">${rows.map(([k,v])=>`<div class="doc-row"><dt>${L[k]}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>${stamp?`<span class="stamp">${stamp}</span>`:""}`;
+}
+
+/* ---------- Events ---------- */
+document.querySelector(".lang").addEventListener("click", e=>{
+  const b = e.target.closest("button[data-lang]"); if(!b) return;
+  LANG = b.dataset.lang;
+  try{ localStorage.setItem("kolnik-lang", LANG); }catch(err){}
+  render();
+});
+$("#svcList").addEventListener("click", e=>{
+  const b = e.target.closest("[data-svc]"); if(!b) return;
+  svcOn = +b.dataset.svc;
+  document.querySelectorAll(".svc-item").forEach((li,i)=>{ li.classList.toggle("on", i===svcOn); li.firstElementChild.setAttribute("aria-expanded", String(i===svcOn)); });
+});
+document.querySelector(".seg-tabs").addEventListener("click", e=>{
+  const b = e.target.closest("[data-seg]"); if(!b) return;
+  segOn = +b.dataset.seg;
+  document.querySelectorAll(".seg-tab").forEach((t,i)=>t.setAttribute("aria-selected", String(i===segOn)));
+  drawAerial(segOn);
+});
+$("#stepTabs").addEventListener("click", e=>{
+  const b = e.target.closest("[data-step]"); if(!b) return;
+  stepOn = +b.dataset.step;
+  document.querySelectorAll("#stepTabs button").forEach((t,i)=>t.setAttribute("aria-selected", String(i===stepOn)));
+  renderStep();
+});
+const rail = $("#rail");
+const step = () => (rail.firstElementChild?.getBoundingClientRect().width || 300);
+$("#prev").addEventListener("click", ()=>rail.scrollBy({left:-step(), behavior:"smooth"}));
+$("#next").addEventListener("click", ()=>rail.scrollBy({left: step(), behavior:"smooth"}));
+
+const modal = $("#modal");
+document.addEventListener("click", e=>{
+  if(e.target.closest(".js-quote")){ modal.hidden=false; $("#qnote").hidden=true; setTimeout(()=>$("#q-to").focus(),30); }
+  if(e.target===modal || e.target.closest("#mClose")) modal.hidden=true;
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") modal.hidden=true; });
+$("#qform").addEventListener("submit", e=>{ e.preventDefault(); $("#qnote").hidden=false; });
+
+render();
+drawAerial(0);
+</script>
