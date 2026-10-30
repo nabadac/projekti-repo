@@ -64,8 +64,8 @@ section{position:relative}
 /* NAV */
 .nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(13,24,48,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--on-ink);border-bottom:1px solid var(--ink-line)}
 .nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.3rem;letter-spacing:-.03em}
-.logo svg{width:30px;height:30px;flex:none}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-stretch:100%;font-weight:700;font-size:1.45rem;letter-spacing:-.045em}
+.logo svg{width:28px;height:28px;flex:none}
 .nav-links{display:flex;gap:26px;margin-left:auto;list-style:none;padding:0;margin-block:0}
 .nav-links a{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--on-ink-muted);transition:color .2s}
 .nav-links a:hover{color:var(--on-ink)}
@@ -77,25 +77,24 @@ section{position:relative}
 @media (max-width:980px){.nav-links{display:none}.nav-right{margin-left:auto}}
 @media (max-width:560px){.nav .btn-line{display:none}.nav .wrap{gap:12px}}
 
-/* HERO */
-.hero{background:var(--ink);color:var(--on-ink);overflow:hidden;padding-block:clamp(56px,8vw,96px) clamp(40px,5vw,64px)}
-.hero-map{position:absolute;inset:0;pointer-events:none}
-.hero-map svg{position:absolute;right:-4%;top:50%;transform:translateY(-52%);height:118%;width:auto;min-height:520px}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 18%,rgba(13,24,48,.72) 46%,rgba(13,24,48,0) 75%),linear-gradient(0deg,var(--ink) 0,rgba(13,24,48,0) 30%);pointer-events:none}
-.hero .wrap{position:relative;z-index:2;display:grid;gap:28px}
+/* HERO: night motorway, parallax layers loop under a stationary truck */
+.hero{background:linear-gradient(180deg,#081124 0%,var(--ink) 50%,#1C2E5B 100%);color:var(--on-ink);overflow:hidden;padding-top:clamp(48px,7vw,88px)}
+.hero .wrap{position:relative;z-index:2;display:grid;gap:24px}
 .hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-muted)}
 .hero-meta b{color:var(--amber);font-weight:500}
-.hero h1{max-width:13ch;margin-top:clamp(100px,16vw,200px)}
+.hero h1{max-width:14ch}
 .hero-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px}
 .hero-row p{margin:0;font-size:1.125rem;max-width:54ch;color:var(--on-ink-muted)}
-.route{fill:none;stroke:var(--cobalt);stroke-width:1.6;stroke-dasharray:4 7;animation:dash 2.6s linear infinite}
-.route.main{stroke:var(--amber);stroke-width:2;stroke-dasharray:none;animation:none}
-.route-run{fill:none;stroke:var(--amber);stroke-width:2.4;stroke-linecap:round}
-@keyframes dash{to{stroke-dashoffset:-22}}
-.city circle{fill:var(--on-ink)}
-.city text{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;fill:var(--on-ink-muted);text-transform:uppercase}
-.hub .pulse{fill:none;stroke:var(--amber);stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:pulse 2.4s ease-out infinite}
-@keyframes pulse{from{transform:scale(.4);opacity:1}to{transform:scale(2.4);opacity:0}}
+.scene{position:relative;height:clamp(230px,30vw,380px);margin-top:clamp(28px,4vw,48px)}
+.layer{position:absolute;left:0;bottom:0;height:100%;width:4000px;animation:pan linear infinite;will-change:transform}
+.layer svg{display:block;width:4000px;height:100%}
+.l-far{animation-duration:150s}.l-mid{animation-duration:48s}.l-near{animation-duration:9s}
+@keyframes pan{to{transform:translateX(-2000px)}}
+.hero-truck{position:absolute;right:max(16px,7vw);bottom:clamp(12px,1.6vw,20px);width:min(80vw,600px);animation:bob 1.6s ease-in-out infinite}
+.hero-truck svg{width:100%;height:auto;display:block;overflow:visible}
+.wh-spin .wh{transform-box:fill-box;transform-origin:center;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(-1.5px)}}
 
 /* COVERAGE GRID */
 .coverage{background:var(--ink-2);color:var(--on-ink);padding-block:40px 56px}
@@ -109,30 +108,37 @@ section{position:relative}
 @media (max-width:900px){.cells{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:480px){.cells{grid-template-columns:repeat(2,1fr)}}
 
-/* PROBLEM */
+/* PROBLEM: scroll story. Freight bars light up, detach and travel down wires to each pain point */
+.problem{padding-bottom:0}
 .problem .display{text-align:center;max-width:18ch;margin:0 auto}
-.pains{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:64px;border-top:1px solid var(--line)}
-.pain{padding:28px 24px 0 0;display:grid;gap:12px;align-content:start}
-.pain+.pain{padding-left:24px;border-left:1px solid var(--line)}
-.pain .k{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
-.pain p{margin:0;font-size:1.2rem;line-height:1.4;font-weight:500;text-wrap:balance}
-@media (max-width:760px){.pains{grid-template-columns:1fr}.pain+.pain{padding-left:0;border-left:0;border-top:1px solid var(--line)}.pain{padding-bottom:24px}}
+.flow{position:relative;margin-top:40px;overflow:hidden}
+.flow svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pain-stack{position:relative;display:grid;gap:clamp(140px,18vw,220px);padding:300px 16px 160px;justify-items:center;text-align:center}
+.pain-t{margin:0;max-width:24ch;font-family:var(--f-display);font-stretch:106%;font-weight:500;font-size:clamp(1.25rem,2.3vw,1.75rem);line-height:1.25;letter-spacing:-.01em;text-wrap:balance;background:var(--paper);padding:10px 14px}
+.bar-r{fill:var(--paper-2);stroke:#AEB8CA;stroke-width:1}
+.wire{fill:none;stroke:#9AA7BD;stroke-width:1.2}
+.pallet{fill:var(--amber);stroke:#C98A00;stroke-width:1}
 
-.runline{margin-top:72px;border:1px solid var(--line);background:#F7F9FB;padding:28px clamp(16px,3vw,32px) 32px}
-.runline-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;margin-bottom:36px}
-.runline-head h3{margin:0;font-family:var(--f-display);font-stretch:112%;font-weight:600;font-size:1.15rem;letter-spacing:-.01em}
-.runline-head span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.track-scroll{overflow-x:auto;padding-bottom:6px}
-.track{position:relative;min-width:720px;height:150px}
-.track .road{position:absolute;left:0;right:0;top:56px;height:14px;background:var(--fg);border-radius:2px}
-.track .road::after{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:repeating-linear-gradient(90deg,var(--amber) 0 18px,transparent 18px 34px)}
-.stop{position:absolute;top:0;transform:translateX(-50%);display:grid;justify-items:center;width:130px;text-align:center}
-.stop .t{font-family:var(--f-mono);font-size:.78rem;font-weight:500}
-.stop .tick{width:1px;height:22px;background:var(--fg);margin:6px 0 34px}
-.stop .n{font-size:.85rem;font-weight:600;line-height:1.25}
-.stop .d{font-size:.78rem;color:var(--muted);line-height:1.3}
-.truck-dot{position:absolute;top:44px;left:0;width:38px;height:22px;transform:translateX(-50%);animation:drive 14s cubic-bezier(.45,0,.55,1) infinite alternate}
-@keyframes drive{0%{left:7%}100%{left:93%}}
+/* RUN: one line, one day, drawn as a vertical road */
+.run{padding-block:clamp(72px,9vw,120px);border-top:1px solid var(--line)}
+.run-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.run-copy{position:sticky;top:120px;display:grid;gap:20px;align-content:start}
+.run-copy .lede{max-width:44ch}
+.run-tag{display:flex;flex-wrap:wrap;gap:8px}
+.run-tag span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;padding:5px 9px;background:var(--paper-2)}
+.vtrack{position:relative;height:clamp(560px,64vw,720px)}
+.vroad{position:absolute;left:0;top:0;bottom:0;width:46px;background:var(--fg);border-radius:3px;overflow:hidden}
+.vroad::after{content:"";position:absolute;left:22px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(180deg,var(--amber) 0 18px,transparent 18px 34px)}
+.vfill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(180deg,rgba(61,99,255,0),rgba(61,99,255,.55))}
+.vtruck{position:absolute;left:9px;top:0;width:28px;height:auto;z-index:2}
+.vstop{position:absolute;left:46px;right:0;transform:translateY(-50%);display:grid;grid-template-columns:28px 56px minmax(0,1fr);align-items:center;gap:0 12px}
+.vstop .tick{height:1px;background:var(--line);transition:background .3s}
+.vstop .t{font-family:var(--f-mono);font-size:.8rem;font-weight:500;color:var(--muted);transition:color .3s}
+.vstop .n{display:block;font-weight:600;line-height:1.25}
+.vstop .d{display:block;font-size:.85rem;color:var(--muted);line-height:1.3}
+.vstop.passed .tick{background:var(--cobalt)}
+.vstop.passed .t{color:var(--cobalt)}
+@media (max-width:820px){.run-grid{grid-template-columns:1fr}.run-copy{position:static}}
 
 /* SERVICES (dark) */
 .services{background:#060D1E}
@@ -195,7 +201,7 @@ section{position:relative}
 .rail::-webkit-scrollbar{display:none}
 .vcard{scroll-snap-align:start;border-right:1px solid var(--line);padding:0 24px 8px;display:grid;gap:18px;align-content:start;min-width:0}
 .vcard:first-child{border-left:3px solid var(--cobalt);margin-left:-1px}
-.vcard .sil{height:120px;display:flex;align-items:flex-end;color:var(--fg)}
+.vcard .sil{height:130px;display:flex;align-items:flex-end;color:var(--fg)}
 .vcard .sil svg{height:100%;width:auto;max-width:100%}
 .vcard h3{margin:0;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
 .specs{display:flex;flex-wrap:wrap;gap:6px}
@@ -232,8 +238,10 @@ section{position:relative}
 /* DOCS grid */
 .docs-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,80px)}
 .docs-grid .left{display:grid;align-content:space-between;gap:32px}
-.dcells{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.dcells{position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
 .dcell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 18px 18px;display:grid;gap:22px;align-content:space-between;min-height:118px;position:relative;background:#F7F9FB;min-width:0}
+.dcells::before{content:"";position:absolute;left:calc(33.333% - 5px);top:-30%;width:10px;height:30%;background:linear-gradient(180deg,rgba(61,99,255,0),rgba(61,99,255,.45),rgba(61,99,255,0));animation:scan 5s linear infinite;z-index:1;pointer-events:none}
+@keyframes scan{to{top:100%}}
 .dcell::after{content:"";position:absolute;left:18px;right:18px;bottom:10px;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 6px)}
 .dcell .code{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.3rem;letter-spacing:-.02em}
 .dcell .what{font-size:.82rem;color:var(--muted);line-height:1.35;margin-bottom:8px}
@@ -250,7 +258,7 @@ section{position:relative}
 footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:hidden}
 .mark{display:flex;align-items:center;gap:clamp(16px,3vw,40px);margin-bottom:56px}
 .mark svg{width:clamp(64px,13vw,170px);height:auto;flex:none}
-.mark .word{font-family:var(--f-display);font-stretch:125%;font-weight:800;font-size:clamp(4rem,17vw,15rem);letter-spacing:-.06em;line-height:.8;color:#7D8AA8}
+.mark .word{font-family:var(--f-display);font-stretch:100%;font-weight:700;font-size:clamp(4rem,17vw,15rem);letter-spacing:-.06em;line-height:.8;color:#7D8AA8}
 .fcols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:32px}
 .fcols h4{margin:0 0 14px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--on-ink-muted)}
 .fcols p{margin:0;color:var(--on-ink-muted);line-height:1.7}
@@ -290,8 +298,8 @@ footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:h
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Kolnik">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="#FFB21C"/><path d="M8 31 13 1M24 31 19 1" stroke="#0D1830" stroke-width="2.4" fill="none"/><path d="M16 4v5M16 13.5v5M16 23v5" stroke="#0D1830" stroke-width="2.4"/></svg>
-      kolnik
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 4C17 13 21 24 21 32C21 40 17 51 6 60C3 44 3 20 6 4Z" fill="#FFB21C"/><path d="M26 30C33 16 45 7 61 3C57 17 45 27 26 30Z" fill="#FF8A1C"/><path d="M27 35C43 35 55 44 61 61C46 59 34 51 27 35Z" fill="#FFB21C"/></svg>
+      Kolnik
     </a>
     <ul class="nav-links">
       <li><a href="#usluge" data-i18n="nav.services">Usluge</a></li>
@@ -314,14 +322,19 @@ footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:h
 <main id="top">
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-map" aria-hidden="true"><svg id="map"></svg></div>
   <div class="wrap">
     <div class="hero-meta"><span><b>●</b> Hub · Sveta Nedelja</span><span>45.80° N · 15.78° E</span><span data-i18n="hero.meta">10 km od Zagreba · A3 čvor</span></div>
-    <h1 class="display h1" data-i18n="hero.title">Roba na putu. Na vrijeme.</h1>
+    <h1 class="display h1" id="heroTitle" data-i18n="hero.title">Roba na putu. Na vrijeme.</h1>
     <div class="hero-row">
       <p data-i18n="hero.sub">Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Europe.</p>
       <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
     </div>
+  </div>
+  <div class="scene" id="scene" aria-hidden="true">
+    <div class="layer l-far"></div>
+    <div class="layer l-mid"></div>
+    <div class="layer l-near"></div>
+    <div class="hero-truck wh-spin" id="heroTruck"></div>
   </div>
 </section>
 
@@ -337,23 +350,38 @@ footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:h
 <section class="band problem">
   <div class="wrap">
     <h2 class="display h2" data-i18n="pr.title">Kad dostava kasni, kasni cijeli vaš posao</h2>
-    <div class="pains">
-      <div class="pain"><span class="k">01</span><p data-i18n="pr.1">Kupac čeka, a nitko ne zna gdje je kamion.</p></div>
-      <div class="pain"><span class="k">02</span><p data-i18n="pr.2">Granice, CMR i carinski papiri pojedu dan koji niste imali.</p></div>
-      <div class="pain"><span class="k">03</span><p data-i18n="pr.3">Pola šlepera vozi prazno, a vi plaćate cijeli.</p></div>
+  </div>
+  <div class="flow" id="flow">
+    <svg class="wires" id="wires" aria-hidden="true"></svg>
+    <div class="pain-stack">
+      <p class="pain-t" data-i18n="pr.1">Kupac čeka, a nitko ne zna gdje je kamion.</p>
+      <p class="pain-t" data-i18n="pr.2">Granice, CMR i carinski papiri pojedu dan koji niste imali.</p>
+      <p class="pain-t" data-i18n="pr.3">Pola šlepera vozi prazno, a vi plaćate cijeli.</p>
     </div>
+  </div>
+</section>
 
-    <div class="runline">
-      <div class="runline-head">
-        <h3 data-i18n="run.title">Jedna linija, jedan dan: Sveta Nedelja → München</h3>
-        <span data-i18n="run.meta">FTL · 33 palete · 548 km</span>
-      </div>
-      <div class="track-scroll">
-        <div class="track" id="track">
-          <div class="road"></div>
-          <svg class="truck-dot" viewBox="0 0 38 22" aria-hidden="true"><rect x="0" y="2" width="26" height="14" fill="#FFB21C"/><path d="M27 6h6l4 5v5H27z" fill="#3D63FF"/><circle cx="7" cy="18" r="3.4" fill="#0D1830"/><circle cx="20" cy="18" r="3.4" fill="#0D1830"/><circle cx="32" cy="18" r="3.4" fill="#0D1830"/></svg>
-        </div>
-      </div>
+<!-- RUN -->
+<section class="run">
+  <div class="wrap run-grid">
+    <div class="run-copy">
+      <p class="eyebrow" data-i18n="run.eyebrow">Primjer linije</p>
+      <h2 class="display h2" data-i18n="run.title">Jedna linija, jedan dan: Sveta Nedelja → München</h2>
+      <p class="lede" data-i18n="run.desc"></p>
+      <div class="run-tag"><span>FTL</span><span>33 EUR</span><span>548 km</span><span>8 h 40 min</span></div>
+    </div>
+    <div class="vtrack" id="vtrack">
+      <div class="vroad"><div class="vfill" id="vfill"></div></div>
+      <svg class="vtruck" id="vtruck" viewBox="-3 0 34 120" aria-hidden="true">
+        <rect x="2" y="0" width="24" height="86" rx="1.5" fill="#F3F5F8" stroke="#0D1830" stroke-width="1"/>
+        <g stroke="#D5DBE4" stroke-width="1"><line x1="4" y1="8" x2="24" y2="8"/><line x1="4" y1="18" x2="24" y2="18"/><line x1="4" y1="28" x2="24" y2="28"/><line x1="4" y1="38" x2="24" y2="38"/><line x1="4" y1="48" x2="24" y2="48"/><line x1="4" y1="58" x2="24" y2="58"/><line x1="4" y1="68" x2="24" y2="68"/><line x1="4" y1="78" x2="24" y2="78"/></g>
+        <rect x="2" y="0" width="2.5" height="86" fill="#FFB21C"/><rect x="23.5" y="0" width="2.5" height="86" fill="#FFB21C"/>
+        <rect x="11" y="85" width="6" height="7" fill="#0D1830"/>
+        <rect x="3" y="90" width="22" height="27" rx="3.5" fill="#FFB21C" stroke="#0D1830" stroke-width="1"/>
+        <rect x="5" y="92" width="18" height="9" rx="2" fill="#E09400"/>
+        <rect x="5" y="110" width="18" height="5" rx="1.2" fill="#2A3A5E"/>
+        <rect x="-2" y="104" width="4" height="6" rx="1" fill="#0D1830"/><rect x="26" y="104" width="4" height="6" rx="1" fill="#0D1830"/>
+      </svg>
     </div>
   </div>
 </section>
@@ -445,8 +473,8 @@ footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:h
 <footer id="kontakt">
   <div class="wrap">
     <div class="mark" aria-hidden="true">
-      <svg viewBox="0 0 32 32"><rect x="1" y="1" width="30" height="30" fill="#FFB21C"/><path d="M8 31 13 1M24 31 19 1" stroke="#060D1E" stroke-width="2.4" fill="none"/><path d="M16 4v5M16 13.5v5M16 23v5" stroke="#060D1E" stroke-width="2.4"/></svg>
-      <span class="word">kolnik</span>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 4C17 13 21 24 21 32C21 40 17 51 6 60C3 44 3 20 6 4Z" fill="#FFB21C"/><path d="M26 30C33 16 45 7 61 3C57 17 45 27 26 30Z" fill="#FF8A1C"/><path d="M27 35C43 35 55 44 61 61C46 59 34 51 27 35Z" fill="#FFB21C"/></svg>
+      <span class="word">Kolnik</span>
     </div>
     <div class="fcols">
       <p class="tag" data-i18n="ft.tag">Gradska dostava i međunarodna špedicija iz Svete Nedelje.</p>
@@ -494,6 +522,11 @@ footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:h
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
 <script>
 const I18N = {
 hr:{
@@ -504,7 +537,7 @@ hr:{
  "cov.title":"Redovne linije iz Svete Nedelje · tranzitno vrijeme",
  "pr.title":"Kad dostava kasni, kasni cijeli vaš posao",
  "pr.1":"Kupac čeka, a nitko ne zna gdje je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate cijeli.",
- "run.title":"Jedna linija, jedan dan: Sveta Nedelja → München","run.meta":"FTL · 33 palete · 548 km",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → München","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primjer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, s pauzom po propisima i GPS-om cijelim putem.",
  "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Rotterdam",
  "board.title":"Pošiljke danas · primjer",
  "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za zadnji kilometar i za dvije tisuće kilometara",
@@ -529,7 +562,7 @@ sl:{
  "cov.title":"Redne linije iz Svete Nedelje · čas prevoza",
  "pr.title":"Ko dostava zamuja, zamuja ves vaš posel",
  "pr.1":"Kupec čaka, nihče pa ne ve, kje je tovornjak.","pr.2":"Meje, CMR in carinski papirji pojedo dan, ki ga niste imeli.","pr.3":"Pol polpriklopnika vozi prazno, vi pa plačate celega.",
- "run.title":"Ena linija, en dan: Sveta Nedelja → München","run.meta":"FTL · 33 palet · 548 km",
+ "run.title":"Ena linija, en dan: Sveta Nedelja → München","run.meta":"FTL · 33 palet · 548 km","run.eyebrow":"Primer linije","run.desc":"Odhod ob 05:30, razkladanje ob 14:10. Brez čakanja na meji, z odmorom po predpisih in GPS-om ves čas.",
  "svc.eyebrow":"Storitve","svc.title":"Od palete v Zagrebu do polnega polpriklopnika za Rotterdam",
  "board.title":"Pošiljke danes · primer",
  "seg.eyebrow":"Za koga vozimo","seg.title":"En partner za zadnji kilometer in za dva tisoč kilometrov",
@@ -554,7 +587,7 @@ sr:{
  "cov.title":"Redovne linije iz Svete Nedelje · vreme tranzita",
  "pr.title":"Kad dostava kasni, kasni ceo vaš posao",
  "pr.1":"Kupac čeka, a niko ne zna gde je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate ceo.",
- "run.title":"Jedna linija, jedan dan: Sveta Nedelja → Minhen","run.meta":"FTL · 33 palete · 548 km",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → Minhen","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, sa pauzom po propisima i GPS-om celim putem.",
  "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Roterdam",
  "board.title":"Pošiljke danas · primer",
  "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za poslednji kilometar i za dve hiljade kilometara",
@@ -635,22 +668,22 @@ const STATS = {
 
 // Side-profile silhouettes: box length, box height, cab type, axles under box
 const FLEET = [
- {svg:{L:70,H:40,cab:"van",ax:[18,58]}, specs:["3,5 t","1,2 t","12 m³","4 EUR"],
+ {mk:()=>deliveryVan(), specs:["3,5 t","1,2 t","12 m³","4 EUR"],
   n:{hr:"Dostavni kombi",sl:"Dostavno vozilo",sr:"Dostavni kombi"},
   d:{hr:"Hitne gradske dostave i dijelovi za servise, isti dan.",sl:"Nujne mestne dostave in rezervni deli za servise, isti dan.",sr:"Hitne gradske dostave i delovi za servise, istog dana."}},
- {svg:{L:100,H:56,cab:"rigid",ax:[22,86]}, specs:["7,5 t","3 t","18 m³","8 EUR"],
+ {mk:()=>rigidTruck({box:110,bh:62,lift:true,cabH:64,cabW:46}), specs:["7,5 t","3 t","18 m³","8 EUR"],
   n:{hr:"Kamion s rampom",sl:"Tovornjak z dvižno rampo",sr:"Kamion sa rampom"},
   d:{hr:"Trgovine bez utovarne rampe: hidraulična rampa do 1.000 kg.",sl:"Trgovine brez nakladalne rampe: hidravlična rampa do 1.000 kg.",sr:"Prodavnice bez utovarne rampe: hidraulična rampa do 1.000 kg."}},
- {svg:{L:140,H:62,cab:"rigid",ax:[28,118]}, specs:["12 t","6 t","15 EUR"],
+ {mk:()=>rigidTruck({box:150,bh:70,curtain:true}), specs:["12 t","6 t","15 EUR"],
   n:{hr:"Kamion s ceradom",sl:"Tovornjak s ponjavo",sr:"Kamion sa ceradom"},
   d:{hr:"Bočni i gornji utovar viličarom za građevinski materijal.",sl:"Bočno in zgornje nakladanje z viličarjem za gradbeni material.",sr:"Bočni i gornji utovar viljuškarom za građevinski materijal."}},
- {svg:{L:140,H:62,cab:"rigid",ax:[28,118],reefer:true}, specs:["12 t","+2…+8 °C","ATP","14 EUR"],
+ {mk:()=>rigidTruck({box:150,bh:70,reefer:true}), specs:["12 t","+2…+8 °C","ATP","14 EUR"],
   n:{hr:"Hladnjača",sl:"Hladilnik",sr:"Hladnjača"},
   d:{hr:"Hrana i lijekovi s ispisom temperature uz svaki CMR.",sl:"Hrana in zdravila z izpisom temperature ob vsakem CMR.",sr:"Hrana i lekovi sa ispisom temperature uz svaki CMR."}},
- {svg:{L:230,H:70,cab:"tractor",ax:[180,198,216]}, specs:["13,6 m","24 t","33 EUR","Euro 6"],
+ {mk:()=>tractorTrailer(), specs:["13,6 m","24 t","33 EUR","Euro 6"],
   n:{hr:"Tegljač s ceradom",sl:"Vlačilec s ponjavo",sr:"Tegljač sa ceradom"},
   d:{hr:"Standard za međunarodne linije prema EU, Srbiji i BiH.",sl:"Standard za mednarodne linije v EU, Srbijo in BiH.",sr:"Standard za međunarodne linije ka EU, Srbiji i BiH."}},
- {svg:{L:230,H:80,cab:"tractor",ax:[180,198,216],mega:true}, specs:["100 m³","3 m","24 t","Euro 6"],
+ {mk:()=>tractorTrailer({mega:true}), specs:["100 m³","3 m","24 t","Euro 6"],
   n:{hr:"Mega prikolica",sl:"Mega polpriklopnik",sr:"Mega prikolica"},
   d:{hr:"Unutarnja visina 3 m za lagan i voluminozan teret, npr. automobilsku industriju.",sl:"Notranja višina 3 m za lahek in voluminozen tovor, npr. avtomobilsko industrijo.",sr:"Unutrašnja visina 3 m za lak i voluminozan teret, npr. automobilsku industriju."}}
 ];
@@ -706,32 +739,6 @@ try{ const s = localStorage.getItem("kolnik-lang"); if(I18N[s]) LANG = s; }catch
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
-/* ---------- Hero map ---------- */
-function drawMap(){
-  const k = 34, cos = Math.cos(47*Math.PI/180);
-  const P = (lon,lat) => [ (lon-1)*cos*k, (55.5-lat)*k ];
-  const W = (25-1)*cos*k, H = (55.5-40.5)*k;
-  const svg = $("#map");
-  svg.setAttribute("viewBox", `0 0 ${W.toFixed(0)} ${H.toFixed(0)}`);
-  let g = "";
-  // graticule dots
-  for(let lon=1; lon<=25; lon+=0.5) for(let lat=41; lat<=55.5; lat+=0.5){
-    const [x,y]=P(lon,lat); g += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="0.9" fill="rgba(147,160,188,.22)"/>`;
-  }
-  const [hx,hy] = P(...HUB);
-  const all = CITIES.map(c=>[c[1][LANG],c[3],c[4],true]).concat(EXTRA.map(e=>[e[0],e[1],e[2],false]));
-  all.forEach(([name,lon,lat],i)=>{
-    const [x,y]=P(lon,lat);
-    const mx=(hx+x)/2, my=(hy+y)/2, dx=x-hx, dy=y-hy;
-    const cx = mx - dy*0.18, cy = my + dx*0.18;
-    const main = name==="München"||name==="Minhen";
-    g += `<path class="route${main?' main':''}" d="M${hx.toFixed(1)} ${hy.toFixed(1)} Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}" style="animation-delay:${(-i*0.3).toFixed(1)}s"/>`;
-    g += `<g class="city"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3"/><text x="${(x+7).toFixed(1)}" y="${(y+3.5).toFixed(1)}">${esc(name)}</text></g>`;
-  });
-  g += `<g class="hub"><circle class="pulse" cx="${hx}" cy="${hy}" r="10"/><circle cx="${hx}" cy="${hy}" r="5.5" fill="#FFB21C"/><text x="${hx+12}" y="${hy+18}" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1" fill="#FFB21C">SVETA NEDELJA</text></g>`;
-  svg.innerHTML = g;
-}
-
 /* ---------- Aerial yard (segments) ---------- */
 function drawAerial(mode){
   const s = [];
@@ -766,38 +773,217 @@ function drawAerial(mode){
   $("#aerial").innerHTML = s.join("");
 }
 
-/* ---------- Vehicle silhouettes ---------- */
-function vehicle({L,H,cab,ax,reefer,mega}){
-  const ground = 100, r = 8;
-  const parts = [];
-  const boxY = ground - r*2 - 4 - H;
-  if(cab==="van"){
-    parts.push(`<path d="M0 ${ground-14} V${boxY+6} Q0 ${boxY} 6 ${boxY} H${L} L${L+22} ${boxY+22} V${ground-14} Z" fill="currentColor"/>`);
-    parts.push(`<path d="M${L+2} ${boxY+5} L${L+17} ${boxY+21} H${L+2} Z" fill="#DDE3EC"/>`);
-    return wrap(parts, L+24, ax, ground, r);
-  }
-  if(cab==="tractor"){
-    const tH = mega ? H : H;
-    parts.push(`<rect x="0" y="${boxY}" width="${L-56}" height="${tH}" fill="currentColor"/>`);
-    parts.push(`<rect x="0" y="${boxY+tH}" width="${L-56}" height="4" fill="currentColor" opacity=".5"/>`);
-    if(mega) parts.push(`<rect x="0" y="${boxY+tH-10}" width="${L-56}" height="2" fill="#FFB21C"/>`);
-    const cx = L-50;
-    parts.push(`<path d="M${cx} ${ground-14} V${boxY+10} Q${cx} ${boxY+4} ${cx+6} ${boxY+4} H${cx+38} Q${cx+44} ${boxY+4} ${cx+44} ${boxY+14} V${ground-14} Z" fill="currentColor"/>`);
-    parts.push(`<rect x="${cx+28}" y="${boxY+12}" width="12" height="18" fill="#DDE3EC"/>`);
-    return wrap(parts, L-6, ax.concat([cx+12, cx+34]).map(v=>v), ground, r);
-  }
-  parts.push(`<rect x="0" y="${boxY}" width="${L}" height="${H}" fill="currentColor"/>`);
-  if(reefer) parts.push(`<rect x="2" y="${boxY-8}" width="16" height="8" fill="currentColor"/><rect x="${L-30}" y="${boxY+6}" width="24" height="3" fill="#3D63FF"/>`);
-  const cx = L+4;
-  parts.push(`<path d="M${cx} ${ground-14} V${boxY+12} Q${cx} ${boxY+8} ${cx+5} ${boxY+8} H${cx+24} Q${cx+30} ${boxY+8} ${cx+32} ${boxY+20} V${ground-14} Z" fill="currentColor"/>`);
-  parts.push(`<rect x="${cx+18}" y="${boxY+14}" width="10" height="14" fill="#DDE3EC"/>`);
-  return wrap(parts, cx+34, ax.concat([cx+16]), ground, r);
+/* ---------- Vehicles: side views, facing right ---------- */
+const VC = {ink:"#0D1830", cab:"#FFB21C", cabDk:"#E09400", body:"#F3F5F8", bodyDk:"#D5DBE4", glass:"#2A3A5E", glassHi:"#4F648F", tire:"#1A1F2B", rim:"#B9C1CD", chrome:"#8E99AB", light:"#FFF4C2", red:"#D9412B"};
+function vWheel(x, gy, r){
+  const cy = gy - r;
+  let s = `<circle cx="${x}" cy="${cy}" r="${r}" fill="${VC.tire}"/><circle cx="${x}" cy="${cy}" r="${r*0.62}" fill="${VC.rim}"/><circle cx="${x}" cy="${cy}" r="${r*0.5}" fill="none" stroke="${VC.chrome}" stroke-width="0.8"/><circle cx="${x}" cy="${cy}" r="${r*0.2}" fill="${VC.chrome}"/>`;
+  for(let i=0;i<8;i++){ const a=i*Math.PI/4; s += `<circle cx="${(x+Math.cos(a)*r*0.36).toFixed(2)}" cy="${(cy+Math.sin(a)*r*0.36).toFixed(2)}" r="${(r*0.06).toFixed(2)}" fill="${VC.ink}"/>`; }
+  return `<g class="wh">${s}</g>`;
 }
-function wrap(parts,w,ax,ground,r){
-  ax.forEach(x=>parts.push(`<circle cx="${x}" cy="${ground-r-1}" r="${r}" fill="currentColor"/><circle cx="${x}" cy="${ground-r-1}" r="3" fill="#DDE3EC"/>`));
-  parts.push(`<rect x="-4" y="${ground}" width="${w+8}" height="1" fill="currentColor" opacity=".35"/>`);
-  return `<svg viewBox="-4 0 ${w+8} 104" aria-hidden="true">${parts.join("")}</svg>`;
+const vGuard = (x, gy, r) => `<path d="M${x-r-3} ${gy-r} A${r+3} ${r+3} 0 0 1 ${x+r+3} ${gy-r}" fill="none" stroke="${VC.ink}" stroke-width="3"/>`;
+function vCab(x0, gy, {h=86, w=58, r=14} = {}){
+  const top = gy - r - 14 - h, bot = gy - r - 6, fx = x0 + w;
+  const wy = top + 10, wh = h*0.34, dx = x0 + w*0.38;
+  let s = `<rect x="${x0-2}" y="${bot-6}" width="${w+2}" height="10" fill="${VC.ink}"/>`;
+  s += `<path d="M${x0} ${bot} L${x0} ${top+10} Q${x0} ${top} ${x0+10} ${top} L${fx-8} ${top} Q${fx-2} ${top} ${fx-1} ${top+8} L${fx+1} ${bot-6} Q${fx+1} ${bot} ${fx-4} ${bot} Z" fill="${VC.cab}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<path d="M${x0+4} ${top+1} L${x0+10} ${top-12} Q${x0+12} ${top-15} ${x0+18} ${top-15} L${fx-14} ${top-13} Q${fx-8} ${top-12} ${fx-7} ${top+1} Z" fill="${VC.cabDk}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<path d="M${x0+w*0.42} ${wy+wh} L${x0+w*0.42} ${wy+4} Q${x0+w*0.42} ${wy} ${x0+w*0.48} ${wy} L${fx-6} ${wy} L${fx-4} ${wy+wh} Z" fill="${VC.glass}"/>`;
+  s += `<path d="M${x0+w*0.55} ${wy+2} L${fx-10} ${wy+2} L${x0+w*0.62} ${wy+wh-3} Z" fill="${VC.glassHi}" opacity=".55"/>`;
+  s += `<rect x="${fx-3}" y="${wy}" width="3" height="${wh}" fill="${VC.glass}"/>`;
+  s += `<path d="M${dx} ${wy-2} L${dx} ${bot-8} L${fx-3} ${bot-8}" fill="none" stroke="${VC.ink}" stroke-width="0.9" opacity=".6"/>`;
+  s += `<rect x="${dx+4}" y="${wy+wh+8}" width="8" height="2.4" rx="1" fill="${VC.ink}"/>`;
+  s += `<path d="M${fx} ${wy+4} L${fx+7} ${wy+6}" stroke="${VC.ink}" stroke-width="1.5"/><rect x="${fx+5}" y="${wy+2}" width="4" height="${wh*0.75}" rx="1.5" fill="${VC.ink}"/>`;
+  s += `<rect x="${dx+2}" y="${bot-4}" width="16" height="3" fill="${VC.chrome}"/><rect x="${dx+2}" y="${bot+3}" width="16" height="3" fill="${VC.chrome}"/>`;
+  s += `<rect x="${fx-14}" y="${bot-10}" width="16" height="12" rx="2" fill="${VC.ink}"/><rect x="${fx-4}" y="${bot-8}" width="5" height="5" rx="1" fill="${VC.light}"/>`;
+  for(let i=0;i<3;i++) s += `<rect x="${x0+4}" y="${wy+wh+6+i*5}" width="${w*0.26}" height="2" fill="${VC.cabDk}"/>`;
+  return s;
 }
+function vLabel(x, y, size){ return `<text x="${x}" y="${y}" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="700" font-size="${size}" letter-spacing="${-size*0.04}" fill="${VC.ink}">Kolnik</text>`; }
+function tractorTrailer({mega=false, beam=false} = {}){
+  const r = 14, gy = 130, L = 300, th = mega ? 96 : 86, cabX = L - 4;
+  const tTop = gy - r - 16 - th, tBot = gy - r - 14;
+  let s = '';
+  if(beam) s += `<defs><linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#FFE7A6" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7A6" stop-opacity="0"/></linearGradient></defs><path d="M${cabX+60} ${gy-30} L${cabX+260} ${gy-52} L${cabX+260} ${gy+4} Z" fill="url(#beam)"/>`;
+  s += `<rect x="4" y="${tBot}" width="${L-8}" height="7" fill="${VC.ink}"/>`;
+  s += `<rect x="120" y="${tBot+10}" width="${L-230}" height="2.5" fill="${VC.chrome}"/><rect x="120" y="${tBot+16}" width="${L-230}" height="2.5" fill="${VC.chrome}"/>`;
+  s += `<rect x="${L-90}" y="${tBot+6}" width="3" height="${gy-tBot-10}" fill="${VC.ink}"/><rect x="${L-94}" y="${gy-5}" width="11" height="3" fill="${VC.ink}"/>`;
+  s += `<rect x="0" y="${tTop}" width="${L}" height="${th}" fill="${VC.body}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<rect x="0" y="${tTop}" width="${L}" height="6" fill="${VC.bodyDk}"/><rect x="0" y="${tTop+th-6}" width="${L}" height="6" fill="${VC.bodyDk}"/>`;
+  for(let x=12; x<L; x+=12) s += `<line x1="${x}" y1="${tTop+6}" x2="${x}" y2="${tTop+th-6}" stroke="${VC.bodyDk}" stroke-width="0.8"/>`;
+  s += `<rect x="0" y="${tTop+th-22}" width="${L}" height="6" fill="${VC.cab}"/>`;
+  s += vLabel(L*0.5, tTop+th*0.52, th*0.3);
+  s += `<rect x="-2" y="${tBot+2}" width="5" height="6" fill="${VC.red}"/>`;
+  [40, 70, 100].forEach(x=>{ s += vGuard(x, gy, r); });
+  s += `<rect x="${cabX-58}" y="${tBot+2}" width="130" height="8" fill="${VC.ink}"/>`;
+  s += `<rect x="${cabX+2}" y="${tBot+10}" width="30" height="12" rx="5" fill="${VC.chrome}" stroke="${VC.ink}" stroke-width="0.8"/>`;
+  s += vCab(cabX, gy, {h:86, w:62, r});
+  [cabX-34, cabX-8].forEach(x=>{ s += vGuard(x, gy, r); });
+  [40,70,100,cabX-34,cabX-8,cabX+48].forEach(x=> s += vWheel(x, gy, r));
+  return {svg:s, w:cabX+72+8, h:gy+2, x:-6, y:tTop-20};
+}
+function rigidTruck({box=150, bh=72, reefer=false, lift=false, curtain=false, cabH=72, cabW=50} = {}){
+  const r = 12, gy = 120, bTop = gy - r - 14 - bh, bBot = gy - r - 12, cabX = box + 6;
+  let s = `<rect x="4" y="${bBot}" width="${box+cabW}" height="6" fill="${VC.ink}"/>`;
+  s += `<rect x="0" y="${bTop}" width="${box}" height="${bh}" fill="${VC.body}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  if(curtain){ for(let x=10;x<box;x+=10) s+=`<line x1="${x}" y1="${bTop+5}" x2="${x}" y2="${bBot-5}" stroke="${VC.bodyDk}" stroke-width="0.8"/>`; s+=`<rect x="0" y="${bTop}" width="${box}" height="5" fill="${VC.bodyDk}"/>`; }
+  else { for(let x=box/4;x<box-2;x+=box/4) s+=`<line x1="${x}" y1="${bTop+2}" x2="${x}" y2="${bBot-2}" stroke="${VC.bodyDk}" stroke-width="1"/>`; }
+  s += `<rect x="0" y="${bBot-16}" width="${box}" height="5" fill="${VC.cab}"/>`;
+  s += vLabel(box*0.5, bTop+bh*0.5, Math.min(bh*0.28, box*0.16));
+  if(reefer){ s += `<rect x="${box-26}" y="${bTop-2}" width="24" height="${bh*0.45}" rx="2" fill="${VC.bodyDk}" stroke="${VC.ink}" stroke-width="1"/>`; for(let i=0;i<4;i++) s+=`<rect x="${box-22}" y="${bTop+4+i*5}" width="16" height="2" fill="${VC.chrome}"/>`; }
+  if(lift) s += `<rect x="-6" y="${bTop+8}" width="5" height="${bh-6}" fill="${VC.chrome}" stroke="${VC.ink}" stroke-width="0.8"/>`;
+  s += `<rect x="-2" y="${bBot+1}" width="4" height="5" fill="${VC.red}"/>`;
+  s += `<rect x="${box*0.3}" y="${bBot+8}" width="${box*0.38}" height="2.5" fill="${VC.chrome}"/>`;
+  s += `<rect x="${cabX+4}" y="${bBot+6}" width="22" height="10" rx="4" fill="${VC.chrome}" stroke="${VC.ink}" stroke-width="0.8"/>`;
+  s += vCab(cabX, gy, {h:cabH, w:cabW, r});
+  const rearX = box*0.72, frontX = cabX+cabW-14;
+  s += vGuard(rearX, gy, r) + vGuard(frontX, gy, r) + vWheel(rearX, gy, r) + vWheel(frontX, gy, r);
+  return {svg:s, w:cabX+cabW+12, h:gy+2, x:-8, y:bTop-20};
+}
+function deliveryVan(){
+  const r = 11, gy = 100, top = 26, bot = gy - r - 4;
+  let s = `<path d="M4 ${bot} L4 ${top+8} Q4 ${top} 12 ${top} L132 ${top} Q140 ${top} 144 ${top+10} L160 ${top+34} Q172 ${top+38} 176 ${top+46} L178 ${bot-6} Q178 ${bot} 172 ${bot} Z" fill="${VC.body}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<path d="M136 ${top+6} L156 ${top+34} L138 ${top+34} Z" fill="${VC.glass}"/><path d="M112 ${top+8} L132 ${top+8} L134 ${top+34} L112 ${top+34} Z" fill="${VC.glass}"/><path d="M116 ${top+10} L128 ${top+10} L118 ${top+30} Z" fill="${VC.glassHi}" opacity=".5"/>`;
+  s += `<path d="M108 ${top+6} L108 ${bot-4} M84 ${top+6} L84 ${bot-4}" stroke="${VC.ink}" stroke-width=".9" opacity=".55"/><rect x="96" y="${top+40}" width="8" height="2.2" rx="1" fill="${VC.ink}"/>`;
+  s += `<rect x="4" y="${bot-20}" width="174" height="5" fill="${VC.cab}"/>` + vLabel(46, top+30, 17);
+  s += `<rect x="170" y="${top+42}" width="7" height="5" rx="1" fill="${VC.light}"/><rect x="160" y="${bot-6}" width="20" height="7" rx="2" fill="${VC.ink}"/><rect x="2" y="${bot-6}" width="12" height="7" fill="${VC.ink}"/><rect x="2" y="${top+30}" width="3" height="8" fill="${VC.red}"/><rect x="150" y="${top+24}" width="4" height="10" rx="1.5" fill="${VC.ink}"/>`;
+  s += `<path d="M18 ${bot} A${r+3} ${r+3} 0 0 1 48 ${bot}" fill="${VC.ink}"/><path d="M134 ${bot} A${r+3} ${r+3} 0 0 1 164 ${bot}" fill="${VC.ink}"/>`;
+  s += vWheel(33, gy, r) + vWheel(149, gy, r);
+  return {svg:s, w:184, h:gy+2, x:-2, y:top-4};
+}
+function vehicleSVG(v){
+  return `<svg viewBox="${v.x} ${v.y} ${v.w - v.x} ${v.h - v.y + 2}" aria-hidden="true"><ellipse cx="${(v.w+v.x)/2}" cy="${v.h-1}" rx="${(v.w-v.x)/2}" ry="2.5" fill="${VC.ink}" opacity=".18"/>${v.svg}</svg>`;
+}
+
+/* ---------- Hero scene: three looping parallax layers, period 2000px ---------- */
+function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function buildScene(){
+  const P = 2000, H = 380, TAU = Math.PI*2;
+  const wrapSVG = inner => `<svg viewBox="0 0 4000 ${H}" preserveAspectRatio="xMinYMax slice">${inner}</svg>`;
+  const both = (fn) => fn(0) + fn(P);
+  const prof = (f) => { let d = `M0 ${H}`; for(let x=0; x<=4000; x+=16) d += ` L${x} ${f(x).toFixed(1)}`; return d + ` L4000 ${H} Z`; };
+  // far: mountains of Samoborsko gorje with village lights
+  const mtn = x => { const t = x/P*TAU; return 205 - 44*Math.sin(t*2+1) - 24*Math.sin(t*5+.3) - 10*Math.sin(t*13+2); };
+  let r = rng(11), lights = [];
+  for(let i=0;i<34;i++){ const x = r()*P, y = mtn(x) + 18 + r()*50; lights.push([x,y,0.6+r()*0.9]); }
+  const far = `<path d="${prof(mtn)}" fill="#192A55"/>` + both(o => lights.map(([x,y,s])=>`<circle cx="${(x+o).toFixed(1)}" cy="${y.toFixed(1)}" r="${s.toFixed(2)}" fill="#FFD27A" opacity=".7"/>`).join(""));
+  // mid: forested hills
+  const hill = x => { const t = x/P*TAU; return 286 - 16*Math.sin(t*3) - 9*Math.sin(t*8+1); };
+  r = rng(5); let trees = "";
+  for(let x=4; x<P; x+= 7 + r()*16){
+    const h = 14 + r()*24, w = h*0.42, y = hill(x) + 6;
+    for(const o of [0,P]) trees += `M${(x+o).toFixed(1)} ${(y-h).toFixed(1)} L${(x+o+w).toFixed(1)} ${y.toFixed(1)} L${(x+o-w).toFixed(1)} ${y.toFixed(1)} Z`;
+  }
+  const mid = `<path d="${prof(hill)}" fill="#111E3D"/><path d="${trees}" fill="#111E3D"/>`;
+  // near: lamp posts, guardrail, asphalt and lane dashes
+  let near = `<defs><radialGradient id="glow"><stop offset="0" stop-color="#FFC95A" stop-opacity=".55"/><stop offset="1" stop-color="#FFC95A" stop-opacity="0"/></radialGradient></defs>`;
+  near += `<rect x="0" y="322" width="4000" height="${H-322}" fill="#0A1226"/><rect x="0" y="328" width="4000" height="2" fill="#E9EEF8" opacity=".35"/>`;
+  for(let x=0; x<4000; x+=400){ near += `<rect x="${x}" y="130" width="4" height="194" fill="#0A1328"/><path d="M${x+2} 132 Q${x+6} 122 ${x+30} 124" fill="none" stroke="#0A1328" stroke-width="3"/><rect x="${x+24}" y="122" width="18" height="5" rx="2" fill="#FFE7A6"/><ellipse cx="${x+33}" cy="140" rx="60" ry="40" fill="url(#glow)"/><ellipse cx="${x+33}" cy="345" rx="90" ry="14" fill="url(#glow)" opacity=".6"/>`; }
+  for(let x=0; x<4000; x+=40) near += `<rect x="${x}" y="306" width="3" height="18" fill="#2C3D69"/>`;
+  near += `<rect x="0" y="306" width="4000" height="5" fill="#3A4D7A"/>`;
+  for(let x=0; x<4000; x+=80) near += `<rect x="${x}" y="356" width="40" height="3" fill="#E9EEF8" opacity=".75"/>`;
+  const L = document.querySelectorAll("#scene .layer");
+  L[0].innerHTML = wrapSVG(far); L[1].innerHTML = wrapSVG(mid); L[2].innerHTML = wrapSVG(near);
+  $("#heroTruck").innerHTML = vehicleSVG(tractorTrailer({beam:true}));
+}
+
+/* ---------- Motion (GSAP: ScrollTrigger, SplitText, DrawSVG, MotionPath) ---------- */
+const HAS_GSAP = !!(window.gsap && window.ScrollTrigger && window.SplitText && window.DrawSVGPlugin && window.MotionPathPlugin);
+if(HAS_GSAP) gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, MotionPathPlugin);
+const MOTION = () => HAS_GSAP && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let flowTL = null, flowSplits = [];
+function buildFlow(){
+  if(flowTL){ flowTL.scrollTrigger && flowTL.scrollTrigger.kill(); flowTL.kill(); flowTL = null; }
+  flowSplits.forEach(s=>s.revert()); flowSplits = [];
+  const flow = $("#flow"), svg = $("#wires");
+  const W = flow.clientWidth, H = flow.clientHeight, fr = flow.getBoundingClientRect();
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const r = rng(3), n = Math.max(14, Math.floor(W/34)), bw = Math.max(10, Math.min(18, W/n*0.5));
+  const hiIdx = [Math.round(n*.18), Math.round(n*.57), Math.round(n*.82)];
+  let bars = "", hi = [];
+  for(let i=0;i<n;i++){
+    const x = (i+.5)*W/n + (r()-.5)*10, h = 70 + r()*90, y = 30 + r()*(190-h);
+    if(r() < .35 && !hiIdx.includes(i)) bars += `<rect class="bar-r" x="${(x-bw/2+bw*.6).toFixed(1)}" y="${(y-24+r()*48).toFixed(1)}" width="${bw}" height="${(h*.9).toFixed(1)}"/>`;
+    if(hiIdx.includes(i)) hi.push({x, y, h, k: hiIdx.indexOf(i)});
+    bars += `<rect class="bar-r${hiIdx.includes(i)?' hb':''}" data-k="${hiIdx.indexOf(i)}" x="${(x-bw/2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}"/>`;
+  }
+  const pains = [...flow.querySelectorAll(".pain-t")];
+  let wires = "", pallets = "";
+  hi.sort((a,b)=>a.k-b.k).forEach((b,i)=>{
+    const pr = pains[i].getBoundingClientRect();
+    const tx = W/2 + (i-1)*Math.min(60, W*.08), ty = pr.top - fr.top - 10, by = b.y + b.h;
+    const exitX = i % 2 ? W + 20 : -20, bot = pr.bottom - fr.top + 10;
+    wires += `<path class="wire wa" d="M${b.x.toFixed(1)} ${by.toFixed(1)} C${b.x.toFixed(1)} ${(by+(ty-by)*.6).toFixed(1)} ${tx.toFixed(1)} ${(ty-(ty-by)*.45).toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)}"/>`;
+    wires += `<path class="wire wb" d="M${tx.toFixed(1)} ${bot.toFixed(1)} C${tx.toFixed(1)} ${(bot+90).toFixed(1)} ${(exitX*.5+tx*.5).toFixed(1)} ${(bot+60).toFixed(1)} ${exitX} ${(bot+110).toFixed(1)}"/>`;
+    pallets += `<rect class="pallet" x="${(-bw/2).toFixed(1)}" y="${(-b.h/2).toFixed(1)}" width="${bw}" height="${b.h.toFixed(1)}" opacity="0"/>`;
+  });
+  svg.innerHTML = bars + wires + pallets;
+  if(!MOTION()) return;
+
+  const wa = svg.querySelectorAll(".wa"), wb = svg.querySelectorAll(".wb"), pal = svg.querySelectorAll(".pallet");
+  const hb = [0,1,2].map(k => svg.querySelector(`.hb[data-k="${k}"]`));
+  flowSplits = pains.map(p => SplitText.create(p, {type:"words"}));
+  flowTL = gsap.timeline({scrollTrigger:{trigger:flow, start:"top 78%", end:"bottom 70%", scrub:.8}});
+  flowTL.set([...wa, ...wb], {drawSVG:"0%"}, 0);
+  flowSplits.forEach(s => flowTL.set(s.words, {opacity:.18}, 0));
+  flowTL.to(hb, {fill:"#FFB21C", stroke:"#C98A00", stagger:.15, duration:.4}, .05);
+  hb.forEach((bar,i)=>{
+    flowTL.set(pal[i], {opacity:1}, ">")
+      .set(bar, {opacity:.25}, "<")
+      .to(wa[i], {drawSVG:"100%", duration:1, ease:"none"}, "<")
+      .to(pal[i], {motionPath:{path:wa[i], align:wa[i], alignOrigin:[.5,.5], autoRotate:-90}, duration:1, ease:"none"}, "<")
+      .to(pal[i], {opacity:0, duration:.15})
+      .to(flowSplits[i].words, {opacity:1, stagger:.05, duration:.3}, "<")
+      .to(wb[i], {drawSVG:"100%", duration:.6, ease:"none"});
+  });
+}
+
+let runTL = null;
+function buildRun(){
+  if(runTL){ runTL.kill(); runTL = null; }
+  const track = $("#vtrack"), truck = $("#vtruck"), fill = $("#vfill");
+  const stops = [...track.querySelectorAll(".vstop")];
+  const H = track.clientHeight, len = truck.getBoundingClientRect().height || 120;
+  if(!MOTION()){ gsap?.set?.(truck, {y: H*.55}); truck.style.transform = `translateY(${H*.55}px)`; stops.slice(0,4).forEach(s=>s.classList.add("passed")); fill.style.height = (H*.55)+"px"; return; }
+  const D = 14;
+  runTL = gsap.timeline({repeat:-1, repeatDelay:.5,
+    onUpdate(){ const front = gsap.getProperty(truck,"y") + len; stops.forEach((s,i)=>s.classList.toggle("passed", front >= RUN[i].p/100*H)); }});
+  runTL.fromTo(truck, {y:-len, opacity:0}, {y:H - len*.15, duration:D, ease:"none"}, 0)
+       .to(truck, {opacity:1, duration:.5}, 0)
+       .fromTo(fill, {height:0}, {height:H, duration:D, ease:"none"}, 0)
+       .to(truck, {opacity:0, duration:.5}, D - .5);
+}
+
+function introMotion(){
+  if(!MOTION()) return;
+  const split = SplitText.create("#heroTitle", {type:"lines", mask:"lines"});
+  gsap.timeline({defaults:{ease:"expo.out"}})
+    .from(split.lines, {yPercent:110, duration:1.1, stagger:.12, onComplete:()=>split.revert()})
+    .from(".hero-meta span", {opacity:0, y:10, stagger:.08, duration:.6}, .1)
+    .from(".hero-row > *", {opacity:0, y:16, stagger:.1, duration:.8}, .35)
+    .from("#heroTruck", {xPercent:-60, opacity:0, duration:1.6, ease:"power3.out"}, .2);
+  gsap.utils.toArray(".sec-head, .band > .wrap > .eyebrow, .run-copy, .docs-grid .left, .cta .wrap > div").forEach(el=>{
+    gsap.from(el, {opacity:0, y:36, duration:.9, ease:"power3.out", scrollTrigger:{trigger:el, start:"top 88%", once:true}});
+  });
+  gsap.from("#cells .cell", {opacity:0, y:14, stagger:.04, duration:.5, scrollTrigger:{trigger:"#cells", start:"top 92%", once:true}});
+  gsap.from("#dcells .dcell", {opacity:0, scale:.96, stagger:.06, duration:.5, scrollTrigger:{trigger:"#dcells", start:"top 85%", once:true}});
+  gsap.from("#rail .vcard .sil svg", {x:-80, opacity:0, stagger:.12, duration:1.2, ease:"power3.out", scrollTrigger:{trigger:"#rail", start:"top 85%", once:true}});
+  gsap.from(".board .ship", {opacity:0, y:16, stagger:.08, duration:.6, scrollTrigger:{trigger:".board", start:"top 80%", once:true}});
+  ScrollTrigger.create({trigger:"#stats", start:"top 85%", once:true, onEnter(){
+    document.querySelectorAll("#stats .v").forEach(v=>{
+      const node = v.firstChild, txt = node.textContent, target = +txt.replace(/\./g,"").replace(",", ".");
+      const dec = txt.includes(",") ? 1 : 0, o = {n:0};
+      gsap.to(o, {n:target, duration:1.6, ease:"power2.out", onUpdate(){
+        node.textContent = dec ? o.n.toFixed(1).replace(".", ",") : Math.round(o.n).toLocaleString("de-DE");
+      }});
+    });
+  }});
+}
+
+function rebuildMotion(){ buildFlow(); buildRun(); if(HAS_GSAP) ScrollTrigger.refresh(); }
+let rsT; let lastW = innerWidth;
+addEventListener("resize", ()=>{ if(innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rsT); rsT = setTimeout(rebuildMotion, 200); });
 
 /* ---------- Render all language-dependent parts ---------- */
 let svcOn = 1, segOn = 0, stepOn = 0;
@@ -810,11 +996,11 @@ function render(){
 
   $("#cells").innerHTML = CITIES.map(c=>`<div class="cell"><span class="cc">${c[0]}</span><span class="city-n">${esc(c[1][LANG])}</span><span class="days">${c[2]===3?'2–3':c[2]} ${c[2]===1?T.day1:T.dayN}</span></div>`).join("");
 
-  const track = $("#track");
-  track.querySelectorAll(".stop").forEach(n=>n.remove());
+  const track = $("#vtrack");
+  track.querySelectorAll(".vstop").forEach(n=>n.remove());
   RUN.forEach(s=>{
-    const d=document.createElement("div"); d.className="stop"; d.style.left=s.p+"%";
-    d.innerHTML=`<span class="t">${s.t}</span><span class="tick"></span><span class="n">${esc(s.n[LANG])}</span><span class="d">${esc(s.d[LANG])}</span>`;
+    const d=document.createElement("div"); d.className="vstop"; d.style.top=s.p+"%";
+    d.innerHTML=`<span class="tick"></span><span class="t">${s.t}</span><span><span class="n">${esc(s.n[LANG])}</span><span class="d">${esc(s.d[LANG])}</span></span>`;
     track.appendChild(d);
   });
 
@@ -824,14 +1010,13 @@ function render(){
 
   $("#stats").innerHTML = STATS[LANG].map(s=>`<div class="stat"><span class="v">${s[0]}<small>${s[1]}</small></span><span class="l">${esc(s[2])}</span></div>`).join("");
 
-  $("#rail").innerHTML = FLEET.map(v=>`<article class="vcard"><div class="sil">${vehicle(v.svg)}</div><h3>${esc(v.n[LANG])}</h3><div class="specs">${v.specs.map(x=>`<span>${esc(x)}</span>`).join("")}</div><p>${esc(v.d[LANG])}</p></article>`).join("");
+  $("#rail").innerHTML = FLEET.map(v=>`<article class="vcard"><div class="sil">${vehicleSVG(v.mk())}</div><h3>${esc(v.n[LANG])}</h3><div class="specs">${v.specs.map(x=>`<span>${esc(x)}</span>`).join("")}</div><p>${esc(v.d[LANG])}</p></article>`).join("");
 
   $("#stepTabs").innerHTML = STEPS.map((s,i)=>`<button type="button" role="tab" aria-selected="${i===stepOn}" data-step="${i}"><span>${esc(s.tab[LANG])}</span><span class="num">0${i+1}</span></button>`).join("");
   renderStep();
 
   $("#dcells").innerHTML = DOCS.map((d,i)=>`<div class="dcell${i===2||i===3?' hl':''}"><span class="code">${esc(d[0])}</span><span class="what">${esc(d[1][LANG])}</span></div>`).join("");
 
-  drawMap();
 }
 
 function renderStep(){
@@ -849,6 +1034,7 @@ document.querySelector(".lang").addEventListener("click", e=>{
   LANG = b.dataset.lang;
   try{ localStorage.setItem("kolnik-lang", LANG); }catch(err){}
   render();
+  rebuildMotion();
 });
 $("#svcList").addEventListener("click", e=>{
   const b = e.target.closest("[data-svc]"); if(!b) return;
@@ -882,4 +1068,8 @@ $("#qform").addEventListener("submit", e=>{ e.preventDefault(); $("#qnote").hidd
 
 render();
 drawAerial(0);
+buildScene();
+introMotion();
+rebuildMotion();
+if(document.fonts) document.fonts.ready.then(rebuildMotion);
 </script>
