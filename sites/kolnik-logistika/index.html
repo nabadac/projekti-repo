@@ -1,0 +1,1081 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kolnik Logistika</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Kolnik d.o.o. – gradska dostava i međunarodna špedicija iz Svete Nedelje.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: full-bleed bands alternating night-ink and cold paper, hairline grid cells,
+   square controls with a separate arrow block. Route-map hero radiating from Sveta Nedelja. */
+:root{
+  --ink:#0D1830;        /* asphalt at night */
+  --ink-2:#15244A;
+  --ink-line:rgba(205,216,240,.14);
+  --paper:#EDF0F4;      /* cold concrete */
+  --paper-2:#DDE3EC;
+  --line:rgba(13,24,48,.15);
+  --fg:#0D1830;
+  --muted:#56627C;
+  --on-ink:#E9EEF8;
+  --on-ink-muted:#93A0BC;
+  --amber:#FFB21C;      /* reflective road-sign amber */
+  --amber-ink:#1A1300;
+  --cobalt:#3D63FF;     /* route lines, live state */
+  --ok:#1E9E6A;
+  --warn:#E58A00;
+  --f-display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --wrap:1320px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media (min-width:700px){.wrap{padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}}
+
+.display{font-family:var(--f-display);font-stretch:118%;font-weight:600;letter-spacing:-.025em;line-height:1.02;text-wrap:balance;margin:0}
+.h1{font-size:clamp(2.6rem,7vw,5.6rem)}
+.h2{font-size:clamp(2rem,4.4vw,3.6rem)}
+.h3{font-size:clamp(1.25rem,2vw,1.6rem);letter-spacing:-.015em}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 18px;color:var(--muted)}
+.on-ink .eyebrow{color:var(--on-ink-muted)}
+.lede{font-size:1.125rem;max-width:58ch;color:var(--muted);margin:0}
+section{position:relative}
+.band{padding-block:clamp(72px,10vw,128px)}
+.on-ink{background:var(--ink);color:var(--on-ink)}
+
+/* Buttons: label block + arrow block */
+.btn{display:inline-flex;align-items:stretch;gap:4px;text-decoration:none;cursor:pointer;border:0;background:none;padding:0}
+.btn span{display:flex;align-items:center;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.btn .lbl{padding:0 20px;height:48px;background:var(--amber);color:var(--amber-ink)}
+.btn .arr{width:48px;justify-content:center;background:var(--amber);color:var(--amber-ink);transition:transform .2s}
+.btn:hover .arr{transform:translateX(4px)}
+.btn-line{display:inline-flex;align-items:center;height:44px;padding:0 18px;border:1px solid currentColor;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;background:none;cursor:pointer;transition:background .2s,color .2s}
+.btn-line:hover{background:var(--fg);color:var(--paper)}
+.on-ink .btn-line:hover{background:var(--on-ink);color:var(--ink)}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(13,24,48,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--on-ink);border-bottom:1px solid var(--ink-line)}
+.nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--f-display);font-stretch:100%;font-weight:700;font-size:1.45rem;letter-spacing:-.045em}
+.logo svg{width:28px;height:28px;flex:none}
+.nav-links{display:flex;gap:26px;margin-left:auto;list-style:none;padding:0;margin-block:0}
+.nav-links a{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--on-ink-muted);transition:color .2s}
+.nav-links a:hover{color:var(--on-ink)}
+.nav-right{display:flex;align-items:center;gap:14px;margin-left:24px}
+.lang{display:flex;border:1px solid var(--ink-line)}
+.lang button{background:none;border:0;padding:6px 9px;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;color:var(--on-ink-muted);cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--on-ink);color:var(--ink)}
+.nav .btn-line{height:36px;font-size:.68rem}
+@media (max-width:980px){.nav-links{display:none}.nav-right{margin-left:auto}}
+@media (max-width:560px){.nav .btn-line{display:none}.nav .wrap{gap:12px}}
+
+/* HERO: night motorway, parallax layers loop under a stationary truck */
+.hero{background:linear-gradient(180deg,#081124 0%,var(--ink) 50%,#1C2E5B 100%);color:var(--on-ink);overflow:hidden;padding-top:clamp(48px,7vw,88px)}
+.hero .wrap{position:relative;z-index:2;display:grid;gap:24px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-muted)}
+.hero-meta b{color:var(--amber);font-weight:500}
+.hero h1{max-width:14ch}
+.hero-row{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px}
+.hero-row p{margin:0;font-size:1.125rem;max-width:54ch;color:var(--on-ink-muted)}
+.scene{position:relative;height:clamp(230px,30vw,380px);margin-top:clamp(28px,4vw,48px)}
+.layer{position:absolute;left:0;bottom:0;height:100%;width:4000px;animation:pan linear infinite;will-change:transform}
+.layer svg{display:block;width:4000px;height:100%}
+.l-far{animation-duration:150s}.l-mid{animation-duration:48s}.l-near{animation-duration:9s}
+@keyframes pan{to{transform:translateX(-2000px)}}
+.hero-truck{position:absolute;right:max(16px,7vw);bottom:clamp(12px,1.6vw,20px);width:min(80vw,600px);animation:bob 1.6s ease-in-out infinite}
+.hero-truck svg{width:100%;height:auto;display:block;overflow:visible}
+.wh-spin .wh{transform-box:fill-box;transform-origin:center;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes bob{50%{transform:translateY(-1.5px)}}
+
+/* COVERAGE GRID */
+.coverage{background:var(--ink-2);color:var(--on-ink);padding-block:40px 56px}
+.coverage .eyebrow{text-align:center;margin-bottom:24px}
+.cells{display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--ink-line);border-left:1px solid var(--ink-line)}
+.cell{border-right:1px solid var(--ink-line);border-bottom:1px solid var(--ink-line);padding:18px 16px;display:grid;gap:6px;min-width:0;transition:background .2s}
+.cell:hover{background:rgba(255,178,28,.06)}
+.cell .cc{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.5rem;letter-spacing:-.02em}
+.cell .city-n{font-size:.9rem;color:var(--on-ink)}
+.cell .days{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+@media (max-width:900px){.cells{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:480px){.cells{grid-template-columns:repeat(2,1fr)}}
+
+/* PROBLEM: scroll story. Freight bars light up, detach and travel down wires to each pain point */
+.problem{padding-bottom:0}
+.problem .display{text-align:center;max-width:18ch;margin:0 auto}
+.flow{position:relative;margin-top:40px;overflow:hidden}
+.flow svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.pain-stack{position:relative;display:grid;gap:clamp(140px,18vw,220px);padding:300px 16px 160px;justify-items:center;text-align:center}
+.pain-t{margin:0;max-width:24ch;font-family:var(--f-display);font-stretch:106%;font-weight:500;font-size:clamp(1.25rem,2.3vw,1.75rem);line-height:1.25;letter-spacing:-.01em;text-wrap:balance;background:var(--paper);padding:10px 14px}
+.bar-r{fill:var(--paper-2);stroke:#AEB8CA;stroke-width:1}
+.wire{fill:none;stroke:#9AA7BD;stroke-width:1.2}
+.pallet{fill:var(--amber);stroke:#C98A00;stroke-width:1}
+
+/* RUN: one line, one day, drawn as a vertical road */
+.run{padding-block:clamp(72px,9vw,120px);border-top:1px solid var(--line)}
+.run-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
+.run-copy{position:sticky;top:120px;display:grid;gap:20px;align-content:start}
+.run-copy .lede{max-width:44ch}
+.run-tag{display:flex;flex-wrap:wrap;gap:8px}
+.run-tag span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;padding:5px 9px;background:var(--paper-2)}
+.vtrack{position:relative;height:clamp(560px,64vw,720px)}
+.vroad{position:absolute;left:0;top:0;bottom:0;width:46px;background:var(--fg);border-radius:3px;overflow:hidden}
+.vroad::after{content:"";position:absolute;left:22px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(180deg,var(--amber) 0 18px,transparent 18px 34px)}
+.vfill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(180deg,rgba(61,99,255,0),rgba(61,99,255,.55))}
+.vtruck{position:absolute;left:9px;top:0;width:28px;height:auto;z-index:2}
+.vstop{position:absolute;left:46px;right:0;transform:translateY(-50%);display:grid;grid-template-columns:28px 56px minmax(0,1fr);align-items:center;gap:0 12px}
+.vstop .tick{height:1px;background:var(--line);transition:background .3s}
+.vstop .t{font-family:var(--f-mono);font-size:.8rem;font-weight:500;color:var(--muted);transition:color .3s}
+.vstop .n{display:block;font-weight:600;line-height:1.25}
+.vstop .d{display:block;font-size:.85rem;color:var(--muted);line-height:1.3}
+.vstop.passed .tick{background:var(--cobalt)}
+.vstop.passed .t{color:var(--cobalt)}
+@media (max-width:820px){.run-grid{grid-template-columns:1fr}.run-copy{position:static}}
+
+/* SERVICES (dark) */
+.services{background:#060D1E}
+.svc-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(32px,6vw,96px);align-items:start}
+.svc-list{list-style:none;padding:0;margin:56px 0 0;display:grid}
+.svc-item button{display:grid;gap:6px;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;padding:16px 0 16px 20px;cursor:pointer;color:var(--on-ink-muted)}
+.svc-item button .tt{font-weight:600;font-size:1.05rem}
+.svc-item button .dd{display:none;font-size:.95rem;line-height:1.5;color:var(--on-ink-muted);max-width:48ch}
+.svc-item.on button{border-left-color:var(--amber);color:var(--on-ink)}
+.svc-item.on .dd{display:block}
+.svc-item button:hover{color:var(--on-ink)}
+.board{border:1px solid var(--ink-line);background:var(--ink);font-size:.9rem}
+.board-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--ink-line);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--on-ink-muted)}
+.live{display:inline-flex;align-items:center;gap:8px;color:var(--on-ink)}
+.live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(30,158,106,.25)}
+.ship{display:grid;grid-template-columns:auto 1fr auto;gap:4px 16px;padding:16px 18px;border-bottom:1px solid var(--ink-line);align-items:center}
+.ship:last-child{border-bottom:0}
+.ship .id{font-family:var(--f-mono);font-size:.72rem;color:var(--on-ink-muted);grid-row:span 2}
+.ship .rt{font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ship .meta{font-family:var(--f-mono);font-size:.72rem;color:var(--on-ink-muted)}
+.pill{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border:1px solid currentColor;white-space:nowrap;justify-self:end}
+.pill.go{color:#8FB0FF}.pill.wait{color:var(--amber)}.pill.done{color:#5FD3A0}.pill.load{color:var(--on-ink-muted)}
+.bar{grid-column:2 / 4;height:3px;background:var(--ink-line);position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;background:var(--cobalt)}
+@media (max-width:900px){.svc-grid{grid-template-columns:1fr}.svc-list{margin-top:32px}}
+
+/* STATS */
+.stats{background:var(--ink-2);color:var(--on-ink)}
+.stats .row{display:grid;grid-template-columns:repeat(5,1fr)}
+.stat{padding:28px 20px 26px;border-right:1px solid var(--ink-line);display:grid;gap:42px;min-width:0}
+.stat:first-child{padding-left:0}
+.stat:last-child{border-right:0}
+.stat .v{font-family:var(--f-display);font-stretch:118%;font-weight:600;font-size:clamp(2rem,3.6vw,3rem);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.stat .v small{font-size:.5em;color:var(--amber);margin-left:2px}
+.stat .l{font-size:.88rem;color:var(--on-ink-muted);line-height:1.35}
+@media (max-width:900px){.stats .row{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--ink-line);padding-left:0}.stat:nth-child(2n){border-right:0;padding-left:20px}.stat:last-child{grid-column:1/-1;border-bottom:0}}
+
+/* SEGMENTS */
+.seg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);border:1px solid var(--line);margin-top:56px}
+.seg-tabs{display:grid;grid-template-rows:1fr auto}
+.seg-tab{display:grid;align-content:space-between;gap:20px;text-align:left;background:var(--paper-2);border:0;border-left:3px solid transparent;padding:22px 24px;cursor:pointer}
+.seg-tab+.seg-tab{border-top:1px solid var(--line)}
+.seg-tab .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.seg-tab .tt{font-weight:600;font-size:1.05rem}
+.seg-tab .num{font-family:var(--f-mono);font-size:.72rem;color:var(--muted)}
+.seg-tab .dd{display:none;margin:0;color:var(--muted);max-width:52ch}
+.seg-tab[aria-selected="true"]{background:#F7F9FB;border-left-color:var(--cobalt);min-height:260px;align-content:end}
+.seg-tab[aria-selected="true"] .dd{display:block}
+.seg-tab[aria-selected="true"] .top{order:-1}
+.seg-pic{background:#3A4152;min-height:340px;position:relative;overflow:hidden}
+.seg-pic svg{position:absolute;inset:0;width:100%;height:100%}
+@media (max-width:820px){.seg{grid-template-columns:1fr}.seg-pic{min-height:260px}}
+
+/* FLEET carousel */
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px}
+.arrows{display:flex;gap:8px}
+.arrows button{width:44px;height:44px;border:1px solid var(--fg);background:none;cursor:pointer;display:grid;place-items:center}
+.arrows button:hover{background:var(--fg);color:var(--paper)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,calc((100% - 2px) / 3));overflow-x:auto;scroll-snap-type:x mandatory;margin-top:48px;border-left:1px solid var(--line);scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.vcard{scroll-snap-align:start;border-right:1px solid var(--line);padding:0 24px 8px;display:grid;gap:18px;align-content:start;min-width:0}
+.vcard:first-child{border-left:3px solid var(--cobalt);margin-left:-1px}
+.vcard .sil{height:130px;display:flex;align-items:flex-end;color:var(--fg)}
+.vcard .sil svg{height:100%;width:auto;max-width:100%}
+.vcard h3{margin:0;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:500}
+.specs{display:flex;flex-wrap:wrap;gap:6px}
+.specs span{font-family:var(--f-mono);font-size:.72rem;padding:3px 7px;background:var(--paper-2)}
+.vcard p{margin:0;color:var(--muted);font-size:.95rem}
+@media (max-width:900px){.rail{grid-auto-columns:minmax(260px,78%)}}
+.ticks{height:28px;margin-top:56px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 14px)}
+
+/* PROCESS */
+.process{background:var(--paper-2)}
+.steps{margin-top:48px;border:1px solid var(--line);background:var(--paper)}
+.step-tabs{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line);overflow-x:auto}
+.step-tabs button{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 18px;background:var(--paper-2);border:0;border-top:3px solid transparent;cursor:pointer;text-align:left;min-width:150px}
+.step-tabs button+button{border-left:1px solid var(--line)}
+.step-tabs .num{font-family:var(--f-mono);font-size:.7rem;color:var(--muted)}
+.step-tabs button[aria-selected="true"]{background:var(--paper);border-top-color:var(--cobalt);font-weight:600}
+.step-body{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);min-height:380px}
+.step-copy{padding:32px 28px;display:grid;align-content:end;gap:16px;background:#F7F9FB;border-right:1px solid var(--line)}
+.step-copy h3{margin:0}
+.step-copy p{margin:0;color:var(--muted)}
+.step-copy .btn-line{justify-self:start;margin-top:8px}
+.step-vis{display:grid;place-items:center;padding:32px;background:var(--paper-2)}
+.doc{width:min(100%,420px);background:#FFFFFF;border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(13,24,48,.45)}
+.doc-head{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--ink);color:var(--on-ink);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+.doc-head b{color:var(--amber);font-weight:500}
+.doc-row{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:12px 18px;border-bottom:1px dashed var(--line);font-size:.92rem}
+.doc-row:last-child{border-bottom:0}
+.doc-row dt{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.doc-row dd{margin:0;font-weight:500;min-width:0;overflow-wrap:anywhere}
+.stamp{display:inline-block;margin:6px 18px 16px;padding:4px 10px;border:2px solid var(--ok);color:var(--ok);font-family:var(--f-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;transform:rotate(-3deg)}
+@media (max-width:820px){.step-body{grid-template-columns:1fr}.step-copy{border-right:0;border-bottom:1px solid var(--line)}}
+@media (max-width:420px){.doc-row{grid-template-columns:1fr;gap:2px}}
+
+/* DOCS grid */
+.docs-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,80px)}
+.docs-grid .left{display:grid;align-content:space-between;gap:32px}
+.dcells{position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.dcell{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 18px 18px;display:grid;gap:22px;align-content:space-between;min-height:118px;position:relative;background:#F7F9FB;min-width:0}
+.dcells::before{content:"";position:absolute;left:calc(33.333% - 5px);top:-30%;width:10px;height:30%;background:linear-gradient(180deg,rgba(61,99,255,0),rgba(61,99,255,.45),rgba(61,99,255,0));animation:scan 5s linear infinite;z-index:1;pointer-events:none}
+@keyframes scan{to{top:100%}}
+.dcell::after{content:"";position:absolute;left:18px;right:18px;bottom:10px;height:4px;background:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 6px)}
+.dcell .code{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:1.3rem;letter-spacing:-.02em}
+.dcell .what{font-size:.82rem;color:var(--muted);line-height:1.35;margin-bottom:8px}
+.dcell.hl .code{color:var(--cobalt)}
+@media (max-width:900px){.docs-grid{grid-template-columns:1fr}}
+@media (max-width:520px){.dcells{grid-template-columns:repeat(2,1fr)}}
+
+/* CTA + FOOTER */
+.cta{background:var(--amber);color:var(--amber-ink);padding-block:clamp(64px,8vw,104px)}
+.cta .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:32px}
+.cta .display{max-width:16ch}
+.cta p{margin:16px 0 0;font-size:1.1rem;max-width:46ch}
+.cta .btn .lbl,.cta .btn .arr{background:var(--ink);color:var(--on-ink)}
+footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:hidden}
+.mark{display:flex;align-items:center;gap:clamp(16px,3vw,40px);margin-bottom:56px}
+.mark svg{width:clamp(64px,13vw,170px);height:auto;flex:none}
+.mark .word{font-family:var(--f-display);font-stretch:100%;font-weight:700;font-size:clamp(4rem,17vw,15rem);letter-spacing:-.06em;line-height:.8;color:#7D8AA8}
+.fcols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:32px}
+.fcols h4{margin:0 0 14px;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;color:var(--on-ink-muted)}
+.fcols p{margin:0;color:var(--on-ink-muted);line-height:1.7}
+.fcols .tag{font-size:1.15rem;color:var(--on-ink);max-width:28ch;line-height:1.45}
+.copyable{user-select:all}
+.flinks{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px 24px;margin-top:56px;padding-top:24px;border-top:1px solid var(--ink-line);list-style:none;padding-left:0}
+.flinks a{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--on-ink-muted)}
+.flinks a:hover{color:var(--on-ink)}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:40px;font-size:.8rem;color:var(--on-ink-muted)}
+@media (max-width:820px){.fcols{grid-template-columns:1fr}}
+
+/* Floating quick quote */
+.fab{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--paper);color:var(--fg);border:1px solid var(--fg);font-family:var(--f-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 30px -12px rgba(6,13,30,.5)}
+.fab::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.modal{position:fixed;inset:0;z-index:70;background:rgba(6,13,30,.6);display:grid;place-items:center;padding:16px}
+.sheet{width:min(100%,460px);background:var(--paper);color:var(--fg);border-top:4px solid var(--amber);padding:28px 24px 24px;display:grid;gap:16px;max-height:calc(100% - 16px);overflow:auto}
+.sheet-head{display:flex;justify-content:space-between;align-items:start;gap:16px}
+.sheet-head h3{margin:0}
+.x-btn{background:none;border:1px solid var(--line);width:36px;height:36px;cursor:pointer;font-size:1.2rem;line-height:1;flex:none}
+.sheet form{display:grid;gap:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:6px}
+.field label{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.field input{height:44px;padding:0 12px;border:1px solid var(--line);background:#FFFFFF;color:var(--fg);font:inherit;border-radius:0}
+.field input:focus{outline:2px solid var(--cobalt);outline-offset:-1px}
+.sheet .btn{justify-self:start;margin-top:6px}
+.note{margin:0;font-size:.88rem;color:var(--ok);font-weight:500}
+@media (max-width:420px){.two{grid-template-columns:1fr}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Kolnik">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 4C17 13 21 24 21 32C21 40 17 51 6 60C3 44 3 20 6 4Z" fill="#FFB21C"/><path d="M26 30C33 16 45 7 61 3C57 17 45 27 26 30Z" fill="#FF8A1C"/><path d="M27 35C43 35 55 44 61 61C46 59 34 51 27 35Z" fill="#FFB21C"/></svg>
+      Kolnik
+    </a>
+    <ul class="nav-links">
+      <li><a href="#usluge" data-i18n="nav.services">Usluge</a></li>
+      <li><a href="#vozni-park" data-i18n="nav.fleet">Vozni park</a></li>
+      <li><a href="#mreza" data-i18n="nav.network">Mreža</a></li>
+      <li><a href="#proces" data-i18n="nav.process">Kako radimo</a></li>
+      <li><a href="#kontakt" data-i18n="nav.about">Kontakt</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Jezik">
+        <button type="button" data-lang="hr" aria-pressed="true">HR</button>
+        <button type="button" data-lang="sl" aria-pressed="false">SL</button>
+        <button type="button" data-lang="sr" aria-pressed="false">SR</button>
+      </div>
+      <button type="button" class="btn-line js-quote" data-i18n="cta.quote">Zatražite ponudu</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-meta"><span><b>●</b> Hub · Sveta Nedelja</span><span>45.80° N · 15.78° E</span><span data-i18n="hero.meta">10 km od Zagreba · A3 čvor</span></div>
+    <h1 class="display h1" id="heroTitle" data-i18n="hero.title">Roba na putu. Na vrijeme.</h1>
+    <div class="hero-row">
+      <p data-i18n="hero.sub">Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Europe.</p>
+      <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
+    </div>
+  </div>
+  <div class="scene" id="scene" aria-hidden="true">
+    <div class="layer l-far"></div>
+    <div class="layer l-mid"></div>
+    <div class="layer l-near"></div>
+    <div class="hero-truck wh-spin" id="heroTruck"></div>
+  </div>
+</section>
+
+<!-- COVERAGE -->
+<section class="coverage" id="mreza">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="cov.title">Redovne linije iz Svete Nedelje · tranzitno vrijeme</p>
+    <div class="cells" id="cells"></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="band problem">
+  <div class="wrap">
+    <h2 class="display h2" data-i18n="pr.title">Kad dostava kasni, kasni cijeli vaš posao</h2>
+  </div>
+  <div class="flow" id="flow">
+    <svg class="wires" id="wires" aria-hidden="true"></svg>
+    <div class="pain-stack">
+      <p class="pain-t" data-i18n="pr.1">Kupac čeka, a nitko ne zna gdje je kamion.</p>
+      <p class="pain-t" data-i18n="pr.2">Granice, CMR i carinski papiri pojedu dan koji niste imali.</p>
+      <p class="pain-t" data-i18n="pr.3">Pola šlepera vozi prazno, a vi plaćate cijeli.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RUN -->
+<section class="run">
+  <div class="wrap run-grid">
+    <div class="run-copy">
+      <p class="eyebrow" data-i18n="run.eyebrow">Primjer linije</p>
+      <h2 class="display h2" data-i18n="run.title">Jedna linija, jedan dan: Sveta Nedelja → München</h2>
+      <p class="lede" data-i18n="run.desc"></p>
+      <div class="run-tag"><span>FTL</span><span>33 EUR</span><span>548 km</span><span>8 h 40 min</span></div>
+    </div>
+    <div class="vtrack" id="vtrack">
+      <div class="vroad"><div class="vfill" id="vfill"></div></div>
+      <svg class="vtruck" id="vtruck" viewBox="-3 0 34 120" aria-hidden="true">
+        <rect x="2" y="0" width="24" height="86" rx="1.5" fill="#F3F5F8" stroke="#0D1830" stroke-width="1"/>
+        <g stroke="#D5DBE4" stroke-width="1"><line x1="4" y1="8" x2="24" y2="8"/><line x1="4" y1="18" x2="24" y2="18"/><line x1="4" y1="28" x2="24" y2="28"/><line x1="4" y1="38" x2="24" y2="38"/><line x1="4" y1="48" x2="24" y2="48"/><line x1="4" y1="58" x2="24" y2="58"/><line x1="4" y1="68" x2="24" y2="68"/><line x1="4" y1="78" x2="24" y2="78"/></g>
+        <rect x="2" y="0" width="2.5" height="86" fill="#FFB21C"/><rect x="23.5" y="0" width="2.5" height="86" fill="#FFB21C"/>
+        <rect x="11" y="85" width="6" height="7" fill="#0D1830"/>
+        <rect x="3" y="90" width="22" height="27" rx="3.5" fill="#FFB21C" stroke="#0D1830" stroke-width="1"/>
+        <rect x="5" y="92" width="18" height="9" rx="2" fill="#E09400"/>
+        <rect x="5" y="110" width="18" height="5" rx="1.2" fill="#2A3A5E"/>
+        <rect x="-2" y="104" width="4" height="6" rx="1" fill="#0D1830"/><rect x="26" y="104" width="4" height="6" rx="1" fill="#0D1830"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="band on-ink services" id="usluge">
+  <div class="wrap svc-grid">
+    <div>
+      <p class="eyebrow" data-i18n="svc.eyebrow">Usluge</p>
+      <h2 class="display h2" data-i18n="svc.title">Od palete u Zagrebu do punog šlepera za Rotterdam</h2>
+      <ul class="svc-list" id="svcList"></ul>
+    </div>
+    <div class="board" aria-label="Primjer ploče pošiljaka">
+      <div class="board-head"><span data-i18n="board.title">Pošiljke danas · primjer</span><span class="live">GPS</span></div>
+      <div id="ships"></div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="wrap"><div class="row" id="stats"></div></div>
+</section>
+
+<!-- SEGMENTS -->
+<section class="band">
+  <div class="wrap">
+    <p class="eyebrow" data-i18n="seg.eyebrow">Za koga vozimo</p>
+    <h2 class="display h2" style="max-width:20ch" data-i18n="seg.title">Jedan partner za zadnji kilometar i za dvije tisuće kilometara</h2>
+    <div class="seg">
+      <div class="seg-tabs" role="tablist">
+        <button class="seg-tab" role="tab" aria-selected="true" data-seg="0"><span class="top"><span class="tt" data-i18n="seg.a">Trgovina i e-commerce</span><span class="num">01</span></span><p class="dd" data-i18n="seg.a.d"></p></button>
+        <button class="seg-tab" role="tab" aria-selected="false" data-seg="1"><span class="top"><span class="tt" data-i18n="seg.b">Industrija i proizvodnja</span><span class="num">02</span></span><p class="dd" data-i18n="seg.b.d"></p></button>
+      </div>
+      <div class="seg-pic" aria-hidden="true"><svg id="aerial" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice"></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- FLEET -->
+<section class="band" id="vozni-park" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-i18n="fl.eyebrow">Vozni park</p><h2 class="display h2" data-i18n="fl.title">Vozilo za svaku pošiljku</h2></div>
+      <div class="arrows"><button type="button" id="prev" aria-label="Prethodno">←</button><button type="button" id="next" aria-label="Sljedeće">→</button></div>
+    </div>
+    <div class="rail" id="rail"></div>
+    <div class="ticks" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="band process" id="proces">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="eyebrow" data-i18n="pc.eyebrow">Kako radimo</p><h2 class="display h2" data-i18n="pc.title">Od upita do potpisanog CMR-a</h2></div>
+      <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
+    </div>
+    <div class="steps">
+      <div class="step-tabs" role="tablist" id="stepTabs"></div>
+      <div class="step-body">
+        <div class="step-copy"><h3 class="display h3" id="stepH"></h3><p id="stepP"></p><button type="button" class="btn-line js-quote" id="stepB"></button></div>
+        <div class="step-vis"><div class="doc" id="stepDoc"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCS -->
+<section class="band">
+  <div class="wrap docs-grid">
+    <div class="left">
+      <div><p class="eyebrow" data-i18n="dc.eyebrow">Dokumenti i standardi</p><h2 class="display h2" data-i18n="dc.title">Papiri koje rješavamo umjesto vas</h2></div>
+      <a class="btn-line" href="#kontakt" data-i18n="dc.btn" style="justify-self:start">Pitajte carinskog referenta</a>
+    </div>
+    <div class="dcells" id="dcells"></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap">
+    <div><h2 class="display h2" data-i18n="cta.title">Vaša sljedeća tura kreće iz Svete Nedelje</h2><p data-i18n="cta.sub">Pošaljite relaciju i dobit ćete ponudu u dva sata, radnim danom.</p></div>
+    <button type="button" class="btn js-quote"><span class="lbl" data-i18n="cta.quote">Zatražite ponudu</span><span class="arr" aria-hidden="true">→</span></button>
+  </div>
+</section>
+</main>
+
+<footer id="kontakt">
+  <div class="wrap">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M6 4C17 13 21 24 21 32C21 40 17 51 6 60C3 44 3 20 6 4Z" fill="#FFB21C"/><path d="M26 30C33 16 45 7 61 3C57 17 45 27 26 30Z" fill="#FF8A1C"/><path d="M27 35C43 35 55 44 61 61C46 59 34 51 27 35Z" fill="#FFB21C"/></svg>
+      <span class="word">Kolnik</span>
+    </div>
+    <div class="fcols">
+      <p class="tag" data-i18n="ft.tag">Gradska dostava i međunarodna špedicija iz Svete Nedelje.</p>
+      <div>
+        <h4 data-i18n="ft.contact">Kontakt</h4>
+        <p>Kolnik d.o.o.<br>Industrijska ulica 12<br>10431 Sveta Nedelja, <span data-i18n="ft.country">Hrvatska</span></p>
+        <p style="margin-top:12px"><span class="copyable">dispecer@kolnik.hr</span><br><span class="copyable">+385 1 000 0000</span></p>
+      </div>
+      <div>
+        <h4 data-i18n="ft.hours">Dispečer</h4>
+        <p data-i18n="ft.hours.d">0–24, 7 dana u tjednu<br>Ured: pon–pet 7–17 h</p>
+      </div>
+    </div>
+    <ul class="flinks">
+      <li><a href="#usluge" data-i18n="nav.services">Usluge</a></li>
+      <li><a href="#vozni-park" data-i18n="nav.fleet">Vozni park</a></li>
+      <li><a href="#mreza" data-i18n="nav.network">Mreža</a></li>
+      <li><a href="#proces" data-i18n="nav.process">Kako radimo</a></li>
+      <li><a href="#top" data-i18n="ft.career">Karijere · vozači C+E</a></li>
+      <li><a href="#top" data-i18n="ft.privacy">Privatnost</a></li>
+      <li><a href="#top" data-i18n="ft.terms">Opći uvjeti</a></li>
+    </ul>
+    <div class="legal"><span data-i18n="ft.rights">© 2026 Kolnik d.o.o. Sva prava pridržana.</span><span>OIB 00000000000 · EU licencija za prijevoz</span></div>
+  </div>
+</footer>
+
+<button type="button" class="fab js-quote" data-i18n="fab">Brzi upit</button>
+
+<div class="modal" id="modal" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <div class="sheet-head"><h3 class="display h3" id="mTitle" data-i18n="m.title">Brzi upit za prijevoz</h3><button type="button" class="x-btn" id="mClose" aria-label="Zatvori">×</button></div>
+    <form id="qform">
+      <div class="two">
+        <div class="field"><label for="q-from" data-i18n="m.from">Utovar</label><input id="q-from" value="Sveta Nedelja" required></div>
+        <div class="field"><label for="q-to" data-i18n="m.to">Istovar</label><input id="q-to" placeholder="München" required></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="q-pal" data-i18n="m.pal">Broj paleta</label><input id="q-pal" type="number" min="1" max="66" value="12" inputmode="numeric"></div>
+        <div class="field"><label for="q-kg" data-i18n="m.kg">Težina (kg)</label><input id="q-kg" type="number" min="1" value="6400" inputmode="numeric"></div>
+      </div>
+      <div class="field"><label for="q-mail">E-mail</label><input id="q-mail" type="email" required placeholder="ime@tvrtka.hr"></div>
+      <button type="submit" class="btn"><span class="lbl" data-i18n="m.send">Pošalji upit</span><span class="arr" aria-hidden="true">→</span></button>
+      <p class="note" id="qnote" hidden data-i18n="m.ok"></p>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/MotionPathPlugin.min.js"></script>
+<script>
+const I18N = {
+hr:{
+ "nav.services":"Usluge","nav.fleet":"Vozni park","nav.network":"Mreža","nav.process":"Kako radimo","nav.about":"Kontakt",
+ "cta.quote":"Zatražite ponudu",
+ "hero.meta":"10 km od Zagreba · čvor A3","hero.title":"Roba na putu. Na vrijeme.",
+ "hero.sub":"Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Europe.",
+ "cov.title":"Redovne linije iz Svete Nedelje · tranzitno vrijeme",
+ "pr.title":"Kad dostava kasni, kasni cijeli vaš posao",
+ "pr.1":"Kupac čeka, a nitko ne zna gdje je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate cijeli.",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → München","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primjer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, s pauzom po propisima i GPS-om cijelim putem.",
+ "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Rotterdam",
+ "board.title":"Pošiljke danas · primjer",
+ "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za zadnji kilometar i za dvije tisuće kilometara",
+ "seg.a":"Trgovina i e-commerce","seg.a.d":"Dnevne rute po Zagrebu, Velikoj Gorici, Samoboru i Zaprešiću. Hidraulična rampa, dostava na kat i povrat ambalaže.",
+ "seg.b":"Industrija i proizvodnja","seg.b.d":"Puni šleperi prema tvornicama u Njemačkoj, Austriji i Italiji. Fiksni termini utovara i povratni teret iz EU.",
+ "fl.eyebrow":"Vozni park","fl.title":"Vozilo za svaku pošiljku",
+ "pc.eyebrow":"Kako radimo","pc.title":"Od upita do potpisanog CMR-a",
+ "dc.eyebrow":"Dokumenti i standardi","dc.title":"Papiri koje rješavamo umjesto vas","dc.btn":"Pitajte carinskog referenta",
+ "cta.title":"Vaša sljedeća tura kreće iz Svete Nedelje","cta.sub":"Pošaljite relaciju i dobit ćete ponudu u dva sata, radnim danom.",
+ "ft.tag":"Gradska dostava i međunarodna špedicija iz Svete Nedelje.","ft.contact":"Kontakt","ft.country":"Hrvatska","ft.hours":"Dispečer",
+ "ft.hours.d":"0–24, 7 dana u tjednu<br>Ured: pon–pet 7–17 h","ft.career":"Karijere · vozači C+E","ft.privacy":"Privatnost","ft.terms":"Opći uvjeti",
+ "ft.rights":"© 2026 Kolnik d.o.o. Sva prava pridržana.",
+ "fab":"Brzi upit","m.title":"Brzi upit za prijevoz","m.from":"Utovar","m.to":"Istovar","m.pal":"Broj paleta","m.kg":"Težina (kg)","m.send":"Pošalji upit",
+ "m.ok":"Upit je zabilježen. Ovo je demo stranica pa se ništa ne šalje.",
+ day1:"dan",dayN:"dana"
+},
+sl:{
+ "nav.services":"Storitve","nav.fleet":"Vozni park","nav.network":"Mreža","nav.process":"Kako delamo","nav.about":"Kontakt",
+ "cta.quote":"Zahtevajte ponudbo",
+ "hero.meta":"10 km od Zagreba · priključek A3","hero.title":"Blago na poti. Pravočasno.",
+ "hero.sub":"Mestna dostava in mednarodna špedicija iz Svete Nedelje pri Zagrebu. Vozimo po Hrvaški, Sloveniji, Srbiji in še 16 državah Evrope.",
+ "cov.title":"Redne linije iz Svete Nedelje · čas prevoza",
+ "pr.title":"Ko dostava zamuja, zamuja ves vaš posel",
+ "pr.1":"Kupec čaka, nihče pa ne ve, kje je tovornjak.","pr.2":"Meje, CMR in carinski papirji pojedo dan, ki ga niste imeli.","pr.3":"Pol polpriklopnika vozi prazno, vi pa plačate celega.",
+ "run.title":"Ena linija, en dan: Sveta Nedelja → München","run.meta":"FTL · 33 palet · 548 km","run.eyebrow":"Primer linije","run.desc":"Odhod ob 05:30, razkladanje ob 14:10. Brez čakanja na meji, z odmorom po predpisih in GPS-om ves čas.",
+ "svc.eyebrow":"Storitve","svc.title":"Od palete v Zagrebu do polnega polpriklopnika za Rotterdam",
+ "board.title":"Pošiljke danes · primer",
+ "seg.eyebrow":"Za koga vozimo","seg.title":"En partner za zadnji kilometer in za dva tisoč kilometrov",
+ "seg.a":"Trgovina in e-trgovina","seg.a.d":"Dnevne poti po Zagrebu, Veliki Gorici, Samoboru in Zaprešiću. Hidravlična dvižna rampa, dostava v nadstropje in vračilo embalaže.",
+ "seg.b":"Industrija in proizvodnja","seg.b.d":"Polni polpriklopniki do tovarn v Nemčiji, Avstriji in Italiji. Fiksni termini nakladanja in povratni tovor iz EU.",
+ "fl.eyebrow":"Vozni park","fl.title":"Vozilo za vsako pošiljko",
+ "pc.eyebrow":"Kako delamo","pc.title":"Od povpraševanja do podpisanega CMR",
+ "dc.eyebrow":"Dokumenti in standardi","dc.title":"Papirji, ki jih uredimo namesto vas","dc.btn":"Vprašajte carinskega referenta",
+ "cta.title":"Vaša naslednja tura štarta v Sveti Nedelji","cta.sub":"Pošljite relacijo in ponudbo prejmete v dveh urah ob delavnikih.",
+ "ft.tag":"Mestna dostava in mednarodna špedicija iz Svete Nedelje.","ft.contact":"Kontakt","ft.country":"Hrvaška","ft.hours":"Dispečer",
+ "ft.hours.d":"0–24, 7 dni v tednu<br>Pisarna: pon–pet 7–17 h","ft.career":"Kariera · vozniki C+E","ft.privacy":"Zasebnost","ft.terms":"Splošni pogoji",
+ "ft.rights":"© 2026 Kolnik d.o.o. Vse pravice pridržane.",
+ "fab":"Hitro povpraševanje","m.title":"Hitro povpraševanje za prevoz","m.from":"Nakladanje","m.to":"Razkladanje","m.pal":"Število palet","m.kg":"Teža (kg)","m.send":"Pošlji povpraševanje",
+ "m.ok":"Povpraševanje je zabeleženo. To je demo stran, zato se nič ne pošlje.",
+ day1:"dan",dayN:"dni"
+},
+sr:{
+ "nav.services":"Usluge","nav.fleet":"Vozni park","nav.network":"Mreža","nav.process":"Kako radimo","nav.about":"Kontakt",
+ "cta.quote":"Zatražite ponudu",
+ "hero.meta":"10 km od Zagreba · petlja A3","hero.title":"Roba na putu. Na vreme.",
+ "hero.sub":"Gradska dostava i međunarodna špedicija iz Svete Nedelje kod Zagreba. Vozimo po Hrvatskoj, Sloveniji, Srbiji i još 16 zemalja Evrope.",
+ "cov.title":"Redovne linije iz Svete Nedelje · vreme tranzita",
+ "pr.title":"Kad dostava kasni, kasni ceo vaš posao",
+ "pr.1":"Kupac čeka, a niko ne zna gde je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate ceo.",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → Minhen","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, sa pauzom po propisima i GPS-om celim putem.",
+ "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Roterdam",
+ "board.title":"Pošiljke danas · primer",
+ "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za poslednji kilometar i za dve hiljade kilometara",
+ "seg.a":"Trgovina i e-commerce","seg.a.d":"Dnevne rute po Zagrebu, Velikoj Gorici, Samoboru i Zaprešiću. Hidraulična rampa, dostava na sprat i povrat ambalaže.",
+ "seg.b":"Industrija i proizvodnja","seg.b.d":"Puni šleperi ka fabrikama u Nemačkoj, Austriji i Italiji. Fiksni termini utovara i povratni teret iz EU.",
+ "fl.eyebrow":"Vozni park","fl.title":"Vozilo za svaku pošiljku",
+ "pc.eyebrow":"Kako radimo","pc.title":"Od upita do potpisanog CMR-a",
+ "dc.eyebrow":"Dokumenta i standardi","dc.title":"Papiri koje rešavamo umesto vas","dc.btn":"Pitajte carinskog referenta",
+ "cta.title":"Vaša sledeća tura kreće iz Svete Nedelje","cta.sub":"Pošaljite relaciju i dobićete ponudu za dva sata, radnim danom.",
+ "ft.tag":"Gradska dostava i međunarodna špedicija iz Svete Nedelje.","ft.contact":"Kontakt","ft.country":"Hrvatska","ft.hours":"Dispečer",
+ "ft.hours.d":"0–24, 7 dana u nedelji<br>Kancelarija: pon–pet 7–17 h","ft.career":"Karijera · vozači C+E","ft.privacy":"Privatnost","ft.terms":"Opšti uslovi",
+ "ft.rights":"© 2026 Kolnik d.o.o. Sva prava zadržana.",
+ "fab":"Brzi upit","m.title":"Brzi upit za prevoz","m.from":"Utovar","m.to":"Istovar","m.pal":"Broj paleta","m.kg":"Težina (kg)","m.send":"Pošalji upit",
+ "m.ok":"Upit je zabeležen. Ovo je demo stranica pa se ništa ne šalje.",
+ day1:"dan",dayN:"dana"
+}};
+
+// Lines from the hub: [code, {hr,sl,sr}, transit days, lon, lat]
+const CITIES = [
+ ["SI",{hr:"Ljubljana",sl:"Ljubljana",sr:"Ljubljana"},1,14.51,46.05],
+ ["RS",{hr:"Beograd",sl:"Beograd",sr:"Beograd"},1,20.46,44.82],
+ ["AT",{hr:"Beč",sl:"Dunaj",sr:"Beč"},1,16.37,48.21],
+ ["HU",{hr:"Budimpešta",sl:"Budimpešta",sr:"Budimpešta"},1,19.04,47.50],
+ ["DE",{hr:"München",sl:"München",sr:"Minhen"},1,11.58,48.14],
+ ["IT",{hr:"Milano",sl:"Milano",sr:"Milano"},2,9.19,45.46],
+ ["BA",{hr:"Sarajevo",sl:"Sarajevo",sr:"Sarajevo"},1,18.41,43.86],
+ ["SK",{hr:"Bratislava",sl:"Bratislava",sr:"Bratislava"},1,17.11,48.15],
+ ["CZ",{hr:"Prag",sl:"Praga",sr:"Prag"},2,14.42,50.08],
+ ["PL",{hr:"Varšava",sl:"Varšava",sr:"Varšava"},2,21.01,52.23],
+ ["NL",{hr:"Rotterdam",sl:"Rotterdam",sr:"Roterdam"},3,4.48,51.92],
+ ["FR",{hr:"Lyon",sl:"Lyon",sr:"Lion"},2,4.84,45.76]
+];
+const EXTRA = [["Frankfurt",8.68,50.11],["Hamburg",9.99,53.55],["Skopje",21.43,42.00],["Sofija",23.32,42.70],["Zürich",8.54,47.37]];
+const HUB = [15.78,45.80];
+
+const RUN = [
+ {p:7, t:"05:30", n:{hr:"Utovar",sl:"Nakladanje",sr:"Utovar"}, d:{hr:"Sveta Nedelja",sl:"Sveta Nedelja",sr:"Sveta Nedelja"}},
+ {p:24,t:"06:05", n:{hr:"Bregana",sl:"Obrežje",sr:"Bregana"}, d:{hr:"Schengen, bez zadržavanja",sl:"Schengen, brez zadrževanja",sr:"Šengen, bez zadržavanja"}},
+ {p:41,t:"07:40", n:{hr:"Ljubljana",sl:"Ljubljana",sr:"Ljubljana"}, d:{hr:"Obilaznica",sl:"Obvoznica",sr:"Obilaznica"}},
+ {p:58,t:"08:55", n:{hr:"Karavanke",sl:"Karavanke",sr:"Karavanke"}, d:{hr:"Tunel, AT vinjeta GO-Box",sl:"Predor, AT GO-Box",sr:"Tunel, AT GO-Box"}},
+ {p:76,t:"12:30", n:{hr:"Salzburg",sl:"Salzburg",sr:"Salcburg"}, d:{hr:"Pauza 45 min",sl:"Odmor 45 min",sr:"Pauza 45 min"}},
+ {p:93,t:"14:10", n:{hr:"Istovar",sl:"Razkladanje",sr:"Istovar"}, d:{hr:"München, rampa 7",sl:"München, rampa 7",sr:"Minhen, rampa 7"}}
+];
+
+const SERVICES = {
+ hr:[["Gradska dostava","Kamioni od 3,5 do 12 t za Zagreb i okolicu. Dostava isti dan za narudžbe do 11 sati."],
+     ["Međunarodna špedicija (FTL)","Tegljači s ceradom 13,6 m, 33 palete, do 24 t. Izravno do istovara, bez pretovara."],
+     ["Zbirni prijevoz (LTL)","Plaćate samo svoje palete i LDM. Zbirne linije svaki tjedan prema SI, AT, DE i RS."],
+     ["Carina i dokumentacija","Izvozne deklaracije, T1 tranzit i EUR.1 za Srbiju i BiH rješavamo prije utovara."]],
+ sl:[["Mestna dostava","Tovornjaki od 3,5 do 12 t za Zagreb in okolico. Dostava isti dan za naročila do 11. ure."],
+     ["Mednarodna špedicija (FTL)","Vlačilci s ponjavo 13,6 m, 33 palet, do 24 t. Neposredno do razkladanja, brez prekladanja."],
+     ["Zbirni prevoz (LTL)","Plačate le svoje palete in LDM. Zbirne linije vsak teden v SI, AT, DE in RS."],
+     ["Carina in dokumentacija","Izvozne deklaracije, tranzit T1 in EUR.1 za Srbijo in BiH uredimo pred nakladanjem."]],
+ sr:[["Gradska dostava","Kamioni od 3,5 do 12 t za Zagreb i okolinu. Dostava istog dana za porudžbine do 11 časova."],
+     ["Međunarodna špedicija (FTL)","Tegljači sa ceradom 13,6 m, 33 palete, do 24 t. Direktno do istovara, bez pretovara."],
+     ["Zbirni prevoz (LTL)","Plaćate samo svoje palete i LDM. Zbirne linije svake nedelje ka SI, AT, DE i RS."],
+     ["Carina i dokumentacija","Izvozne deklaracije, T1 tranzit i EUR.1 za Srbiju i BiH rešavamo pre utovara."]]
+};
+
+const SHIPS = [
+ {id:"KN-24817",rt:"Sveta Nedelja → München",meta:"FTL · 33 pal · ETA 14:10",st:"go",pr:62},
+ {id:"KN-24822",rt:"Sveta Nedelja → Beograd",meta:"FTL · 21 t · Batrovci",st:"wait",pr:71},
+ {id:"KN-24826",rt:"Zagreb, Dubrava · 14 stop",meta:"7,5 t · 9/14",st:"go",pr:64},
+ {id:"KN-24830",rt:"Sveta Nedelja → Ljubljana",meta:"LTL · 6 pal",st:"done",pr:100},
+ {id:"KN-24835",rt:"Sveta Nedelja → Lyon",meta:"FTL · 30 pal · rampa 3",st:"load",pr:8}
+];
+const ST = {
+ hr:{go:"Na cesti",wait:"Carina",done:"Isporučeno",load:"Utovar"},
+ sl:{go:"Na cesti",wait:"Carina",done:"Dostavljeno",load:"Nakladanje"},
+ sr:{go:"Na putu",wait:"Carina",done:"Isporučeno",load:"Utovar"}
+};
+
+const STATS = {
+ hr:[["64","","vozila u voznom parku"],["19","","zemalja s redovnim linijama"],["98,6","%","isporuka u dogovorenom terminu"],["2.400","+","paleta tjedno"],["24","/7","dispečer na telefonu"]],
+ sl:[["64","","vozil v voznem parku"],["19","","držav z rednimi linijami"],["98,6","%","dostav v dogovorjenem terminu"],["2.400","+","palet na teden"],["24","/7","dispečer na telefonu"]],
+ sr:[["64","","vozila u voznom parku"],["19","","zemalja sa redovnim linijama"],["98,6","%","isporuka u dogovorenom terminu"],["2.400","+","paleta nedeljno"],["24","/7","dispečer na telefonu"]]
+};
+
+// Side-profile silhouettes: box length, box height, cab type, axles under box
+const FLEET = [
+ {mk:()=>deliveryVan(), specs:["3,5 t","1,2 t","12 m³","4 EUR"],
+  n:{hr:"Dostavni kombi",sl:"Dostavno vozilo",sr:"Dostavni kombi"},
+  d:{hr:"Hitne gradske dostave i dijelovi za servise, isti dan.",sl:"Nujne mestne dostave in rezervni deli za servise, isti dan.",sr:"Hitne gradske dostave i delovi za servise, istog dana."}},
+ {mk:()=>rigidTruck({box:110,bh:62,lift:true,cabH:64,cabW:46}), specs:["7,5 t","3 t","18 m³","8 EUR"],
+  n:{hr:"Kamion s rampom",sl:"Tovornjak z dvižno rampo",sr:"Kamion sa rampom"},
+  d:{hr:"Trgovine bez utovarne rampe: hidraulična rampa do 1.000 kg.",sl:"Trgovine brez nakladalne rampe: hidravlična rampa do 1.000 kg.",sr:"Prodavnice bez utovarne rampe: hidraulična rampa do 1.000 kg."}},
+ {mk:()=>rigidTruck({box:150,bh:70,curtain:true}), specs:["12 t","6 t","15 EUR"],
+  n:{hr:"Kamion s ceradom",sl:"Tovornjak s ponjavo",sr:"Kamion sa ceradom"},
+  d:{hr:"Bočni i gornji utovar viličarom za građevinski materijal.",sl:"Bočno in zgornje nakladanje z viličarjem za gradbeni material.",sr:"Bočni i gornji utovar viljuškarom za građevinski materijal."}},
+ {mk:()=>rigidTruck({box:150,bh:70,reefer:true}), specs:["12 t","+2…+8 °C","ATP","14 EUR"],
+  n:{hr:"Hladnjača",sl:"Hladilnik",sr:"Hladnjača"},
+  d:{hr:"Hrana i lijekovi s ispisom temperature uz svaki CMR.",sl:"Hrana in zdravila z izpisom temperature ob vsakem CMR.",sr:"Hrana i lekovi sa ispisom temperature uz svaki CMR."}},
+ {mk:()=>tractorTrailer(), specs:["13,6 m","24 t","33 EUR","Euro 6"],
+  n:{hr:"Tegljač s ceradom",sl:"Vlačilec s ponjavo",sr:"Tegljač sa ceradom"},
+  d:{hr:"Standard za međunarodne linije prema EU, Srbiji i BiH.",sl:"Standard za mednarodne linije v EU, Srbijo in BiH.",sr:"Standard za međunarodne linije ka EU, Srbiji i BiH."}},
+ {mk:()=>tractorTrailer({mega:true}), specs:["100 m³","3 m","24 t","Euro 6"],
+  n:{hr:"Mega prikolica",sl:"Mega polpriklopnik",sr:"Mega prikolica"},
+  d:{hr:"Unutarnja visina 3 m za lagan i voluminozan teret, npr. automobilsku industriju.",sl:"Notranja višina 3 m za lahek in voluminozen tovor, npr. avtomobilsko industrijo.",sr:"Unutrašnja visina 3 m za lak i voluminozan teret, npr. automobilsku industriju."}}
+];
+
+const LBL = {
+ hr:{route:"Relacija",cargo:"Teret",price:"Cijena",slot:"Termin",veh:"Vozilo",photo:"Fotografije",pos:"Pozicija",eta:"ETA",link:"Praćenje",border:"Granica",docs:"Dokumenti",wait:"Čekanje",sign:"Potpis",pod:"POD",inv:"Račun"},
+ sl:{route:"Relacija",cargo:"Tovor",price:"Cena",slot:"Termin",veh:"Vozilo",photo:"Fotografije",pos:"Položaj",eta:"ETA",link:"Sledenje",border:"Meja",docs:"Dokumenti",wait:"Čakanje",sign:"Podpis",pod:"POD",inv:"Račun"},
+ sr:{route:"Relacija",cargo:"Teret",price:"Cena",slot:"Termin",veh:"Vozilo",photo:"Fotografije",pos:"Pozicija",eta:"ETA",link:"Praćenje",border:"Granica",docs:"Dokumenta",wait:"Čekanje",sign:"Potpis",pod:"POD",inv:"Faktura"}
+};
+const STEPS = [
+ {tab:{hr:"Upit",sl:"Povpraševanje",sr:"Upit"},
+  h:{hr:"Ponuda u dva sata",sl:"Ponudba v dveh urah",sr:"Ponuda za dva sata"},
+  p:{hr:"Pošaljete relaciju, broj paleta i težinu. Dispečer vam vraća fiksnu cijenu i termin utovara, bez skrivenih doplata za cestarine.",sl:"Pošljete relacijo, število palet in težo. Dispečer vam vrne fiksno ceno in termin nakladanja, brez skritih doplačil za cestnine.",sr:"Pošaljete relaciju, broj paleta i težinu. Dispečer vam vraća fiksnu cenu i termin utovara, bez skrivenih doplata za putarine."},
+  b:{hr:"Zatražite ponudu",sl:"Zahtevajte ponudbo",sr:"Zatražite ponudu"},
+  doc:["PONUDA 2026-1184",[["route","Sveta Nedelja → Lyon"],["cargo","22 EUR · 14,2 t · 9 LDM"],["price","1.840 € + PDV"],["slot","čet 06:00–06:30"]],null]},
+ {tab:{hr:"Utovar",sl:"Nakladanje",sr:"Utovar"},
+  h:{hr:"Utovar na minutu",sl:"Nakladanje na minuto",sr:"Utovar u minut"},
+  p:{hr:"Vozač stiže u dogovorenom prozoru od 30 minuta. Teret osiguravamo trakama i kutnicima, a fotografije utovara dobivate odmah.",sl:"Voznik pride v dogovorjenem 30-minutnem oknu. Tovor zavarujemo s pasovi in kotniki, fotografije nakladanja pa prejmete takoj.",sr:"Vozač stiže u dogovorenom prozoru od 30 minuta. Teret obezbeđujemo trakama i ugaonicima, a fotografije utovara dobijate odmah."},
+  b:{hr:"Rezervirajte termin",sl:"Rezervirajte termin",sr:"Rezervišite termin"},
+  doc:["UTOVAR · RAMPA 3",[["veh","ZG 4471-KN · 13,6 m"],["slot","06:00 → 06:12"],["cargo","22 / 22 EUR · 8 traka"],["photo","4 × JPG"]],"OK"]},
+ {tab:{hr:"Na cesti",sl:"Na cesti",sr:"Na putu"},
+  h:{hr:"Uživo na karti",sl:"V živo na zemljevidu",sr:"Uživo na mapi"},
+  p:{hr:"Svako vozilo ima GPS. Pošiljku pratite preko poveznice, a ETA se ažurira svakih pet minuta.",sl:"Vsako vozilo ima GPS. Pošiljko spremljate prek povezave, ETA pa se posodobi vsakih pet minut.",sr:"Svako vozilo ima GPS. Pošiljku pratite preko linka, a ETA se ažurira na svakih pet minuta."},
+  b:{hr:"Pratite pošiljku",sl:"Sledite pošiljki",sr:"Pratite pošiljku"},
+  doc:["KN-24835 · GPS",[["pos","A4 · Brescia, 87 km/h"],["eta","19:40 (+0 min)"],["link","kolnik.hr/t/24835"]],null]},
+ {tab:{hr:"Granica",sl:"Meja",sr:"Granica"},
+  h:{hr:"Granica bez čekanja na papire",sl:"Meja brez čakanja na papirje",sr:"Granica bez čekanja na papire"},
+  p:{hr:"Za Srbiju, BiH i Švicarsku carinske papire pripremamo dan ranije. Vozač na Bajakovu ne čeka na dokumente.",sl:"Za Srbijo, BiH in Švico carinske dokumente pripravimo dan prej. Voznik na Bajakovem ne čaka na dokumente.",sr:"Za Srbiju, BiH i Švajcarsku carinske papire pripremamo dan ranije. Vozač na Batrovcima ne čeka na dokumenta."},
+  b:{hr:"Carinske usluge",sl:"Carinske storitve",sr:"Carinske usluge"},
+  doc:["HR → RS · NCTS",[["border","Bajakovo / Batrovci"],["docs","EX-A · T1 · EUR.1 · CMR"],["wait","35 min"]],"T1 OK"]},
+ {tab:{hr:"Istovar",sl:"Razkladanje",sr:"Istovar"},
+  h:{hr:"Dokaz o isporuci isti sat",sl:"Dokazilo o dostavi v eni uri",sr:"Dokaz o isporuci za sat vremena"},
+  p:{hr:"Potpisani CMR i fotografija istovara stižu vam e-mailom u roku od sat vremena. Račun ide isti dan.",sl:"Podpisan CMR in fotografija razkladanja prispeta po e-pošti v eni uri. Račun pride isti dan.",sr:"Potpisani CMR i fotografija istovara stižu vam mejlom u roku od sat vremena. Faktura ide istog dana."},
+  b:{hr:"Kontaktirajte nas",sl:"Kontaktirajte nas",sr:"Kontaktirajte nas"},
+  doc:["CMR 0047712",[["sign","M. Weber, 14:16"],["pod","PDF · 2 str."],["inv","R-2026-3391"]],"POD"]}
+];
+
+const DOCS = [
+ ["CMR",{hr:"Međunarodni tovarni list",sl:"Mednarodni tovorni list",sr:"Međunarodni tovarni list"}],
+ ["e-CMR",{hr:"Digitalni tovarni list",sl:"Digitalni tovorni list",sr:"Digitalni tovarni list"}],
+ ["T1 / T2",{hr:"Tranzit kroz NCTS",sl:"Tranzit prek NCTS",sr:"Tranzit kroz NCTS"}],
+ ["EUR.1",{hr:"Povlašteno podrijetlo za RS i BiH",sl:"Preferencialno poreklo za RS in BiH",sr:"Povlašćeno poreklo za RS i BiH"}],
+ ["EX-A",{hr:"Izvozna carinska deklaracija",sl:"Izvozna carinska deklaracija",sr:"Izvozna carinska deklaracija"}],
+ ["ADR",{hr:"Opasne tvari, vozači s certifikatom",sl:"Nevarno blago, vozniki s certifikatom",sr:"Opasne materije, vozači sa sertifikatom"}],
+ ["ATP",{hr:"Hladni lanac za hranu",sl:"Hladna veriga za hrano",sr:"Hladni lanac za hranu"}],
+ ["CMR+",{hr:"Osiguranje tereta do 400.000 €",sl:"Zavarovanje tovora do 400.000 €",sr:"Osiguranje tereta do 400.000 €"}],
+ ["Euro 6",{hr:"Svi tegljači mlađi od 5 godina",sl:"Vsi vlačilci mlajši od 5 let",sr:"Svi tegljači mlađi od 5 godina"}]
+];
+
+let LANG = "hr";
+try{ const s = localStorage.getItem("kolnik-lang"); if(I18N[s]) LANG = s; }catch(e){}
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Aerial yard (segments) ---------- */
+function drawAerial(mode){
+  const s = [];
+  s.push(`<rect width="600" height="400" fill="#454C5C"/>`);
+  // building with solar roof
+  s.push(`<rect x="0" y="250" width="600" height="150" fill="#C9CFD8"/>`);
+  for(let x=14; x<590; x+=26) for(let y=266; y<392; y+=20) if((x*7+y)%9!==0) s.push(`<rect x="${x}" y="${y}" width="22" height="16" fill="#25335C"/>`);
+  // dock doors
+  for(let x=20; x<590; x+=38) s.push(`<rect x="${x}" y="244" width="26" height="6" fill="#FFB21C"/>`);
+  // lane markings
+  s.push(`<rect x="0" y="78" width="600" height="3" fill="#E9EEF8" opacity=".75"/>`);
+  for(let x=0; x<600; x+=40) s.push(`<rect x="${x}" y="36" width="22" height="3" fill="#E9EEF8" opacity=".6"/>`);
+  if(mode===1){
+    // semi-trailers backed into docks
+    [0,1,2,4,5,7,8,9,11,12,14].forEach(i=>{
+      const x=20+i*38, len=150;
+      s.push(`<rect x="${x}" y="${244-len}" width="26" height="${len}" fill="#F1F3F7"/>`);
+      for(let y=244-len+8; y<240; y+=12) s.push(`<rect x="${x+2}" y="${y}" width="22" height="1" fill="#C9CFD8"/>`);
+      if(i%3===0) s.push(`<rect x="${x+1}" y="${244-len-20}" width="24" height="18" fill="${i%2?'#3D63FF':'#0D1830'}"/>`);
+    });
+    s.push(`<rect x="210" y="8" width="160" height="24" fill="#F1F3F7"/><rect x="370" y="9" width="20" height="22" fill="#FFB21C"/>`);
+  } else {
+    // vans and rigid trucks at the city depot
+    [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14].forEach(i=>{
+      const x=20+i*38, len = i%4===0 ? 92 : 56;
+      if(i===6||i===10) return;
+      s.push(`<rect x="${x}" y="${244-len}" width="26" height="${len}" fill="#F1F3F7"/>`);
+      s.push(`<rect x="${x+2}" y="${244-len-14}" width="22" height="14" fill="${i%4===0?'#0D1830':'#FFB21C'}"/>`);
+    });
+    for(let i=0;i<4;i++) s.push(`<rect x="${60+i*130}" y="12" width="60" height="22" fill="#F1F3F7"/><rect x="${120+i*130}" y="13" width="12" height="20" fill="#FFB21C"/>`);
+  }
+  $("#aerial").innerHTML = s.join("");
+}
+
+/* ---------- Vehicles: side views, facing right ---------- */
+const VC = {ink:"#0D1830", cab:"#FFB21C", cabDk:"#E09400", body:"#F3F5F8", bodyDk:"#D5DBE4", glass:"#2A3A5E", glassHi:"#4F648F", tire:"#1A1F2B", rim:"#B9C1CD", chrome:"#8E99AB", light:"#FFF4C2", red:"#D9412B"};
+function vWheel(x, gy, r){
+  const cy = gy - r;
+  let s = `<circle cx="${x}" cy="${cy}" r="${r}" fill="${VC.tire}"/><circle cx="${x}" cy="${cy}" r="${r*0.62}" fill="${VC.rim}"/><circle cx="${x}" cy="${cy}" r="${r*0.5}" fill="none" stroke="${VC.chrome}" stroke-width="0.8"/><circle cx="${x}" cy="${cy}" r="${r*0.2}" fill="${VC.chrome}"/>`;
+  for(let i=0;i<8;i++){ const a=i*Math.PI/4; s += `<circle cx="${(x+Math.cos(a)*r*0.36).toFixed(2)}" cy="${(cy+Math.sin(a)*r*0.36).toFixed(2)}" r="${(r*0.06).toFixed(2)}" fill="${VC.ink}"/>`; }
+  return `<g class="wh">${s}</g>`;
+}
+const vGuard = (x, gy, r) => `<path d="M${x-r-3} ${gy-r} A${r+3} ${r+3} 0 0 1 ${x+r+3} ${gy-r}" fill="none" stroke="${VC.ink}" stroke-width="3"/>`;
+function vCab(x0, gy, {h=86, w=58, r=14} = {}){
+  const top = gy - r - 14 - h, bot = gy - r - 6, fx = x0 + w;
+  const wy = top + 10, wh = h*0.34, dx = x0 + w*0.38;
+  let s = `<rect x="${x0-2}" y="${bot-6}" width="${w+2}" height="10" fill="${VC.ink}"/>`;
+  s += `<path d="M${x0} ${bot} L${x0} ${top+10} Q${x0} ${top} ${x0+10} ${top} L${fx-8} ${top} Q${fx-2} ${top} ${fx-1} ${top+8} L${fx+1} ${bot-6} Q${fx+1} ${bot} ${fx-4} ${bot} Z" fill="${VC.cab}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<path d="M${x0+4} ${top+1} L${x0+10} ${top-12} Q${x0+12} ${top-15} ${x0+18} ${top-15} L${fx-14} ${top-13} Q${fx-8} ${top-12} ${fx-7} ${top+1} Z" fill="${VC.cabDk}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<path d="M${x0+w*0.42} ${wy+wh} L${x0+w*0.42} ${wy+4} Q${x0+w*0.42} ${wy} ${x0+w*0.48} ${wy} L${fx-6} ${wy} L${fx-4} ${wy+wh} Z" fill="${VC.glass}"/>`;
+  s += `<path d="M${x0+w*0.55} ${wy+2} L${fx-10} ${wy+2} L${x0+w*0.62} ${wy+wh-3} Z" fill="${VC.glassHi}" opacity=".55"/>`;
+  s += `<rect x="${fx-3}" y="${wy}" width="3" height="${wh}" fill="${VC.glass}"/>`;
+  s += `<path d="M${dx} ${wy-2} L${dx} ${bot-8} L${fx-3} ${bot-8}" fill="none" stroke="${VC.ink}" stroke-width="0.9" opacity=".6"/>`;
+  s += `<rect x="${dx+4}" y="${wy+wh+8}" width="8" height="2.4" rx="1" fill="${VC.ink}"/>`;
+  s += `<path d="M${fx} ${wy+4} L${fx+7} ${wy+6}" stroke="${VC.ink}" stroke-width="1.5"/><rect x="${fx+5}" y="${wy+2}" width="4" height="${wh*0.75}" rx="1.5" fill="${VC.ink}"/>`;
+  s += `<rect x="${dx+2}" y="${bot-4}" width="16" height="3" fill="${VC.chrome}"/><rect x="${dx+2}" y="${bot+3}" width="16" height="3" fill="${VC.chrome}"/>`;
+  s += `<rect x="${fx-14}" y="${bot-10}" width="16" height="12" rx="2" fill="${VC.ink}"/><rect x="${fx-4}" y="${bot-8}" width="5" height="5" rx="1" fill="${VC.light}"/>`;
+  for(let i=0;i<3;i++) s += `<rect x="${x0+4}" y="${wy+wh+6+i*5}" width="${w*0.26}" height="2" fill="${VC.cabDk}"/>`;
+  return s;
+}
+function vLabel(x, y, size){ return `<text x="${x}" y="${y}" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-weight="700" font-size="${size}" letter-spacing="${-size*0.04}" fill="${VC.ink}">Kolnik</text>`; }
+function tractorTrailer({mega=false, beam=false} = {}){
+  const r = 14, gy = 130, L = 300, th = mega ? 96 : 86, cabX = L - 4;
+  const tTop = gy - r - 16 - th, tBot = gy - r - 14;
+  let s = '';
+  if(beam) s += `<defs><linearGradient id="beam" x1="0" x2="1"><stop offset="0" stop-color="#FFE7A6" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7A6" stop-opacity="0"/></linearGradient></defs><path d="M${cabX+60} ${gy-30} L${cabX+260} ${gy-52} L${cabX+260} ${gy+4} Z" fill="url(#beam)"/>`;
+  s += `<rect x="4" y="${tBot}" width="${L-8}" height="7" fill="${VC.ink}"/>`;
+  s += `<rect x="120" y="${tBot+10}" width="${L-230}" height="2.5" fill="${VC.chrome}"/><rect x="120" y="${tBot+16}" width="${L-230}" height="2.5" fill="${VC.chrome}"/>`;
+  s += `<rect x="${L-90}" y="${tBot+6}" width="3" height="${gy-tBot-10}" fill="${VC.ink}"/><rect x="${L-94}" y="${gy-5}" width="11" height="3" fill="${VC.ink}"/>`;
+  s += `<rect x="0" y="${tTop}" width="${L}" height="${th}" fill="${VC.body}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<rect x="0" y="${tTop}" width="${L}" height="6" fill="${VC.bodyDk}"/><rect x="0" y="${tTop+th-6}" width="${L}" height="6" fill="${VC.bodyDk}"/>`;
+  for(let x=12; x<L; x+=12) s += `<line x1="${x}" y1="${tTop+6}" x2="${x}" y2="${tTop+th-6}" stroke="${VC.bodyDk}" stroke-width="0.8"/>`;
+  s += `<rect x="0" y="${tTop+th-22}" width="${L}" height="6" fill="${VC.cab}"/>`;
+  s += vLabel(L*0.5, tTop+th*0.52, th*0.3);
+  s += `<rect x="-2" y="${tBot+2}" width="5" height="6" fill="${VC.red}"/>`;
+  [40, 70, 100].forEach(x=>{ s += vGuard(x, gy, r); });
+  s += `<rect x="${cabX-58}" y="${tBot+2}" width="130" height="8" fill="${VC.ink}"/>`;
+  s += `<rect x="${cabX+2}" y="${tBot+10}" width="30" height="12" rx="5" fill="${VC.chrome}" stroke="${VC.ink}" stroke-width="0.8"/>`;
+  s += vCab(cabX, gy, {h:86, w:62, r});
+  [cabX-34, cabX-8].forEach(x=>{ s += vGuard(x, gy, r); });
+  [40,70,100,cabX-34,cabX-8,cabX+48].forEach(x=> s += vWheel(x, gy, r));
+  return {svg:s, w:cabX+72+8, h:gy+2, x:-6, y:tTop-20};
+}
+function rigidTruck({box=150, bh=72, reefer=false, lift=false, curtain=false, cabH=72, cabW=50} = {}){
+  const r = 12, gy = 120, bTop = gy - r - 14 - bh, bBot = gy - r - 12, cabX = box + 6;
+  let s = `<rect x="4" y="${bBot}" width="${box+cabW}" height="6" fill="${VC.ink}"/>`;
+  s += `<rect x="0" y="${bTop}" width="${box}" height="${bh}" fill="${VC.body}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  if(curtain){ for(let x=10;x<box;x+=10) s+=`<line x1="${x}" y1="${bTop+5}" x2="${x}" y2="${bBot-5}" stroke="${VC.bodyDk}" stroke-width="0.8"/>`; s+=`<rect x="0" y="${bTop}" width="${box}" height="5" fill="${VC.bodyDk}"/>`; }
+  else { for(let x=box/4;x<box-2;x+=box/4) s+=`<line x1="${x}" y1="${bTop+2}" x2="${x}" y2="${bBot-2}" stroke="${VC.bodyDk}" stroke-width="1"/>`; }
+  s += `<rect x="0" y="${bBot-16}" width="${box}" height="5" fill="${VC.cab}"/>`;
+  s += vLabel(box*0.5, bTop+bh*0.5, Math.min(bh*0.28, box*0.16));
+  if(reefer){ s += `<rect x="${box-26}" y="${bTop-2}" width="24" height="${bh*0.45}" rx="2" fill="${VC.bodyDk}" stroke="${VC.ink}" stroke-width="1"/>`; for(let i=0;i<4;i++) s+=`<rect x="${box-22}" y="${bTop+4+i*5}" width="16" height="2" fill="${VC.chrome}"/>`; }
+  if(lift) s += `<rect x="-6" y="${bTop+8}" width="5" height="${bh-6}" fill="${VC.chrome}" stroke="${VC.ink}" stroke-width="0.8"/>`;
+  s += `<rect x="-2" y="${bBot+1}" width="4" height="5" fill="${VC.red}"/>`;
+  s += `<rect x="${box*0.3}" y="${bBot+8}" width="${box*0.38}" height="2.5" fill="${VC.chrome}"/>`;
+  s += `<rect x="${cabX+4}" y="${bBot+6}" width="22" height="10" rx="4" fill="${VC.chrome}" stroke="${VC.ink}" stroke-width="0.8"/>`;
+  s += vCab(cabX, gy, {h:cabH, w:cabW, r});
+  const rearX = box*0.72, frontX = cabX+cabW-14;
+  s += vGuard(rearX, gy, r) + vGuard(frontX, gy, r) + vWheel(rearX, gy, r) + vWheel(frontX, gy, r);
+  return {svg:s, w:cabX+cabW+12, h:gy+2, x:-8, y:bTop-20};
+}
+function deliveryVan(){
+  const r = 11, gy = 100, top = 26, bot = gy - r - 4;
+  let s = `<path d="M4 ${bot} L4 ${top+8} Q4 ${top} 12 ${top} L132 ${top} Q140 ${top} 144 ${top+10} L160 ${top+34} Q172 ${top+38} 176 ${top+46} L178 ${bot-6} Q178 ${bot} 172 ${bot} Z" fill="${VC.body}" stroke="${VC.ink}" stroke-width="1.2"/>`;
+  s += `<path d="M136 ${top+6} L156 ${top+34} L138 ${top+34} Z" fill="${VC.glass}"/><path d="M112 ${top+8} L132 ${top+8} L134 ${top+34} L112 ${top+34} Z" fill="${VC.glass}"/><path d="M116 ${top+10} L128 ${top+10} L118 ${top+30} Z" fill="${VC.glassHi}" opacity=".5"/>`;
+  s += `<path d="M108 ${top+6} L108 ${bot-4} M84 ${top+6} L84 ${bot-4}" stroke="${VC.ink}" stroke-width=".9" opacity=".55"/><rect x="96" y="${top+40}" width="8" height="2.2" rx="1" fill="${VC.ink}"/>`;
+  s += `<rect x="4" y="${bot-20}" width="174" height="5" fill="${VC.cab}"/>` + vLabel(46, top+30, 17);
+  s += `<rect x="170" y="${top+42}" width="7" height="5" rx="1" fill="${VC.light}"/><rect x="160" y="${bot-6}" width="20" height="7" rx="2" fill="${VC.ink}"/><rect x="2" y="${bot-6}" width="12" height="7" fill="${VC.ink}"/><rect x="2" y="${top+30}" width="3" height="8" fill="${VC.red}"/><rect x="150" y="${top+24}" width="4" height="10" rx="1.5" fill="${VC.ink}"/>`;
+  s += `<path d="M18 ${bot} A${r+3} ${r+3} 0 0 1 48 ${bot}" fill="${VC.ink}"/><path d="M134 ${bot} A${r+3} ${r+3} 0 0 1 164 ${bot}" fill="${VC.ink}"/>`;
+  s += vWheel(33, gy, r) + vWheel(149, gy, r);
+  return {svg:s, w:184, h:gy+2, x:-2, y:top-4};
+}
+function vehicleSVG(v){
+  return `<svg viewBox="${v.x} ${v.y} ${v.w - v.x} ${v.h - v.y + 2}" aria-hidden="true"><ellipse cx="${(v.w+v.x)/2}" cy="${v.h-1}" rx="${(v.w-v.x)/2}" ry="2.5" fill="${VC.ink}" opacity=".18"/>${v.svg}</svg>`;
+}
+
+/* ---------- Hero scene: three looping parallax layers, period 2000px ---------- */
+function rng(seed){ return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function buildScene(){
+  const P = 2000, H = 380, TAU = Math.PI*2;
+  const wrapSVG = inner => `<svg viewBox="0 0 4000 ${H}" preserveAspectRatio="xMinYMax slice">${inner}</svg>`;
+  const both = (fn) => fn(0) + fn(P);
+  const prof = (f) => { let d = `M0 ${H}`; for(let x=0; x<=4000; x+=16) d += ` L${x} ${f(x).toFixed(1)}`; return d + ` L4000 ${H} Z`; };
+  // far: mountains of Samoborsko gorje with village lights
+  const mtn = x => { const t = x/P*TAU; return 205 - 44*Math.sin(t*2+1) - 24*Math.sin(t*5+.3) - 10*Math.sin(t*13+2); };
+  let r = rng(11), lights = [];
+  for(let i=0;i<34;i++){ const x = r()*P, y = mtn(x) + 18 + r()*50; lights.push([x,y,0.6+r()*0.9]); }
+  const far = `<path d="${prof(mtn)}" fill="#192A55"/>` + both(o => lights.map(([x,y,s])=>`<circle cx="${(x+o).toFixed(1)}" cy="${y.toFixed(1)}" r="${s.toFixed(2)}" fill="#FFD27A" opacity=".7"/>`).join(""));
+  // mid: forested hills
+  const hill = x => { const t = x/P*TAU; return 286 - 16*Math.sin(t*3) - 9*Math.sin(t*8+1); };
+  r = rng(5); let trees = "";
+  for(let x=4; x<P; x+= 7 + r()*16){
+    const h = 14 + r()*24, w = h*0.42, y = hill(x) + 6;
+    for(const o of [0,P]) trees += `M${(x+o).toFixed(1)} ${(y-h).toFixed(1)} L${(x+o+w).toFixed(1)} ${y.toFixed(1)} L${(x+o-w).toFixed(1)} ${y.toFixed(1)} Z`;
+  }
+  const mid = `<path d="${prof(hill)}" fill="#111E3D"/><path d="${trees}" fill="#111E3D"/>`;
+  // near: lamp posts, guardrail, asphalt and lane dashes
+  let near = `<defs><radialGradient id="glow"><stop offset="0" stop-color="#FFC95A" stop-opacity=".55"/><stop offset="1" stop-color="#FFC95A" stop-opacity="0"/></radialGradient></defs>`;
+  near += `<rect x="0" y="322" width="4000" height="${H-322}" fill="#0A1226"/><rect x="0" y="328" width="4000" height="2" fill="#E9EEF8" opacity=".35"/>`;
+  for(let x=0; x<4000; x+=400){ near += `<rect x="${x}" y="130" width="4" height="194" fill="#0A1328"/><path d="M${x+2} 132 Q${x+6} 122 ${x+30} 124" fill="none" stroke="#0A1328" stroke-width="3"/><rect x="${x+24}" y="122" width="18" height="5" rx="2" fill="#FFE7A6"/><ellipse cx="${x+33}" cy="140" rx="60" ry="40" fill="url(#glow)"/><ellipse cx="${x+33}" cy="345" rx="90" ry="14" fill="url(#glow)" opacity=".6"/>`; }
+  for(let x=0; x<4000; x+=40) near += `<rect x="${x}" y="306" width="3" height="18" fill="#2C3D69"/>`;
+  near += `<rect x="0" y="306" width="4000" height="5" fill="#3A4D7A"/>`;
+  for(let x=0; x<4000; x+=80) near += `<rect x="${x}" y="356" width="40" height="3" fill="#E9EEF8" opacity=".75"/>`;
+  const L = document.querySelectorAll("#scene .layer");
+  L[0].innerHTML = wrapSVG(far); L[1].innerHTML = wrapSVG(mid); L[2].innerHTML = wrapSVG(near);
+  $("#heroTruck").innerHTML = vehicleSVG(tractorTrailer({beam:true}));
+}
+
+/* ---------- Motion (GSAP: ScrollTrigger, SplitText, DrawSVG, MotionPath) ---------- */
+const HAS_GSAP = !!(window.gsap && window.ScrollTrigger && window.SplitText && window.DrawSVGPlugin && window.MotionPathPlugin);
+if(HAS_GSAP) gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, MotionPathPlugin);
+const MOTION = () => HAS_GSAP && !matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let flowTL = null, flowSplits = [];
+function buildFlow(){
+  if(flowTL){ flowTL.scrollTrigger && flowTL.scrollTrigger.kill(); flowTL.kill(); flowTL = null; }
+  flowSplits.forEach(s=>s.revert()); flowSplits = [];
+  const flow = $("#flow"), svg = $("#wires");
+  const W = flow.clientWidth, H = flow.clientHeight, fr = flow.getBoundingClientRect();
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const r = rng(3), n = Math.max(14, Math.floor(W/34)), bw = Math.max(10, Math.min(18, W/n*0.5));
+  const hiIdx = [Math.round(n*.18), Math.round(n*.57), Math.round(n*.82)];
+  let bars = "", hi = [];
+  for(let i=0;i<n;i++){
+    const x = (i+.5)*W/n + (r()-.5)*10, h = 70 + r()*90, y = 30 + r()*(190-h);
+    if(r() < .35 && !hiIdx.includes(i)) bars += `<rect class="bar-r" x="${(x-bw/2+bw*.6).toFixed(1)}" y="${(y-24+r()*48).toFixed(1)}" width="${bw}" height="${(h*.9).toFixed(1)}"/>`;
+    if(hiIdx.includes(i)) hi.push({x, y, h, k: hiIdx.indexOf(i)});
+    bars += `<rect class="bar-r${hiIdx.includes(i)?' hb':''}" data-k="${hiIdx.indexOf(i)}" x="${(x-bw/2).toFixed(1)}" y="${y.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}"/>`;
+  }
+  const pains = [...flow.querySelectorAll(".pain-t")];
+  let wires = "", pallets = "";
+  hi.sort((a,b)=>a.k-b.k).forEach((b,i)=>{
+    const pr = pains[i].getBoundingClientRect();
+    const tx = W/2 + (i-1)*Math.min(60, W*.08), ty = pr.top - fr.top - 10, by = b.y + b.h;
+    const exitX = i % 2 ? W + 20 : -20, bot = pr.bottom - fr.top + 10;
+    wires += `<path class="wire wa" d="M${b.x.toFixed(1)} ${by.toFixed(1)} C${b.x.toFixed(1)} ${(by+(ty-by)*.6).toFixed(1)} ${tx.toFixed(1)} ${(ty-(ty-by)*.45).toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)}"/>`;
+    wires += `<path class="wire wb" d="M${tx.toFixed(1)} ${bot.toFixed(1)} C${tx.toFixed(1)} ${(bot+90).toFixed(1)} ${(exitX*.5+tx*.5).toFixed(1)} ${(bot+60).toFixed(1)} ${exitX} ${(bot+110).toFixed(1)}"/>`;
+    pallets += `<rect class="pallet" x="${(-bw/2).toFixed(1)}" y="${(-b.h/2).toFixed(1)}" width="${bw}" height="${b.h.toFixed(1)}" opacity="0"/>`;
+  });
+  svg.innerHTML = bars + wires + pallets;
+  if(!MOTION()) return;
+
+  const wa = svg.querySelectorAll(".wa"), wb = svg.querySelectorAll(".wb"), pal = svg.querySelectorAll(".pallet");
+  const hb = [0,1,2].map(k => svg.querySelector(`.hb[data-k="${k}"]`));
+  flowSplits = pains.map(p => SplitText.create(p, {type:"words"}));
+  flowTL = gsap.timeline({scrollTrigger:{trigger:flow, start:"top 78%", end:"bottom 70%", scrub:.8}});
+  flowTL.set([...wa, ...wb], {drawSVG:"0%"}, 0);
+  flowSplits.forEach(s => flowTL.set(s.words, {opacity:.18}, 0));
+  flowTL.to(hb, {fill:"#FFB21C", stroke:"#C98A00", stagger:.15, duration:.4}, .05);
+  hb.forEach((bar,i)=>{
+    flowTL.set(pal[i], {opacity:1}, ">")
+      .set(bar, {opacity:.25}, "<")
+      .to(wa[i], {drawSVG:"100%", duration:1, ease:"none"}, "<")
+      .to(pal[i], {motionPath:{path:wa[i], align:wa[i], alignOrigin:[.5,.5], autoRotate:-90}, duration:1, ease:"none"}, "<")
+      .to(pal[i], {opacity:0, duration:.15})
+      .to(flowSplits[i].words, {opacity:1, stagger:.05, duration:.3}, "<")
+      .to(wb[i], {drawSVG:"100%", duration:.6, ease:"none"});
+  });
+}
+
+let runTL = null;
+function buildRun(){
+  if(runTL){ runTL.kill(); runTL = null; }
+  const track = $("#vtrack"), truck = $("#vtruck"), fill = $("#vfill");
+  const stops = [...track.querySelectorAll(".vstop")];
+  const H = track.clientHeight, len = truck.getBoundingClientRect().height || 120;
+  if(!MOTION()){ gsap?.set?.(truck, {y: H*.55}); truck.style.transform = `translateY(${H*.55}px)`; stops.slice(0,4).forEach(s=>s.classList.add("passed")); fill.style.height = (H*.55)+"px"; return; }
+  const D = 14;
+  runTL = gsap.timeline({repeat:-1, repeatDelay:.5,
+    onUpdate(){ const front = gsap.getProperty(truck,"y") + len; stops.forEach((s,i)=>s.classList.toggle("passed", front >= RUN[i].p/100*H)); }});
+  runTL.fromTo(truck, {y:-len, opacity:0}, {y:H - len*.15, duration:D, ease:"none"}, 0)
+       .to(truck, {opacity:1, duration:.5}, 0)
+       .fromTo(fill, {height:0}, {height:H, duration:D, ease:"none"}, 0)
+       .to(truck, {opacity:0, duration:.5}, D - .5);
+}
+
+function introMotion(){
+  if(!MOTION()) return;
+  const split = SplitText.create("#heroTitle", {type:"lines", mask:"lines"});
+  gsap.timeline({defaults:{ease:"expo.out"}})
+    .from(split.lines, {yPercent:110, duration:1.1, stagger:.12, onComplete:()=>split.revert()})
+    .from(".hero-meta span", {opacity:0, y:10, stagger:.08, duration:.6}, .1)
+    .from(".hero-row > *", {opacity:0, y:16, stagger:.1, duration:.8}, .35)
+    .from("#heroTruck", {xPercent:-60, opacity:0, duration:1.6, ease:"power3.out"}, .2);
+  gsap.utils.toArray(".sec-head, .band > .wrap > .eyebrow, .run-copy, .docs-grid .left, .cta .wrap > div").forEach(el=>{
+    gsap.from(el, {opacity:0, y:36, duration:.9, ease:"power3.out", scrollTrigger:{trigger:el, start:"top 88%", once:true}});
+  });
+  gsap.from("#cells .cell", {opacity:0, y:14, stagger:.04, duration:.5, scrollTrigger:{trigger:"#cells", start:"top 92%", once:true}});
+  gsap.from("#dcells .dcell", {opacity:0, scale:.96, stagger:.06, duration:.5, scrollTrigger:{trigger:"#dcells", start:"top 85%", once:true}});
+  gsap.from("#rail .vcard .sil svg", {x:-80, opacity:0, stagger:.12, duration:1.2, ease:"power3.out", scrollTrigger:{trigger:"#rail", start:"top 85%", once:true}});
+  gsap.from(".board .ship", {opacity:0, y:16, stagger:.08, duration:.6, scrollTrigger:{trigger:".board", start:"top 80%", once:true}});
+  ScrollTrigger.create({trigger:"#stats", start:"top 85%", once:true, onEnter(){
+    document.querySelectorAll("#stats .v").forEach(v=>{
+      const node = v.firstChild, txt = node.textContent, target = +txt.replace(/\./g,"").replace(",", ".");
+      const dec = txt.includes(",") ? 1 : 0, o = {n:0};
+      gsap.to(o, {n:target, duration:1.6, ease:"power2.out", onUpdate(){
+        node.textContent = dec ? o.n.toFixed(1).replace(".", ",") : Math.round(o.n).toLocaleString("de-DE");
+      }});
+    });
+  }});
+}
+
+function rebuildMotion(){ buildFlow(); buildRun(); if(HAS_GSAP) ScrollTrigger.refresh(); }
+let rsT; let lastW = innerWidth;
+addEventListener("resize", ()=>{ if(innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rsT); rsT = setTimeout(rebuildMotion, 200); });
+
+/* ---------- Render all language-dependent parts ---------- */
+let svcOn = 1, segOn = 0, stepOn = 0;
+
+function render(){
+  const T = I18N[LANG];
+  document.documentElement.lang = LANG === "sr" ? "sr-Latn" : LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=T[el.dataset.i18n]; if(v!=null) el.innerHTML=v; });
+  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===LANG)));
+
+  $("#cells").innerHTML = CITIES.map(c=>`<div class="cell"><span class="cc">${c[0]}</span><span class="city-n">${esc(c[1][LANG])}</span><span class="days">${c[2]===3?'2–3':c[2]} ${c[2]===1?T.day1:T.dayN}</span></div>`).join("");
+
+  const track = $("#vtrack");
+  track.querySelectorAll(".vstop").forEach(n=>n.remove());
+  RUN.forEach(s=>{
+    const d=document.createElement("div"); d.className="vstop"; d.style.top=s.p+"%";
+    d.innerHTML=`<span class="tick"></span><span class="t">${s.t}</span><span><span class="n">${esc(s.n[LANG])}</span><span class="d">${esc(s.d[LANG])}</span></span>`;
+    track.appendChild(d);
+  });
+
+  $("#svcList").innerHTML = SERVICES[LANG].map((s,i)=>`<li class="svc-item${i===svcOn?' on':''}"><button type="button" data-svc="${i}" aria-expanded="${i===svcOn}"><span class="tt">${esc(s[0])}</span><span class="dd">${esc(s[1])}</span></button></li>`).join("");
+
+  $("#ships").innerHTML = SHIPS.map(s=>`<div class="ship"><span class="id">${s.id}</span><span class="rt">${esc(s.rt)}</span><span class="pill ${s.st}">${ST[LANG][s.st]}</span><span class="meta" style="grid-column:2">${esc(s.meta)}</span><span></span><span class="bar"><i style="width:${s.pr}%"></i></span></div>`).join("");
+
+  $("#stats").innerHTML = STATS[LANG].map(s=>`<div class="stat"><span class="v">${s[0]}<small>${s[1]}</small></span><span class="l">${esc(s[2])}</span></div>`).join("");
+
+  $("#rail").innerHTML = FLEET.map(v=>`<article class="vcard"><div class="sil">${vehicleSVG(v.mk())}</div><h3>${esc(v.n[LANG])}</h3><div class="specs">${v.specs.map(x=>`<span>${esc(x)}</span>`).join("")}</div><p>${esc(v.d[LANG])}</p></article>`).join("");
+
+  $("#stepTabs").innerHTML = STEPS.map((s,i)=>`<button type="button" role="tab" aria-selected="${i===stepOn}" data-step="${i}"><span>${esc(s.tab[LANG])}</span><span class="num">0${i+1}</span></button>`).join("");
+  renderStep();
+
+  $("#dcells").innerHTML = DOCS.map((d,i)=>`<div class="dcell${i===2||i===3?' hl':''}"><span class="code">${esc(d[0])}</span><span class="what">${esc(d[1][LANG])}</span></div>`).join("");
+
+}
+
+function renderStep(){
+  const s = STEPS[stepOn], L = LBL[LANG];
+  $("#stepH").textContent = s.h[LANG];
+  $("#stepP").textContent = s.p[LANG];
+  $("#stepB").textContent = s.b[LANG];
+  const [head, rows, stamp] = s.doc;
+  $("#stepDoc").innerHTML = `<div class="doc-head"><span>${esc(head)}</span><b>KOLNIK</b></div><dl style="margin:0">${rows.map(([k,v])=>`<div class="doc-row"><dt>${L[k]}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>${stamp?`<span class="stamp">${stamp}</span>`:""}`;
+}
+
+/* ---------- Events ---------- */
+document.querySelector(".lang").addEventListener("click", e=>{
+  const b = e.target.closest("button[data-lang]"); if(!b) return;
+  LANG = b.dataset.lang;
+  try{ localStorage.setItem("kolnik-lang", LANG); }catch(err){}
+  render();
+  rebuildMotion();
+});
+$("#svcList").addEventListener("click", e=>{
+  const b = e.target.closest("[data-svc]"); if(!b) return;
+  svcOn = +b.dataset.svc;
+  document.querySelectorAll(".svc-item").forEach((li,i)=>{ li.classList.toggle("on", i===svcOn); li.firstElementChild.setAttribute("aria-expanded", String(i===svcOn)); });
+});
+document.querySelector(".seg-tabs").addEventListener("click", e=>{
+  const b = e.target.closest("[data-seg]"); if(!b) return;
+  segOn = +b.dataset.seg;
+  document.querySelectorAll(".seg-tab").forEach((t,i)=>t.setAttribute("aria-selected", String(i===segOn)));
+  drawAerial(segOn);
+});
+$("#stepTabs").addEventListener("click", e=>{
+  const b = e.target.closest("[data-step]"); if(!b) return;
+  stepOn = +b.dataset.step;
+  document.querySelectorAll("#stepTabs button").forEach((t,i)=>t.setAttribute("aria-selected", String(i===stepOn)));
+  renderStep();
+});
+const rail = $("#rail");
+const step = () => (rail.firstElementChild?.getBoundingClientRect().width || 300);
+$("#prev").addEventListener("click", ()=>rail.scrollBy({left:-step(), behavior:"smooth"}));
+$("#next").addEventListener("click", ()=>rail.scrollBy({left: step(), behavior:"smooth"}));
+
+const modal = $("#modal");
+document.addEventListener("click", e=>{
+  if(e.target.closest(".js-quote")){ modal.hidden=false; $("#qnote").hidden=true; setTimeout(()=>$("#q-to").focus(),30); }
+  if(e.target===modal || e.target.closest("#mClose")) modal.hidden=true;
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") modal.hidden=true; });
+$("#qform").addEventListener("submit", e=>{ e.preventDefault(); $("#qnote").hidden=false; });
+
+render();
+drawAerial(0);
+buildScene();
+introMotion();
+rebuildMotion();
+if(document.fonts) document.fonts.ready.then(rebuildMotion);
+</script>
+</html>
