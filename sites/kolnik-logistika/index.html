@@ -133,26 +133,57 @@ section{position:relative}
 .wire{fill:none;stroke:#9AA7BD;stroke-width:1.2}
 .pallet{fill:var(--amber);stroke:#C98A00;stroke-width:1}
 
-/* RUN: one line, one day, drawn as a vertical road */
-.run{padding-block:clamp(72px,9vw,120px);border-top:1px solid var(--line)}
-.run-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,96px);align-items:start}
-.run-copy{position:sticky;top:120px;display:grid;gap:20px;align-content:start}
-.run-copy .lede{max-width:44ch}
+/* RUN: aerial road. Truck stays mid-screen while the road scrolls under it */
+.run{background:var(--ink);color:var(--on-ink);padding-block:clamp(72px,9vw,120px) 0}
+.run-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,5vw,72px);align-items:start}
+.run-copy{position:sticky;top:120px;display:grid;gap:20px;align-content:start;padding-bottom:clamp(48px,6vw,96px)}
+.run-copy .lede{max-width:44ch;color:var(--on-ink-muted)}
 .run-tag{display:flex;flex-wrap:wrap;gap:8px}
-.run-tag span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;padding:5px 9px;background:var(--paper-2)}
-.vtrack{position:relative;height:clamp(560px,64vw,720px)}
-.vroad{position:absolute;left:0;top:0;bottom:0;width:46px;background:var(--fg);border-radius:3px;overflow:hidden}
-.vroad::after{content:"";position:absolute;left:22px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(180deg,var(--amber) 0 18px,transparent 18px 34px)}
-.vfill{position:absolute;left:0;top:0;width:100%;height:0;background:linear-gradient(180deg,rgba(61,99,255,0),rgba(61,99,255,.55))}
-.vtruck{position:absolute;left:9px;top:0;width:28px;height:auto;z-index:2}
-.vstop{position:absolute;left:46px;right:0;transform:translateY(-50%);display:grid;grid-template-columns:28px 56px minmax(0,1fr);align-items:center;gap:0 12px}
-.vstop .tick{height:1px;background:var(--line);transition:background .3s}
-.vstop .t{font-family:var(--f-mono);font-size:.8rem;font-weight:500;color:var(--muted);transition:color .3s}
-.vstop .n{display:block;font-weight:600;line-height:1.25}
-.vstop .d{display:block;font-size:.85rem;color:var(--muted);line-height:1.3}
-.vstop.passed .tick{background:var(--cobalt)}
-.vstop.passed .t{color:var(--cobalt)}
-@media (max-width:820px){.run-grid{grid-template-columns:1fr}.run-copy{position:static}}
+.run-tag span{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;padding:5px 9px;border:1px solid var(--ink-line);color:var(--on-ink-muted)}
+.odo{display:flex;align-items:baseline;gap:10px;margin-top:12px;padding-top:20px;border-top:1px solid var(--ink-line)}
+.odo .km{font-family:var(--f-display);font-stretch:118%;font-weight:600;font-size:clamp(2.6rem,5vw,4rem);letter-spacing:-.03em;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
+.odo .of{font-family:var(--f-mono);font-size:.8rem;color:var(--on-ink-muted)}
+.odo-next{margin:0;font-family:var(--f-mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--on-ink-muted)}
+.odo-next b{color:var(--on-ink);font-weight:500}
+
+.rworld{position:relative;height:clamp(2200px,320vh,3400px);overflow:hidden;overflow:clip;--road-w:340px;--r-dim:#22325A;--r-dim2:#33467A;--r-acc:var(--amber);--r-soft:rgba(255,178,28,.45)}
+.rroad{position:absolute;top:0;bottom:0;left:50%;width:var(--road-w);transform:translateX(-50%)}
+.rroad .ln{position:absolute;top:0;bottom:0;width:1px;background:var(--r-dim2)}
+.rroad .edge-l{left:0}.rroad .edge-r{right:0}
+.rroad .curb-l{left:-22px}.rroad .curb-r{right:-22px}
+.rroad .c1{left:calc(50% - 3px)}.rroad .c2{left:calc(50% + 2px)}
+.rroad .dash{background:repeating-linear-gradient(to bottom,var(--r-dim2) 0 70px,transparent 70px 190px)}
+.rroad .fine{background:repeating-linear-gradient(to bottom,var(--r-dim) 0 3px,transparent 3px 8px)}
+.rroad .grail{position:absolute;top:0;bottom:0;width:10px;background:linear-gradient(to right,transparent 4px,var(--r-dim2) 4px 5px,transparent 5px),repeating-linear-gradient(to bottom,var(--r-dim2) 0 1px,transparent 1px 64px)}
+.rroad .grail.l{left:-40px}.rroad .grail.r{right:-40px}
+.robj{position:absolute;overflow:visible}
+.robj *{vector-effect:non-scaling-stroke}
+.rd1{stroke:var(--r-dim);fill:none;stroke-width:1}
+.rd2{stroke:var(--r-dim2);fill:none;stroke-width:1}
+.rdd{stroke:var(--r-dim2);fill:none;stroke-width:1;stroke-dasharray:3 5}
+.rmk{fill:var(--ink);stroke:none}
+.rlane{position:absolute;width:4px;border-left:1px dashed var(--r-dim)}
+.rdot{position:absolute;left:-3px;width:5px;height:5px;border-radius:50%;background:var(--r-acc);box-shadow:0 0 8px var(--r-acc);animation:rrun var(--t,6s) linear infinite var(--b,0s)}
+@keyframes rrun{0%{transform:translateY(0);opacity:0}10%,90%{opacity:1}100%{transform:translateY(var(--len,1400px));opacity:0}}
+.rcheck{position:absolute;left:calc(50% - var(--road-w) / 2);width:var(--road-w);border-top:1px dashed var(--r-dim2);z-index:3;transition:border-color .4s}
+.rstop{position:absolute;right:8px;max-width:44%;transform:translateY(-50%);z-index:4;display:grid;gap:2px;padding:8px 12px;background:var(--ink);border:1px solid var(--r-dim2);border-left:3px solid var(--r-dim2);transition:border-color .4s}
+.rstop .t{font-family:var(--f-mono);font-size:.75rem;color:var(--on-ink-muted);transition:color .4s}
+.rstop .n{font-weight:600;font-size:.92rem;line-height:1.25}
+.rstop .d{font-size:.78rem;color:var(--on-ink-muted);line-height:1.3}
+.rstop.passed{border-left-color:var(--r-acc)}
+.rstop.passed .t{color:var(--r-acc)}
+.rcheck.passed{border-top-color:var(--r-acc)}
+.rtrack{position:absolute;inset:0;pointer-events:none;z-index:6}
+.rsticky{position:sticky;top:0;height:100vh}
+.rtruck{position:absolute;top:50%;left:0;width:calc(var(--road-w) * .118);filter:drop-shadow(0 0 2.5px var(--r-soft));will-change:transform}
+.rtruck svg{display:block;width:100%;height:auto;overflow:visible}
+.rtruck .g{stroke:var(--r-acc);stroke-width:1.2;fill:none;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:1}
+.rworld.on .rtruck .g{animation:rdraw 1.4s cubic-bezier(.6,.05,.3,1) forwards var(--d,0s)}
+.rtruck .rib{stroke-opacity:.75}
+@keyframes rdraw{to{stroke-dashoffset:0}}
+.rodo{position:absolute;top:84px;left:12px;padding:6px 12px;background:var(--ink);border:1px solid var(--r-dim2);font-family:var(--f-mono);font-size:.8rem;color:var(--r-acc);font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.rtruck .g{stroke-dashoffset:0;animation:none!important}.rdot{display:none}}
+@media (max-width:820px){.run-grid{grid-template-columns:1fr}.run-copy{position:static;padding-bottom:0}.rworld{margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}}
 
 /* SERVICES (dark) */
 .services{background:#060D1E}
@@ -375,26 +406,30 @@ footer{background:#060D1E;color:var(--on-ink);padding-block:64px 32px;overflow:h
 </section>
 
 <!-- RUN -->
-<section class="run">
+<section class="run" id="linija">
   <div class="wrap run-grid">
     <div class="run-copy">
       <p class="eyebrow" data-i18n="run.eyebrow">Primjer linije</p>
       <h2 class="display h2" data-i18n="run.title">Jedna linija, jedan dan: Sveta Nedelja → München</h2>
       <p class="lede" data-i18n="run.desc"></p>
       <div class="run-tag"><span>FTL</span><span>33 EUR</span><span>548 km</span><span>8 h 40 min</span></div>
+      <div class="odo"><span class="km" id="odoKm">0</span><span class="of">/ 548 km</span></div>
+      <p class="odo-next"><span data-i18n="run.next">Sljedeće</span>: <b id="odoNext"></b></p>
     </div>
-    <div class="vtrack" id="vtrack">
-      <div class="vroad"><div class="vfill" id="vfill"></div></div>
-      <svg class="vtruck" id="vtruck" viewBox="-3 0 34 120" aria-hidden="true">
-        <rect x="2" y="0" width="24" height="86" rx="1.5" fill="#F3F5F8" stroke="#0D1830" stroke-width="1"/>
-        <g stroke="#D5DBE4" stroke-width="1"><line x1="4" y1="8" x2="24" y2="8"/><line x1="4" y1="18" x2="24" y2="18"/><line x1="4" y1="28" x2="24" y2="28"/><line x1="4" y1="38" x2="24" y2="38"/><line x1="4" y1="48" x2="24" y2="48"/><line x1="4" y1="58" x2="24" y2="58"/><line x1="4" y1="68" x2="24" y2="68"/><line x1="4" y1="78" x2="24" y2="78"/></g>
-        <rect x="2" y="0" width="2.5" height="86" fill="#FFB21C"/><rect x="23.5" y="0" width="2.5" height="86" fill="#FFB21C"/>
-        <rect x="11" y="85" width="6" height="7" fill="#0D1830"/>
-        <rect x="3" y="90" width="22" height="27" rx="3.5" fill="#FFB21C" stroke="#0D1830" stroke-width="1"/>
-        <rect x="5" y="92" width="18" height="9" rx="2" fill="#E09400"/>
-        <rect x="5" y="110" width="18" height="5" rx="1.2" fill="#2A3A5E"/>
-        <rect x="-2" y="104" width="4" height="6" rx="1" fill="#0D1830"/><rect x="26" y="104" width="4" height="6" rx="1" fill="#0D1830"/>
-      </svg>
+    <div class="rworld" id="rworld" aria-hidden="true">
+      <div class="rroad">
+        <div class="grail l"></div><div class="grail r"></div>
+        <div class="ln curb-l fine"></div><div class="ln curb-r fine"></div>
+        <div class="ln edge-l"></div><div class="ln edge-r"></div>
+        <div class="ln c1"></div><div class="ln c2"></div>
+        <div class="ln dash" style="left:25%"></div><div class="ln dash" style="left:75%"></div>
+      </div>
+      <div class="rtrack">
+        <div class="rsticky">
+          <div class="rtruck" id="rtruck"><svg id="rtruckSvg" viewBox="0 0 80 410"></svg></div>
+          <div class="rodo" id="rodo">0 km</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -550,7 +585,7 @@ hr:{
  "cov.title":"Redovne linije iz Svete Nedelje · tranzitno vrijeme",
  "pr.title":"Kad dostava kasni, kasni cijeli vaš posao",
  "pr.1":"Kupac čeka, a nitko ne zna gdje je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate cijeli.",
- "run.title":"Jedna linija, jedan dan: Sveta Nedelja → München","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primjer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, s pauzom po propisima i GPS-om cijelim putem.",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → München","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primjer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, s pauzom po propisima i GPS-om cijelim putem.","run.next":"Sljedeće","run.done":"Isporučeno, München rampa 7",
  "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Rotterdam",
  "board.title":"Pošiljke danas · primjer",
  "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za zadnji kilometar i za dvije tisuće kilometara",
@@ -575,7 +610,7 @@ sl:{
  "cov.title":"Redne linije iz Svete Nedelje · čas prevoza",
  "pr.title":"Ko dostava zamuja, zamuja ves vaš posel",
  "pr.1":"Kupec čaka, nihče pa ne ve, kje je tovornjak.","pr.2":"Meje, CMR in carinski papirji pojedo dan, ki ga niste imeli.","pr.3":"Pol polpriklopnika vozi prazno, vi pa plačate celega.",
- "run.title":"Ena linija, en dan: Sveta Nedelja → München","run.meta":"FTL · 33 palet · 548 km","run.eyebrow":"Primer linije","run.desc":"Odhod ob 05:30, razkladanje ob 14:10. Brez čakanja na meji, z odmorom po predpisih in GPS-om ves čas.",
+ "run.title":"Ena linija, en dan: Sveta Nedelja → München","run.meta":"FTL · 33 palet · 548 km","run.eyebrow":"Primer linije","run.desc":"Odhod ob 05:30, razkladanje ob 14:10. Brez čakanja na meji, z odmorom po predpisih in GPS-om ves čas.","run.next":"Naslednje","run.done":"Dostavljeno, München rampa 7",
  "svc.eyebrow":"Storitve","svc.title":"Od palete v Zagrebu do polnega polpriklopnika za Rotterdam",
  "board.title":"Pošiljke danes · primer",
  "seg.eyebrow":"Za koga vozimo","seg.title":"En partner za zadnji kilometer in za dva tisoč kilometrov",
@@ -600,7 +635,7 @@ sr:{
  "cov.title":"Redovne linije iz Svete Nedelje · vreme tranzita",
  "pr.title":"Kad dostava kasni, kasni ceo vaš posao",
  "pr.1":"Kupac čeka, a niko ne zna gde je kamion.","pr.2":"Granice, CMR i carinski papiri pojedu dan koji niste imali.","pr.3":"Pola šlepera vozi prazno, a vi plaćate ceo.",
- "run.title":"Jedna linija, jedan dan: Sveta Nedelja → Minhen","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, sa pauzom po propisima i GPS-om celim putem.",
+ "run.title":"Jedna linija, jedan dan: Sveta Nedelja → Minhen","run.meta":"FTL · 33 palete · 548 km","run.eyebrow":"Primer linije","run.desc":"Polazak u 05:30, istovar u 14:10. Bez čekanja na granici, sa pauzom po propisima i GPS-om celim putem.","run.next":"Sledeće","run.done":"Isporučeno, Minhen rampa 7",
  "svc.eyebrow":"Usluge","svc.title":"Od palete u Zagrebu do punog šlepera za Roterdam",
  "board.title":"Pošiljke danas · primer",
  "seg.eyebrow":"Za koga vozimo","seg.title":"Jedan partner za poslednji kilometar i za dve hiljade kilometara",
@@ -1092,21 +1127,174 @@ function buildFlow(){
   });
 }
 
-let runTL = null;
-function buildRun(){
-  if(runTL){ runTL.kill(); runTL = null; }
-  const track = $("#vtrack"), truck = $("#vtruck"), fill = $("#vfill");
-  const stops = [...track.querySelectorAll(".vstop")];
-  const H = track.clientHeight, len = truck.getBoundingClientRect().height || 120;
-  if(!MOTION()){ gsap?.set?.(truck, {y: H*.55}); truck.style.transform = `translateY(${H*.55}px)`; stops.slice(0,4).forEach(s=>s.classList.add("passed")); fill.style.height = (H*.55)+"px"; return; }
-  const D = 14;
-  runTL = gsap.timeline({repeat:-1, repeatDelay:.5,
-    onUpdate(){ const front = gsap.getProperty(truck,"y") + len; stops.forEach((s,i)=>s.classList.toggle("passed", front >= RUN[i].p/100*H)); }});
-  runTL.fromTo(truck, {y:-len, opacity:0}, {y:H - len*.15, duration:D, ease:"none"}, 0)
-       .to(truck, {opacity:1, duration:.5}, 0)
-       .fromTo(fill, {height:0}, {height:H, duration:D, ease:"none"}, 0)
-       .to(truck, {opacity:0, duration:.5}, D - .5);
+/* ---------- Aerial road: truck pinned mid-screen, road and yards scroll past ---------- */
+const ROAD = {H:1, roadW:340, cw:1, checks:[], stops:[], drawn:false, live:false, curX:null, curA:0};
+const LANE = {downSlow:.125, downFast:.375, upFast:.625, upSlow:.875};
+const smooth = t => t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t);
+const route = p => LANE.downSlow + (LANE.downFast - LANE.downSlow) * (smooth((p - .34) / .09) - smooth((p - .62) / .09));
+
+function drawRoadTruck(){
+  const NS = "http://www.w3.org/2000/svg", svg = $("#rtruckSvg");
+  let n = 0;
+  const el = (tag, attrs, cls, delay) => {
+    const e = document.createElementNS(NS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]);
+    e.setAttribute("class", cls);
+    if(cls.split(" ").includes("g")){ e.setAttribute("pathLength", "1"); e.style.setProperty("--d", (delay != null ? delay : n++ * 0.02).toFixed(2) + "s"); }
+    svg.appendChild(e);
+  };
+  const cab = "M6 334 h68 a4 4 0 0 1 4 4 v56 a14 14 0 0 1 -10 13 h-56 a14 14 0 0 1 -10 -13 v-56 a4 4 0 0 1 4 -4z";
+  // fills so road lines do not show through
+  el("rect", {x:2, y:2, width:76, height:318}, "rmk");
+  el("path", {d:cab}, "rmk");
+  // trailer
+  el("rect", {x:2, y:2, width:76, height:318}, "g", 0);
+  el("rect", {x:6, y:6, width:68, height:310}, "g", .15);
+  for(let y = 14, i = 0; y < 312; y += 9, i++) el("line", {x1:7, y1:y, x2:73, y2:y}, "g rib", .35 + i * .022);
+  [[2,2],[70,2],[2,312],[70,312]].forEach(([x, y]) => el("rect", {x, y, width:8, height:8}, "g", .25));
+  // coupling
+  el("path", {d:"M18 320 V334 M62 320 V334 M18 327 H62"}, "g", .6);
+  el("circle", {cx:40, cy:327, r:3}, "g", .65);
+  // cab, roof hatch, windscreen, mirrors, headlights
+  el("path", {d:cab}, "g", .3);
+  el("rect", {x:12, y:340, width:56, height:46, rx:4}, "g", .55);
+  el("rect", {x:33, y:352, width:14, height:16, rx:2}, "g", .75);
+  el("path", {d:"M10 396 q30 9 60 0"}, "g", .8);
+  el("path", {d:"M8 404 q32 6 64 0"}, "g", .85);
+  el("rect", {x:-5, y:384, width:7, height:13, rx:1}, "g", .9);
+  el("rect", {x:78, y:384, width:7, height:13, rx:1}, "g", .9);
+  el("rect", {x:10, y:400, width:10, height:4, rx:1}, "g", .95);
+  el("rect", {x:60, y:400, width:10, height:4, rx:1}, "g", .95);
 }
+
+function layoutRoad(){
+  const NS = "http://www.w3.org/2000/svg", world = $("#rworld");
+  world.querySelectorAll(".robj, .rlane, .rstop, .rcheck").forEach(e => e.remove());
+  const cw = world.clientWidth, H = world.offsetHeight, vh = innerHeight;
+  const roadW = Math.round(Math.min(340, cw * (cw < 520 ? .5 : .56)));
+  world.style.setProperty("--road-w", roadW + "px");
+  Object.assign(ROAD, {H, roadW, cw});
+  let seed = 7;
+  const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+  const add = (svg, tag, attrs, cls) => { const e = document.createElementNS(NS, tag); for(const k in attrs) e.setAttribute(k, attrs[k]); e.setAttribute("class", cls); svg.appendChild(e); return e; };
+  const obj = (left, top, w, h, build) => {
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "robj"); svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    svg.setAttribute("width", w); svg.setAttribute("height", h);
+    svg.style.left = left; svg.style.top = top + "px";
+    build(svg); world.appendChild(svg); return svg;
+  };
+  const shoulderX = (side, off) => side < 0 ? `calc(50% - var(--road-w) / 2 - 60px - ${off}px)` : `calc(50% + var(--road-w) / 2 + 60px + ${off}px)`;
+  // container seen from above
+  const container = (svg, w, h) => {
+    add(svg, "rect", {x:.5, y:.5, width:w - 1, height:h - 1}, "rd2");
+    add(svg, "rect", {x:4, y:4, width:w - 8, height:h - 8}, "rd1");
+    if(w > h) for(let x = 10; x < w - 6; x += 7) add(svg, "line", {x1:x, y1:5, x2:x, y2:h - 5}, "rd1");
+    else for(let y = 10; y < h - 6; y += 7) add(svg, "line", {x1:5, y1:y, x2:w - 5, y2:y}, "rd1");
+  };
+  const pallet = (svg, x, y, a) => {
+    add(svg, "rect", {x, y, width:a, height:a}, "rd2");
+    add(svg, "rect", {x:x + 5, y:y + 5, width:a - 10, height:a - 10}, "rd1");
+    add(svg, "path", {d:`M${x+5} ${y+a/2} H${x+a-5} M${x+a/2} ${y+5} V${y+a-5}`}, "rd1");
+  };
+  [-1, 1].forEach(side => {
+    // service lane with a travelling light
+    for(let y = 0; y < H; y += 1400){
+      const lane = document.createElement("div");
+      lane.className = "rlane";
+      lane.style.left = side < 0 ? "calc(50% - var(--road-w) / 2 - 86px)" : "calc(50% + var(--road-w) / 2 + 86px)";
+      lane.style.top = y + "px"; lane.style.height = "1400px";
+      const dot = document.createElement("div");
+      dot.className = "rdot";
+      dot.style.setProperty("--t", (5 + rnd() * 4).toFixed(1) + "s");
+      dot.style.setProperty("--b", (-rnd() * 8).toFixed(1) + "s");
+      if(side > 0) dot.style.animationDirection = "reverse";
+      lane.appendChild(dot); world.appendChild(lane);
+    }
+    // yards: containers, pallet blocks, loading bays
+    let y = 80 + rnd() * 200;
+    while(y < H - 300){
+      const kind = rnd(), off = 70 + Math.floor(rnd() * 40);
+      if(kind < .4){
+        const horiz = rnd() < .5, w = horiz ? 260 : 60, hh = horiz ? 60 : 260;
+        obj(shoulderX(side, side < 0 ? off + w : off), y, w + 2, hh + 2, s => container(s, w, hh));
+        y += hh + 140 + rnd() * 160;
+      } else if(kind < .75){
+        const a = 46, cols = 2 + Math.floor(rnd() * 2), rows = 2 + Math.floor(rnd() * 2), w = cols * (a + 8), hh = rows * (a + 8);
+        obj(shoulderX(side, side < 0 ? off + w : off), y, w, hh, s => { for(let i=0;i<cols;i++) for(let j=0;j<rows;j++) if(rnd() > .15) pallet(s, i * (a + 8) + 1, j * (a + 8) + 1, a); });
+        y += hh + 160 + rnd() * 160;
+      } else {
+        const w = 180 + rnd() * 80, hh = 220 + rnd() * 160;
+        obj(shoulderX(side, side < 0 ? off + w : off), y, w, hh, s => {
+          add(s, "rect", {x:1, y:1, width:w - 2, height:hh - 2}, "rdd");
+          for(let x = 30; x < w - 20; x += 34) add(s, "line", {x1:x, y1:1, x2:x, y2:40}, "rd1");
+        });
+        y += hh + 140 + rnd() * 140;
+      }
+    }
+  });
+  // cars: two in our lane that we overtake, oncoming traffic on the left
+  const car = (frac, y) => {
+    const w = 38, h = 80, svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "robj"); svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+    svg.style.width = "calc(var(--road-w) * .075)";
+    svg.style.left = `calc(50% - var(--road-w) / 2 + var(--road-w) * ${frac} - var(--road-w) * .0375)`;
+    svg.style.top = y + "px";
+    add(svg, "rect", {x:0, y:0, width:w, height:h}, "rmk");
+    add(svg, "rect", {x:1, y:1, width:w - 2, height:h - 2, rx:8}, "rd2");
+    add(svg, "rect", {x:5, y:18, width:w - 10, height:12, rx:3}, "rd2");
+    add(svg, "rect", {x:6, y:56, width:w - 12, height:9, rx:3}, "rd1");
+    add(svg, "rect", {x:6, y:32, width:w - 12, height:22, rx:2}, "rd1");
+    world.appendChild(svg);
+  };
+  const span = H - vh, at = p => vh / 2 + p * span;
+  car(LANE.downSlow, at(.52) + 30);
+  car(LANE.downSlow, at(.86) + 30);
+  for(let i=0;i<7;i++) car(i % 2 ? LANE.upSlow : LANE.upFast, 260 + i * (H / 7) + (i % 2) * 180);
+  // the day's stops as checkpoints across the road
+  ROAD.checks = []; ROAD.stops = [];
+  RUN.forEach((r, i) => {
+    const y = at((r.p - 7) / 86);
+    const c = document.createElement("div"); c.className = "rcheck"; c.style.top = y + "px"; world.appendChild(c);
+    const b = document.createElement("div"); b.className = "rstop"; b.style.top = y + "px";
+    b.innerHTML = `<span class="t">${r.t}</span><span class="n">${esc(r.n[LANG])}</span><span class="d">${esc(r.d[LANG])}</span>`;
+    world.appendChild(b);
+    ROAD.checks.push(c); ROAD.stops.push({el:b, y, i});
+  });
+  ROAD.curX = null;
+  roadFrame();
+}
+
+function roadFrame(){
+  const world = $("#rworld"), truck = $("#rtruck");
+  const r = world.getBoundingClientRect(), vh = innerHeight;
+  const span = Math.max(1, ROAD.H - vh);
+  const p = Math.min(1, Math.max(0, -r.top / span));
+  const truckY = Math.min(ROAD.H - vh / 2, Math.max(vh / 2, vh / 2 - r.top));
+  const roadLeft = (ROAD.cw - ROAD.roadW) / 2;
+  const target = roadLeft + ROAD.roadW * route(p) - truck.offsetWidth / 2;
+  const dp = 40 / span;
+  const dx = ROAD.roadW * (route(Math.min(1, p + dp)) - route(Math.max(0, p - dp)));
+  const targetA = Math.max(-7, Math.min(7, -Math.atan2(dx, 80) * 180 / Math.PI * .35));
+  if(ROAD.curX === null){ ROAD.curX = target; ROAD.curA = targetA; }
+  ROAD.curX += (target - ROAD.curX) * .18;
+  ROAD.curA += (targetA - ROAD.curA) * .18;
+  truck.style.transform = `translate(${ROAD.curX.toFixed(1)}px, -50%) rotate(${ROAD.curA.toFixed(2)}deg)`;
+  // the truck's nose is at the bottom of the drawing
+  const nose = truckY + truck.offsetHeight / 2;
+  let next = null;
+  ROAD.stops.forEach(s => { const on = nose >= s.y; s.el.classList.toggle("passed", on); ROAD.checks[s.i].classList.toggle("passed", on); if(!on && !next) next = s; });
+  const km = Math.round(p * 548);
+  $("#odoKm").textContent = km; $("#rodo").textContent = km + " km";
+  $("#odoNext").textContent = next ? `${RUN[next.i].t} · ${RUN[next.i].n[LANG]}` : I18N[LANG]["run.done"];
+  if(ROAD.live) requestAnimationFrame(roadFrame);
+}
+
+drawRoadTruck();
+new IntersectionObserver(([e]) => {
+  if(e.isIntersecting){ $("#rworld").classList.add("on"); if(!ROAD.live){ ROAD.live = true; requestAnimationFrame(roadFrame); } }
+  else ROAD.live = false;
+}).observe($("#rworld"));
 
 function introMotion(){
   if(!MOTION()) return;
@@ -1133,7 +1321,7 @@ function introMotion(){
   }});
 }
 
-function rebuildMotion(){ buildFlow(); buildRun(); if(HAS_GSAP) ScrollTrigger.refresh(); }
+function rebuildMotion(){ buildFlow(); layoutRoad(); if(HAS_GSAP) ScrollTrigger.refresh(); }
 let rsT; let lastW = innerWidth;
 addEventListener("resize", ()=>{ if(innerWidth === lastW) return; lastW = innerWidth; clearTimeout(rsT); rsT = setTimeout(rebuildMotion, 200); });
 
@@ -1147,14 +1335,6 @@ function render(){
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.lang===LANG)));
 
   $("#cells").innerHTML = CITIES.map(c=>`<div class="cell"><span class="cc">${c[0]}</span><span class="city-n">${esc(c[1][LANG])}</span><span class="days">${c[2]===3?'2–3':c[2]} ${c[2]===1?T.day1:T.dayN}</span></div>`).join("");
-
-  const track = $("#vtrack");
-  track.querySelectorAll(".vstop").forEach(n=>n.remove());
-  RUN.forEach(s=>{
-    const d=document.createElement("div"); d.className="vstop"; d.style.top=s.p+"%";
-    d.innerHTML=`<span class="tick"></span><span class="t">${s.t}</span><span><span class="n">${esc(s.n[LANG])}</span><span class="d">${esc(s.d[LANG])}</span></span>`;
-    track.appendChild(d);
-  });
 
   $("#svcList").innerHTML = SERVICES[LANG].map((s,i)=>`<li class="svc-item${i===svcOn?' on':''}"><button type="button" data-svc="${i}" aria-expanded="${i===svcOn}"><span class="tt">${esc(s[0])}</span><span class="dd">${esc(s[1])}</span></button></li>`).join("");
 
