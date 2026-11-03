@@ -5,6 +5,7 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 | Stranica | Mapa | Opis |
 |---|---|---|
 | Poliklinika Lipa | [`sites/poliklinika-lipa/`](sites/poliklinika-lipa/) | Koncept landing stranice za izmišljenu privatnu polikliniku u Zagrebu: GSAP i Lenis animacije, prikvačeni tabovi, carousel, responzivno. |
+| Fuga atelier | [`sites/fuga-atelier/`](sites/fuga-atelier/) | Koncept stranice za premium keramičara koji radi od obale do Zagreba: uredničke sekcije, pinned poglavlje, karta rute, slider materijala, upit. |
 | Kolnik Logistika | [`sites/kolnik-logistika/`](sites/kolnik-logistika/) | Landing stranica za gradsku dostavu i međunarodnu špediciju iz Svete Nedelje (HR/SL/SR), s GSAP animacijama. |
 
 ## Lokalni pregled
@@ -19,6 +20,7 @@ i otvorite:
 
 - <http://localhost:8080/sites/poliklinika-lipa/>
 - <http://localhost:8080/sites/kolnik-logistika/>
+- <http://localhost:8080/sites/fuga-atelier/>
 
 ## Izvorne grane
 
