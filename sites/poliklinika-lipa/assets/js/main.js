@@ -136,9 +136,13 @@
   function countUp(el) {
     const end = parseFloat(el.dataset.count);
     const suffix = el.dataset.suffix || '';
-    if (reduced || !hasGsap) { el.textContent = fmt(end) + suffix; return; }
+    const dec = parseInt(el.dataset.decimals || '0', 10);
+    const show = v => dec
+      ? v.toLocaleString('hr-HR', { minimumFractionDigits: dec, maximumFractionDigits: dec })
+      : fmt(Math.round(v));
+    if (reduced || !hasGsap) { el.textContent = show(end) + suffix; return; }
     const o = { v: 0 };
-    gsap.to(o, { v: end, duration: 1.8, ease: 'power3.out', onUpdate: () => { el.textContent = fmt(Math.round(o.v)) + suffix; } });
+    gsap.to(o, { v: end, duration: 1.8, ease: 'power3.out', onUpdate: () => { el.textContent = show(o.v) + suffix; } });
   }
 
   /* ---------- pokretanje nakon učitavanja fontova ---------- */
@@ -172,6 +176,12 @@
     pinTabs();
     stepsAccordion();
     bento();
+    availability();
+    pricing();
+    booking();
+    visit();
+    reviews();
+    newSectionAnimations();
     const yr = $('[data-year]'); if (yr) yr.textContent = new Date().getFullYear();
     if (hasGsap) ScrollTrigger.refresh();
   }
@@ -273,7 +283,7 @@
     gsap.from('.integr', { scale: 0.96, opacity: 0, duration: 1.3, ease: 'expo.out', scrollTrigger: { trigger: '.integr', start: 'top 85%' } });
 
     // CTA gumbi
-    gsap.from('.cta__btns .btn', { y: 20, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger: '.cta__btns', start: 'top 90%' } });
+    gsap.from(['.bform', '.callcard'], { y: 50, opacity: 0, duration: 1.3, ease: 'expo.out', stagger: 0.1, scrollTrigger: { trigger: '.book__grid', start: 'top 85%' } });
 
     // podnožje
     gsap.from('.fnav > div', { y: 30, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: 0.07, scrollTrigger: { trigger: '.footer', start: 'top 85%' } });
@@ -514,6 +524,329 @@
     panel.addEventListener('mouseenter', () => panel.classList.add('is-paused'));
     panel.addEventListener('mouseleave', () => { if (inView) panel.classList.remove('is-paused'); });
     open(0);
+  }
+
+  /* =========================================================
+     SPECIJALNOSTI I DOSTUPNOST TERMINA
+     ========================================================= */
+  // `first` = koliko radnih dana do prvog slobodnog termina
+  const SPECS = [
+    { key: 'kardiologija', name: 'Kardiologija', exam: 'kardiološki pregled', first: 1 },
+    { key: 'dermatologija', name: 'Dermatologija', exam: 'dermatološki pregled', first: 1 },
+    { key: 'ortopedija', name: 'Ortopedija', exam: 'ortopedski pregled', first: 2 },
+    { key: 'neurologija', name: 'Neurologija', exam: 'neurološki pregled', first: 4 },
+    { key: 'ginekologija', name: 'Ginekologija', exam: 'ginekološki pregled', first: 1 },
+    { key: 'pedijatrija', name: 'Pedijatrija', exam: 'pedijatrijski pregled', first: 0 },
+    { key: 'ultrazvuk', name: 'Ultrazvuk', exam: 'ultrazvučni pregled', first: 1 },
+    { key: 'laboratorij', name: 'Laboratorij', exam: 'vađenje krvi', first: 0 },
+    { key: 'sistematski', name: 'Sistematski pregled', exam: 'sistematski pregled', first: 5 }
+  ];
+  const specByKey = Object.fromEntries(SPECS.map(sp => [sp.key, sp]));
+  const DAYS = ['nedjelja', 'ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota'];
+  const MONTHS = ['siječnja', 'veljače', 'ožujka', 'travnja', 'svibnja', 'lipnja', 'srpnja', 'kolovoza', 'rujna', 'listopada', 'studenog', 'prosinca'];
+  const TIMES = ['08:00', '09:30', '11:00', '12:30', '14:00', '15:30', '17:00', '18:30'];
+  const isWorkday = d => d.getDay() > 0 && d.getDay() < 6;
+  const dayStart = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+  function addWorkdays(from, n) {
+    const d = dayStart(from);
+    // nakon 18 h ili vikendom prvi radni dan je sutra
+    if (!isWorkday(d) || from.getHours() >= 18) { do { d.setDate(d.getDate() + 1); } while (!isWorkday(d)); }
+    for (let i = 0; i < n; i++) { do { d.setDate(d.getDate() + 1); } while (!isWorkday(d)); }
+    return d;
+  }
+  function relLabel(date, now = new Date()) {
+    const diff = Math.round((dayStart(date) - dayStart(now)) / 864e5);
+    if (diff === 0) return 'danas';
+    if (diff === 1) return 'sutra';
+    const monday = d => { const m = dayStart(d); m.setDate(m.getDate() - ((m.getDay() + 6) % 7)); return m; };
+    const weeks = Math.round((monday(date) - monday(now)) / (7 * 864e5));
+    if (weeks === 0) return 'ovaj tjedan';
+    if (weeks === 1) return 'sljedeći tjedan';
+    return `${date.getDate()}. ${MONTHS[date.getMonth()]}`;
+  }
+  function firstFree(sp) {
+    const d = addWorkdays(new Date(), sp.first);
+    const diff = Math.round((d - dayStart(new Date())) / 864e5);
+    return { date: d, label: relLabel(d), soon: diff <= 2 };
+  }
+  // deterministički "slobodni" termini za demo
+  function slotsFor(sp) {
+    const now = new Date();
+    const out = [];
+    let d = addWorkdays(now, sp.first);
+    for (let day = 0; day < 5; day++) {
+      const seed = d.getDate() * 31 + sp.key.length * 7 + day;
+      const times = TIMES.filter((t, i) => (seed + i * 5) % 3 !== 0);
+      const today = dayStart(d).getTime() === dayStart(now).getTime();
+      const free = times.filter(t => !today || +t.slice(0, 2) > now.getHours() + 1);
+      if (free.length) out.push({ date: new Date(d), times: free });
+      do { d.setDate(d.getDate() + 1); } while (!isWorkday(d));
+    }
+    return out;
+  }
+  const dateLong = d => `${DAYS[d.getDay()][0].toUpperCase()}${DAYS[d.getDay()].slice(1)}, ${d.getDate()}. ${MONTHS[d.getMonth()]}`;
+
+  function availability() {
+    // oznake na karticama liječnika i na ploči uz telefon
+    $$('[data-avail]').forEach(el => {
+      const sp = specByKey[el.dataset.avail];
+      if (!sp) return;
+      const f = firstFree(sp);
+      el.classList.toggle('avail--week', !f.soon);
+      el.innerHTML = `Prvi termin: <b>${f.label}</b>`;
+    });
+    const board = $('[data-avboard]');
+    if (board) {
+      board.innerHTML = SPECS.slice(0, 6).map(sp => {
+        const f = firstFree(sp);
+        return `<li><span>${sp.name}</span><span class="avail${f.soon ? '' : ' avail--week'}"><b>${f.label}</b></span></li>`;
+      }).join('');
+    }
+
+    // hero: izmjenjuje specijalnosti, počinje s kardiologijom
+    const chip = $('[data-hero-avail]');
+    if (!chip) return;
+    const txt = $('.avail-chip__txt', chip);
+    const order = ['kardiologija', 'dermatologija', 'ortopedija', 'neurologija', 'pedijatrija'].map(k => specByKey[k]);
+    let i = 0;
+    const paint = () => {
+      const sp = order[i];
+      txt.innerHTML = `Prvi slobodni termini za ${sp.exam}: <b>${firstFree(sp).label}</b>`;
+      chip.dataset.book = sp.key;
+    };
+    paint();
+    if (reduced) return;
+    setInterval(() => {
+      txt.classList.add('is-out');
+      setTimeout(() => { i = (i + 1) % order.length; paint(); txt.classList.remove('is-out'); }, 380);
+    }, 4800);
+  }
+
+  /* =========================================================
+     CJENIK S PRETRAGOM
+     ========================================================= */
+  const PRICES = [
+    ['Kardiologija', 'Specijalistički kardiološki pregled', '30 min', 90, 0, 'srce pregled kardiolog'],
+    ['Kardiologija', 'UZV srca (ehokardiografija)', '30 min', 110, 0, 'srce eho ultrazvuk'],
+    ['Kardiologija', 'EKG s tumačenjem', '10 min', 25, 0, 'srce elektrokardiogram ekg'],
+    ['Kardiologija', 'Holter EKG 24 h', '24 h', 85, 0, 'srce ritam holter'],
+    ['Kardiologija', 'Holter tlaka 24 h', '24 h', 75, 0, 'tlak hipertenzija holter'],
+    ['Kardiologija', 'Ergometrija (test opterećenja)', '45 min', 95, 0, 'srce test opterecenja bicikl'],
+    ['Dermatologija', 'Dermatološki pregled', '20 min', 70, 0, 'koza pregled'],
+    ['Dermatologija', 'Digitalna dermatoskopija madeža', '30 min', 80, 0, 'madez madezi mladez koza'],
+    ['Dermatologija', 'Uklanjanje kožne promjene', '30 min', 120, 1, 'madez kirurski zahvat'],
+    ['Ortopedija', 'Ortopedski pregled', '20 min', 80, 0, 'kosti zglobovi koljeno rame kraljeznica'],
+    ['Ortopedija', 'UZV koljena ili ramena', '20 min', 65, 0, 'ultrazvuk zglob'],
+    ['Ortopedija', 'Intraartikularna injekcija pod UZV-om', '20 min', 90, 0, 'injekcija koljeno zglob'],
+    ['Neurologija', 'Neurološki pregled', '30 min', 85, 0, 'glavobolja migrena zivci'],
+    ['Neurologija', 'EMNG (elektromioneurografija)', '45 min', 140, 0, 'zivci misici emng'],
+    ['Neurologija', 'EEG', '40 min', 95, 0, 'mozak elektroencefalogram'],
+    ['Ginekologija', 'Ginekološki pregled s UZV-om', '30 min', 85, 0, 'ginekolog ultrazvuk'],
+    ['Ginekologija', 'PAPA test', '10 min', 25, 0, 'papa test bris'],
+    ['Pedijatrija', 'Pedijatrijski pregled', '30 min', 60, 0, 'dijete djeca pedijatar'],
+    ['Ultrazvuk', 'UZV abdomena', '20 min', 70, 0, 'trbuh jetra bubrezi ultrazvuk'],
+    ['Ultrazvuk', 'UZV štitnjače', '15 min', 60, 0, 'stitnjaca stitna ultrazvuk'],
+    ['Ultrazvuk', 'UZV dojki', '20 min', 70, 0, 'dojka ultrazvuk'],
+    ['Laboratorij', 'Kompletna krvna slika (KKS)', '5 min', 8, 0, 'krv kks vadenje'],
+    ['Laboratorij', 'Lipidogram', '5 min', 14, 0, 'kolesterol trigliceridi krv'],
+    ['Laboratorij', 'Glukoza u krvi', '5 min', 3, 0, 'secer dijabetes krv'],
+    ['Laboratorij', 'TSH', '5 min', 12, 0, 'stitnjaca hormon krv'],
+    ['Laboratorij', 'Vitamin D', '5 min', 25, 0, 'vitamin d krv'],
+    ['Laboratorij', 'HbA1c', '5 min', 15, 0, 'secer dijabetes krv'],
+    ['Sistematski', 'Sistematski pregled · Osnovni', '90 min', 149, 0, 'paket sistematski'],
+    ['Sistematski', 'Sistematski pregled · Prošireni', '2,5 h', 289, 0, 'paket sistematski'],
+    ['Sistematski', 'Sistematski pregled · Premium', '3,5 h', 449, 0, 'paket sistematski']
+  ].map(([cat, name, dur, price, from, kw]) => ({ cat, name, dur, price, from: !!from, kw }));
+
+  // normalizacija znak po znak (indeksi ostaju poravnati za isticanje)
+  const normChar = c => c.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace('đ', 'd')[0] || c;
+  const norm = str => [...str].map(normChar).join('');
+  const esc = str => str.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const euro = n => n.toLocaleString('hr-HR', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }) + ' €';
+  const rateText = n => n >= 150 ? `ili <b>12 × ${(n / 12).toLocaleString('hr-HR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €</b> bez kamata` : '';
+
+  function highlight(text, tokens) {
+    if (!tokens.length) return esc(text);
+    const n = norm(text);
+    const marks = new Array(text.length).fill(false);
+    tokens.forEach(t => { let i = n.indexOf(t); while (i > -1) { for (let k = i; k < i + t.length; k++) marks[k] = true; i = n.indexOf(t, i + 1); } });
+    let out = '', open = false;
+    [...text].forEach((c, i) => {
+      if (marks[i] && !open) { out += '<mark>'; open = true; }
+      if (!marks[i] && open) { out += '</mark>'; open = false; }
+      out += esc(c);
+    });
+    return out + (open ? '</mark>' : '');
+  }
+
+  function pricing() {
+    $$('[data-rate]').forEach(el => { el.innerHTML = rateText(+el.dataset.rate); });
+    const input = $('[data-psearch]');
+    const list = $('[data-plist]');
+    if (!input || !list) return;
+    const chipsWrap = $('[data-pchips]');
+    const count = $('[data-pcount]');
+    const empty = $('[data-pempty]');
+    const cats = [...new Set(PRICES.map(p => p.cat))];
+    let cat = 'Sve';
+    let refreshT;
+
+    chipsWrap.innerHTML = ['Sve', ...cats].map(c => `<button type="button" aria-pressed="${c === cat}">${c}</button>`).join('');
+    chipsWrap.addEventListener('click', e => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      cat = b.textContent;
+      $$('button', chipsWrap).forEach(x => x.setAttribute('aria-pressed', x === b));
+      render();
+    });
+
+    function render() {
+      const tokens = norm(input.value.trim()).split(/\s+/).filter(Boolean);
+      const hits = PRICES.filter(p => {
+        if (cat !== 'Sve' && p.cat !== cat) return false;
+        const hay = norm(`${p.name} ${p.cat} ${p.kw}`);
+        return tokens.every(t => hay.includes(t));
+      });
+      const groups = {};
+      hits.forEach(p => (groups[p.cat] = groups[p.cat] || []).push(p));
+      list.innerHTML = Object.entries(groups).map(([g, rows]) => `
+        <div class="pgroup">
+          <h3>${g}</h3>
+          ${rows.map(p => `<div class="prow">
+            <span class="prow__name">${highlight(p.name, tokens)}</span>
+            <span class="prow__dur">${p.dur}</span>
+            <span class="prow__price">${p.from ? '<small>od</small>' : ''}${euro(p.price)}</span>
+          </div>`).join('')}
+        </div>`).join('');
+      empty.hidden = hits.length > 0;
+      count.textContent = hits.length
+        ? `Prikazano ${hits.length} od ${PRICES.length} usluga`
+        : `Nema rezultata za „${input.value.trim()}”`;
+      if (hasGsap) { clearTimeout(refreshT); refreshT = setTimeout(() => ScrollTrigger.refresh(), 250); }
+    }
+    input.addEventListener('input', render);
+    // "/" fokusira pretragu
+    addEventListener('keydown', e => {
+      if (e.key !== '/' || /input|textarea|select/i.test(document.activeElement.tagName)) return;
+      e.preventDefault();
+      input.focus({ preventScroll: true });
+      scrollTo(input, -140);
+    });
+    render();
+  }
+
+  /* =========================================================
+     NARUČIVANJE (online obrazac)
+     ========================================================= */
+  let preselect = () => {};
+  function booking() {
+    const form = $('[data-bform]');
+    if (!form) return;
+    const spec = $('[data-bspec]', form);
+    const slot = $('[data-bslot]', form);
+    const hint = $('[data-bavail]', form);
+    const err = $('[data-berror]', form);
+    const fields = $('[data-bform-fields]', form);
+    const done = $('[data-bdone]', form);
+    const summary = $('[data-bsummary]', form);
+
+    spec.insertAdjacentHTML('beforeend', SPECS.map(sp => `<option value="${sp.key}">${sp.name}</option>`).join(''));
+
+    function fillSlots() {
+      const sp = specByKey[spec.value];
+      if (!sp) {
+        slot.disabled = true;
+        slot.innerHTML = '<option value="">Najprije odaberite granu medicine</option>';
+        hint.innerHTML = '';
+        return;
+      }
+      const f = firstFree(sp);
+      hint.innerHTML = `<span class="avail${f.soon ? '' : ' avail--week'}">Prvi slobodni termini: <b>${f.label}</b></span>`;
+      slot.innerHTML = '<option value="">Odaberite termin…</option>' + slotsFor(sp).map(day => {
+        const rel = relLabel(day.date);
+        const lbl = `${dateLong(day.date)}${/^\d/.test(rel) ? '' : ` (${rel})`}`;
+        return `<optgroup label="${lbl}">${day.times.map(t => `<option value="${day.date.toISOString().slice(0, 10)}T${t}">${lbl.split(' (')[0]} u ${t}</option>`).join('')}</optgroup>`;
+      }).join('');
+      slot.disabled = false;
+      spec.removeAttribute('aria-invalid');
+    }
+    spec.addEventListener('change', fillSlots);
+    slot.addEventListener('change', () => slot.removeAttribute('aria-invalid'));
+    $$('input', form).forEach(i => i.addEventListener('input', () => i.removeAttribute('aria-invalid')));
+
+    preselect = key => {
+      if (!specByKey[key]) return;
+      spec.value = key;
+      fillSlots();
+      setTimeout(() => slot.focus({ preventScroll: true }), 1300);
+    };
+    $$('[data-book]').forEach(a => a.addEventListener('click', () => preselect(a.dataset.book)));
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = form.elements.ime, phone = form.elements.mobitel, ok = form.elements.privola;
+      const problems = [];
+      const bad = (el, msg) => { el.setAttribute('aria-invalid', 'true'); problems.push(msg); };
+      if (!spec.value) bad(spec, 'odaberite granu medicine');
+      else if (!slot.value) bad(slot, 'odaberite termin');
+      if (name.value.trim().length < 3) bad(name, 'upišite ime i prezime');
+      if (phone.value.replace(/\D/g, '').length < 8) bad(phone, 'upišite ispravan broj mobitela');
+      if (!ok.checked) problems.push('potvrdite privolu za kontakt');
+      if (problems.length) {
+        err.textContent = `Molimo ${problems.join(', ')}.`;
+        err.hidden = false;
+        const first = $('[aria-invalid="true"]', form) || ok;
+        first.focus();
+        return;
+      }
+      err.hidden = true;
+      const opt = slot.selectedOptions[0];
+      summary.textContent = `${name.value.trim()}, zaprimili smo zahtjev za termin: ${specByKey[spec.value].name}, ${opt.textContent}. Potvrdu šaljemo SMS-om na broj ${phone.value.trim()}.`;
+      fields.hidden = true;
+      done.hidden = false;
+      done.focus({ preventScroll: true });
+    });
+    $('[data-breset]', form).addEventListener('click', () => {
+      form.reset();
+      fillSlots();
+      done.hidden = true;
+      fields.hidden = false;
+      spec.focus();
+    });
+
+    // fiksna traka za poziv ne smije prekrivati obrazac dok se tipka
+    form.addEventListener('focusin', () => document.body.classList.add('is-typing'));
+    form.addEventListener('focusout', () => document.body.classList.remove('is-typing'));
+  }
+
+  /* =========================================================
+     KAKO DO NAS + RECENZIJE
+     ========================================================= */
+  function visit() {
+    $$('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
+      const label = $('span', btn);
+      const prev = label.textContent;
+      try { await navigator.clipboard.writeText(btn.dataset.copy); label.textContent = 'Kopirano ✓'; }
+      catch { label.textContent = btn.dataset.copy; }
+      setTimeout(() => { label.textContent = prev; }, 2200);
+    }));
+  }
+  function reviews() {
+    const el = $('.reviews');
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { el.classList.add('in-view'); io.disconnect(); } }, { threshold: 0.25 });
+    io.observe(el);
+  }
+  function newSectionAnimations() {
+    if (!hasGsap || reduced) return;
+    const up = (targets, trigger, extra = {}) => gsap.from(targets, { y: 50, opacity: 0, duration: 1.2, ease: 'expo.out', stagger: 0.08, scrollTrigger: { trigger, start: 'top 85%' }, ...extra });
+    up('.doc', '.team__grid');
+    up('.review', '.reviews__list');
+    up('.pkg', '.pkgs');
+    up(['.ptool', '.paynote'], '.pricing__grid');
+    up('.vrow', '.visit__info', { y: 24 });
+    gsap.from('.visit__map', { clipPath: 'inset(10% 6% 10% 6% round 24px)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: '.visit__grid', start: 'top 80%' } });
   }
 
   /* ---------- BENTO ---------- */
