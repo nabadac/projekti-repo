@@ -1,5 +1,7 @@
 # Zagrebačko dijabetičko društvo · koncept web stranice
 
+![Pregled stranice](pregled.jpg)
+
 Koncept redizajna stranice [zadi.hr](https://www.zadi.hr/) za Zagrebačko dijabetičko društvo (ZDD). Raspored sekcija prati zadani referentni dizajn: hero preko cijelog ekrana s velikim serifnim naslovom, brojke u šarenim pločicama, bento mreža pogodnosti, tabovi s fotografijom, carousel kartica s ilustracijama, zid citata, upisno polje s ilustracijom, novosti, izvori brojki i plavo podnožje s golemim znakom. Sadržaj, ilustracije i kod izrađeni su iznova.
 
 ## Sadržaj (preuzet sa zadi.hr, studeni 2026.)
