@@ -25,7 +25,18 @@ Poštuje se `prefers-reduced-motion`. Ako se GSAP ne učita, sav sadržaj je odm
 
 ## Što još treba zamijeniti
 
-- **Fotografije**: u kodu su Unsplash poveznice (označene s `ZAMIJENI`). Ako se neka fotografija ne učita, ostaje drvena tekstura iz originala. Za pravu objavu stavite fotografije radova same stolarije.
+- **Fotografije**: trenutno su s Pexelsa (besplatna licenca, navođenje autora nije obavezno). Svaka je preuzeta i pregledana. Za pravu objavu zamijenite ih fotografijama radova same stolarije. Ako se neka fotografija ne učita, ostaje drvena tekstura iz originala.
+
+| Mjesto | Pexels |
+|---|---|
+| Hero | [Man Hold Wood Planer](https://www.pexels.com/photo/man-hold-wood-planer-374861/) |
+| Naša priča | [Carpenter Working on a Piece of Wood](https://www.pexels.com/photo/carpenter-working-on-a-piece-of-wood-6790977/) |
+| Kuhinja | [Wooden Design Cabinet Kitchen](https://www.pexels.com/photo/wooden-design-cabinet-kitchen-3847520/) |
+| Ormar | [Photo of Walk in Closet](https://www.pexels.com/photo/photo-of-walk-in-closet-6670657/) |
+| Stol | [Cozy Dining Room with Wooden Furniture](https://www.pexels.com/photo/cozy-dining-room-with-wooden-furniture-and-natural-light-37184165/) |
+| Stepenice | [Brown Wooden Staircase With Glass Railing](https://www.pexels.com/photo/brown-wooden-staircase-with-glass-railing-8134804/) |
+| Recepcija | [Warm Cozy Reception Area with Wooden Decor](https://www.pexels.com/photo/warm-cozy-reception-area-with-wooden-decor-31771715/) |
+| Pozadina upita | [A Person using a Wood Planer](https://www.pexels.com/photo/a-person-using-a-wood-planer-7109995/) |
 - **Kontakti**: telefon `091 234 5678`, adresa `Bobovica 00` i OIB `00000000000` preuzeti su iz originala i još su ogledni.
 
 ## Tehnologija
