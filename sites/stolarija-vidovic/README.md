@@ -1,7 +1,9 @@
 # Stolarija Vidović · redizajn
 
 Redizajn stranice `stolarija-vidovic.html` iz repozitorija `nabadac/Webstranice-Vi-e-industrija`.
-**Priča, tekstovi i brand ostali su isti** (boje orah / papir / hrast / šumsko zelena, fontovi Bricolage Grotesque, Newsreader i Spline Sans Mono, SV žig, kontakti, forma).
+**Priča, tekstovi i brand ostali su isti** (boje orah / papir / hrast / šumsko zelena, SV žig, kontakti, forma).
+
+**Fontovi:** naslovi su u **Cinzel Decorative**, a tekst, citati i kurziv u **EB Garamondu**. Cinzel nema kurziv, pa je „rukama” u naslovu u EB Garamond kurzivu. Bricolage Grotesque (naziv obrta) i Spline Sans Mono (male oznake) ostali su iz originala. Svi fontovi podržavaju č ć đ š ž.
 Promijenjeni su raspored i kretanje, po uzoru na zadanu referencu: tamni pojas s velikim serifnim naslovom, široka fotografija preko ruba, izmjenični redovi „fotografija + kartica + tonirani blok”, tamni blok za upit preko fotografije i footer s pločicom u boji hrasta.
 
 ## Sekcije i animacije
