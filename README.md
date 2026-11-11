@@ -8,6 +8,7 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 | Fuga atelier | [`sites/fuga-atelier/`](sites/fuga-atelier/) | Koncept stranice za premium keramičara koji radi od obale do Zagreba: uredničke sekcije, pinned poglavlje, karta rute, slider materijala, upit. |
 | SOS Dječje selo Hrvatska | [`sites/sos-djecje-selo/`](sites/sos-djecje-selo/) | Koncept stranice za neprofitnu udrugu sa selima u Lekeniku i Ladimirevcima: slaganje kartica četiriju načela, tabovi sela, carousel priča, galerija na valu, donacijski obrazac, GSAP i Lenis. |
 | Zagrebačko dijabetičko društvo | [`sites/zdd-zagreb/`](sites/zdd-zagreb/) | Koncept redizajna zadi.hr po uzoru na zadani referentni dizajn: hero s fotografijom s Obiteljskog kampa, brojke u pločicama, bento pogodnosti članstva, tabovi pet klubova, carousel za članove, citati obitelji, novosti. Stvarni sadržaj i brand ZDD-a. |
+| Autoservis Kovač | [`sites/autoservis-kovac/`](sites/autoservis-kovac/) | Novi dizajn za autoservis u Zagrebu po referentnom videu (svijetli editorial stil, tamnoplave sekcije, serifni naslovi), usmjeren na zakazivanje: brzi termin u heroju, rezervacija iz svake usluge i cjenika, obrazac u 3 koraka, mobilna traka Nazovi / Naruči. |
 | Kolnik Logistika | [`sites/kolnik-logistika/`](sites/kolnik-logistika/) | Landing stranica za gradsku dostavu i međunarodnu špediciju iz Svete Nedelje (HR/SL/SR), s GSAP animacijama. |
 
 ## Lokalni pregled
@@ -25,6 +26,7 @@ i otvorite:
 - <http://localhost:8080/sites/fuga-atelier/>
 - <http://localhost:8080/sites/sos-djecje-selo/>
 - <http://localhost:8080/sites/zdd-zagreb/>
+- <http://localhost:8080/sites/autoservis-kovac/>
 
 ## Izvorne grane
 
