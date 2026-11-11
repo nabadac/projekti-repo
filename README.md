@@ -9,7 +9,7 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 | SOS Dječje selo Hrvatska | [`sites/sos-djecje-selo/`](sites/sos-djecje-selo/) | Koncept stranice za neprofitnu udrugu sa selima u Lekeniku i Ladimirevcima: slaganje kartica četiriju načela, tabovi sela, carousel priča, galerija na valu, donacijski obrazac, GSAP i Lenis. |
 | Zagrebačko dijabetičko društvo | [`sites/zdd-zagreb/`](sites/zdd-zagreb/) | Koncept redizajna zadi.hr po uzoru na zadani referentni dizajn: hero s fotografijom s Obiteljskog kampa, brojke u pločicama, bento pogodnosti članstva, tabovi pet klubova, carousel za članove, citati obitelji, novosti. Stvarni sadržaj i brand ZDD-a. |
 | Kolnik Logistika | [`sites/kolnik-logistika/`](sites/kolnik-logistika/) | Landing stranica za gradsku dostavu i međunarodnu špediciju iz Svete Nedelje (HR/SL/SR), s GSAP animacijama. |
-| Stolarija Vidović | [`sites/stolarija-vidovic/`](sites/stolarija-vidovic/) | Redizajn stranice obiteljske stolarije iz Samobora: ista priča i brand, novi raspored s izmjeničnim redovima fotografija i kartica, loader sa žigom, marquee usluga, linija procesa koja se iscrtava skrolom, GSAP i Lenis. |
+| Stolarija Vidović | [`sites/stolarija-vidovic/`](sites/stolarija-vidovic/) | Redizajn stranice obiteljske stolarije iz Samobora na toploj neutralnoj podlozi: fotografski hero s makro pločicama spojeva, bento usluga s gumbima za ponudu, vodoravni niz vrijednosti, izjava koja se pali skrolom, slider recenzija, forma s izborom projekta, plutajući gumb za ponudu, GSAP i Lenis. |
 
 ## Lokalni pregled
 

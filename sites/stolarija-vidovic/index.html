@@ -5,47 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Stolarija Vidović — namještaj po mjeri | Samobor, od 1994.</title>
 <meta name="description" content="Obiteljska stolarija iz Samobora. Kuhinje, ormari i namještaj po mjeri, izrađeni rukama koje to rade preko 30 godina. Zatražite ponudu." />
-<meta name="theme-color" content="#241A14" />
+<meta name="theme-color" content="#1F1C19" />
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
-
-<!-- Fontovi: svi imaju punu podršku za hrvatske dijakritike (č ć š ž đ) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Fraunces:opsz,wght@9..144,400..700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://images.pexels.com">
+<!-- Fraunces (naslovi) + Bricolage Grotesque (tekst, iz originalnog branda). Oba podržavaju č ć đ š ž. -->
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css" />
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-<!-- ============ LOADER (žig se iscrta) ============ -->
-<div class="loader" id="loader" aria-hidden="true">
-  <svg class="loader-mark" viewBox="0 0 200 200">
-    <circle class="lm-ring" cx="100" cy="100" r="92" />
-    <circle class="lm-ring lm-ring--in" cx="100" cy="100" r="58" />
-    <text class="lm-sv" x="100" y="116" text-anchor="middle">SV</text>
-  </svg>
-  <div class="loader-line"><span></span></div>
-</div>
-
 <a class="skip" href="#sadrzaj">Preskoči na sadržaj</a>
 
 <!-- ============ HEADER ============ -->
 <header class="site" id="header">
-  <div class="wrap nav">
+  <div class="nav">
     <a class="brand" href="#vrh" aria-label="Stolarija Vidović — početak">
       <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="47" fill="none" stroke="#C8A06A" stroke-width="2"/>
-        <circle cx="50" cy="50" r="38" fill="none" stroke="#C8A06A" stroke-width="1" opacity=".5"/>
-        <text x="50" y="60" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="34" fill="#C8A06A">SV</text>
+        <circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/>
+        <text x="50" y="60" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="34" fill="currentColor">SV</text>
       </svg>
       <span><b>Stolarija Vidović</b><small>Samobor · od 1994.</small></span>
     </a>
-    <nav class="nav-links" aria-label="Glavna navigacija">
-      <a class="ulink" href="#prica">Priča</a>
-      <a class="ulink" href="#radovi">Radovi</a>
-      <a class="ulink" href="#proces">Kako radimo</a>
-      <a class="btn btn-primary magnetic" href="#upit"><span>Zatražite ponudu</span></a>
+    <nav class="nav-pill" aria-label="Glavna navigacija">
+      <a href="#prica">Priča</a>
+      <a href="#usluge">Usluge</a>
+      <a href="#vrijednosti">Vrijednosti</a>
+      <a href="#proces">Kako radimo</a>
+      <a href="#recenzije">Recenzije</a>
     </nav>
+    <a class="btn btn-dark btn-arrow magnetic" href="#upit"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
   </div>
 </header>
 
@@ -53,53 +45,73 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="vrh">
-  <div class="hero-band">
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="wrap hero-copy">
-      <p class="eyebrow hero-eyebrow" data-hero>Stolarija · Samobor · od 1994.</p>
-      <h1 class="hero-title">
-        <span class="line"><span>Namještaj po mjeri,</span></span>
-        <span class="line"><span>izrađen <em>rukama</em></span></span>
-        <span class="line"><span>koje to rade 30 godina.</span></span>
-      </h1>
-      <p class="hero-lead" data-hero>Obiteljski obrt iz Samobora. Kuhinje, ugradbeni ormari i namještaj koji se radi pažljivo, jednom — i traje. Mali tim, veliko poštovanje prema svakom poslu.</p>
-      <div class="hero-cta" data-hero>
-        <a class="btn btn-primary magnetic" href="#upit"><span>Zatražite besplatnu ponudu</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="hero-phone" href="tel:+385912345678">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          091 234 5678
-        </a>
-      </div>
+  <div class="hero-bg" aria-hidden="true">
+    <img class="hero-img is-on" src="https://images.pexels.com/photos/19208266/pexels-photo-19208266.jpeg?auto=compress&cs=tinysrgb&w=2400" alt="" fetchpriority="high">
+    <img class="hero-img" src="https://images.pexels.com/photos/5974283/pexels-photo-5974283.jpeg?auto=compress&cs=tinysrgb&w=2400" alt="" loading="lazy">
+    <img class="hero-img" src="https://images.pexels.com/photos/5974350/pexels-photo-5974350.jpeg?auto=compress&cs=tinysrgb&w=2400" alt="" loading="lazy">
+    <img class="hero-img" src="https://images.pexels.com/photos/326333/pexels-photo-326333.jpeg?auto=compress&cs=tinysrgb&w=2400" alt="" loading="lazy">
+  </div>
+  <div class="hero-shade" aria-hidden="true"></div>
+
+  <div class="wrap hero-in">
+    <p class="chip chip--light" data-hero>Stolarija · Samobor · od 1994.</p>
+    <h1 class="hero-title">
+      <span class="line"><span>Namještaj po mjeri,</span></span>
+      <span class="line"><span>izrađen <em>rukama</em></span></span>
+      <span class="line"><span>koje to rade 30 godina.</span></span>
+    </h1>
+    <p class="hero-lead" data-hero>Obiteljski obrt iz Samobora. Kuhinje, ugradbeni ormari i namještaj koji se radi pažljivo, jednom — i traje. Mali tim, veliko poštovanje prema svakom poslu.</p>
+    <div class="hero-cta" data-hero>
+      <a class="btn btn-light btn-arrow magnetic" href="#upit"><span>Zatražite besplatnu ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
+      <a class="hero-phone" href="tel:+385912345678"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 091 234 5678</a>
     </div>
   </div>
 
-  <!-- Široka fotografija koja prelazi iz tamnog pojasa u papir -->
-  <div class="wrap hero-media-wrap">
-    <figure class="hero-media">
-      <div class="hero-media-in ph oak">
-        <!-- Fotografije: Pexels (besplatna licenca). Za objavu zamijeniti pravim radovima. -->
-        <img src="https://images.pexels.com/photos/374861/pexels-photo-374861.jpeg?auto=compress&cs=tinysrgb&w=2200" alt="Ruke majstora blanjaju dasku u radionici" fetchpriority="high" onerror="this.remove()">
+  <!-- Makro detalji: klik mijenja pozadinu -->
+  <div class="hero-thumbs" data-hero role="tablist" aria-label="Detalji iz radionice">
+    <button class="thumb is-on" role="tab" aria-selected="true" data-i="0"><img src="https://images.pexels.com/photos/19208266/pexels-photo-19208266.jpeg?auto=compress&cs=tinysrgb&w=300" alt=""><span>Radionica</span><i class="ring"></i></button>
+    <button class="thumb" role="tab" aria-selected="false" data-i="1"><img src="https://images.pexels.com/photos/5974283/pexels-photo-5974283.jpeg?auto=compress&cs=tinysrgb&w=300" alt=""><span>Utor i čep</span><i class="ring"></i></button>
+    <button class="thumb" role="tab" aria-selected="false" data-i="2"><img src="https://images.pexels.com/photos/5974350/pexels-photo-5974350.jpeg?auto=compress&cs=tinysrgb&w=300" alt=""><span>Ručna obrada</span><i class="ring"></i></button>
+    <button class="thumb" role="tab" aria-selected="false" data-i="3"><img src="https://images.pexels.com/photos/326333/pexels-photo-326333.jpeg?auto=compress&cs=tinysrgb&w=300" alt=""><span>Drvo</span><i class="ring"></i></button>
+  </div>
+</section>
+
+<!-- ============ PRIČA ============ -->
+<section class="blk about" id="prica">
+  <div class="wrap about-grid">
+    <div class="about-copy">
+      <p class="chip">Naša priča</p>
+      <h2 class="split">Tri desetljeća iste ruke, isti standard.</h2>
+      <p class="pull">Ne radimo brzo. Radimo dobro — i zato nas zovu ljudi kojima je prvi put bilo zadovoljstvo.</p>
+      <div class="about-body">
+        <p>Ante Vidović otvorio je radionicu u Samoboru 1994. s jednom blanjom, jednom stolicom i pravilom kojeg se i danas držimo: napravi to kako bi napravio za svoju kuću. Danas uz njega rade sin Marko i tim majstora — i dalje smo mali obrt, i to nam je namjerno.</p>
+        <p>Ne tražimo stotinu poslova mjesečno. Tražimo poslove koje možemo napraviti pošteno, sa svojom pažnjom na svakom rubu i spoju. Svaki klijent kod nas razgovara s čovjekom koji će njegov namještaj i izraditi — ne s prodavačem.</p>
       </div>
-      <!-- Veliki žig — potpisni element (rotira na skrol) -->
-      <svg class="hero-stamp" viewBox="0 0 200 200" aria-hidden="true">
+      <div class="about-actions">
+        <a class="btn btn-dark btn-arrow magnetic" href="#upit"><span>Razgovarajte s majstorom</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
+      </div>
+      <p class="tags-title">Gdje radimo</p>
+      <ul class="tags">
+        <li>Samobor</li><li>Zagreb</li><li>Sveta Nedelja</li><li>Bregana</li><li class="hl">Zagreb i okolica</li>
+      </ul>
+    </div>
+
+    <div class="about-visual">
+      <figure class="about-main"><div class="mask"><img src="https://images.pexels.com/photos/6790977/pexels-photo-6790977.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Stolar u kariranoj košulji radi na komadu drva u radionici" loading="lazy"></div></figure>
+      <figure class="about-macro"><div class="mask"><img src="https://images.pexels.com/photos/5974343/pexels-photo-5974343.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Makro: dlijeto i strugotine na bukovoj dasci" loading="lazy"></div><figcaption>Svaki spoj ručno dovršen</figcaption></figure>
+      <svg class="stamp" viewBox="0 0 200 200" aria-hidden="true">
         <defs><path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
-        <circle cx="100" cy="100" r="92" fill="#241A14"/>
+        <circle cx="100" cy="100" r="92" fill="#1F1C19"/>
         <circle cx="100" cy="100" r="92" fill="none" stroke="#C8A06A" stroke-width="2"/>
         <circle cx="100" cy="100" r="58" fill="none" stroke="#C8A06A" stroke-width="1" opacity=".55"/>
-        <g class="stamp-ring">
-          <text font-family="Spline Sans Mono, monospace" font-size="11" letter-spacing="3" fill="#C8A06A">
-            <textPath href="#ring" startOffset="0">· STOLARIJA VIDOVIĆ · SAMOBOR · IZRAĐENO PO MJERI ·</textPath>
-          </text>
-        </g>
-        <text x="100" y="96" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="46" fill="#F2ECE0">SV</text>
-        <text x="100" y="120" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="11" letter-spacing="4" fill="#C8A06A">1994</text>
+        <g class="stamp-ring"><text font-family="Bricolage Grotesque, sans-serif" font-weight="600" font-size="12" letter-spacing="3.4" fill="#C8A06A"><textPath href="#ring">· STOLARIJA VIDOVIĆ · SAMOBOR · IZRAĐENO PO MJERI ·</textPath></text></g>
+        <text x="100" y="98" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="46" fill="#F5F2EC">SV</text>
+        <text x="100" y="122" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-size="12" letter-spacing="4" fill="#C8A06A">1994</text>
       </svg>
-    </figure>
+    </div>
   </div>
 
-  <!-- Trust: brojke koje se odbrojavaju -->
-  <div class="wrap trust">
+  <div class="wrap stats">
     <div class="stat"><div class="n"><span data-count="30">30</span>+</div><div class="l">godina iskustva</div></div>
     <div class="stat"><div class="n"><span data-count="1200">1200</span>+</div><div class="l">završenih projekata</div></div>
     <div class="stat"><div class="n"><span data-count="4">4</span></div><div class="l">majstora u timu</div></div>
@@ -107,251 +119,219 @@
   </div>
 </section>
 
-<!-- ============ MARQUEE USLUGA ============ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Kuhinje po mjeri</span><i></i><span>Ugradbeni ormari</span><i></i><span>Namještaj po mjeri</span><i></i><span>Stepenice i interijeri</span><i></i>
-    <span>Kuhinje po mjeri</span><i></i><span>Ugradbeni ormari</span><i></i><span>Namještaj po mjeri</span><i></i><span>Stepenice i interijeri</span><i></i>
-  </div>
-</div>
-
-<!-- ============ PRIČA ============ -->
-<section class="blk story" id="prica">
+<!-- ============ USLUGE (bento) ============ -->
+<section class="blk services" id="usluge">
   <div class="wrap">
-    <article class="row row--left">
-      <div class="row-tint" aria-hidden="true"></div>
-      <figure class="row-media">
-        <div class="row-media-in ph walnut">
-          <!-- ZAMIJENI: fotografija Ante / Marka u radionici -->
-          <img src="https://images.pexels.com/photos/6790977/pexels-photo-6790977.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Stolar u kariranoj košulji radi na komadu drva u radionici" loading="lazy" onerror="this.remove()">
-        </div>
-      </figure>
-      <div class="row-card row-card--wide">
-        <div class="card-head">
-          <svg class="mini-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="37" class="in"/><text x="50" y="61" text-anchor="middle">SV</text></svg>
-          <div>
-            <p class="eyebrow">Naša priča</p>
-            <h2 class="split">Tri desetljeća iste ruke, isti standard.</h2>
-          </div>
-        </div>
-        <p class="pull">Ne radimo brzo. Radimo dobro — i zato nas zovu ljudi kojima je prvi put bilo zadovoljstvo.</p>
-        <div class="story-body">
-          <p>Ante Vidović otvorio je radionicu u Samoboru 1994. s jednom blanjom, jednom stolicom i pravilom kojeg se i danas držimo: napravi to kako bi napravio za svoju kuću. Danas uz njega rade sin Marko i tim majstora — i dalje smo mali obrt, i to nam je namjerno.</p>
-          <p>Ne tražimo stotinu poslova mjesečno. Tražimo poslove koje možemo napraviti pošteno, sa svojom pažnjom na svakom rubu i spoju. Svaki klijent kod nas razgovara s čovjekom koji će njegov namještaj i izraditi — ne s prodavačem.</p>
-        </div>
+    <div class="sec-head sec-head--split">
+      <div>
+        <p class="chip">Usluge</p>
+        <h2 class="split">Što izrađujemo — od nacrta do ugradnje.</h2>
       </div>
-    </article>
-
-    <ul class="values" aria-label="Naše vrijednosti">
-      <li><span class="vk">01</span><span class="vt">Predanost</span><span class="vd">Svaki komad radimo do kraja, bez prečaca — i kad nas nitko ne gleda.</span></li>
-      <li><span class="vk">02</span><span class="vt">Pažnja prema svakom klijentu</span><span class="vd">Dođemo, izmjerimo, poslušamo. Rješenje krojimo za vaš prostor i život.</span></li>
-      <li><span class="vk">03</span><span class="vt">Poštena riječ</span><span class="vd">Dogovorena cijena i rok su dogovor. Bez skrivenih troškova i izmišljanja.</span></li>
-      <li><span class="vk">04</span><span class="vt">Domaći materijal, domaća ruka</span><span class="vd">Radimo s provjerenim hrvatskim dobavljačima i masivnim drvom koje traje.</span></li>
-    </ul>
-  </div>
-</section>
-
-<!-- ============ RADOVI (izmjenični redovi kao u referenci) ============ -->
-<section class="blk work" id="radovi">
-  <div class="wrap">
-    <div class="sec-head sec-head--center">
-      <p class="eyebrow">Naši radovi</p>
-      <h2 class="split">Pogledajte što izlazi iz naše radionice.</h2>
       <p>Izbor projekata iz domova i prostora diljem Zagreba i okolice. Svaki je krojen po mjeri prostora i želja.</p>
     </div>
 
-    <!-- ZAMIJENI fotografije pravim radovima (zadrži .ph kao rezervnu teksturu) -->
-    <article class="row row--left">
-      <div class="row-tint" aria-hidden="true"></div>
-      <figure class="row-media"><div class="row-media-in ph oak">
-        <img src="https://images.pexels.com/photos/3847520/pexels-photo-3847520.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Kuhinja s drvenim elementima po mjeri" loading="lazy" onerror="this.remove()">
-      </div></figure>
-      <div class="row-card">
-        <div class="card-head">
-          <svg class="mini-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="37" class="in"/><text x="50" y="61" text-anchor="middle">01</text></svg>
-          <div><h3>Kuhinja od masivnog hrasta</h3><p class="meta">Kuhinje · Samobor</p></div>
+    <div class="bento">
+      <article class="svc svc--xl">
+        <div class="svc-media"><img src="https://images.pexels.com/photos/3847520/pexels-photo-3847520.jpeg?auto=compress&cs=tinysrgb&w=1800" alt="Kuhinja s drvenim elementima po mjeri" loading="lazy"></div>
+        <div class="svc-card">
+          <span class="svc-no">01</span>
+          <h3>Kuhinje po mjeri</h3>
+          <p>Kuhinja krojena za vaš prostor i navike — od prvog mjerenja do ugradnje i završnog podešavanja.</p>
+          <p class="svc-ex">Primjer: Kuhinja od masivnog hrasta · Samobor</p>
+          <a class="btn btn-oak btn-arrow btn-sm magnetic" href="#upit" data-tip="Kuhinja po mjeri"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
         </div>
-        <a class="btn btn-primary btn-sm magnetic" href="#upit" data-tip="Kuhinja po mjeri"><span>Zatražite ponudu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
+      </article>
 
-    <article class="row row--right">
-      <div class="row-tint" aria-hidden="true"></div>
-      <figure class="row-media"><div class="row-media-in ph walnut">
-        <img src="https://images.pexels.com/photos/6670657/pexels-photo-6670657.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Garderoba s drvenim policama i ugradbenim ormarima" loading="lazy" onerror="this.remove()">
-      </div></figure>
-      <div class="row-card">
-        <div class="card-head">
-          <svg class="mini-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="37" class="in"/><text x="50" y="61" text-anchor="middle">02</text></svg>
-          <div><h3>Ugradbeni ormar s kliznim vratima</h3><p class="meta">Ormari · Zagreb</p></div>
+      <article class="svc svc--md">
+        <div class="svc-media"><img src="https://images.pexels.com/photos/6670657/pexels-photo-6670657.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Garderoba s drvenim policama i ugradbenim ormarima" loading="lazy"></div>
+        <div class="svc-card">
+          <span class="svc-no">02</span>
+          <h3>Ugradbeni ormari</h3>
+          <p>Ormari od poda do stropa, niše i potkrovlja. Unutrašnjost prema onome što spremate.</p>
+          <p class="svc-ex">Primjer: Ugradbeni ormar s kliznim vratima · Zagreb</p>
+          <a class="btn btn-oak btn-arrow btn-sm magnetic" href="#upit" data-tip="Ugradbeni ormar"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
         </div>
-        <a class="btn btn-primary btn-sm magnetic" href="#upit" data-tip="Ugradbeni ormar"><span>Zatražite ponudu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
+      </article>
 
-    <article class="row row--left">
-      <div class="row-tint" aria-hidden="true"></div>
-      <figure class="row-media"><div class="row-media-in ph pine">
-        <img src="https://images.pexels.com/photos/37184165/pexels-photo-37184165.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Blagovaonica s masivnim drvenim stolom i stolicama" loading="lazy" onerror="this.remove()">
-      </div></figure>
-      <div class="row-card">
-        <div class="card-head">
-          <svg class="mini-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="37" class="in"/><text x="50" y="61" text-anchor="middle">03</text></svg>
-          <div><h3>Blagovaonski stol</h3><p class="meta">Namještaj · Sveta Nedelja</p></div>
+      <article class="svc svc--md svc--tall">
+        <div class="svc-media"><img src="https://images.pexels.com/photos/37184165/pexels-photo-37184165.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Blagovaonica s masivnim drvenim stolom i stolicama" loading="lazy"></div>
+        <div class="svc-card">
+          <span class="svc-no">03</span>
+          <h3>Namještaj po mjeri</h3>
+          <p>Stolovi, komode, police i kreveti od masivnog drva — izrađeni jednom, da traju.</p>
+          <p class="svc-ex">Primjer: Blagovaonski stol · Sveta Nedelja</p>
+          <a class="btn btn-oak btn-arrow btn-sm magnetic" href="#upit" data-tip="Namještaj po mjeri"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
         </div>
-        <a class="btn btn-primary btn-sm magnetic" href="#upit" data-tip="Namještaj po mjeri"><span>Zatražite ponudu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
+      </article>
 
-    <article class="row row--right">
-      <div class="row-tint" aria-hidden="true"></div>
-      <figure class="row-media"><div class="row-media-in ph green">
-        <img src="https://images.pexels.com/photos/8134804/pexels-photo-8134804.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Drvene unutarnje stepenice sa staklenom ogradom" loading="lazy" onerror="this.remove()">
-      </div></figure>
-      <div class="row-card">
-        <div class="card-head">
-          <svg class="mini-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="37" class="in"/><text x="50" y="61" text-anchor="middle">04</text></svg>
-          <div><h3>Unutarnje stepenice</h3><p class="meta">Interijer · Bregana</p></div>
+      <article class="svc svc--md">
+        <div class="svc-media"><img src="https://images.pexels.com/photos/8134804/pexels-photo-8134804.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Drvene unutarnje stepenice sa staklenom ogradom" loading="lazy"></div>
+        <div class="svc-card">
+          <span class="svc-no">04</span>
+          <h3>Stepenice i interijeri</h3>
+          <p>Unutarnje stepenice, obloge i drveni detalji koji povezuju prostor.</p>
+          <p class="svc-ex">Primjer: Unutarnje stepenice · Bregana</p>
+          <a class="btn btn-oak btn-arrow btn-sm magnetic" href="#upit" data-tip="Stepenice"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
         </div>
-        <a class="btn btn-primary btn-sm magnetic" href="#upit" data-tip="Stepenice"><span>Zatražite ponudu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
+      </article>
 
-    <article class="row row--left">
-      <div class="row-tint" aria-hidden="true"></div>
-      <figure class="row-media"><div class="row-media-in ph oak">
-        <img src="https://images.pexels.com/photos/31771715/pexels-photo-31771715.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Recepcija obložena drvom u poslovnom prostoru" loading="lazy" onerror="this.remove()">
-      </div></figure>
-      <div class="row-card">
-        <div class="card-head">
-          <svg class="mini-mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="37" class="in"/><text x="50" y="61" text-anchor="middle">05</text></svg>
-          <div><h3>Recepcija lokala</h3><p class="meta">Poslovni prostor · Zagreb</p></div>
+      <article class="svc svc--wide">
+        <div class="svc-media"><img src="https://images.pexels.com/photos/31771715/pexels-photo-31771715.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Recepcija obložena drvom u poslovnom prostoru" loading="lazy"></div>
+        <div class="svc-card">
+          <span class="svc-no">05</span>
+          <h3>Poslovni prostor / lokal</h3>
+          <p>Recepcije, pultovi i namještaj za lokale — po mjeri, u dogovorenom roku.</p>
+          <p class="svc-ex">Primjer: Recepcija lokala · Zagreb</p>
+          <a class="btn btn-oak btn-arrow btn-sm magnetic" href="#upit" data-tip="Poslovni prostor / lokal"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
         </div>
-        <a class="btn btn-primary btn-sm magnetic" href="#upit" data-tip="Poslovni prostor / lokal"><span>Zatražite ponudu</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VRIJEDNOSTI (horizontalni niz tamnih kartica) ============ -->
+<section class="values" id="vrijednosti">
+  <div class="values-pin">
+    <div class="wrap values-head">
+      <p class="chip">Naše vrijednosti</p>
+      <h2 class="split">Što vam jamčimo na svakom poslu.</h2>
+    </div>
+    <div class="values-track">
+      <article class="val"><img src="https://images.pexels.com/photos/5974283/pexels-photo-5974283.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Makro: dlijeto dubi utor za čep u dasci" loading="lazy"><div class="val-in"><span class="val-no">01</span><h3>Predanost</h3><p>Svaki komad radimo do kraja, bez prečaca — i kad nas nitko ne gleda.</p><span class="val-tag">Utor i čep, ručno</span></div></article>
+      <article class="val"><img src="https://images.pexels.com/photos/5711901/pexels-photo-5711901.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Makro: ručna dlijeta i bat na radnom stolu" loading="lazy"><div class="val-in"><span class="val-no">02</span><h3>Pažnja prema svakom klijentu</h3><p>Dođemo, izmjerimo, poslušamo. Rješenje krojimo za vaš prostor i život.</p><span class="val-tag">Ručni alati</span></div></article>
+      <article class="val"><img src="https://images.pexels.com/photos/5974350/pexels-photo-5974350.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Makro: ručno nanošenje završnog premaza na drvo" loading="lazy"><div class="val-in"><span class="val-no">03</span><h3>Poštena riječ</h3><p>Dogovorena cijena i rok su dogovor. Bez skrivenih troškova i izmišljanja.</p><span class="val-tag">Ručna završna obrada</span></div></article>
+      <article class="val"><img src="https://images.pexels.com/photos/326333/pexels-photo-326333.jpeg?auto=compress&cs=tinysrgb&w=1000" alt="Makro: struktura tamnog masivnog drva" loading="lazy"><div class="val-in"><span class="val-no">04</span><h3>Domaći materijal, domaća ruka</h3><p>Radimo s provjerenim hrvatskim dobavljačima i masivnim drvom koje traje.</p><span class="val-tag">Masivno drvo</span></div></article>
+      <article class="val val--cta"><div class="val-in"><span class="val-no">→</span><h3>Imate ideju?</h3><p>Ostavite par podataka i javljamo se u roku jednog radnog dana — bez obaveze.</p><a class="btn btn-dark btn-arrow magnetic" href="#upit"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Kuhinje po mjeri</span><b>✦</b><span>Ugradbeni ormari</span><b>✦</b><span>Namještaj po mjeri</span><b>✦</b><span>Stepenice i interijeri</span><b>✦</b>
+    <span>Kuhinje po mjeri</span><b>✦</b><span>Ugradbeni ormari</span><b>✦</b><span>Namještaj po mjeri</span><b>✦</b><span>Stepenice i interijeri</span><b>✦</b>
+  </div>
+</div>
+
+<!-- ============ IZJAVA (fotografija + topli panel) ============ -->
+<section class="statement">
+  <figure class="st-media"><img src="https://images.pexels.com/photos/7109995/pexels-photo-7109995.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Blanja, dlijeto i strugotine na drvenom stolu" loading="lazy"></figure>
+  <div class="st-panel">
+    <p class="st-text" id="stText">Ne radimo brzo. Radimo dobro — i zato nas zovu ljudi kojima je prvi put bilo zadovoljstvo.</p>
+    <p class="st-sign">— Ante Vidović, osnivač</p>
   </div>
 </section>
 
 <!-- ============ KAKO RADIMO ============ -->
 <section class="blk process" id="proces">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="eyebrow">Kako radimo</p>
+  <div class="wrap proc-grid">
+    <figure class="proc-media"><div class="mask"><img src="https://images.pexels.com/photos/374861/pexels-photo-374861.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Ruke majstora blanjaju dasku u radionici" loading="lazy"></div></figure>
+    <div class="proc-copy">
+      <p class="chip">Kako radimo</p>
       <h2 class="split">Od prvog poziva do gotovog namještaja.</h2>
-      <p>Jednostavno i bez iznenađenja. Točno znate što slijedi i kada.</p>
-    </div>
-    <div class="steps">
-      <div class="steps-line" aria-hidden="true"><span></span></div>
-      <div class="step"><div class="dot" aria-hidden="true"></div><div class="num">KORAK 01</div><h3>Upit i razgovor</h3><p>Javite se preko forme ili telefona. Saslušamo što vam treba i odgovorimo iskreno je li to za nas.</p></div>
-      <div class="step"><div class="dot" aria-hidden="true"></div><div class="num">KORAK 02</div><h3>Dolazak i mjerenje</h3><p>Dođemo na lokaciju, sve izmjerimo i posavjetujemo oko materijala i rješenja.</p></div>
-      <div class="step"><div class="dot" aria-hidden="true"></div><div class="num">KORAK 03</div><h3>Nacrt i ponuda</h3><p>Dobijete jasan prijedlog, nacrt i fiksnu ponudu s rokom. Bez sitnih slova.</p></div>
-      <div class="step"><div class="dot" aria-hidden="true"></div><div class="num">KORAK 04</div><h3>Izrada i ugradnja</h3><p>Izradimo u radionici i uredno ugradimo. Za sobom čistimo i ostavljamo gotov posao.</p></div>
+      <p class="proc-lead">Jednostavno i bez iznenađenja. Točno znate što slijedi i kada.</p>
+      <ol class="steps">
+        <li class="step"><span class="num">01</span><div><h3>Upit i razgovor</h3><p>Javite se preko forme ili telefona. Saslušamo što vam treba i odgovorimo iskreno je li to za nas.</p></div></li>
+        <li class="step"><span class="num">02</span><div><h3>Dolazak i mjerenje</h3><p>Dođemo na lokaciju, sve izmjerimo i posavjetujemo oko materijala i rješenja.</p></div></li>
+        <li class="step"><span class="num">03</span><div><h3>Nacrt i ponuda</h3><p>Dobijete jasan prijedlog, nacrt i fiksnu ponudu s rokom. Bez sitnih slova.</p></div></li>
+        <li class="step"><span class="num">04</span><div><h3>Izrada i ugradnja</h3><p>Izradimo u radionici i uredno ugradimo. Za sobom čistimo i ostavljamo gotov posao.</p></div></li>
+      </ol>
+      <a class="btn btn-dark btn-arrow magnetic" href="#upit"><span>Krenimo s korakom 01</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
     </div>
   </div>
 </section>
 
-<!-- ============ RIJEČ KLIJENATA ============ -->
-<section class="blk says">
+<!-- ============ RECENZIJE ============ -->
+<section class="blk says" id="recenzije">
+  <div class="wrap says-grid">
+    <div class="says-head">
+      <p class="chip">Riječ klijenata</p>
+      <h2 class="split">Najviše posla dolazi nam preporukom.</h2>
+      <div class="says-nav">
+        <button class="circ" id="prev" aria-label="Prethodna recenzija"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="circ circ--oak" id="next" aria-label="Sljedeća recenzija"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+    <div class="quotes-view">
+      <div class="quotes" id="quotes">
+        <figure class="quote">
+          <span class="qmark" aria-hidden="true">“</span>
+          <blockquote>„Kuhinju su napravili točno po mjeri našeg malog prostora i u dogovorenom roku. Marko je došao tri puta dok nije bilo savršeno. Preporuka od srca.”</blockquote>
+          <figcaption><span class="av">IK</span><span><b>Ivana K.</b>Samobor</span><span class="stars" aria-label="Ocjena 5 od 5">★★★★★</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="qmark" aria-hidden="true">“</span>
+          <blockquote>„Tražio sam ozbiljnog majstora za ugradbene ormare. Dobio sam poštenu cijenu, čist rad i ljude na koje se može osloniti. Vidi se 30 godina iskustva.”</blockquote>
+          <figcaption><span class="av">DM</span><span><b>Davor M.</b>Zagreb</span><span class="stars" aria-label="Ocjena 5 od 5">★★★★★</span></figcaption>
+        </figure>
+        <figure class="quote">
+          <span class="qmark" aria-hidden="true">“</span>
+          <blockquote>„Renovirali smo kuću i njima povjerili stepenice i stolove. Sve dogovoreno na riječ i sve ispoštovano. Rijetkost danas.”</blockquote>
+          <figcaption><span class="av">PB</span><span><b>Petra B.</b>Bregana</span><span class="stars" aria-label="Ocjena 5 od 5">★★★★★</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROSTORI (cijele sobe) ============ -->
+<section class="blk rooms">
   <div class="wrap">
     <div class="sec-head sec-head--center">
-      <p class="eyebrow">Riječ klijenata</p>
-      <h2 class="split">Najviše posla dolazi nam preporukom.</h2>
+      <p class="chip">Iz domova naših klijenata</p>
+      <h2 class="split">Od detalja do cijelog prostora.</h2>
     </div>
-    <div class="quotes">
-      <figure class="quote">
-        <div class="stars" aria-label="Ocjena 5 od 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
-        <blockquote>„Kuhinju su napravili točno po mjeri našeg malog prostora i u dogovorenom roku. Marko je došao tri puta dok nije bilo savršeno. Preporuka od srca.”</blockquote>
-        <figcaption class="who"><b>Ivana K.</b>Samobor</figcaption>
-      </figure>
-      <figure class="quote">
-        <div class="stars" aria-label="Ocjena 5 od 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
-        <blockquote>„Tražio sam ozbiljnog majstora za ugradbene ormare. Dobio sam poštenu cijenu, čist rad i ljude na koje se može osloniti. Vidi se 30 godina iskustva.”</blockquote>
-        <figcaption class="who"><b>Davor M.</b>Zagreb</figcaption>
-      </figure>
-      <figure class="quote">
-        <div class="stars" aria-label="Ocjena 5 od 5"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></div>
-        <blockquote>„Renovirali smo kuću i njima povjerili stepenice i stolove. Sve dogovoreno na riječ i sve ispoštovano. Rijetkost danas.”</blockquote>
-        <figcaption class="who"><b>Petra B.</b>Bregana</figcaption>
-      </figure>
+    <div class="rooms-grid">
+      <figure class="room room--a"><img src="https://images.pexels.com/photos/6180674/pexels-photo-6180674.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Svijetao stan s drvenim podom, policama i blagovaonicom" loading="lazy"><figcaption>Dnevni prostor</figcaption></figure>
+      <figure class="room room--b"><img src="https://images.pexels.com/photos/12119223/pexels-photo-12119223.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Kuhinja s tamnim drvenim elementima i otokom" loading="lazy"><figcaption>Kuhinja</figcaption></figure>
+      <figure class="room room--c"><img src="https://images.pexels.com/photos/5711901/pexels-photo-5711901.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Makro: ručni alati na radnom stolu u radionici" loading="lazy"><figcaption>Radionica</figcaption></figure>
+      <figure class="room room--d"><img src="https://images.pexels.com/photos/18657158/pexels-photo-18657158.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Dnevni boravak s drvenim zidnim policama" loading="lazy"><figcaption>Police po mjeri</figcaption></figure>
     </div>
   </div>
 </section>
 
-<!-- ============ UPIT (tamni blok preko fotografije) ============ -->
+<!-- ============ UPIT ============ -->
 <section class="cta" id="upit">
-  <div class="cta-bg ph walnut" aria-hidden="true">
-    <img src="https://images.pexels.com/photos/7109995/pexels-photo-7109995.jpeg?auto=compress&cs=tinysrgb&w=2200" alt="" loading="lazy" onerror="this.remove()">
-  </div>
+  <div class="cta-bg" aria-hidden="true"><img src="https://images.pexels.com/photos/19208266/pexels-photo-19208266.jpeg?auto=compress&cs=tinysrgb&w=2400" alt="" loading="lazy"></div>
   <div class="wrap cta-grid">
     <div class="cta-copy">
-      <p class="eyebrow">Zatražite ponudu</p>
+      <p class="chip chip--light">Zatražite ponudu</p>
       <h2 class="cta-title split">Imate ideju? Recite nam.</h2>
       <p class="cta-lead">Ostavite par podataka i javljamo se u roku jednog radnog dana — bez obaveze. Najbrže je da nazovete ili pišete na WhatsApp.</p>
-
       <div class="contact-rows">
-        <a class="crow link" href="tel:+385912345678">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <span><span class="ck">Telefon</span><span class="cv">091 234 5678</span></span>
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-        </a>
-        <a class="crow link" href="https://wa.me/385912345678" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.2 8.2 0 0 1 2.42 5.83c0 4.55-3.7 8.25-8.26 8.25a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.55 3.7-8.25 8.26-8.25zm4.52 11.43c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.48-.02s-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
-          <span><span class="ck">WhatsApp</span><span class="cv">Pišite nam poruku</span></span>
-          <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-        </a>
-        <div class="crow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span><span class="ck">Radionica</span><span class="cv">Bobovica 00, Samobor</span></span>
-        </div>
+        <a class="crow" href="tel:+385912345678"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span><span class="ck">Telefon</span><span class="cv">091 234 5678</span></span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
+        <a class="crow" href="https://wa.me/385912345678" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.2 8.2 0 0 1 2.42 5.83c0 4.55-3.7 8.25-8.26 8.25a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.55 3.7-8.25 8.26-8.25zm4.52 11.43c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.48-.02s-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg><span><span class="ck">WhatsApp</span><span class="cv">Pišite nam poruku</span></span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
+        <div class="crow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><span class="ck">Radionica</span><span class="cv">Bobovica 00, Samobor</span></span></div>
       </div>
     </div>
 
-    <!-- ===== FORMA ===== -->
     <div class="form-card">
       <div id="form-view">
         <h3>Pošaljite upit</h3>
         <p class="sub">Ispunite ukratko — dovoljno je ime i broj telefona.</p>
-
-        <!-- Netlify Forms: kad se stranica deploya na Netlify, svi upiti automatski
-             stižu u Netlify dashboard + e-mail notifikacija. Bez backenda. -->
+        <!-- Netlify Forms: kad se stranica deploya na Netlify, upiti stižu u Netlify dashboard + e-mail. -->
         <form name="upit" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead-form">
           <input type="hidden" name="form-name" value="upit" />
           <p style="display:none"><label>Ne ispunjavati: <input name="bot-field" /></label></p>
-
           <div class="two">
-            <div class="field">
-              <input id="ime" name="ime" type="text" required autocomplete="name" placeholder=" " />
-              <label for="ime">Ime i prezime</label>
-            </div>
-            <div class="field">
-              <input id="tel" name="telefon" type="tel" required autocomplete="tel" placeholder=" " />
-              <label for="tel">Telefon</label>
-            </div>
+            <div class="field"><input id="ime" name="ime" type="text" required autocomplete="name" placeholder=" " /><label for="ime">Ime i prezime</label></div>
+            <div class="field"><input id="tel" name="telefon" type="tel" required autocomplete="tel" placeholder=" " /><label for="tel">Telefon</label></div>
           </div>
-
-          <div class="field field--select">
-            <select id="tip" name="tip_projekta">
-              <option>Kuhinja po mjeri</option>
-              <option>Ugradbeni ormar</option>
-              <option>Namještaj po mjeri</option>
-              <option>Stepenice</option>
-              <option>Poslovni prostor / lokal</option>
-              <option>Nešto drugo</option>
-            </select>
-            <label for="tip">Što vas zanima?</label>
-          </div>
-
-          <div class="field">
-            <textarea id="poruka" name="poruka" placeholder=" "></textarea>
-            <label for="poruka">Ukratko o projektu <span class="opt">(neobavezno)</span></label>
-          </div>
-
-          <button class="btn btn-dark" type="submit"><span>Pošalji upit</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <fieldset class="opts">
+            <legend>Što vas zanima?</legend>
+            <label><input type="radio" name="tip_projekta" value="Kuhinja po mjeri" checked><span>Kuhinja</span></label>
+            <label><input type="radio" name="tip_projekta" value="Ugradbeni ormar"><span>Ormar</span></label>
+            <label><input type="radio" name="tip_projekta" value="Namještaj po mjeri"><span>Namještaj</span></label>
+            <label><input type="radio" name="tip_projekta" value="Stepenice"><span>Stepenice</span></label>
+            <label><input type="radio" name="tip_projekta" value="Poslovni prostor / lokal"><span>Lokal</span></label>
+            <label><input type="radio" name="tip_projekta" value="Nešto drugo"><span>Nešto drugo</span></label>
+          </fieldset>
+          <div class="field"><textarea id="poruka" name="poruka" placeholder=" "></textarea><label for="poruka">Ukratko o projektu <span class="opt">(neobavezno)</span></label></div>
+          <button class="btn btn-dark btn-arrow btn-block" type="submit"><span>Pošalji upit</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></button>
           <p class="form-note">Javljamo se unutar 1 radnog dana · bez obaveze</p>
         </form>
       </div>
-
       <div class="form-success" id="form-ok" aria-live="polite">
         <svg class="ok" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="2.5"><circle class="ok-c" cx="26" cy="26" r="24"/><path class="ok-t" d="m15 27 7 7 15-16"/></svg>
         <h3>Upit zaprimljen — hvala!</h3>
@@ -367,58 +347,27 @@
 <footer class="site">
   <div class="wrap foot-top">
     <div class="foot-brand">
-      <svg class="foot-mark" viewBox="0 0 100 100" aria-hidden="true">
-        <circle cx="50" cy="50" r="47" fill="none" stroke="#A87C44" stroke-width="2"/>
-        <circle cx="50" cy="50" r="38" fill="none" stroke="#A87C44" stroke-width="1" opacity=".5"/>
-        <text x="50" y="60" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="34" fill="#33271F">SV</text>
-      </svg>
-      <b>Stolarija Vidović</b>
+      <a class="brand brand--foot" href="#vrh">
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="1" opacity=".5"/><text x="50" y="60" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="34" fill="currentColor">SV</text></svg>
+        <span><b>Stolarija Vidović</b><small>Samobor · od 1994.</small></span>
+      </a>
       <p>Obiteljski stolarski obrt iz Samobora. Namještaj po mjeri od 1994.</p>
       <p class="foot-quote">„Ne radimo brzo. Radimo dobro.”</p>
     </div>
-    <div class="foot-col">
-      <h4>Usluge</h4>
-      <a class="ulink" href="#radovi">Kuhinje po mjeri</a>
-      <a class="ulink" href="#radovi">Ugradbeni ormari</a>
-      <a class="ulink" href="#radovi">Namještaj po mjeri</a>
-      <a class="ulink" href="#radovi">Stepenice i interijeri</a>
-    </div>
-    <div class="foot-col">
-      <h4>Kontakt</h4>
-      <a class="ulink" href="tel:+385912345678">091 234 5678</a>
-      <a class="ulink" href="mailto:upiti@stolarija-vidovic.hr">upiti@stolarija-vidovic.hr</a>
-      <p>Bobovica 00, Samobor</p>
-      <p>Pon–Pet 8–16 · Sub po dogovoru</p>
-    </div>
-    <div class="foot-col">
-      <h4>Brzo</h4>
-      <a class="ulink" href="#prica">Naša priča</a>
-      <a class="ulink" href="#proces">Kako radimo</a>
-      <a class="ulink" href="#upit">Zatražite ponudu</a>
-    </div>
-    <a class="foot-tile" href="#upit">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-      <span>Zatražite ponudu</span>
-    </a>
+    <div class="foot-col"><h4>Usluge</h4><a href="#usluge">Kuhinje po mjeri</a><a href="#usluge">Ugradbeni ormari</a><a href="#usluge">Namještaj po mjeri</a><a href="#usluge">Stepenice i interijeri</a></div>
+    <div class="foot-col"><h4>Kontakt</h4><a href="tel:+385912345678">091 234 5678</a><a href="mailto:upiti@stolarija-vidovic.hr">upiti@stolarija-vidovic.hr</a><p>Bobovica 00, Samobor</p><p>Pon–Pet 8–16 · Sub po dogovoru</p></div>
+    <div class="foot-col"><h4>Brzo</h4><a href="#prica">Naša priča</a><a href="#proces">Kako radimo</a><a href="#upit">Zatražite ponudu</a></div>
+    <a class="foot-tile" href="#upit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg><span>Zatražite ponudu</span></a>
   </div>
+  <div class="foot-giant" aria-hidden="true"><div class="fg-track"><span>Vidović<sup>®</sup> <i>Samobor · od 1994.</i></span><span>Vidović<sup>®</sup> <i>Samobor · od 1994.</i></span><span>Vidović<sup>®</sup> <i>Samobor · od 1994.</i></span><span>Vidović<sup>®</sup> <i>Samobor · od 1994.</i></span></div></div>
   <div class="wrap foot-bottom">
     <span>© <span id="yr"></span> Obrt Stolarija Vidović, Samobor · OIB: 00000000000</span>
-    <span>Izrada: Velpo</span>
+    <span>Fotografije: Pexels · Izrada: Velpo</span>
   </div>
-  <div class="foot-giant" aria-hidden="true">Vidović</div>
 </footer>
 
-<!-- ============ STICKY CTA ============ -->
-<div class="sticky" id="sticky">
-  <div class="in">
-    <div class="txt">Trebate namještaj po mjeri?<span>Besplatna ponuda, bez obaveze</span></div>
-    <div class="acts">
-      <a class="btn btn-ghost ghost-sm" href="tel:+385912345678">Nazovite</a>
-      <a class="btn btn-primary" href="#upit"><span>Zatražite ponudu</span></a>
-    </div>
-  </div>
-</div>
-
+<!-- Uvijek vidljiv gumb za ponudu -->
+<a class="fab" id="fab" href="#upit"><span>Zatražite ponudu</span><i class="arr" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></svg></i></a>
 <div class="progress" aria-hidden="true"><span id="progress"></span></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

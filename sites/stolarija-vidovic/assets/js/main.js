@@ -1,319 +1,266 @@
-/* Stolarija Vidović — motion
-   GSAP + ScrollTrigger + Lenis (CDN). Ako se biblioteke ne učitaju ili korisnik
-   traži smanjeno kretanje, sav sadržaj je odmah vidljiv i stranica radi normalno. */
+/* Stolarija Vidović — motion (v2)
+   GSAP + ScrollTrigger + Lenis (CDN). Bez biblioteka ili uz smanjeno kretanje
+   sav je sadržaj odmah vidljiv, a slider, hero pločice i forma rade i dalje. */
 (function () {
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const root = document.documentElement;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ---------- Osnovno (radi i bez animacija) ----------
   $('#yr').textContent = new Date().getFullYear();
 
+  // ---------- Header, traka napretka, plutajući gumb, aktivni link ----------
   const header = $('#header');
-  const sticky = $('#sticky');
+  const fab = $('#fab');
   const hero = $('#vrh');
   const upit = $('#upit');
   const bar = $('#progress');
+  const links = $$('.nav-pill a');
+  const secs = links.map((a) => $(a.getAttribute('href')));
   let lastY = 0;
-
   function onScroll() {
     const y = window.scrollY;
-    header.classList.toggle('scrolled', y > 40);
-    header.classList.toggle('hide', y > lastY && y > 400);
+    header.classList.toggle('scrolled', y > 60);
+    header.classList.toggle('hide', y > lastY + 2 && y > 500);
+    if (y < lastY - 2) header.classList.remove('hide');
     lastY = y;
-    const pastHero = y > hero.offsetHeight * 0.55;
-    const atForm = upit.getBoundingClientRect().top < window.innerHeight * 0.7;
-    sticky.classList.toggle('show', pastHero && !atForm);
+    const r = upit.getBoundingClientRect();
+    const atForm = r.top < window.innerHeight * 0.8 && r.bottom > 0;
+    fab.classList.toggle('show', y > hero.offsetHeight * 0.6 && !atForm);
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    if (bar) bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+    bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+    let cur = -1;
+    secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.4) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === cur));
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Gumb "Zatražite ponudu" na radovima unaprijed odabere vrstu projekta
+  // ---------- Hero: pločice detalja mijenjaju pozadinu (auto svakih 6 s) ----------
+  const imgs = $$('.hero-img');
+  const thumbs = $$('.thumb');
+  let hi = 0, timer = null;
+  function showHero(i) {
+    hi = i;
+    imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
+    thumbs.forEach((t, k) => {
+      t.classList.toggle('is-on', k === i);
+      t.setAttribute('aria-selected', k === i ? 'true' : 'false');
+      const ring = $('.ring', t); // restart animacije trake
+      ring.style.animation = 'none'; void ring.offsetWidth; ring.style.animation = '';
+    });
+  }
+  function auto() { clearInterval(timer); if (!reduced) timer = setInterval(() => showHero((hi + 1) % imgs.length), 6000); }
+  thumbs.forEach((t) => t.addEventListener('click', () => { showHero(+t.dataset.i); auto(); }));
+  auto();
+
+  // ---------- Gumbi usluga unaprijed odaberu vrstu projekta ----------
   $$('[data-tip]').forEach((a) =>
     a.addEventListener('click', () => {
-      const sel = $('#tip');
-      const opt = Array.from(sel.options).find((o) => o.text === a.dataset.tip);
-      if (opt) {
-        sel.value = opt.value;
-        const f = sel.closest('.field');
-        f.classList.add('flash');
-        setTimeout(() => f.classList.remove('flash'), 1400);
+      const r = $$('.opts input').find((i) => i.value === a.dataset.tip);
+      if (r) {
+        r.checked = true;
+        const f = $('.opts'); f.classList.remove('flash'); void f.offsetWidth; f.classList.add('flash');
       }
     })
   );
 
-  // Forma: pokušaj Netlify slanje, u svakom slučaju prikaži potvrdu (za demo)
+  // ---------- Forma ----------
   const form = $('#lead-form');
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
-    if (!form.ime.value.trim() || !form.telefon.value.trim()) {
-      form.reportValidity();
-      return;
-    }
+    if (!form.ime.value.trim() || !form.telefon.value.trim()) { form.reportValidity(); return; }
     const data = new URLSearchParams(new FormData(form)).toString();
     fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data })
-      .catch(() => {}) // na lokalnom pregledu fetch ne uspije — to je ok za demo
+      .catch(() => {}) // lokalno ne uspije — za demo je u redu
       .finally(() => {
         $('#form-view').style.display = 'none';
         $('#form-ok').classList.add('show');
-        $('#form-ok').scrollIntoView({ behavior: 'smooth', block: 'center' });
       });
   });
 
-  // ---------- Motion ----------
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // ---------- Slider recenzija ----------
+  const track = $('#quotes');
+  const qs = $$('.quote', track);
+  let qi = 0;
+  function maxIndex() {
+    const view = track.parentElement.clientWidth;
+    const step = qs[0].offsetWidth + 16;
+    return Math.max(0, Math.ceil((track.scrollWidth - view) / step));
+  }
+  function goQ(i) {
+    qi = Math.max(0, Math.min(i, maxIndex()));
+    track.style.transform = `translateX(${-qi * (qs[0].offsetWidth + 16)}px)`;
+  }
+  $('#next').addEventListener('click', () => goQ(qi >= maxIndex() ? 0 : qi + 1));
+  $('#prev').addEventListener('click', () => goQ(qi <= 0 ? maxIndex() : qi - 1));
+  window.addEventListener('resize', () => goQ(qi));
+
+  // ---------- Izjava: riječi u spanove ----------
+  const st = $('#stText');
+  st.innerHTML = st.textContent.trim().split(/\s+/).map((w) => `<span class="sw">${w}</span>`).join(' ');
+
+  // ================= MOTION =================
   const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
   if (reduced || !hasGsap) {
     root.classList.add('no-motion');
+    $$('.sw').forEach((s) => (s.style.opacity = 1));
     return;
   }
-
   gsap.registerPlugin(ScrollTrigger);
   const ease = 'expo.out';
 
-  // Lenis glatki skrol
-  let lenis = null;
+  // Lenis
   if (typeof window.Lenis !== 'undefined') {
-    lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
-    // sidra idu kroz Lenis
     $$('a[href^="#"]').forEach((a) =>
       a.addEventListener('click', (e) => {
         const id = a.getAttribute('href');
         const el = id.length > 1 && $(id);
         if (!el) return;
         e.preventDefault();
-        lenis.scrollTo(el, { offset: id === '#vrh' ? 0 : -70, duration: 1.4 });
+        lenis.scrollTo(el, { offset: id === '#vrh' ? 0 : -90, duration: 1.4 });
       })
     );
   }
 
-  // Razbij naslove na riječi za maskirani reveal
+  // Riječi naslova
   $$('.split').forEach((el) => {
-    const words = el.textContent.trim().split(/\s+/);
-    el.setAttribute('aria-label', el.textContent.trim());
-    el.innerHTML = words.map((w) => `<span class="w" aria-hidden="true"><span>${w}</span></span>`).join(' ');
+    const t = el.textContent.trim();
+    el.setAttribute('aria-label', t);
+    el.innerHTML = t.split(/\s+/).map((w) => `<span class="w" aria-hidden="true"><span>${w}</span></span>`).join(' ');
   });
 
-  // ----- Loader + intro -----
-  const intro = gsap.timeline({ defaults: { ease } });
+  // ----- Intro heroja -----
   gsap.set('.hero-title .line > span', { yPercent: 110 });
-  gsap.set('[data-hero]', { y: 24, autoAlpha: 0 });
-  gsap.set('.hero-media-in', { clipPath: 'inset(100% 0% 0% 0%)' });
-  gsap.set('.hero-media-in img', { scale: 1.25 });
-  gsap.set('.hero-stamp', { scale: 0, rotate: -120 });
-  gsap.set('header.site .nav > *', { y: -20, autoAlpha: 0 });
+  gsap.set('[data-hero]', { y: 26, autoAlpha: 0 });
+  gsap.set('.thumb', { y: 30, autoAlpha: 0 });
+  gsap.set('.nav > *', { y: -16, autoAlpha: 0 });
+  gsap.timeline({ defaults: { ease }, delay: 0.15 })
+    .from('.hero-bg', { scale: 1.18, duration: 2.4, ease: 'power3.out' }, 0)
+    .to('.nav > *', { y: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, 0.3)
+    .to('.hero-in .chip', { y: 0, autoAlpha: 1, duration: 1 }, 0.35)
+    .to('.hero-title .line > span', { yPercent: 0, duration: 1.3, stagger: 0.1 }, 0.45)
+    .to('.hero-lead, .hero-cta', { y: 0, autoAlpha: 1, duration: 1.1, stagger: 0.1 }, 0.8)
+    .to('.hero-thumbs', { y: 0, autoAlpha: 1, duration: 0.01 }, 0.9)
+    .to('.thumb', { y: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, 0.95);
 
-  intro
-    .to('.lm-ring', { strokeDashoffset: 0, duration: 1.1, ease: 'power2.inOut', stagger: 0.12 })
-    .to('.lm-sv', { opacity: 1, duration: 0.5 }, '-=.5')
-    .to('.loader-line span', { scaleX: 1, duration: 0.9, ease: 'power2.inOut' }, 0)
-    .to('#loader', { yPercent: -100, duration: 1, ease: 'expo.inOut' }, '+=.15')
-    .set('#loader', { display: 'none' })
-    .to('header.site .nav > *', { y: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, '-=.55')
-    .to('.hero-eyebrow', { y: 0, autoAlpha: 1, duration: 1 }, '-=.9')
-    .to('.hero-title .line > span', { yPercent: 0, duration: 1.3, stagger: 0.1 }, '-=.9')
-    .to('.hero-lead, .hero-cta', { y: 0, autoAlpha: 1, duration: 1.1, stagger: 0.1 }, '-=1')
-    .to('.hero-media-in', { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, '-=1.2')
-    .to('.hero-media-in img', { scale: 1, duration: 1.8 }, '<')
-    .to('.hero-stamp', { scale: 1, rotate: 0, duration: 1.2, ease: 'back.out(1.6)' }, '-=1');
+  gsap.to('.hero-bg', { yPercent: 18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero-in', { yPercent: -25, autoAlpha: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: '30% top', end: 'bottom top', scrub: true } });
 
-  // Hero: parallax fotografije, pojas teksta lagano odlazi, žig se vrti
-  gsap.to('.hero-media-in img', {
-    yPercent: 10, ease: 'none',
-    scrollTrigger: { trigger: '.hero-media', start: 'top bottom', end: 'bottom top', scrub: true },
-  });
-  gsap.to('.hero-copy', {
-    yPercent: -18, autoAlpha: 0.2, ease: 'none',
-    scrollTrigger: { trigger: '.hero-band', start: 'top top', end: 'bottom top', scrub: true },
-  });
-  gsap.to('.stamp-ring', {
-    rotate: 360, ease: 'none',
-    scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1 },
-  });
-
-  // Brojke
-  $$('[data-count]').forEach((el) => {
-    const end = +el.dataset.count;
-    const o = { v: 0 };
-    el.textContent = '0';
-    gsap.to(o, {
-      v: end, duration: 2, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      onUpdate: () => (el.textContent = Math.round(o.v)),
-    });
-  });
-  gsap.from('.stat', {
-    y: 30, autoAlpha: 0, duration: 1.1, stagger: 0.1, ease,
-    scrollTrigger: { trigger: '.trust', start: 'top 88%', once: true },
-  });
-
-  // Marquee: beskonačno, ubrzava i mijenja smjer s brzinom skrola
-  const track = $('.marquee-track');
-  if (track) {
-    let x = 0, dir = -1, speed = 0.6;
-    const half = () => track.scrollWidth / 2;
-    ScrollTrigger.create({
-      trigger: '.marquee', start: 'top bottom', end: 'bottom top',
-      onUpdate: (s) => {
-        dir = s.direction === 1 ? -1 : 1;
-        speed = 0.6 + Math.min(Math.abs(s.getVelocity()) / 300, 6);
-      },
-    });
-    gsap.ticker.add(() => {
-      x += dir * speed;
-      speed += (0.6 - speed) * 0.04;
-      const h = half();
-      if (x <= -h) x += h;
-      if (x > 0) x -= h;
-      track.style.transform = `translate3d(${x}px,0,0)`;
-    });
-  }
-
-  // Naslovi sekcija: riječi izlaze iz maske
+  // ----- Naslovi i oznake -----
   $$('.split').forEach((el) => {
-    if (el.closest('.row-card')) return; // u karticama ih animira timeline reda
-    gsap.from(el.querySelectorAll('.w > span'), {
-      yPercent: 110, duration: 1.2, stagger: 0.05, ease,
-      scrollTrigger: { trigger: el, start: 'top 86%', once: true },
-    });
+    gsap.from(el.querySelectorAll('.w > span'), { yPercent: 110, duration: 1.2, stagger: 0.045, ease, scrollTrigger: { trigger: el, start: 'top 86%', once: true } });
   });
-  $$('.sec-head').forEach((h) => {
-    gsap.from(h.querySelectorAll('.eyebrow, p'), {
-      y: 24, autoAlpha: 0, duration: 1, stagger: 0.12, ease,
-      scrollTrigger: { trigger: h, start: 'top 86%', once: true },
-    });
+  $$('.blk .chip, .values .chip, .sec-head p:not(.chip)').forEach((el) => {
+    gsap.from(el, { y: 20, autoAlpha: 0, duration: 0.9, ease, scrollTrigger: { trigger: el, start: 'top 90%', once: true } });
   });
 
-  // Redovi: tonirani blok klizi, fotografija se otkriva, kartica se podiže, oznaka se iscrta
-  $$('.row').forEach((row) => {
-    const left = row.classList.contains('row--left');
-    const tint = $('.row-tint', row);
-    const media = $('.row-media-in', row);
-    const img = $('.row-media-in img', row);
-    const card = $('.row-card', row);
-    const mark = $$('.mini-mark circle', row);
-    const markTxt = $('.mini-mark text', row);
-    const inner = card.querySelectorAll('.eyebrow, h3, .meta, .pull, .story-body p, .btn');
-    const words = card.querySelectorAll('.split .w > span');
-
-    mark.forEach((c) => {
-      const len = 2 * Math.PI * c.r.baseVal.value;
-      gsap.set(c, { strokeDasharray: len, strokeDashoffset: len });
-    });
-
-    const tl = gsap.timeline({ defaults: { ease }, scrollTrigger: { trigger: row, start: 'top 78%', once: true } });
-    tl.from(tint, { xPercent: left ? -100 : 100, duration: 1.6, ease: 'expo.inOut' })
-      .fromTo(media, { clipPath: left ? 'inset(0% 100% 0% 0%)' : 'inset(0% 0% 0% 100%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut' }, 0.15)
-      .from(img || media, { scale: 1.3, duration: 2 }, 0.15)
-      .from(card, { y: 90, autoAlpha: 0, duration: 1.4 }, 0.55)
-      .to(mark, { strokeDashoffset: 0, duration: 1.4, stagger: 0.15, ease: 'power2.inOut' }, 0.8)
-      .from(markTxt, { autoAlpha: 0, scale: 0.6, transformOrigin: '50% 50%', duration: 0.8 }, 1.2)
-      .from(words, { yPercent: 110, duration: 1.1, stagger: 0.04 }, 0.95)
-      .from(inner, { y: 22, autoAlpha: 0, duration: 1, stagger: 0.08 }, 1);
-
-    if (img) {
-      gsap.fromTo(img, { yPercent: -6 }, {
-        yPercent: 6, ease: 'none',
-        scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-    }
-    // kartica blago "pluta" suprotno od fotografije
-    gsap.fromTo(card, { y: 30 }, {
-      y: -30, ease: 'none', immediateRender: false,
-      scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true },
-    });
+  // Maskirane slike: otkrivanje + parallax
+  $$('.mask').forEach((m) => {
+    const img = $('img', m);
+    gsap.fromTo(m, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'expo.inOut', scrollTrigger: { trigger: m, start: 'top 85%', once: true } });
+    gsap.fromTo(img, { yPercent: -8, scale: 1.15 }, { yPercent: 0, scale: 1, ease: 'none', scrollTrigger: { trigger: m, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 
-  // Vrijednosti: linije i stavke redom
-  gsap.from('.values li', {
-    y: 40, autoAlpha: 0, duration: 1.1, stagger: 0.12, ease,
-    scrollTrigger: { trigger: '.values', start: 'top 85%', once: true },
+  // ----- Priča -----
+  gsap.from('.pull, .about-body p, .about-actions, .tags-title', { y: 26, autoAlpha: 0, duration: 1, stagger: 0.1, ease, scrollTrigger: { trigger: '.about-copy', start: 'top 70%', once: true } });
+  gsap.from('.tags li', { y: 14, scale: 0.9, autoAlpha: 0, duration: 0.7, stagger: 0.06, ease: 'back.out(2)', scrollTrigger: { trigger: '.tags', start: 'top 92%', once: true } });
+  gsap.fromTo('.about-macro', { y: 60 }, { y: -40, ease: 'none', scrollTrigger: { trigger: '.about-visual', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.from('.stamp', { scale: 0, rotate: -140, duration: 1.4, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.about-visual', start: 'top 70%', once: true } });
+  gsap.to('.stamp-ring', { rotate: 360, ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: 1 } });
+
+  $$('[data-count]').forEach((el) => {
+    const end = +el.dataset.count, o = { v: 0 };
+    el.textContent = '0';
+    gsap.to(o, { v: end, duration: 2.2, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 92%', once: true }, onUpdate: () => (el.textContent = Math.round(o.v)) });
+  });
+  gsap.from('.stat', { y: 40, autoAlpha: 0, duration: 1.1, stagger: 0.1, ease, scrollTrigger: { trigger: '.stats', start: 'top 90%', once: true } });
+
+  // ----- Usluge (bento) -----
+  $$('.svc').forEach((c, i) => {
+    gsap.fromTo(c, { clipPath: 'inset(12% 6% 0% 6% round 22px)', y: 60 }, { clipPath: 'inset(0% 0% 0% 0% round 22px)', y: 0, duration: 1.4, ease, scrollTrigger: { trigger: c, start: 'top 90%', once: true } });
+    gsap.from($('.svc-card', c), { y: 40, autoAlpha: 0, duration: 1.1, delay: 0.25, ease, scrollTrigger: { trigger: c, start: 'top 85%', once: true } });
+    gsap.fromTo($('.svc-media img', c), { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: c, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
 
-  // Proces: linija se iscrtava skrolom i pali korake
-  const mq = window.matchMedia('(max-width: 900px)');
+  // ----- Vrijednosti: horizontalni pin na desktopu -----
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 901px)', () => {
+    const tr = $('.values-track');
+    const dist = () => Math.max(0, tr.scrollWidth - window.innerWidth);
+    gsap.to(tr, {
+      x: () => -dist(), ease: 'none',
+      scrollTrigger: { trigger: '.values-pin', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.8, invalidateOnRefresh: true, anticipatePin: 1 },
+    });
+  });
+  gsap.from('.val', { y: 80, autoAlpha: 0, duration: 1.2, stagger: 0.08, ease, scrollTrigger: { trigger: '.values-track', start: 'top 92%', once: true } });
+
+  // ----- Marquee (brzina prema skrolu) -----
+  const mt = $('.marquee-track');
+  let mx = 0, dir = -1, sp = 0.7;
+  ScrollTrigger.create({ trigger: '.marquee', start: 'top bottom', end: 'bottom top', onUpdate: (s) => { dir = s.direction === 1 ? -1 : 1; sp = 0.7 + Math.min(Math.abs(s.getVelocity()) / 280, 7); } });
+  // footer wordmark
+  const fg = $('.fg-track');
+  let fx = 0;
+  gsap.ticker.add(() => {
+    mx += dir * sp; sp += (0.7 - sp) * 0.04;
+    const h = mt.scrollWidth / 2;
+    if (mx <= -h) mx += h; if (mx > 0) mx -= h;
+    mt.style.transform = `translate3d(${mx}px,0,0)`;
+    fx -= 0.5; const fh = fg.scrollWidth / 2; if (fx <= -fh) fx += fh;
+    fg.style.transform = `translate3d(${fx}px,0,0)`;
+  });
+
+  // ----- Izjava: riječi se pale skrolom -----
+  const sws = $$('.sw');
+  ScrollTrigger.create({
+    trigger: '.statement', start: 'top 70%', end: 'bottom 60%', scrub: true,
+    onUpdate: (s) => { const n = Math.round(s.progress * sws.length); sws.forEach((w, i) => (w.style.opacity = i < n ? 1 : 0.25)); },
+  });
+  gsap.fromTo('.st-media img', { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.statement', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+  // ----- Kako radimo: koraci se pale redom -----
   const steps = $$('.step');
-  gsap.fromTo('.steps-line span', { scaleX: 0, scaleY: 0 }, {
-    scaleX: mq.matches ? 1 : 1, scaleY: 1, ease: 'none',
-    scrollTrigger: {
-      trigger: '.steps', start: 'top 75%', end: mq.matches ? 'bottom 60%' : 'top 25%', scrub: 0.6,
-      onUpdate: (s) => steps.forEach((st, i) => st.classList.toggle('on', s.progress >= i / steps.length + 0.02)),
-    },
-  });
-  gsap.from(steps, {
-    y: 40, autoAlpha: 0, duration: 1.1, stagger: 0.15, ease,
-    scrollTrigger: { trigger: '.steps', start: 'top 80%', once: true },
+  gsap.from(steps, { x: 40, autoAlpha: 0, duration: 1, stagger: 0.12, ease, scrollTrigger: { trigger: '.steps', start: 'top 85%', once: true } });
+  ScrollTrigger.create({
+    trigger: '.steps', start: 'top 65%', end: 'bottom 45%', scrub: true,
+    onUpdate: (s) => { const k = Math.min(steps.length - 1, Math.floor(s.progress * steps.length)); steps.forEach((st, i) => st.classList.toggle('on', i === k)); },
   });
 
-  // Recenzije: ulaze s laganim nagibom, zvjezdice se pale redom
-  gsap.from('.quote', {
-    y: 80, rotateX: -18, autoAlpha: 0, transformOrigin: '50% 100%', duration: 1.3, stagger: 0.14, ease,
-    scrollTrigger: { trigger: '.quotes', start: 'top 82%', once: true },
-  });
-  gsap.from('.quote .stars i', {
-    scale: 0, autoAlpha: 0, duration: 0.5, stagger: 0.05, ease: 'back.out(3)', delay: 0.5,
-    scrollTrigger: { trigger: '.quotes', start: 'top 82%', once: true },
-  });
-  // 3D nagib prema mišu
-  if (window.matchMedia('(hover: hover)').matches) {
-    $$('.quote').forEach((q) => {
-      q.addEventListener('mousemove', (e) => {
-        const r = q.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        gsap.to(q, { rotateY: px * 8, rotateX: -py * 8, y: -6, duration: 0.6, ease: 'power3.out' });
-      });
-      q.addEventListener('mouseleave', () => gsap.to(q, { rotateY: 0, rotateX: 0, y: 0, duration: 0.8, ease: 'power3.out' }));
-    });
-  }
+  // ----- Recenzije -----
+  gsap.from('.quote', { y: 60, autoAlpha: 0, duration: 1.1, stagger: 0.12, ease, scrollTrigger: { trigger: '.quotes', start: 'top 85%', once: true } });
 
-  // CTA: parallax pozadine, sadržaj i forma ulaze
-  gsap.fromTo('.cta-bg img', { yPercent: -8 }, {
-    yPercent: 8, ease: 'none',
-    scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'bottom top', scrub: true },
-  });
-  gsap.from('.cta-copy .eyebrow, .cta-lead, .crow', {
-    y: 30, autoAlpha: 0, duration: 1.1, stagger: 0.08, ease,
-    scrollTrigger: { trigger: '.cta', start: 'top 70%', once: true },
-  });
-  gsap.from('.form-card', {
-    y: 100, autoAlpha: 0, duration: 1.4, ease,
-    scrollTrigger: { trigger: '.cta', start: 'top 65%', once: true },
-  });
-  gsap.from('.form-card .field, .form-card .btn', {
-    y: 20, autoAlpha: 0, duration: 0.9, stagger: 0.07, ease, delay: 0.35,
-    scrollTrigger: { trigger: '.cta', start: 'top 65%', once: true },
+  // ----- Prostori -----
+  $$('.room').forEach((r, i) => {
+    gsap.fromTo(r, { clipPath: 'inset(0% 0% 100% 0% round 22px)' }, { clipPath: 'inset(0% 0% 0% 0% round 22px)', duration: 1.4, delay: (i % 2) * 0.12, ease: 'expo.inOut', scrollTrigger: { trigger: r, start: 'top 88%', once: true } });
+    gsap.from($('figcaption', r), { y: 20, autoAlpha: 0, duration: 0.8, delay: 0.8, ease, scrollTrigger: { trigger: r, start: 'top 88%', once: true } });
   });
 
-  // Footer: veliki natpis izlazi odozdo, pločica i stupci
-  gsap.from('.foot-giant', {
-    yPercent: 60, ease: 'none',
-    scrollTrigger: { trigger: 'footer.site', start: 'top bottom', end: 'bottom bottom', scrub: true },
-  });
-  gsap.from('.foot-top > *', {
-    y: 30, autoAlpha: 0, duration: 1, stagger: 0.08, ease,
-    scrollTrigger: { trigger: 'footer.site', start: 'top 88%', once: true },
-  });
+  // ----- Upit -----
+  gsap.fromTo('.cta-bg img', { yPercent: -8 }, { yPercent: 8, ease: 'none', scrollTrigger: { trigger: '.cta', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.from('.cta-lead, .crow', { y: 26, autoAlpha: 0, duration: 1, stagger: 0.08, ease, scrollTrigger: { trigger: '.cta', start: 'top 65%', once: true } });
+  gsap.from('.form-card', { y: 100, rotate: 2, autoAlpha: 0, duration: 1.4, ease, scrollTrigger: { trigger: '.cta', start: 'top 60%', once: true } });
 
-  // Magnetski gumbi
+  // ----- Footer -----
+  gsap.from('.foot-top > *', { y: 30, autoAlpha: 0, duration: 1, stagger: 0.08, ease, scrollTrigger: { trigger: 'footer.site', start: 'top 90%', once: true } });
+
+  // ----- Magnetski gumbi -----
   if (window.matchMedia('(hover: hover)').matches) {
     $$('.magnetic').forEach((b) => {
       const xTo = gsap.quickTo(b, 'x', { duration: 0.6, ease: 'elastic.out(1,.4)' });
       const yTo = gsap.quickTo(b, 'y', { duration: 0.6, ease: 'elastic.out(1,.4)' });
       b.addEventListener('mousemove', (e) => {
         const r = b.getBoundingClientRect();
-        xTo((e.clientX - r.left - r.width / 2) * 0.25);
-        yTo((e.clientY - r.top - r.height / 2) * 0.35);
+        xTo((e.clientX - r.left - r.width / 2) * 0.2);
+        yTo((e.clientY - r.top - r.height / 2) * 0.3);
       });
       b.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
     });
   }
 
-  // Slike koje se kasnije učitaju mijenjaju visinu — osvježi okidače
   window.addEventListener('load', () => ScrollTrigger.refresh());
 })();
