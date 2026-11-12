@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoservis Kovač — Zagreb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Saira+Condensed:wght@300;400;500;600;700;900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────────
+   TOKENS — Industrijski katalog / Werkstatt
+───────────────────────────────────────────── */
+:root {
+  --ink:       #0f0e0c;
+  --ink-2:     #1e1c18;
+  --ink-3:     #2d2b26;
+  --rust:      #c0392b;
+  --rust-hot:  #e74c3c;
+  --rust-dim:  #7a241a;
+  --rust-pale: #f9ecea;
+  --paper:     #f2ede4;
+  --paper-2:   #e8e1d5;
+  --paper-3:   #d9d0c2;
+  --warm-mid:  #8a8070;
+  --warm-dim:  #bab3a6;
+  --off-white: #faf8f4;
+  --b-ink:     rgba(15,14,12,0.1);
+  --b-rust:    rgba(192,57,43,0.2);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+/* ── Paper texture ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9998;
+}
+
+/* ─────── NAV ─────── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:200;
+  display: flex; align-items: stretch;
+  background: var(--ink);
+  height: 64px;
+  transition: height 0.3s;
+}
+nav.scrolled { height: 52px; }
+
+.nav-logo-block {
+  background: var(--rust);
+  padding: 0 32px;
+  display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+.nav-logo-block::after {
+  content: '';
+  position: absolute; right: -14px; top: 0; bottom: 0;
+  width: 14px;
+  background: var(--rust);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.nav-logo-name {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 17px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #fff; line-height: 1;
+}
+.nav-logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 300;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); margin-top: 3px;
+}
+.nav-links {
+  display: flex; align-items: stretch;
+  gap: 0; list-style: none;
+  padding-left: 28px; flex: 1;
+}
+.nav-links a {
+  display: flex; align-items: center;
+  padding: 0 18px;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(242,237,228,0.4);
+  text-decoration: none;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  transition: color 0.2s, background 0.2s;
+}
+.nav-links a:hover { color: var(--paper); background: rgba(255,255,255,0.04); }
+.nav-right {
+  display: flex; align-items: center; padding: 0 28px; gap: 20px;
+}
+.nav-phone {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px; font-weight: 500;
+  color: rgba(242,237,228,0.5); letter-spacing: 0.06em;
+}
+.nav-cta {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink); background: var(--paper);
+  padding: 10px 24px; text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--rust); color: #fff; }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 0 20px;
+  align-items: center; justify-content: center; height: 100%;
+}
+.hamburger span { width: 22px; height: 1.5px; background: var(--paper); }
+
+/* ─────── HERO ─────── */
+.hero {
+  padding-top: 64px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left: photo full-bleed */
+.hero-photo-col {
+  position: relative; overflow: hidden;
+  background: var(--ink-2);
+}
+.hero-photo-col img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.08) brightness(0.82);
+  mix-blend-mode: normal;
+  display: block;
+}
+/* Rust halftone overlay */
+.hero-photo-col::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to right, transparent 60%, rgba(192,57,43,0.12) 100%),
+    linear-gradient(to top, rgba(15,14,12,0.7) 0%, transparent 45%);
+}
+
+/* Diagonal rule */
+.hero-rule {
+  position: absolute; right: -2px; top: 0; bottom: 0;
+  width: 4px; background: var(--rust);
+  z-index: 2;
+}
+
+/* Right: content */
+.hero-content-col {
+  background: var(--ink);
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 80px 56px 80px 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Technical blueprint lines */
+.hero-content-col::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(192,57,43,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(192,57,43,0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+}
+
+/* Gear SVG watermark */
+.hero-gear {
+  position: absolute; right: -60px; bottom: -60px;
+  width: 320px; height: 320px;
+  opacity: 0.04;
+  pointer-events: none;
+  animation: gearSpin 40s linear infinite;
+}
+@keyframes gearSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+.hero-pretitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 12px;
+  position: relative; z-index: 1;
+}
+.hero-pretitle::before {
+  content: '';
+  width: 24px; height: 1px; background: var(--rust); flex-shrink: 0;
+}
+
+.hero-h1 {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: clamp(52px, 5.5vw, 80px);
+  font-weight: 900;
+  line-height: 0.93;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+  margin-bottom: 8px;
+  position: relative; z-index: 1;
+  text-transform: uppercase;
+}
+.hero-h1 em {
+  font-style: normal;
+  color: var(--rust);
+  display: block;
+}
+.hero-h1-rule {
+  width: 64px; height: 3px;
+  background: var(--rust);
+  margin: 20px 0 24px;
+  position: relative; z-index: 1;
+}
+.hero-body {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px; font-weight: 400;
+  color: rgba(242,237,228,0.55);
+  line-height: 1.8; max-width: 380px;
+  margin-bottom: 44px;
+  position: relative; z-index: 1;
+}
+
+.hero-btns {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.btn-rust {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #fff; background: var(--rust);
+  padding: 14px 40px; text-decoration: none;
+  transition: background 0.2s; display: inline-block;
+  position: relative; overflow: hidden;
+}
+.btn-rust::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--rust-hot);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+.btn-rust:hover::after { transform: translateX(0); }
+.btn-rust span { position: relative; z-index: 1; }
+.btn-ghost-paper {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(242,237,228,0.5);
+  border: 1px solid rgba(242,237,228,0.15);
+  padding: 14px 28px; text-decoration: none;
+  transition: all 0.2s; display: inline-block;
+}
+.btn-ghost-paper:hover { color: var(--paper); border-color: rgba(242,237,228,0.4); }
+
+/* Stats strip inside hero */
+.hero-stats {
+  position: relative; z-index: 1;
+  display: flex; gap: 0;
+  margin-top: 52px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.hstat { flex: 1; }
+.hstat + .hstat { border-left: 1px solid rgba(255,255,255,0.07); padding-left: 24px; }
+.hstat-n {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 40px; font-weight: 900;
+  color: var(--rust); line-height: 1;
+  letter-spacing: -0.02em;
+}
+.hstat-l {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 300;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(242,237,228,0.3); margin-top: 5px;
+}
+
+/* Bottom info strip over photo */
+.hero-bottom-strip {
+  position: absolute; bottom: 0; left: 0;
+  right: 45%; /* width of photo col only */
+  background: var(--rust);
+  padding: 12px 32px;
+  display: flex; gap: 36px; z-index: 3;
+  flex-wrap: wrap;
+}
+.hbs-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  display: flex; align-items: center; gap: 8px;
+}
+.hbs-dot { width: 4px; height: 4px; background: rgba(255,255,255,0.5); border-radius: 50%; }
+
+/* ─────── SECTION COMMONS ─────── */
+.s-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--rust-dim);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.s-eyebrow::before { content: '▸'; font-size: 8px; }
+.s-title {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: clamp(34px, 3.5vw, 52px);
+  font-weight: 900; text-transform: uppercase;
+  line-height: 0.95; letter-spacing: 0.01em;
+  color: var(--ink);
+}
+.s-title .r { color: var(--rust); }
+.s-title-light { color: var(--paper); }
+.s-title-light .r { color: var(--rust); }
+.s-desc {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px; font-weight: 400;
+  color: var(--warm-mid); line-height: 1.8;
+  max-width: 480px;
+}
+
+/* ─────── TICKER ─────── */
+.ticker {
+  background: var(--ink-2);
+  border-top: 2px solid var(--rust);
+  border-bottom: 2px solid var(--rust);
+  overflow: hidden; display: flex;
+}
+.ticker-track {
+  display: flex; white-space: nowrap;
+  animation: tickerScroll 28s linear infinite;
+}
+.t-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--paper-3);
+  padding: 13px 48px;
+  display: flex; align-items: center; gap: 32px;
+}
+.t-item::after { content: '◆'; font-size: 6px; color: var(--rust); }
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ─────── PROCESS ─────── */
+.process {
+  padding: 104px 56px;
+  background: var(--paper);
+}
+.process-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: end; margin-bottom: 72px;
+}
+.process-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.proc-card {
+  background: var(--off-white);
+  padding: 44px 36px;
+  position: relative; overflow: hidden;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.3s, background 0.3s;
+}
+.proc-card:hover { border-color: var(--rust); background: var(--rust-pale); }
+.proc-card-num {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 80px; font-weight: 900;
+  color: rgba(192,57,43,0.06);
+  line-height: 1; position: absolute;
+  right: 20px; top: 12px;
+  letter-spacing: -0.04em;
+  transition: color 0.3s;
+  user-select: none;
+}
+.proc-card:hover .proc-card-num { color: rgba(192,57,43,0.12); }
+.proc-step-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--rust);
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+.proc-step-label::before {
+  content: ''; width: 16px; height: 1px; background: var(--rust);
+}
+.proc-icon { font-size: 28px; margin-bottom: 16px; display: block; }
+.proc-title {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 22px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--ink); margin-bottom: 12px;
+}
+.proc-body {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px; font-weight: 400;
+  color: var(--warm-mid); line-height: 1.8;
+}
+/* Arrow connector between steps */
+.proc-connector {
+  display: flex; align-items: center; justify-content: center;
+  align-self: center;
+  color: var(--rust); font-size: 20px; opacity: 0.4;
+}
+
+/* ─────── USLUGE ─────── */
+.usluge { padding: 0 56px 104px; background: var(--paper); }
+.usluge-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 56px;
+}
+.usluge-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.usluga {
+  background: var(--paper-2);
+  padding: 36px 30px;
+  display: flex; flex-direction: column;
+  border-left: 3px solid transparent;
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+.usluga::before {
+  content: attr(data-n);
+  position: absolute; right: 16px; bottom: 16px;
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 56px; font-weight: 900;
+  color: rgba(15,14,12,0.04);
+  line-height: 1; pointer-events: none;
+  transition: color 0.3s;
+}
+.usluga:hover { background: var(--rust-pale); border-left-color: var(--rust); }
+.usluga:hover::before { color: rgba(192,57,43,0.08); }
+.u-icon { font-size: 22px; margin-bottom: 14px; }
+.u-name {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 19px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--ink); margin-bottom: 10px; line-height: 1.2;
+}
+.u-desc {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 400;
+  color: var(--warm-mid); line-height: 1.8;
+  flex: 1; margin-bottom: 20px;
+}
+.u-footer {
+  display: flex; justify-content: space-between;
+  align-items: baseline;
+  padding-top: 14px;
+  border-top: 1px solid rgba(15,14,12,0.08);
+}
+.u-price {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--ink);
+}
+.u-time {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--warm-mid);
+  letter-spacing: 0.1em;
+}
+
+/* ─────── BRAND BAR ─────── */
+.brand-bar {
+  background: var(--ink-3);
+  padding: 32px 56px;
+  display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+}
+.brand-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.28em;
+  text-transform: uppercase; color: rgba(242,237,228,0.25);
+  white-space: nowrap; flex-shrink: 0;
+}
+.brand-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+.brand-items {
+  display: flex; flex-wrap: wrap; gap: 2px; flex: 1;
+}
+.brand-item {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(242,237,228,0.3);
+  padding: 8px 18px;
+  background: rgba(255,255,255,0.03);
+  transition: all 0.2s; cursor: default;
+}
+.brand-item:hover { color: var(--rust); background: rgba(192,57,43,0.08); }
+
+/* ─────── CJENIK ─────── */
+.cjenik {
+  padding: 104px 56px;
+  background: var(--ink);
+}
+.cjenik-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: end; margin-bottom: 64px;
+}
+.cjenik-header .s-desc { color: rgba(242,237,228,0.35); }
+.cjenik-eyebrow { color: var(--rust); }
+.cjenik-eyebrow::before { content: '▸'; }
+.c-groups { display: flex; flex-direction: column; gap: 2px; }
+.c-cat {
+  background: var(--rust);
+  padding: 10px 24px;
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+.c-cat::before { content: ''; width: 16px; height: 1px; background: rgba(255,255,255,0.4); }
+.c-row {
+  display: grid; grid-template-columns: 1fr 110px 140px;
+  background: var(--ink-2);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.2s;
+}
+.c-row:hover { background: var(--ink-3); }
+.c-cell {
+  padding: 14px 24px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px; font-weight: 400;
+  color: rgba(242,237,228,0.7);
+  display: flex; align-items: center;
+  border-right: 1px solid rgba(255,255,255,0.04);
+}
+.c-cell:last-child { border-right: none; }
+.c-cell.dur {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px; color: rgba(242,237,228,0.3);
+  letter-spacing: 0.08em; justify-content: center;
+}
+.c-cell.price {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--paper); justify-content: flex-end;
+}
+.c-badge {
+  background: var(--rust);
+  font-family: 'DM Mono', monospace;
+  font-size: 7px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: #fff; padding: 2px 7px; margin-left: 8px;
+}
+
+/* ─────── ZASTO ─────── */
+.zasto { padding: 104px 56px; background: var(--paper-2); }
+.zasto-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; margin-top: 64px;
+}
+.zasto-photo {
+  position: relative; overflow: hidden;
+  min-height: 520px;
+}
+.zasto-photo img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(20%) contrast(1.05) brightness(0.8);
+  transition: transform 0.8s ease;
+}
+.zasto-photo:hover img { transform: scale(1.03); }
+.zasto-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(192,57,43,0.15) 0%, transparent 50%),
+              linear-gradient(to top, rgba(15,14,12,0.5) 0%, transparent 40%);
+}
+
+/* Measurement annotation overlay — tech feel */
+.photo-annotation {
+  position: absolute; z-index: 2;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em;
+}
+.photo-annotation.tl { top: 20px; left: 20px; }
+.photo-annotation.br { bottom: 20px; right: 20px; }
+.annotation-cross {
+  position: absolute; top: 20px; right: 20px; z-index: 2;
+  width: 24px; height: 24px;
+}
+.annotation-cross::before, .annotation-cross::after {
+  content: '';
+  position: absolute; background: var(--rust); opacity: 0.5;
+}
+.annotation-cross::before { width: 1px; height: 100%; left: 50%; top: 0; }
+.annotation-cross::after  { width: 100%; height: 1px; top: 50%; left: 0; }
+
+.zasto-content {
+  background: var(--ink);
+  padding: 60px 52px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.zasto-items { margin-top: 36px; }
+.z-item {
+  display: flex; gap: 20px; align-items: flex-start;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: padding-left 0.25s;
+}
+.z-item:hover { padding-left: 6px; }
+.z-item:last-child { border-bottom: none; }
+.z-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.1em; color: var(--rust);
+  opacity: 0.7; flex-shrink: 0; margin-top: 4px;
+}
+.z-title {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 18px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--paper); margin-bottom: 4px;
+}
+.z-desc {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 400;
+  color: rgba(242,237,228,0.4); line-height: 1.8;
+}
+
+/* ─────── GALERIJA ─────── */
+.galerija {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 400px 280px;
+  gap: 2px;
+}
+.galerija > * { overflow: hidden; position: relative; }
+.galerija img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(25%) sepia(8%) brightness(0.82) contrast(1.08);
+  transition: transform 0.8s ease, filter 0.45s;
+  display: block;
+}
+.galerija > *:hover img {
+  transform: scale(1.05);
+  filter: grayscale(0%) sepia(0%) brightness(0.9) contrast(1.0);
+}
+
+/* Col 1: tall portrait spanning rows 1–2 */
+.g-tall {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+/* Col 2: two stacked halves in row 1 */
+.g-stack {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 2px;
+  overflow: visible;
+}
+.g-half { overflow: hidden; }
+.g-half img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: grayscale(25%) sepia(8%) brightness(0.82) contrast(1.08);
+  transition: transform 0.8s ease, filter 0.45s;
+  display: block;
+}
+.g-half:hover img {
+  transform: scale(1.05);
+  filter: grayscale(0%) sepia(0%) brightness(0.9);
+}
+
+/* Row 2: two equal landscape */
+.g-bot-l { grid-column: 1; grid-row: 2; }
+.g-bot-r {
+  grid-column: 2; grid-row: 2;
+  position: relative;
+}
+.g-wide-label {
+  position: absolute;
+  bottom: 16px; right: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 400;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(242,237,228,0.45);
+  z-index: 2;
+  pointer-events: none;
+}
+.g-bot-r::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15,14,12,0.45) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* ─────── BOOKING ─────── */
+.booking { padding: 104px 56px; background: var(--paper); }
+.booking-layout {
+  display: grid; grid-template-columns: 5fr 7fr;
+  gap: 2px; margin-top: 64px;
+}
+.booking-l {
+  background: var(--rust);
+  padding: 56px 48px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative; overflow: hidden;
+}
+/* Cross-hatch diagonal pattern */
+.booking-l::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 12px,
+    rgba(0,0,0,0.06) 12px,
+    rgba(0,0,0,0.06) 13px
+  );
+  pointer-events: none;
+}
+.bl-title {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: clamp(32px, 3.5vw, 52px);
+  font-weight: 900; text-transform: uppercase;
+  line-height: 0.95; color: #fff;
+  position: relative; z-index: 1;
+}
+.bl-sub {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px; font-weight: 400;
+  color: rgba(255,255,255,0.7); line-height: 1.7;
+  margin-top: 18px; position: relative; z-index: 1;
+}
+.bl-contacts { position: relative; z-index: 1; margin-top: 40px; }
+.bl-contact {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.bl-contact:last-child { border-bottom: none; }
+.bl-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.bl-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  margin-bottom: 3px;
+}
+.bl-val {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: #fff; line-height: 1.5;
+}
+.bl-phone {
+  position: relative; z-index: 1;
+  margin-top: 32px;
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 30px; font-weight: 900;
+  color: #fff; letter-spacing: 0.02em;
+}
+.bl-phone-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.22em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  display: block; margin-bottom: 6px;
+}
+.booking-r {
+  background: var(--off-white);
+  padding: 56px 48px;
+  border: 1px solid var(--b-ink);
+}
+.form-head {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 28px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--ink); margin-bottom: 4px;
+}
+.form-subhead {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 300;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--warm-dim); margin-bottom: 36px;
+  padding-bottom: 32px; border-bottom: 1px solid var(--b-ink);
+}
+.fg { margin-bottom: 14px; }
+.fg label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--rust-dim); margin-bottom: 7px;
+}
+.fg input, .fg select, .fg textarea {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--b-ink);
+  border-left: 2px solid transparent;
+  padding: 11px 14px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px; font-weight: 400;
+  color: var(--ink); outline: none;
+  transition: border-left-color 0.2s, border-color 0.2s;
+  appearance: none;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus {
+  border-left-color: var(--rust);
+  border-color: rgba(192,57,43,0.2);
+}
+.fg input::placeholder { color: var(--warm-dim); }
+.fg select option { background: var(--paper); }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.btn-book {
+  width: 100%; background: var(--ink);
+  border: none; padding: 15px;
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--paper); cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.btn-book:hover { background: var(--rust); }
+.f-note {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--warm-dim);
+  text-align: center; margin-top: 12px;
+  line-height: 1.7; letter-spacing: 0.08em;
+}
+.f-success {
+  display: none; text-align: center; padding: 48px 20px;
+}
+.f-success h3 {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 28px; font-weight: 900;
+  text-transform: uppercase; color: var(--rust);
+  margin-bottom: 10px; letter-spacing: 0.04em;
+}
+.f-success p {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px; color: var(--warm-mid); line-height: 1.8;
+}
+
+/* ─────── RECENZIJE ─────── */
+.recenzije { padding: 104px 56px; background: var(--paper-2); }
+.rec-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 2px; margin-top: 64px;
+}
+.rec-card {
+  background: var(--paper);
+  padding: 36px 32px;
+  border-top: 3px solid transparent;
+  transition: border-color 0.3s;
+}
+.rec-card:hover { border-color: var(--rust); }
+.rec-stars { color: var(--rust-dim); font-size: 12px; letter-spacing: 2px; margin-bottom: 16px; }
+.rec-text {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px; font-weight: 400;
+  font-style: italic; color: var(--ink-3);
+  line-height: 1.9; margin-bottom: 28px;
+}
+.rec-foot {
+  display: flex; align-items: center; gap: 12px;
+  padding-top: 18px; border-top: 1px solid var(--b-ink);
+}
+.rec-av {
+  width: 38px; height: 38px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  border: 2px solid var(--paper-3);
+}
+.rec-av img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%); }
+.rec-name {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 15px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--ink);
+}
+.rec-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: var(--warm-mid);
+  letter-spacing: 0.08em; margin-top: 2px;
+}
+.rec-badge {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--rust-dim);
+  border: 1px solid var(--b-rust);
+  padding: 3px 8px; white-space: nowrap;
+}
+
+/* ─────── FOOTER ─────── */
+footer {
+  background: var(--ink);
+  padding: 72px 56px 36px;
+  border-top: 3px solid var(--rust);
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 56px; padding-bottom: 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 36px;
+}
+.f-logo {
+  display: flex; align-items: center; gap: 0; margin-bottom: 16px;
+}
+.f-logo-arrow {
+  width: 0; height: 0;
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-left: 14px solid var(--rust);
+  margin-right: 12px; flex-shrink: 0;
+}
+.f-logo-name {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 18px; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--paper);
+}
+.f-desc {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px; font-weight: 400;
+  color: rgba(242,237,228,0.3); line-height: 1.8;
+  margin-bottom: 24px;
+}
+.f-soc { display: flex; gap: 6px; }
+.fsoc {
+  width: 32px; height: 32px;
+  background: rgba(255,255,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: rgba(242,237,228,0.3);
+  text-decoration: none; transition: all 0.2s;
+}
+.fsoc:hover { background: var(--rust); color: #fff; }
+.f-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 20px;
+}
+.f-links { list-style: none; }
+.f-links li { margin-bottom: 10px; }
+.f-links a {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px; font-weight: 400;
+  color: rgba(242,237,228,0.3); text-decoration: none;
+  transition: color 0.2s;
+}
+.f-links a:hover { color: var(--paper); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.f-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; color: rgba(242,237,228,0.18);
+  letter-spacing: 0.1em;
+}
+
+/* ─────── CALL BUTTON EXTRA ─────── */
+.btn-call {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  padding: 14px 28px;
+}
+
+/* ─────── LOKACIJA BLOK ─────── */
+.lokacija-blok {
+  background: var(--ink-2);
+  border-top: 1px solid rgba(192,57,43,0.3);
+  border-bottom: 2px solid var(--rust);
+  padding: 0 56px;
+  display: flex; align-items: stretch;
+  flex-wrap: wrap; gap: 0;
+}
+.lb-left {
+  display: flex; align-items: center; gap: 16px;
+  padding: 20px 0; flex: 2; min-width: 280px;
+}
+.lb-icon { font-size: 20px; flex-shrink: 0; }
+.lb-title {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 16px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--paper); line-height: 1.2;
+}
+.lb-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; font-weight: 300;
+  letter-spacing: 0.12em; color: rgba(242,237,228,0.4);
+  margin-top: 4px; line-height: 1.6;
+}
+.lb-divider {
+  width: 1px; background: rgba(255,255,255,0.08);
+  margin: 0 32px; flex-shrink: 0; align-self: stretch;
+}
+.lb-item { padding: 20px 0; display: flex; flex-direction: column; justify-content: center; }
+.lb-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(242,237,228,0.3); margin-bottom: 4px;
+}
+.lb-val {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--paper); letter-spacing: 0.04em;
+}
+.lb-cta {
+  padding: 20px 0 20px 32px;
+  display: flex; flex-direction: column; justify-content: center;
+  border-left: 1px solid rgba(255,255,255,0.08);
+  margin-left: auto;
+}
+.lb-phone {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 22px; font-weight: 900;
+  color: var(--rust); letter-spacing: 0.04em;
+  text-decoration: none; transition: color 0.2s;
+}
+.lb-phone:hover { color: var(--rust-hot); }
+.lb-phone-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(242,237,228,0.3);
+  margin-top: 3px;
+}
+
+/* ─────── MARKE SECTION ─────── */
+.marke-section { padding: 104px 56px; background: var(--paper); }
+.marke-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 56px; gap: 40px;
+}
+.marke-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+}
+.marka-card {
+  background: var(--paper-2);
+  padding: 28px 20px 24px;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 10px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+.marka-card::after {
+  content: 'Saznaj više';
+  position: absolute; bottom: -24px;
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: 0.15em;
+  color: var(--rust); text-transform: uppercase;
+  transition: bottom 0.25s;
+}
+.marka-card:hover { background: var(--rust-pale); border-bottom-color: var(--rust); }
+.marka-card:hover::after { bottom: 8px; }
+.marka-logo {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 20px; font-weight: 900;
+  letter-spacing: 0.08em; color: var(--ink-3);
+  transition: color 0.25s;
+}
+.marka-card:hover .marka-logo { color: var(--rust-dim); }
+.marka-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 8px; font-weight: 400;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--warm-mid); text-align: center; line-height: 1.4;
+}
+
+/* ─────── POPUP ─────── */
+.popup-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(15,14,12,0.7);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+  backdrop-filter: blur(4px);
+}
+.popup-overlay.active { opacity: 1; pointer-events: all; }
+.popup-box {
+  background: var(--off-white);
+  padding: 52px 56px;
+  max-width: 540px; width: 90%;
+  position: relative;
+  border-top: 4px solid var(--rust);
+  transform: translateY(16px);
+  transition: transform 0.3s;
+}
+.popup-overlay.active .popup-box { transform: translateY(0); }
+.popup-close {
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none;
+  font-size: 16px; color: var(--warm-mid);
+  cursor: pointer; transition: color 0.2s;
+  font-family: 'DM Mono', monospace; line-height: 1;
+}
+.popup-close:hover { color: var(--rust); }
+.popup-pretitle {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--rust-dim); margin-bottom: 8px;
+}
+.popup-title {
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 36px; font-weight: 900;
+  text-transform: uppercase; color: var(--ink);
+  letter-spacing: 0.02em; line-height: 1;
+}
+.popup-rule { width: 48px; height: 3px; background: var(--rust); margin: 20px 0; }
+.popup-body {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px; font-weight: 400;
+  color: var(--warm-mid); line-height: 1.8; margin-bottom: 32px;
+}
+.popup-cta {
+  display: inline-block;
+  font-family: 'Saira Condensed', sans-serif;
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #fff; background: var(--rust);
+  padding: 13px 32px; text-decoration: none;
+  transition: background 0.2s;
+}
+.popup-cta:hover { background: var(--rust-hot); }
+
+/* ─────── FADE UP ─────── */
+.fade-up {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ─────── MOBILE ─────── */
+@media (max-width: 960px) {
+  .nav-links, .nav-right { display: none; }
+  .hamburger { display: flex; }
+
+  .hero { grid-template-columns: 1fr; }
+  .hero-photo-col { height: 280px; }
+  .hero-bottom-strip { right: 0; }
+  .hero-rule { display: none; }
+  .hero-content-col { padding: 52px 20px; }
+  .hero-stats { flex-wrap: wrap; gap: 16px; }
+  .hstat + .hstat { border-left: none; padding-left: 0; }
+
+  .process, .usluge, .cjenik, .zasto, .booking, .recenzije, footer {
+    padding-left: 20px !important; padding-right: 20px !important;
+  }
+
+  .process-header, .cjenik-header { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: 1fr; }
+
+  .usluge-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .usluge-grid { grid-template-columns: 1fr; }
+
+  .brand-bar { padding: 20px; }
+
+  .c-row { grid-template-columns: 1fr 130px; }
+  .c-cell.dur { display: none; }
+
+  .zasto-layout { grid-template-columns: 1fr; }
+  .zasto-photo { min-height: 220px; }
+
+  .booking-layout { grid-template-columns: 1fr; }
+  .booking-l, .booking-r { padding: 40px 20px; }
+  .frow { grid-template-columns: 1fr; }
+
+  .galerija { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 200px; }
+  .g-tall { grid-column: 1; grid-row: 1; }
+  .g-stack { grid-column: 2; grid-row: 1; }
+  .g-bot-l { grid-column: 1; grid-row: 2; }
+  .g-bot-r { grid-column: 2; grid-row: 2; }
+
+  .rec-grid { grid-template-columns: 1fr; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; }
+
+  .lokacija-blok { padding: 0 20px; flex-direction: column; gap: 16px; }
+  .lb-divider { display: none; }
+  .lb-cta { padding: 0 0 20px 0; border-left: none; margin-left: 0; }
+
+  .marke-section { padding-left: 20px !important; padding-right: 20px !important; }
+  .marke-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .marke-grid { grid-template-columns: repeat(3, 1fr); }
+
+  .popup-box { padding: 40px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo-block">
+    <div class="nav-logo-name">Autoservis Kovač</div>
+    <div class="nav-logo-sub">Zagreb · Est. 1998</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#process">Kako radimo</a></li>
+    <li><a href="#usluge">Usluge</a></li>
+    <li><a href="#cjenik">Cjenik</a></li>
+    <li><a href="#booking">Naruči se</a></li>
+    <li><a href="#recenzije">Recenzije</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-phone">+385 1 234 5678</span>
+    <a href="#booking" class="nav-cta">Zatraži predračun</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-photo-col">
+    <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=1200&q=85&auto=format&fit=crop" alt="Mehaničar">
+    <div class="photo-annotation tl">REF: KOV-2025 // WERKSTATT</div>
+    <div class="photo-annotation br">ZAGREB · HR</div>
+    <div class="annotation-cross"></div>
+    <div class="hero-bottom-strip">
+      <div class="hbs-item"><div class="hbs-dot"></div>Trešnjevka, Zagreb</div>
+      <div class="hbs-item"><div class="hbs-dot"></div>Pon–Pet 08–16h</div>
+      <div class="hbs-item"><div class="hbs-dot"></div>Parking za klijente</div>
+    </div>
+  </div>
+  <div class="hero-rule"></div>
+  <div class="hero-content-col">
+    <!-- Rotating gear watermark -->
+    <svg class="hero-gear" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 15a35 35 0 1 1 0 70 35 35 0 0 1 0-70zm0 10a25 25 0 1 0 0 50 25 25 0 0 0 0-50z" fill="currentColor" style="color:#f2ede4"/>
+      <path d="M47 5h6v10h-6zM47 85h6v10h-6zM5 47v6h10v-6zM85 47v6h10v-6zM18.5 15.1l4.2 4.3 7.1-7-4.2-4.3zM70.2 66.6l4.2 4.2 7.1-7-4.2-4.2zM15.1 70.2l4.3-4.2-7-7.1-4.3 4.2zM66.6 18.5l4.2-4.3-7.1-7-4.2 4.3z" fill="currentColor" style="color:#f2ede4"/>
+    </svg>
+
+    <div class="hero-pretitle">Zagreb · Trešnjevka · Ovlašteni servis od 1998.</div>
+    <h1 class="hero-h1">
+      Kompletan servis<br>za sve marke
+      <em>vozila u Zagrebu.</em>
+    </h1>
+    <div class="hero-h1-rule"></div>
+    <p class="hero-body">Od brze dijagnostike i malog servisa do najsloženijih popravaka. Bez skrivenih troškova i uz jamstvo na rad.</p>
+    <div class="hero-btns">
+      <a href="tel:011234567" class="btn-rust btn-call"><span>📞 Nazovite odmah: 01/123-4567</span></a>
+      <a href="#booking" class="btn-ghost-paper">Rezervirajte termin online</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-n">25+</div>
+        <div class="hstat-l">God. iskustva</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">4.8k+</div>
+        <div class="hstat-l">Zadovoljnih klijenata</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">12 mj.</div>
+        <div class="hstat-l">Jamstvo na rad</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER + LOKACIJA BLOK -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="t-item">Mehanika · Elektrika · Dijagnostika</div>
+    <div class="t-item">Vulkanizacija · Klime · Lakirnica</div>
+    <div class="t-item">OEM dijelovi ili zamjenski po izboru</div>
+    <div class="t-item">Račun i garancija za svaki popravak</div>
+    <div class="t-item">Stari dijelovi vraćaju se klijentu na uvid</div>
+    <div class="t-item">Besplatna dijagnostika uz servis</div>
+    <div class="t-item">Mehanika · Elektrika · Dijagnostika</div>
+    <div class="t-item">Vulkanizacija · Klime · Lakirnica</div>
+    <div class="t-item">OEM dijelovi ili zamjenski po izboru</div>
+    <div class="t-item">Račun i garancija za svaki popravak</div>
+    <div class="t-item">Stari dijelovi vraćaju se klijentu na uvid</div>
+    <div class="t-item">Besplatna dijagnostika uz servis</div>
+  </div>
+</div>
+
+<!-- LOKACIJA BLOK -->
+<div class="lokacija-blok">
+  <div class="lb-left">
+    <div class="lb-icon">📍</div>
+    <div>
+      <div class="lb-title">Nalazimo se u Trešnjevki</div>
+      <div class="lb-sub">Heinzelova 22, Zagreb · Osiguran parking za klijente · Tramvaj br. 11 i 12 (stanica Heinzelova)</div>
+    </div>
+  </div>
+  <div class="lb-divider"></div>
+  <div class="lb-item">
+    <div class="lb-label">Pon – Pet</div>
+    <div class="lb-val">08:00 – 16:00</div>
+  </div>
+  <div class="lb-divider"></div>
+  <div class="lb-item">
+    <div class="lb-label">Subota</div>
+    <div class="lb-val">08:00 – 13:00</div>
+  </div>
+  <div class="lb-divider"></div>
+  <div class="lb-cta">
+    <a href="tel:011234567" class="lb-phone">01/123-4567</a>
+    <span class="lb-phone-label">Nazovite odmah</span>
+  </div>
+</div>
+
+<!-- DIFERENCIJACIJA -->
+<section class="process" id="process">
+  <div class="process-header">
+    <div>
+      <div class="s-eyebrow">Zašto odabrati baš nas</div>
+      <h2 class="s-title">Sve na <span class="r">jednom mjestu.</span><br>Bez kompromisa.</h2>
+    </div>
+    <p class="s-desc">Nismo specijalizirani samo za jednu marku ili jedan tip posla. Pokrivamo sve — od redovnog servisa do elektrike i lakirnice — pod jednim krovom.</p>
+  </div>
+  <div class="process-grid">
+    <div class="proc-card fade-up">
+      <div class="proc-card-num">01</div>
+      <div class="proc-step-label">Kompletna usluga</div>
+      <span class="proc-icon">🔧</span>
+      <div class="proc-title">Mehanika · Elektrika · Dijagnostika · Vulkanizacija · Klime</div>
+      <p class="proc-body">Ne trebate tražiti različite servise za različite probleme. Sve obavljamo na jednom mjestu, s jednim računom i jednom garancijom.</p>
+    </div>
+    <div class="proc-card fade-up" style="transition-delay:.12s">
+      <div class="proc-card-num">02</div>
+      <div class="proc-step-label">Moderna oprema i dijelovi</div>
+      <span class="proc-icon">⚙️</span>
+      <div class="proc-title">OEM dijelovi ili zamjenski visoke kvalitete — po vašem izboru</div>
+      <p class="proc-body">Koristimo originalne (OEM) dijelove ili provjerene zamjenske — vi birate prema budžetu. Uvijek s računom i potvrdom porijekla.</p>
+    </div>
+    <div class="proc-card fade-up" style="transition-delay:.24s">
+      <div class="proc-card-num">03</div>
+      <div class="proc-step-label">Potpuna transparentnost</div>
+      <span class="proc-icon">📋</span>
+      <div class="proc-title">Račun i garancija za svaki popravak. Stari dijelovi vraćaju se vama.</div>
+      <p class="proc-body">Prije svakog rada izdajemo ponudu. Nakon završetka dobivate račun i pisanu garanciju. Zamijenjene dijelove uvijek možete pregledati i zadržati.</p>
+    </div>
+  </div>
+</section>
+
+<!-- USLUGE -->
+<section class="usluge" id="usluge">
+  <div class="usluge-header">
+    <div>
+      <div class="s-eyebrow">Servisne usluge</div>
+      <h2 class="s-title">Što <span class="r">radimo</span></h2>
+    </div>
+    <p class="s-desc" style="max-width:360px">Od redovnog servisa do složenih zahvata — sve s certificiranom opremom i pisanom garancijom.</p>
+  </div>
+  <div class="usluge-grid">
+    <div class="usluga fade-up" data-n="01">
+      <div class="u-icon">🔧</div>
+      <div class="u-name">Redovni servis vozila</div>
+      <p class="u-desc">Izmjena ulja i filtera, provjera 45 točaka prema preporukama proizvođača. Uključuje pisani izvještaj stanja vozila.</p>
+      <div class="u-footer"><div class="u-price">od 89 €</div><div class="u-time">60–90 min</div></div>
+    </div>
+    <div class="usluga fade-up" data-n="02" style="transition-delay:.07s">
+      <div class="u-icon">💻</div>
+      <div class="u-name">Kompjuterska dijagnostika</div>
+      <p class="u-desc">Skeniranje svih sustava vozila: motor, mjenjač, ABS, airbag, klima. Pisani izvještaj s preporukama u 30 minuta.</p>
+      <div class="u-footer"><div class="u-price">od 35 €</div><div class="u-time">30 min</div></div>
+    </div>
+    <div class="usluga fade-up" data-n="03" style="transition-delay:.14s">
+      <div class="u-icon">🛞</div>
+      <div class="u-name">Gume i geometrija</div>
+      <p class="u-desc">Montaža, demontaža i balansiranje. Poravnanje geometrije na modernom uređaju. Sezonska pohrana.</p>
+      <div class="u-footer"><div class="u-price">od 12 € / kom</div><div class="u-time">30–45 min</div></div>
+    </div>
+    <div class="usluga fade-up" data-n="04" style="transition-delay:.21s">
+      <div class="u-icon">🛑</div>
+      <div class="u-name">Kočioni sustav</div>
+      <p class="u-desc">Zamjena obloga, diskova i čeljusti. Provjera tekućina. Testiranje na valjcima s pisanom potvrdom.</p>
+      <div class="u-footer"><div class="u-price">od 79 € / os</div><div class="u-time">45–60 min</div></div>
+    </div>
+    <div class="usluga fade-up" data-n="05" style="transition-delay:.28s">
+      <div class="u-icon">❄️</div>
+      <div class="u-name">Klima servis</div>
+      <p class="u-desc">Punjenje rashladnog sredstva, dezinfekcija i zamjena filtera kabine. Garancija hlađenja ili vraćamo novac.</p>
+      <div class="u-footer"><div class="u-price">od 49 €</div><div class="u-time">60 min</div></div>
+    </div>
+    <div class="usluga fade-up" data-n="06" style="transition-delay:.35s">
+      <div class="u-icon">🎨</div>
+      <div class="u-name">Limarija i lakiranje</div>
+      <p class="u-desc">Popravak udara, ogrebotina i korozije. Lakiranje dijelova ili cijelog vozila s garancijom boje.</p>
+      <div class="u-footer"><div class="u-price">po predračunu</div><div class="u-time">po dogovoru</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKE S POPUPOM -->
+<section class="marke-section" id="marke">
+  <div class="marke-header">
+    <div>
+      <div class="s-eyebrow">Odaberite vašu marku</div>
+      <h2 class="s-title">Servisiramo <span class="r">sve marke</span></h2>
+    </div>
+    <p class="s-desc" style="max-width:400px">Kliknite na marku vašeg vozila i saznajte više o našoj specijalizaciji i opremi za tu marku.</p>
+  </div>
+  <div class="marke-grid">
+    <div class="marka-card" onclick="openPopup('Volkswagen','VW vozila servisiramo od 1998. Raspolažemo VAG dijagnostičkim uređajem (VCDS/OBD) za sve modele. Specijalizirani smo za DSG mjenjače, sustav AdBlue i TDI motore.')">
+      <div class="marka-logo">VW</div><div class="marka-name">Volkswagen</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Audi','Audi vozila servisiramo s originalnom VAG dijagnostikom. Iskustvo s quattro pogonima, S-tronic mjenjačima i TFSI motorima svih generacija.')">
+      <div class="marka-logo">AUDI</div><div class="marka-name">Audi</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('BMW','BMW servis uključuje ISTA dijagnostiku za sve F i G serije. Specijalizirani za B47/B48 diesel motore, xDrive sustave i BMW servisni interval reset.')">
+      <div class="marka-logo">BMW</div><div class="marka-name">BMW</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Mercedes-Benz','Mercedes-Benz servisiramo s XENTRY/DAS dijagnostičkim sustavom. Pokrivamo sve modele — C, E, GLC klase, kao i Sprinter komercijalna vozila.')">
+      <div class="marka-logo">MB</div><div class="marka-name">Mercedes-Benz</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Škoda','Škoda vozila servisiramo s VAG dijagnostikom. Specijalizirani za Octavia, Superb i Kodiaq modele, DSG mjenjače i 1.6/2.0 TDI motore.')">
+      <div class="marka-logo">ŠKODA</div><div class="marka-name">Škoda</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Toyota','Toyota i Lexus vozila servisiramo s Techstream dijagnostikom. Iskustvo s hibridnim sustavima (Prius, Yaris Hybrid, RAV4 Hybrid) i D-4D diesel motorima.')">
+      <div class="marka-logo">TOYOTA</div><div class="marka-name">Toyota</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Renault','Renault vozila servisiramo s Clip dijagnostičkim sustavom. Specijalizirani za 1.5 dCi motore, EDC mjenjače i Renault Zoe električna vozila.')">
+      <div class="marka-logo">RENAULT</div><div class="marka-name">Renault</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Ford','Ford vozila servisiramo s IDS/FDRS dijagnostikom. Iskustvo s EcoBoost motorima, PowerShift mjenjačima i Transit komercijalnim vozilima.')">
+      <div class="marka-logo">FORD</div><div class="marka-name">Ford</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Opel','Opel vozila servisiramo s GDS2 dijagnostičkim sustavom. Specijalizirani za 1.6 CDTI motore, automatske mjenjače i Insignia/Astra modele.')">
+      <div class="marka-logo">OPEL</div><div class="marka-name">Opel</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Peugeot / Citroën','PSA/Stellantis vozila servisiramo s Planet/PP2000 dijagnostikom. Pokrivamo sve Peugeot i Citroën modele — benzin, diesel i elektrika.')">
+      <div class="marka-logo">PSA</div><div class="marka-name">Peugeot / Citroën</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Fiat / Alfa Romeo','FCA vozila servisiramo s Examiner dijagnostičkim sustavom. Iskustvo s MultiJet diesel motorima, Twin Air benzincima i Alfa Romeo sportskim modelima.')">
+      <div class="marka-logo">FIAT</div><div class="marka-name">Fiat / Alfa</div>
+    </div>
+    <div class="marka-card" onclick="openPopup('Hyundai / Kia','Hyundai i Kia vozila servisiramo s GDS dijagnostičkim sustavom. Specijalizirani za 1.6 CRDi i 2.0 CRDi motore, DCT mjenjače i hibridne sustave.')">
+      <div class="marka-logo">HYU</div><div class="marka-name">Hyundai / Kia</div>
+    </div>
+  </div>
+</section>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popupOverlay" onclick="closePopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-pretitle">Specijalizacija za</div>
+    <div class="popup-title" id="popupTitle">Volkswagen</div>
+    <div class="popup-rule"></div>
+    <p class="popup-body" id="popupBody"></p>
+    <a href="#booking" class="popup-cta" onclick="closePopup()">Rezervirajte termin →</a>
+  </div>
+</div>
+
+<!-- CJENIK -->
+<section class="cjenik" id="cjenik">
+  <div class="cjenik-header">
+    <div>
+      <div class="s-eyebrow cjenik-eyebrow">Transparentne cijene</div>
+      <h2 class="s-title s-title-light">Cjenik<br><span class="r">bez iznenađenja</span></h2>
+    </div>
+    <p class="s-desc" style="color:rgba(242,237,228,0.35); max-width:360px">Cijene su okvirne i utvrđuju se predračunom. Nikad ne radimo iznad dogovorenog iznosa.</p>
+  </div>
+  <div class="c-groups">
+    <div>
+      <div class="c-cat">Redovni servis i uljna zamjena</div>
+      <div class="c-row fade-up"><div class="c-cell">Mali servis — benzin (ulje + filteri)</div><div class="c-cell dur">60–90 min</div><div class="c-cell price">od 89 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Mali servis — dizel</div><div class="c-cell dur">90–120 min</div><div class="c-cell price">od 109 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Veliki servis (sve tekućine + kočnice + filteri)</div><div class="c-cell dur">3–4 h</div><div class="c-cell price">od 199 € <span class="c-badge">popular</span></div></div>
+    </div>
+    <div style="margin-top:2px">
+      <div class="c-cat">Gume i kočnice</div>
+      <div class="c-row fade-up"><div class="c-cell">Montaža + demontaža guma (4 kom)</div><div class="c-cell dur">30–45 min</div><div class="c-cell price">od 48 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Balansiranje kotača (4 kom)</div><div class="c-cell dur">20 min</div><div class="c-cell price">od 28 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Poravnanje geometrije</div><div class="c-cell dur">45 min</div><div class="c-cell price">od 55 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Zamjena kočnih obloga (po osi)</div><div class="c-cell dur">45–60 min</div><div class="c-cell price">od 79 €</div></div>
+    </div>
+    <div style="margin-top:2px">
+      <div class="c-cat">Dijagnostika i elektrika</div>
+      <div class="c-row fade-up"><div class="c-cell">Kompjuterska dijagnostika</div><div class="c-cell dur">30 min</div><div class="c-cell price">od 35 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Klima servis (punjenje + dezinfekcija)</div><div class="c-cell dur">60 min</div><div class="c-cell price">od 69 €</div></div>
+      <div class="c-row fade-up"><div class="c-cell">Zamjena akumulatora (rad)</div><div class="c-cell dur">20 min</div><div class="c-cell price">od 25 € + dio</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ZASTO -->
+<section class="zasto" id="zasto">
+  <div class="s-eyebrow">Zašto Kovač servis</div>
+  <h2 class="s-title">Povjerenje kroz<br><span class="r">konkretne postupke</span></h2>
+  <div class="zasto-layout">
+    <div class="zasto-photo">
+      <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=900&q=85&auto=format&fit=crop" alt="Mehaničar na radu">
+      <div class="photo-annotation tl">DOK. BR: KOV-WRK-001</div>
+      <div class="annotation-cross"></div>
+    </div>
+    <div class="zasto-content">
+      <div class="s-eyebrow" style="color:var(--rust)">5 načela rada</div>
+      <h3 style="font-family:'Saira Condensed',sans-serif; font-size:30px; font-weight:900; text-transform:uppercase; color:var(--paper); line-height:1.1; margin-bottom:8px; letter-spacing:0.02em;">Svaki postupak<br><span style="color:var(--rust)">dokumentiran</span></h3>
+      <div class="zasto-items">
+        <div class="z-item">
+          <div class="z-num">01</div>
+          <div><div class="z-title">Predračun prije svakog zahvata</div><div class="z-desc">Ništa ne radimo bez pisanog odobrenja. Cijena se ne mijenja nakon dogovora.</div></div>
+        </div>
+        <div class="z-item">
+          <div class="z-num">02</div>
+          <div><div class="z-title">Fotografiramo svaki zahvat</div><div class="z-desc">Dokumentiramo stanje vozila prije i poslije. Zamijenjene dijelove uvijek možete provjeriti.</div></div>
+        </div>
+        <div class="z-item">
+          <div class="z-num">03</div>
+          <div><div class="z-title">Rok isporuke je obaveza</div><div class="z-desc">Dogovoreni datum je datum gotovosti. Obavještavamo vas — ne čekate da pitate.</div></div>
+        </div>
+        <div class="z-item">
+          <div class="z-num">04</div>
+          <div><div class="z-title">12 mj. pisana garancija</div><div class="z-desc">Na svaki zahvat i svaki dio. Bez iznimki i bez sitnog tiska.</div></div>
+        </div>
+        <div class="z-item">
+          <div class="z-num">05</div>
+          <div><div class="z-title">Zamjensko vozilo bez nadoplate</div><div class="z-desc">Za zahvate dulje od 4 sata — besplatno, bez rezervacije unaprijed.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIJA -->
+<div class="galerija" id="galerija">
+  <div class="g-tall">
+    <img src="https://images.unsplash.com/photo-1676018366904-c083ed678e60?w=700&q=85&auto=format&fit=crop" alt="Mehaničar u garaži">
+  </div>
+  <div class="g-stack">
+    <div class="g-half">
+      <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=700&q=85&auto=format&fit=crop" alt="Mehaničar na radu">
+    </div>
+    <div class="g-half">
+      <img src="https://images.unsplash.com/photo-1530046339160-ce3e530c7d2f?w=700&q=85&auto=format&fit=crop" alt="Inspekcija automobila">
+    </div>
+  </div>
+  <div class="g-bot-l">
+    <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=800&q=85&auto=format&fit=crop" alt="Servisna radionica">
+  </div>
+  <div class="g-bot-r">
+    <img src="https://images.unsplash.com/photo-1613214150333-53afb7561e6d?w=800&q=85&auto=format&fit=crop" alt="BMW servis">
+    <div class="g-wide-label">// WERKSTATT · KOVAČ · ZG-1998</div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div class="s-eyebrow">Online naručivanje</div>
+  <h2 class="s-title">Naruči se na <span class="r">servis</span></h2>
+  <div class="booking-layout">
+    <div class="booking-l">
+      <div>
+        <div class="bl-title">Brzo.<br>Bez čekanja<br>na liniji.</div>
+        <p class="bl-sub">Ispunite obrazac — javimo se unutar 2 sata s potvrdom termina i okvirnim predračunom.</p>
+      </div>
+      <div class="bl-contacts">
+        <div class="bl-contact">
+          <div class="bl-icon">📍</div>
+          <div><div class="bl-label">Adresa</div><div class="bl-val">Heinzelova 22, Zagreb<br>Besplatni parking za klijente</div></div>
+        </div>
+        <div class="bl-contact">
+          <div class="bl-icon">🕐</div>
+          <div><div class="bl-label">Radno vrijeme</div><div class="bl-val">Pon–Pet: 07:00–19:00 · Sub: 08:00–14:00</div></div>
+        </div>
+        <div class="bl-contact">
+          <div class="bl-icon">🚗</div>
+          <div><div class="bl-label">Zamjensko vozilo</div><div class="bl-val">Besplatno za zahvate 4h+</div></div>
+        </div>
+      </div>
+      <div class="bl-phone">
+        <span class="bl-phone-label">Direktni poziv</span>
+        +385 1 234 5678
+      </div>
+    </div>
+    <div class="booking-r">
+      <div class="form-head">Pošaljite upit</div>
+      <div class="form-subhead">▸ odgovaramo unutar 2h · bez obveze · besplatno</div>
+      <form id="bookForm" onsubmit="submitBook(event)">
+        <div class="frow">
+          <div class="fg"><label>Ime i prezime</label><input type="text" placeholder="Ivan Kovačević" required></div>
+          <div class="fg"><label>Telefon</label><input type="tel" placeholder="+385 91 234 5678" required></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label>Marka i model vozila</label><input type="text" placeholder="VW Golf 7 1.6 TDI, 2018." required></div>
+          <div class="fg"><label>Registracija (opcija.)</label><input type="text" placeholder="ZG-1234-AB"></div>
+        </div>
+        <div class="fg">
+          <label>Marka i godište vozila</label>
+          <input type="text" placeholder="npr. VW Golf, 2019." required>
+        </div>
+        <div class="fg">
+          <label>Opišite problem ili što vam treba</label>
+          <textarea rows="4" placeholder="npr. Pali se lampica motora, treba servis, mijenjam gume, buka pri kočenju..." style="resize:vertical" required></textarea>
+        </div>
+        <div class="fg">
+          <label>Željeni datum (opcija.)</label>
+          <input type="date">
+        </div>
+        <button type="submit" class="btn-book"><span>Pošalji zahtjev</span><span>→</span></button>
+        <p class="f-note">▸ Kontaktiramo unutar 2h · Otkazivanje do 24h bez naknade</p>
+      </form>
+      <div class="f-success" id="bookSuccess">
+        <h3>Zahtjev primljen</h3>
+        <p>Kontaktiramo vas unutar 2 sata<br>s potvrdom termina i okvirnim predračunom.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENZIJE -->
+<section class="recenzije" id="recenzije">
+  <div class="s-eyebrow">Klijenti o nama</div>
+  <h2 class="s-title">Što kažu <span class="r">klijenti</span></h2>
+  <div class="rec-grid">
+    <div class="rec-card fade-up">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Tri servisa nisam mogao riješiti problem s motorom. Ovdje su ga dijagnosticirali za 40 minuta, poslali fotografije i predračun na mobitel. Isti dan gotovo, cijena točno kao dogovoreno."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="T"></div>
+        <div><div class="rec-name">Tomislav Babić</div><div class="rec-sub">VW Passat B8 · Dijagnostika</div></div>
+        <div class="rec-badge">Google ★ 5.0</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.12s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Dolazim 7 godina s dva auta. Jednom mi nisu naplatili sitnu stvar jer su je vidjeli usput. Nikad me nisu prevarili, nikad nije bilo iznenađenja na računu. To se pamti."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&q=80" alt="M"></div>
+        <div><div class="rec-name">Marija Horvat</div><div class="rec-sub">Toyota Yaris · Redovni servis</div></div>
+        <div class="rec-badge">Facebook ★ 5.0</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.24s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Naručio se online u subotu navečer. U ponedjeljak ujutro poziv s potvrdom. Gume i geometrija za sat i pol. Zamjenski auto čekao — nisam ni tražio. Savršena organizacija."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="D"></div>
+        <div><div class="rec-name">Davor Šimić</div><div class="rec-sub">BMW 320d · Gume + geometrija</div></div>
+        <div class="rec-badge">Maps ★ 5.0</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="f-logo">
+        <div class="f-logo-arrow"></div>
+        <div class="f-logo-name">Autoservis Kovač</div>
+      </div>
+      <p class="f-desc">Ovlašteni autoservis u Zagrebu od 1998. Transparentnost, pouzdanost i pisana garancija na svaki zahvat.</p>
+      <div class="f-soc">
+        <a href="#" class="fsoc">FB</a>
+        <a href="#" class="fsoc">IG</a>
+        <a href="#" class="fsoc">GM</a>
+      </div>
+    </div>
+    <div>
+      <div class="f-col-title">Usluge</div>
+      <ul class="f-links">
+        <li><a href="#">Redovni servis</a></li>
+        <li><a href="#">Dijagnostika</a></li>
+        <li><a href="#">Gume i geometrija</a></li>
+        <li><a href="#">Klima servis</a></li>
+        <li><a href="#">Limarija</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-col-title">Informacije</div>
+      <ul class="f-links">
+        <li><a href="#">Cjenik</a></li>
+        <li><a href="#">Kako radimo</a></li>
+        <li><a href="#">Naruči se</a></li>
+        <li><a href="#">Recenzije</a></li>
+        <li><a href="#">O nama</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-col-title">Kontakt</div>
+      <ul class="f-links">
+        <li><a href="#">+385 1 234 5678</a></li>
+        <li><a href="#">servis@kovac-auto.hr</a></li>
+        <li><a href="#">Heinzelova 22, Zagreb</a></li>
+        <li><a href="#">Pon–Pet: 07–19h</a></li>
+        <li><a href="#">Sub: 08–14h</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="f-copy">▸ © 2025 Autoservis Kovač · Sva prava pridržana</p>
+    <p class="f-copy">Politika privatnosti · GDPR</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  const d = document.querySelector('input[type="date"]');
+  if(d){ const t=new Date(); t.setDate(t.getDate()+1); d.min=t.toISOString().split('T')[0]; }
+
+  function submitBook(e){
+    e.preventDefault();
+    document.getElementById('bookForm').style.display='none';
+    document.getElementById('bookSuccess').style.display='block';
+  }
+
+  function openPopup(title, body) {
+    document.getElementById('popupTitle').textContent = title;
+    document.getElementById('popupBody').textContent = body;
+    document.getElementById('popupOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePopup() {
+    document.getElementById('popupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closePopup(); });
+</script>
+</body>
+</html>
