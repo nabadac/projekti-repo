@@ -17,6 +17,10 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 | Stolarija Vidović | [`sites/stolarija-vidovic/`](sites/stolarija-vidovic/) | Obiteljska stolarija iz Samobora od 1994.: kuhinje, ormari i namještaj po mjeri, upit za ponudu. |
 | Dentalna ordinacija Matić | [`sites/ordinacija-matic/`](sites/ordinacija-matic/) | Demo stranica stomatološke ordinacije u Zagrebu. |
 
+## Naslovnica portfolija
+
+`index.html` u rootu je naslovnica portfolija s karticama svih stranica (slike u `portfolio/`) i filterom po djelatnosti. Za javni link uključite GitHub Pages (Settings → Pages → grana `main`, mapa `/ (root)`). Naslovnica je tada na `https://nabadac.github.io/projekti-repo/`.
+
 ## Lokalni pregled
 
 U rootu repozitorija pokrenite:
@@ -26,6 +30,8 @@ python3 -m http.server 8080
 ```
 
 i otvorite:
+
+- <http://localhost:8080/> (naslovnica portfolija)
 
 - <http://localhost:8080/sites/poliklinika-lipa/>
 - <http://localhost:8080/sites/kolnik-logistika/>
