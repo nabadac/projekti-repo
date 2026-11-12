@@ -32,7 +32,6 @@ python3 -m http.server 8080
 i otvorite:
 
 - <http://localhost:8080/> (naslovnica portfolija)
-
 - <http://localhost:8080/sites/poliklinika-lipa/>
 - <http://localhost:8080/sites/kolnik-logistika/>
 - <http://localhost:8080/sites/fuga-atelier/>
