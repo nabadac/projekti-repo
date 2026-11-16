@@ -14,6 +14,15 @@ Novi dizajn stranice Autoservisa Kovač, napravljen po zadanom referentnom videu
 - Oznaka „Sada otvoreno” prema radnom vremenu i istaknut današnji dan u tablici radnog vremena.
 - FAQ odgovara na najčešće razloge odgađanja (cijena, trajanje, dijelovi, zamjensko vozilo).
 
+## Dorada (Impeccable audit + polish, Emil Kowalski)
+
+- **Pristupačnost:** stanja `aria-pressed`, `aria-expanded`, `aria-selected` i `aria-current` na čipovima, uslugama, FAQ-u, tabovima i koracima obrasca. Tabovi rade sa strelicama, fokus kod greške ide na prvo neispravno polje, poruke greške se čitaju (`role="alert"`). Vidljiv fokus u boji branda. Stupci načela otvaraju se i fokusom i dodirom, ne samo mišem.
+- **Kontrast:** sivi pomoćni tekst potamnjen s 2,5:1 na 4,7:1.
+- **Dodir:** gumbi, čipovi i tabovi na mobitelu imaju najmanje 44 px visine.
+- **Ikone:** Unicode strelice i znakovi zamijenjeni su SVG ikonama iste debljine linije.
+- **Pokret:** jedan autorski trenutak (naslov u heroju i crta procesa) umjesto istog ulaza na svakoj sekciji. Gumbi se lagano stisnu pri pritisku, hover efekti samo na uređajima s mišem, prilagođene krivulje ubrzanja. `prefers-reduced-motion` čuva korisne prijelaze, a zaustavlja pomake i marquee.
+- **Sadržaj:** uklonjeni nadnaslovi iznad naslova sekcija. Uklonjene dvije tvrdnje koje nisu bile u izvornom sadržaju („isti dan”, „prvi radni sat sljedećeg dana”). „Sada otvoreno” se računa po zagrebačkom vremenu.
+
 ## Tipografija i boje
 
 | | |
