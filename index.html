@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio · web stranice</title>
+<meta name="description" content="Portfolio web stranica: koncepti i redizajni za autoservis, zdravstvo, neprofitne udruge, obrt, turizam i logistiku.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1efea;--card:#fbfaf7;--ink:#17191c;--muted:#61656b;--faint:#9a9ea4;--line:#dcd8cf;--accent:#c0392b;
+  --serif:'Instrument Serif',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
+.mono{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+header{padding:28px 0;display:flex;justify-content:space-between;align-items:center;gap:16px}
+header .mono{color:var(--muted)}
+header a.gh{border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:13px;background:var(--card)}
+header a.gh:hover{border-color:var(--ink)}
+.intro{padding:clamp(48px,9vw,120px) 0 clamp(40px,6vw,72px);display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:end;border-bottom:1px solid var(--line)}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(56px,9vw,136px);line-height:.92;letter-spacing:-.03em}
+h1 em{color:var(--accent)}
+.intro p{color:var(--muted);font-size:18px;max-width:460px}
+.facts{display:flex;gap:28px;margin-top:26px;flex-wrap:wrap}
+.facts div{font-family:var(--serif);font-size:44px;line-height:1}
+.facts small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0}
+.f{border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:14px;background:var(--card);transition:.15s}
+.f:hover{border-color:var(--ink)}
+.f.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.f sup{font-family:var(--mono);font-size:10px;margin-left:4px;opacity:.6}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2.4vw,32px);padding-bottom:80px}
+.card{display:flex;flex-direction:column;gap:16px;transition:opacity .3s}
+.card.hide{display:none}
+.shot{position:relative;aspect-ratio:16/10;border-radius:6px;overflow:hidden;background:#ddd;border:1px solid var(--line);box-shadow:0 20px 40px -28px #0006}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
+.card:hover .shot img{transform:scale(1.035)}
+.shot .open{position:absolute;right:14px;bottom:14px;background:#fff;color:var(--ink);border-radius:999px;padding:9px 15px;font-size:13px;font-weight:500;opacity:0;transform:translateY(6px);transition:.25s;box-shadow:0 8px 20px -8px #0005}
+.card:hover .open{opacity:1;transform:none}
+.num{position:absolute;left:14px;top:14px;font-family:var(--mono);font-size:11px;background:#ffffffe6;color:var(--ink);padding:4px 8px;border-radius:4px}
+.meta{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}
+.meta h2{font-family:var(--serif);font-weight:400;font-size:clamp(28px,2.6vw,36px);line-height:1.05;letter-spacing:-.01em}
+.meta .mono{color:var(--muted);margin-top:6px;display:block}
+.badge{flex:none;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:4px;padding:4px 8px;color:var(--muted);background:var(--card);white-space:nowrap}
+.badge.red{border-color:#c0392b55;color:var(--accent)}
+.card p{color:var(--muted);font-size:15px;max-width:600px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tags span{font-size:12px;border-radius:999px;padding:3px 10px;background:#e6e3dc;color:#45484d}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+footer p{max-width:620px}
+@media(max-width:860px){.intro{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="mono">Portfolio · web dizajn i izrada</span>
+    <a class="gh" href="https://github.com/nabadac/projekti-repo" target="_blank" rel="noopener">Kod na GitHubu ↗</a>
+  </header>
+
+  <section class="intro">
+    <h1>web stranice<br>koje <em>donose</em><br>upite.</h1>
+    <div>
+      <p>Odabrani koncepti i redizajni za male tvrtke i udruge: od autoservisa i poliklinike do hotela i neprofitnih organizacija. Svaka stranica je responzivna, s jasnim pozivom na akciju i obrascem za upit.</p>
+      <div class="facts"><div><span id="count">12</span><small>projekata</small></div><div>10<small>djelatnosti</small></div><div>100%<small>responzivno</small></div></div>
+    </div>
+  </section>
+
+  <nav class="filters" id="filters" aria-label="Filtriraj po djelatnosti">
+    <button class="f on" data-f="sve">Sve</button>
+    <button class="f" data-f="usluge">Usluge i obrt</button>
+    <button class="f" data-f="zdravlje">Zdravlje</button>
+    <button class="f" data-f="udruge">Udruge</button>
+    <button class="f" data-f="turizam">Turizam i lifestyle</button>
+    <button class="f" data-f="b2b">B2B</button>
+  </nav>
+
+  <main class="grid" id="grid">
+    <a class="card" data-cat="usluge" href="sites/autoservis-kovac/">
+      <div class="shot"><img src="portfolio/autoservis-kovac.jpg" alt="Autoservis Kovač, nova početna stranica" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Autoservis Kovač</h2><span class="mono">Autoservis · Zagreb</span></div><span class="badge">koncept</span></div>
+      <p>Redizajn usmjeren na zakazivanje: brzi odabir usluge u heroju, rezervacija iz svake usluge i cjenika, obrazac u tri koraka sa sažetkom cijene i mobilna traka „Nazovi / Naruči”.</p>
+      <div class="tags"><span>konverzija</span><span>obrazac u koracima</span><span>editorial stil</span></div>
+    </a>
+    <a class="card" data-cat="udruge zdravlje" href="sites/zdd-zagreb/">
+      <div class="shot"><img src="portfolio/zdd-zagreb.jpg" alt="Zagrebačko dijabetičko društvo, koncept redizajna" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Zagrebačko dijabetičko društvo</h2><span class="mono">Udruga pacijenata · Zagreb</span></div><span class="badge red">neslužbeni redizajn</span></div>
+      <p>Koncept redizajna sa stvarnim sadržajem i brandom udruge: brojke u pločicama, bento pogodnosti članstva, tabovi pet klubova, citati obitelji i učlanjenje.</p>
+      <div class="tags"><span>redizajn</span><span>tabovi</span><span>carousel</span></div>
+    </a>
+    <a class="card" data-cat="udruge" href="sites/sos-djecje-selo/">
+      <div class="shot"><img src="portfolio/sos-djecje-selo.jpg" alt="SOS Dječje selo Hrvatska, koncept stranice" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>SOS Dječje selo Hrvatska</h2><span class="mono">Neprofitna udruga · Lekenik, Ladimirevci</span></div><span class="badge red">neslužbeni redizajn</span></div>
+      <p>Stranica usmjerena na donacije: slaganje kartica četiriju načela, tabovi sela, carousel priča, galerija na valu i donacijski obrazac. GSAP i Lenis animacije.</p>
+      <div class="tags"><span>donacije</span><span>GSAP</span><span>storytelling</span></div>
+    </a>
+    <a class="card" data-cat="zdravlje" href="sites/poliklinika-lipa/">
+      <div class="shot"><img src="portfolio/poliklinika-lipa.jpg" alt="Poliklinika Lipa, landing stranica" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Poliklinika Lipa</h2><span class="mono">Privatna poliklinika · Zagreb</span></div><span class="badge">koncept</span></div>
+      <p>Landing stranica za privatnu polikliniku s prikvačenim tabovima, carouselom liječnika, cjenikom i naručivanjem pregleda. GSAP i Lenis.</p>
+      <div class="tags"><span>zdravstvo</span><span>pinned sekcije</span><span>GSAP</span></div>
+    </a>
+    <a class="card" data-cat="usluge" href="sites/fuga-atelier/">
+      <div class="shot"><img src="portfolio/fuga-atelier.jpg" alt="Fuga atelier keramike" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Fuga atelier</h2><span class="mono">Keramičar · od obale do Zagreba</span></div><span class="badge">koncept</span></div>
+      <p>Premium uredničke sekcije, pinned poglavlje, karta rute, slider materijala i upit za projekt.</p>
+      <div class="tags"><span>premium</span><span>editorial</span><span>karta</span></div>
+    </a>
+    <a class="card" data-cat="zdravlje" href="sites/ordinacija-matic/">
+      <div class="shot"><img src="portfolio/ordinacija-matic.jpg" alt="Dentalna ordinacija Matić" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Dentalna ordinacija Matić</h2><span class="mono">Stomatologija · Zagreb</span></div><span class="badge">koncept</span></div>
+      <p>Topla, smirujuća stranica ordinacije za nove pacijente: usluge, tim, cjenik, recenzije i online naručivanje.</p>
+      <div class="tags"><span>zdravstvo</span><span>naručivanje</span></div>
+    </a>
+    <a class="card" data-cat="b2b" href="sites/kolnik-logistika/">
+      <div class="shot"><img src="portfolio/kolnik-logistika.jpg" alt="Kolnik Logistika" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Kolnik Logistika</h2><span class="mono">Dostava i špedicija · Sveta Nedelja</span></div><span class="badge">koncept</span></div>
+      <p>Landing za gradsku dostavu i međunarodnu špediciju na tri jezika (HR, SL, SR), s mrežom ruta i upitom za ponudu. GSAP animacije.</p>
+      <div class="tags"><span>B2B</span><span>višejezično</span><span>GSAP</span></div>
+    </a>
+    <a class="card" data-cat="usluge" href="sites/stolarija-vidovic/">
+      <div class="shot"><img src="portfolio/stolarija-vidovic.jpg" alt="Stolarija Vidović" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Stolarija Vidović</h2><span class="mono">Namještaj po mjeri · Samobor</span></div><span class="badge">koncept</span></div>
+      <p>Obiteljska stolarija od 1994.: kuhinje, ormari i namještaj po mjeri, galerija radova i upit za ponudu.</p>
+      <div class="tags"><span>obrt</span><span>upit za ponudu</span></div>
+    </a>
+    <a class="card" data-cat="turizam" href="sites/villa-lunare-hvar/">
+      <div class="shot"><img src="portfolio/villa-lunare-hvar.jpg" alt="Villa Lunare, boutique hotel" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Villa Lunare</h2><span class="mono">Boutique hotel · Hvar</span></div><span class="badge">koncept</span></div>
+      <p>Elegantna stranica boutique hotela: sobe i suite, doživljaj otoka, recenzije i rezervacija smještaja.</p>
+      <div class="tags"><span>turizam</span><span>rezervacije</span></div>
+    </a>
+    <a class="card" data-cat="turizam" href="sites/atelier-noir-salon/">
+      <div class="shot"><img src="portfolio/atelier-noir-salon.jpg" alt="Atelier Noir, frizerski salon" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Atelier Noir</h2><span class="mono">Frizerski salon · Zagreb</span></div><span class="badge">koncept</span></div>
+      <p>Tamna, luksuzna estetika za salon: usluge, galerija, cjenik i rezervacija termina.</p>
+      <div class="tags"><span>lifestyle</span><span>rezervacije</span></div>
+    </a>
+    <a class="card" data-cat="turizam" href="sites/irongate-gym/">
+      <div class="shot"><img src="portfolio/irongate-gym.jpg" alt="IRONGATE teretana" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>IRONGATE</h2><span class="mono">Teretana · Zagreb</span></div><span class="badge">koncept</span></div>
+      <p>Snažna, kontrastna stranica teretane s programima, članarinama i besplatnim probnim treningom.</p>
+      <div class="tags"><span>fitness</span><span>lead magnet</span></div>
+    </a>
+    <a class="card" data-cat="usluge" href="sites/autoservis-kovac-demo/">
+      <div class="shot"><img src="portfolio/autoservis-kovac-demo.jpg" alt="Autoservis Kovač, prva verzija" loading="lazy"><span class="open">Otvori stranicu ↗</span></div>
+      <div class="meta"><div><h2>Autoservis Kovač · v1</h2><span class="mono">Autoservis · Zagreb</span></div><span class="badge">koncept</span></div>
+      <p>Prva verzija iste stranice u tamnom industrijskom stilu. Usporedite je s redizajnom na vrhu popisa.</p>
+      <div class="tags"><span>prije / poslije</span></div>
+    </a>
+  </main>
+
+  <footer>
+    <p>Svi projekti su koncepti izrađeni za portfolio. Stranice s imenima stvarnih organizacija neslužbeni su redizajni i nisu povezane s tim organizacijama. Fotografije: Unsplash i javni materijali navedenih organizacija.</p>
+    <span>© 2026</span>
+  </footer>
+</div>
+<script>
+const fs=[...document.querySelectorAll('.f')],cards=[...document.querySelectorAll('.card')];
+fs.forEach(b=>{const n=b.dataset.f==='sve'?cards.length:cards.filter(c=>c.dataset.cat.split(' ').includes(b.dataset.f)).length;b.insertAdjacentHTML('beforeend','<sup>'+n+'</sup>');
+ b.addEventListener('click',()=>{fs.forEach(x=>x.classList.toggle('on',x===b));cards.forEach(c=>c.classList.toggle('hide',b.dataset.f!=='sve'&&!c.dataset.cat.split(' ').includes(b.dataset.f)));});});
+document.getElementById('count').textContent=cards.length;
+</script>
+</body>
+</html>

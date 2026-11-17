@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dentalna ordinacija Matić — Zagreb Trešnjevka</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:    #2d4a3e;
+  --forest-2:  #3d6454;
+  --forest-3:  #1e3329;
+  --gold:      #c9a96e;
+  --gold-pale: #f5ead8;
+  --gold-light:#e8d4b0;
+  --cream:     #f8f5f0;
+  --off-white: #fdfcfa;
+  --white:     #ffffff;
+  --ink:       #1a1a1a;
+  --mid:       #6b7280;
+  --light:     #e8e4de;
+  --b-forest:  rgba(45,74,62,0.12);
+  --b-gold:    rgba(201,169,110,0.25);
+  --mint:      #e8f2ee;
+  --mint-2:    #d4e8e0;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--off-white);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ── FLOATING MOBILE CTA ── */
+.mobile-cta-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+  background: var(--forest);
+  padding: 12px 16px;
+  gap: 8px;
+}
+.mobile-cta-bar a {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  text-decoration: none; border-radius: 6px;
+  transition: all 0.2s;
+}
+.mcta-call { background: var(--gold); color: var(--forest-3); }
+.mcta-book { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(253,252,250,0.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  padding: 0 56px;
+  height: 72px;
+  display: flex; align-items: center;
+}
+nav.scrolled {
+  border-color: var(--light);
+  box-shadow: 0 2px 24px rgba(45,74,62,0.06);
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none; margin-right: auto;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--forest);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nav-logo-mark svg { width: 18px; height: 18px; fill: var(--gold); }
+.nav-logo-text {
+  font-family: 'Fraunces', serif;
+  font-size: 17px; font-weight: 600;
+  color: var(--forest-3); letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.nav-logo-sub {
+  font-size: 10px; font-weight: 400;
+  color: var(--mid); letter-spacing: 0.08em;
+  text-transform: uppercase; display: block; margin-top: 1px;
+}
+.nav-links {
+  display: flex; gap: 2px; list-style: none;
+}
+.nav-links a {
+  padding: 8px 16px;
+  font-size: 13px; font-weight: 400;
+  color: var(--mid); text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.nav-links a:hover { color: var(--forest); background: var(--mint); }
+.nav-actions { display: flex; gap: 8px; margin-left: 20px; }
+.btn-nav-call {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  font-size: 13px; font-weight: 500;
+  color: var(--forest);
+  border: 1.5px solid var(--b-forest);
+  border-radius: 6px; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-nav-call:hover { background: var(--mint); border-color: var(--forest-2); }
+.btn-nav-book {
+  padding: 9px 20px;
+  font-size: 13px; font-weight: 600;
+  color: var(--white); background: var(--forest);
+  border-radius: 6px; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-nav-book:hover { background: var(--forest-2); }
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  cursor: pointer; padding: 4px; margin-left: auto;
+}
+.hamburger span { width: 22px; height: 1.5px; background: var(--forest); }
+
+/* ── HERO ── */
+.hero {
+  padding-top: 72px;
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  background: var(--cream);
+  padding: 80px 64px 80px 56px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+/* Subtle organic shape */
+.hero-left::after {
+  content: '';
+  position: absolute; right: -60px; top: 50%;
+  transform: translateY(-50%);
+  width: 120px; height: 120px;
+  background: var(--gold-pale);
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--mint);
+  padding: 7px 16px 7px 10px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+  width: fit-content;
+}
+.hero-tag-dot {
+  width: 6px; height: 6px;
+  background: var(--forest);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.7; }
+}
+.hero-tag-text {
+  font-size: 12px; font-weight: 500;
+  color: var(--forest); letter-spacing: 0.04em;
+}
+.hero-h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(40px, 4.5vw, 64px);
+  font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--forest-3);
+  margin-bottom: 20px;
+}
+.hero-h1 em {
+  font-style: italic; font-weight: 400;
+  color: var(--forest-2);
+}
+.hero-sub {
+  font-size: 16px; font-weight: 300;
+  color: var(--mid); line-height: 1.8;
+  max-width: 440px; margin-bottom: 40px;
+}
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px;
+  font-size: 14px; font-weight: 600;
+  color: var(--white); background: var(--forest);
+  border-radius: 8px; text-decoration: none;
+  transition: all 0.25s; box-shadow: 0 4px 16px rgba(45,74,62,0.2);
+}
+.btn-primary:hover { background: var(--forest-2); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(45,74,62,0.28); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 24px;
+  font-size: 14px; font-weight: 500;
+  color: var(--forest);
+  border: 1.5px solid var(--b-forest);
+  border-radius: 8px; text-decoration: none;
+  background: var(--white);
+  transition: all 0.25s;
+}
+.btn-secondary:hover { background: var(--mint); border-color: var(--forest-2); }
+/* Trust signals row */
+.hero-trust {
+  display: flex; gap: 0;
+  padding-top: 36px;
+  border-top: 1px solid var(--light);
+}
+.trust-item {
+  flex: 1; padding-right: 24px;
+}
+.trust-item + .trust-item {
+  padding-left: 24px; padding-right: 0;
+  border-left: 1px solid var(--light);
+}
+.trust-num {
+  font-family: 'Fraunces', serif;
+  font-size: 32px; font-weight: 600;
+  color: var(--forest); line-height: 1;
+}
+.trust-label {
+  font-size: 11px; font-weight: 400;
+  color: var(--mid); margin-top: 4px;
+  line-height: 1.4;
+}
+/* Google rating */
+.trust-google {
+  display: flex; align-items: center; gap: 8px;
+  flex: 1; padding-left: 24px;
+  border-left: 1px solid var(--light);
+}
+.trust-stars { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
+.trust-google-score {
+  font-family: 'Fraunces', serif;
+  font-size: 24px; font-weight: 600; color: var(--forest);
+}
+.trust-google-label { font-size: 11px; color: var(--mid); line-height: 1.4; }
+
+/* Hero right — photo collage */
+.hero-right {
+  position: relative; overflow: hidden;
+  background: var(--forest-3);
+}
+.hero-main-photo {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  filter: brightness(0.92) saturate(0.9);
+}
+/* Floating card on photo */
+.hero-card {
+  position: absolute; bottom: 40px; left: -24px;
+  background: var(--white);
+  padding: 20px 24px;
+  border-radius: 12px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  max-width: 220px;
+  z-index: 2;
+}
+.hero-card-label {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--mid); margin-bottom: 6px;
+}
+.hero-card-text {
+  font-family: 'Fraunces', serif;
+  font-size: 15px; font-weight: 500;
+  color: var(--forest-3); line-height: 1.4;
+}
+.hero-card-tag {
+  display: inline-block; margin-top: 10px;
+  background: var(--mint); color: var(--forest);
+  font-size: 11px; font-weight: 500;
+  padding: 4px 10px; border-radius: 100px;
+}
+
+/* ── CERTIFICATIONS STRIP ── */
+.cert-strip {
+  background: var(--forest);
+  padding: 18px 56px;
+  display: flex; align-items: center;
+  gap: 0; overflow: hidden;
+}
+.cert-label {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  white-space: nowrap; margin-right: 32px; flex-shrink: 0;
+}
+.cert-items {
+  display: flex; gap: 2px; flex: 1; overflow: hidden;
+  animation: scrollCerts 30s linear infinite;
+  white-space: nowrap;
+}
+.cert-item {
+  font-size: 12px; font-weight: 400;
+  color: rgba(255,255,255,0.6);
+  padding: 0 24px;
+  display: flex; align-items: center; gap: 8px;
+  flex-shrink: 0;
+}
+.cert-item::before { content: '·'; color: var(--gold); }
+@keyframes scrollCerts {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── SECTION COMMONS ── */
+section { padding: 96px 56px; }
+.s-eyebrow {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--forest-2); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.s-eyebrow::before {
+  content: '';
+  width: 20px; height: 1.5px; background: var(--gold);
+}
+.s-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 3.5vw, 50px);
+  font-weight: 600; line-height: 1.15;
+  letter-spacing: -0.02em; color: var(--forest-3);
+  margin-bottom: 16px;
+}
+.s-title em { font-style: italic; font-weight: 400; color: var(--forest-2); }
+.s-desc {
+  font-size: 15px; font-weight: 300;
+  color: var(--mid); line-height: 1.9;
+  max-width: 520px;
+}
+
+/* ── USLUGE ── */
+.usluge { background: var(--cream); }
+.usluge-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: end; margin-bottom: 64px;
+}
+.usluge-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.usluga-card {
+  background: var(--white);
+  padding: 40px 32px;
+  position: relative; overflow: hidden;
+  cursor: default;
+  transition: all 0.3s;
+  border-bottom: 3px solid transparent;
+}
+.usluga-card:hover {
+  transform: translateY(-4px);
+  border-bottom-color: var(--forest);
+  box-shadow: 0 16px 48px rgba(45,74,62,0.1);
+}
+.usluga-icon {
+  width: 48px; height: 48px;
+  background: var(--mint);
+  border-radius: 12px;
+  display: flex; align-items: center;
+  justify-content: center;
+  font-size: 22px; margin-bottom: 20px;
+  transition: background 0.3s;
+}
+.usluga-card:hover .usluga-icon { background: var(--forest); }
+.usluga-name {
+  font-family: 'Fraunces', serif;
+  font-size: 19px; font-weight: 600;
+  color: var(--forest-3); margin-bottom: 8px;
+  line-height: 1.3; letter-spacing: -0.01em;
+}
+.usluga-patient-name {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 12px;
+}
+.usluga-desc {
+  font-size: 13px; font-weight: 300;
+  color: var(--mid); line-height: 1.8; margin-bottom: 20px;
+}
+.usluga-cta {
+  font-size: 12px; font-weight: 500;
+  color: var(--forest);
+  display: flex; align-items: center; gap: 6px;
+  text-decoration: none;
+  transition: gap 0.2s;
+}
+.usluga-card:hover .usluga-cta { gap: 10px; }
+
+/* ── TIM ── */
+.tim { background: var(--off-white); }
+.tim-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 64px;
+}
+.tim-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 24px;
+}
+.doktor-card {
+  background: var(--cream);
+  border-radius: 16px; overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.doktor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(45,74,62,0.1);
+}
+.doktor-photo {
+  width: 100%; aspect-ratio: 4/5;
+  object-fit: cover;
+  filter: saturate(0.9);
+  display: block;
+}
+.doktor-card.featured .doktor-photo { aspect-ratio: 4/4; }
+.doktor-body { padding: 28px 24px 32px; }
+.doktor-name {
+  font-family: 'Fraunces', serif;
+  font-size: 22px; font-weight: 600;
+  color: var(--forest-3); letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+.doktor-title {
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--forest-2); margin-bottom: 14px;
+}
+.doktor-bio {
+  font-size: 13px; font-weight: 300;
+  color: var(--mid); line-height: 1.8; margin-bottom: 16px;
+}
+.doktor-certs {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.doktor-cert {
+  background: var(--mint);
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--forest);
+  padding: 4px 10px; border-radius: 100px;
+}
+
+/* ── BEFORE/AFTER ── */
+.gallery { background: var(--forest-3); padding: 96px 56px; }
+.gallery .s-eyebrow { color: var(--gold); }
+.gallery .s-eyebrow::before { background: var(--gold); }
+.gallery .s-title { color: var(--off-white); }
+.gallery .s-title em { color: var(--gold-light); }
+.gallery .s-desc { color: rgba(248,245,240,0.55); }
+.gallery-header {
+  display: flex; justify-content: space-between;
+  align-items: flex-end; margin-bottom: 56px;
+}
+/* Filter tabs */
+.gallery-tabs {
+  display: flex; gap: 6px;
+}
+.gallery-tab {
+  padding: 8px 18px;
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px; cursor: pointer;
+  transition: all 0.2s;
+}
+.gallery-tab.active, .gallery-tab:hover {
+  color: var(--forest-3);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+/* BA items */
+.ba-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.ba-item { display: none; }
+.ba-item.show { display: block; }
+.ba-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px; overflow: hidden;
+}
+.ba-photos {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; position: relative;
+}
+.ba-photo { overflow: hidden; }
+.ba-photo img {
+  width: 100%; aspect-ratio: 4/3;
+  object-fit: cover; display: block;
+  transition: transform 0.5s;
+}
+.ba-card:hover .ba-photo img { transform: scale(1.03); }
+.ba-label {
+  position: absolute; top: 10px;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #fff; padding: 4px 10px; border-radius: 100px;
+}
+.ba-label.before { left: 10px; background: rgba(0,0,0,0.55); }
+.ba-label.after  { right: 10px; background: rgba(45,74,62,0.85); }
+.ba-body { padding: 20px 20px 22px; }
+.ba-procedure {
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 500;
+  color: var(--off-white); letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.ba-detail {
+  font-size: 12px; font-weight: 300;
+  color: rgba(248,245,240,0.4); line-height: 1.6;
+}
+.ba-patient {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 14px; padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.ba-av {
+  width: 32px; height: 32px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+}
+.ba-av img { width: 100%; height: 100%; object-fit: cover; }
+.ba-pat-name {
+  font-size: 12px; font-weight: 500; color: rgba(248,245,240,0.6);
+}
+.ba-pat-sub {
+  font-size: 10px; color: rgba(248,245,240,0.3);
+}
+.ba-stars { margin-left: auto; color: var(--gold); font-size: 11px; letter-spacing: 1px; }
+
+/* ── RECENZIJE ── */
+.recenzije { background: var(--cream); }
+.recenzije-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: end; margin-bottom: 64px;
+}
+/* Google badge */
+.google-badge {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--white);
+  border: 1.5px solid var(--light);
+  border-radius: 12px; padding: 16px 24px;
+  max-width: 320px; margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.google-badge-score {
+  font-family: 'Fraunces', serif;
+  font-size: 40px; font-weight: 600;
+  color: var(--forest-3); line-height: 1;
+}
+.google-badge-right {}
+.google-badge-stars { color: #f59e0b; font-size: 16px; letter-spacing: 2px; }
+.google-badge-label {
+  font-size: 12px; color: var(--mid); margin-top: 2px; line-height: 1.4;
+}
+.rec-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.rec-card {
+  background: var(--white);
+  border-radius: 14px;
+  padding: 28px 24px;
+  border: 1.5px solid transparent;
+  transition: all 0.3s;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.rec-card:hover { border-color: var(--b-forest); box-shadow: 0 8px 32px rgba(45,74,62,0.08); }
+.rec-stars { color: #f59e0b; font-size: 13px; letter-spacing: 2px; margin-bottom: 14px; }
+.rec-text {
+  font-family: 'Fraunces', serif;
+  font-size: 15px; font-weight: 400;
+  font-style: italic;
+  color: var(--ink); line-height: 1.8; margin-bottom: 20px;
+}
+.rec-foot {
+  display: flex; align-items: center; gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--light);
+}
+.rec-av {
+  width: 38px; height: 38px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0;
+  background: var(--mint); display: flex;
+  align-items: center; justify-content: center;
+}
+.rec-av img { width: 100%; height: 100%; object-fit: cover; }
+.rec-av-init {
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 500; color: var(--forest);
+}
+.rec-name { font-size: 13px; font-weight: 500; color: var(--ink); }
+.rec-service { font-size: 11px; color: var(--mid); margin-top: 1px; }
+.rec-source {
+  margin-left: auto;
+  font-size: 10px; font-weight: 500;
+  color: var(--forest-2); letter-spacing: 0.08em;
+  background: var(--mint); padding: 3px 8px; border-radius: 100px;
+  white-space: nowrap;
+}
+
+/* ── CJENIK ── */
+.cjenik { background: var(--off-white); }
+.cjenik-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: end; margin-bottom: 64px;
+}
+/* Rate info box */
+.rate-box {
+  background: var(--forest);
+  border-radius: 14px; padding: 28px 32px;
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 8px;
+}
+.rate-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+.rate-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px; font-weight: 500;
+  color: var(--off-white); margin-bottom: 6px;
+}
+.rate-desc {
+  font-size: 13px; font-weight: 300;
+  color: rgba(248,245,240,0.6); line-height: 1.7;
+}
+.cjenik-note {
+  font-size: 12px; font-weight: 300;
+  color: var(--mid); line-height: 1.7;
+  font-style: italic;
+  padding: 12px 0;
+}
+.cjenik-groups { display: flex; flex-direction: column; gap: 3px; }
+.cjenik-cat {
+  background: var(--cream);
+  padding: 12px 24px;
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 500;
+  color: var(--forest-3); letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 10px;
+}
+.cjenik-cat::before {
+  content: '';
+  width: 16px; height: 2px; background: var(--gold);
+}
+.cjenik-row {
+  display: grid; grid-template-columns: 1fr auto;
+  background: var(--white);
+  border-bottom: 1px solid var(--light);
+  transition: background 0.2s;
+}
+.cjenik-row:last-child { border-bottom: none; }
+.cjenik-row:hover { background: var(--mint); }
+.cc {
+  padding: 14px 24px;
+  font-size: 14px; font-weight: 300;
+  color: var(--ink);
+  display: flex; align-items: center;
+}
+.cc.price {
+  font-family: 'Fraunces', serif;
+  font-size: 17px; font-weight: 500;
+  color: var(--forest); white-space: nowrap;
+  justify-content: flex-end; min-width: 120px;
+}
+
+/* ── BOOKING / KONTAKT ── */
+.booking { background: var(--cream); padding: 96px 56px; }
+.booking-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 48px; margin-top: 64px;
+}
+.booking-info {}
+.booking-info-title {
+  font-family: 'Fraunces', serif;
+  font-size: 26px; font-weight: 500;
+  color: var(--forest-3); letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.booking-info-sub {
+  font-size: 14px; font-weight: 300;
+  color: var(--mid); line-height: 1.8; margin-bottom: 36px;
+}
+.contact-items { display: flex; flex-direction: column; gap: 0; }
+.contact-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--light);
+}
+.contact-item:last-child { border-bottom: none; }
+.ci-icon {
+  width: 40px; height: 40px;
+  background: var(--mint); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.ci-label {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--forest-2); margin-bottom: 4px;
+}
+.ci-val {
+  font-size: 14px; font-weight: 400;
+  color: var(--ink); line-height: 1.6;
+}
+.ci-val a { color: var(--forest); text-decoration: none; }
+.ci-val a:hover { text-decoration: underline; }
+/* Parking note */
+.parking-note {
+  background: var(--gold-pale);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 13px; font-weight: 300;
+  color: var(--forest-3); line-height: 1.6;
+  margin-top: 20px;
+}
+/* Form */
+.booking-form {
+  background: var(--white);
+  border-radius: 16px; padding: 40px 36px;
+  box-shadow: 0 4px 32px rgba(45,74,62,0.06);
+  border: 1.5px solid var(--light);
+}
+.form-title {
+  font-family: 'Fraunces', serif;
+  font-size: 24px; font-weight: 500;
+  color: var(--forest-3); letter-spacing: -0.01em;
+  margin-bottom: 6px;
+}
+.form-sub {
+  font-size: 13px; font-weight: 300;
+  color: var(--mid); margin-bottom: 28px;
+  padding-bottom: 24px; border-bottom: 1px solid var(--light);
+}
+.fg { margin-bottom: 14px; }
+.fg label {
+  display: block;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--forest-2); margin-bottom: 6px;
+}
+.fg input, .fg select, .fg textarea {
+  width: 100%;
+  background: var(--cream);
+  border: 1.5px solid var(--light);
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 300;
+  color: var(--ink); outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  appearance: none;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus {
+  border-color: var(--forest-2); background: var(--white);
+}
+.fg input::placeholder { color: rgba(107,114,128,0.5); }
+.fg select option { background: var(--white); }
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.btn-form-submit {
+  width: 100%; background: var(--forest);
+  border: none; padding: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: var(--white); cursor: pointer;
+  border-radius: 8px;
+  margin-top: 8px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 16px rgba(45,74,62,0.2);
+}
+.btn-form-submit:hover { background: var(--forest-2); transform: translateY(-1px); }
+.form-note {
+  font-size: 11px; color: var(--mid);
+  text-align: center; margin-top: 12px;
+  line-height: 1.7;
+}
+.form-success {
+  display: none; text-align: center; padding: 40px 20px;
+}
+.form-success h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 26px; font-weight: 500;
+  color: var(--forest); margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+.form-success p {
+  font-size: 14px; color: var(--mid); line-height: 1.8;
+}
+.form-success-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--forest-3);
+  padding: 72px 56px 40px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 56px; padding-bottom: 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 36px;
+}
+.f-logo {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.f-logo-mark {
+  width: 32px; height: 32px;
+  background: var(--gold); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.f-logo-mark svg { width: 16px; height: 16px; fill: var(--forest-3); }
+.f-logo-name {
+  font-family: 'Fraunces', serif;
+  font-size: 16px; font-weight: 500;
+  color: var(--off-white); letter-spacing: -0.01em;
+}
+.f-desc {
+  font-size: 13px; font-weight: 300;
+  color: rgba(248,245,240,0.4); line-height: 1.8; margin-bottom: 24px;
+}
+.f-soc { display: flex; gap: 8px; }
+.fsoc {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: rgba(248,245,240,0.4);
+  text-decoration: none; transition: all 0.2s;
+}
+.fsoc:hover { background: var(--gold); color: var(--forest-3); }
+.f-col-title {
+  font-family: 'Fraunces', serif;
+  font-size: 15px; font-weight: 500;
+  color: var(--gold-light); letter-spacing: -0.01em; margin-bottom: 20px;
+}
+.f-links { list-style: none; }
+.f-links li { margin-bottom: 10px; }
+.f-links a {
+  font-size: 13px; font-weight: 300;
+  color: rgba(248,245,240,0.4); text-decoration: none; transition: color 0.2s;
+}
+.f-links a:hover { color: var(--off-white); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.f-copy {
+  font-size: 11px; font-weight: 300;
+  color: rgba(248,245,240,0.2); letter-spacing: 0.04em;
+}
+
+/* ── FADE UP ── */
+.fade-up {
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MOBILE ── */
+@media (max-width: 960px) {
+  .mobile-cta-bar { display: flex; }
+  body { padding-bottom: 72px; }
+
+  nav { padding: 0 20px; }
+  .nav-links, .nav-actions { display: none; }
+  .hamburger { display: flex; }
+
+  .hero { grid-template-columns: 1fr; padding-top: 72px; }
+  .hero-left { padding: 52px 20px 48px; }
+  .hero-right { height: 56vw; }
+  .hero-card { left: 12px; }
+  .hero-trust { flex-wrap: wrap; gap: 16px; }
+  .trust-item + .trust-item, .trust-google { border-left: none; padding-left: 0; }
+
+  .cert-strip { padding: 16px 20px; }
+
+  section { padding: 72px 20px; }
+
+  .usluge-header { grid-template-columns: 1fr; }
+  .usluge-grid { grid-template-columns: 1fr; }
+
+  .tim-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .tim-grid { grid-template-columns: 1fr; }
+
+  .gallery { padding: 72px 20px; }
+  .gallery-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .ba-grid { grid-template-columns: 1fr; }
+
+  .recenzije-header { grid-template-columns: 1fr; }
+  .rec-grid { grid-template-columns: 1fr; }
+
+  .cjenik-header { grid-template-columns: 1fr; }
+
+  .booking { padding: 72px 20px; }
+  .booking-layout { grid-template-columns: 1fr; }
+
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .footer-bottom { flex-direction: column; gap: 12px; }
+
+  .frow { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- FLOATING MOBILE CTA -->
+<div class="mobile-cta-bar">
+  <a href="tel:011234567" class="mcta-call">📞 01/123-4567</a>
+  <a href="#booking" class="mcta-book">Naručite se</a>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H8l4-8v4h3l-4 8z"/></svg>
+    </div>
+    <div>
+      <div class="nav-logo-text">Ordinacija Matić</div>
+      <span class="nav-logo-sub">Dentalna medicina · Zagreb</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#usluge">Usluge</a></li>
+    <li><a href="#tim">Tim</a></li>
+    <li><a href="#galerija">Radovi</a></li>
+    <li><a href="#recenzije">Recenzije</a></li>
+    <li><a href="#cjenik">Cjenik</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="tel:011234567" class="btn-nav-call">📞 01/123-4567</a>
+    <a href="#booking" class="btn-nav-book">Naručite se</a>
+  </div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span class="hero-tag-text">Primamo nove pacijente · Trešnjevka, Zagreb</span>
+    </div>
+    <h1 class="hero-h1">
+      Osmijeh koji<br>
+      <em>zaslužujete</em> —<br>
+      bez straha i boli.
+    </h1>
+    <p class="hero-sub">Moderna dentalna ordinacija u srcu Trešnjevke. Od preventive do implantata, svakom pacijentu pristupamo individualno — s bezbolnim metodama i transparentnim cijenama.</p>
+    <div class="hero-btns">
+      <a href="tel:011234567" class="btn-primary">📞 Nazovite odmah: 01/123-4567</a>
+      <a href="#booking" class="btn-secondary">Naručite se online →</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <div class="trust-num">1.200+</div>
+        <div class="trust-label">Zadovoljnih<br>pacijenata</div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-num">15 god.</div>
+        <div class="trust-label">Iskustvo<br>u ordinaciji</div>
+      </div>
+      <div class="trust-google">
+        <div>
+          <div class="trust-stars">★★★★★</div>
+          <div style="display:flex; align-items:baseline; gap:6px;">
+            <span class="trust-google-score">4.9</span>
+          </div>
+          <div class="trust-google-label">Google ocjena<br>· 214 recenzija</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img class="hero-main-photo" src="https://images.unsplash.com/photo-1631051103633-24959376b92d?w=900&q=85&auto=format&fit=crop" alt="Dentalna ordinacija">
+    <div class="hero-card">
+      <div class="hero-card-label">Pacijentica, 34 god.</div>
+      <div class="hero-card-text">"Konačno zubar kojeg nisam se bojala."</div>
+      <span class="hero-card-tag">★★★★★ Google recenzija</span>
+    </div>
+  </div>
+</section>
+
+<!-- CERT STRIP -->
+<div class="cert-strip">
+  <div class="cert-label">Certifikati i edukacija</div>
+  <div class="cert-items">
+    <div class="cert-item">Stomatološki fakultet Zagreb</div>
+    <div class="cert-item">Implantologija — EAO certifikat</div>
+    <div class="cert-item">Invisalign Provider</div>
+    <div class="cert-item">CEREC digitalni otisci</div>
+    <div class="cert-item">Sedacija dušičnim oksidom</div>
+    <div class="cert-item">Botox i filleri lica</div>
+    <div class="cert-item">Laser u stomatologiji</div>
+    <div class="cert-item">Stomatološki fakultet Zagreb</div>
+    <div class="cert-item">Implantologija — EAO certifikat</div>
+    <div class="cert-item">Invisalign Provider</div>
+    <div class="cert-item">CEREC digitalni otisci</div>
+    <div class="cert-item">Sedacija dušičnim oksidom</div>
+    <div class="cert-item">Botox i filleri lica</div>
+    <div class="cert-item">Laser u stomatologiji</div>
+  </div>
+</div>
+
+<!-- USLUGE -->
+<section class="usluge" id="usluge">
+  <div class="usluge-header">
+    <div>
+      <div class="s-eyebrow">Naše usluge</div>
+      <h2 class="s-title">Sve što vaš<br>osmijeh <em>treba</em></h2>
+    </div>
+    <p class="s-desc">Usluge objašnjene onako kako biste htjeli čuti od prijatelja — ne iz medicinskog rječnika, nego iz perspektive vašeg iskustva u stolici.</p>
+  </div>
+  <div class="usluge-grid">
+    <div class="usluga-card fade-up">
+      <div class="usluga-icon">🦷</div>
+      <div class="usluga-patient-name">Za zdrave zube svaki dan</div>
+      <div class="usluga-name">Preventiva i redovni pregled</div>
+      <p class="usluga-desc">Čišćenje zubnog kamenca, profesionalna polura i detaljan pregled s digitalnim RTG-om. Najjeftinija stomatologija je ona koja spriječava probleme.</p>
+      <a href="#booking" class="usluga-cta">Naručite se <span>→</span></a>
+    </div>
+    <div class="usluga-card fade-up" style="transition-delay:.08s">
+      <div class="usluga-icon">✨</div>
+      <div class="usluga-patient-name">Za osmijeh koji oduševljava</div>
+      <div class="usluga-name">Estetska stomatologija</div>
+      <p class="usluga-desc">Izbjeljivanje, keramičke ljuskice i kompozitna rekonstrukcija. Dizajniramo osmijeh koji izgleda prirodno — a ne "previše bijelo".</p>
+      <a href="#booking" class="usluga-cta">Naručite se <span>→</span></a>
+    </div>
+    <div class="usluga-card fade-up" style="transition-delay:.16s">
+      <div class="usluga-icon">🔩</div>
+      <div class="usluga-patient-name">Trajno rješenje za nedostajući zub</div>
+      <div class="usluga-name">Implantati</div>
+      <p class="usluga-desc">Dentalni implantat je najbliže što možete dobiti prirodnom zubu. Ugrađujemo Swiss i korejske implantate s jamstvom. Konzultacija je besplatna.</p>
+      <a href="#booking" class="usluga-cta">Besplatna konzultacija <span>→</span></a>
+    </div>
+    <div class="usluga-card fade-up" style="transition-delay:.24s">
+      <div class="usluga-icon">😮</div>
+      <div class="usluga-patient-name">Kako spašavamo vaš prirodni zub</div>
+      <div class="usluga-name">Liječenje korijena (Endodoncija)</div>
+      <p class="usluga-desc">Bezbolno liječenje korijenskog kanala pod povećanjem (mikroskopom). Spašavamo zube koje drugi izvade — bez boli, bez straha.</p>
+      <a href="#booking" class="usluga-cta">Naručite se <span>→</span></a>
+    </div>
+    <div class="usluga-card fade-up" style="transition-delay:.32s">
+      <div class="usluga-icon">😁</div>
+      <div class="usluga-patient-name">Ravnanje bez metalnih aparatića</div>
+      <div class="usluga-name">Nevidljivi aparatići (Invisalign)</div>
+      <p class="usluga-desc">Prozirne udlage koje ravnaju zube gotovo nevidljivo. Skidate ih za jelo i čišćenje. Besplatna 3D simulacija rezultata prije nego počnete.</p>
+      <a href="#booking" class="usluga-cta">3D simulacija besplatno <span>→</span></a>
+    </div>
+    <div class="usluga-card fade-up" style="transition-delay:.4s">
+      <div class="usluga-icon">👶</div>
+      <div class="usluga-patient-name">Za najmlađe bez straha</div>
+      <div class="usluga-name">Dječja stomatologija</div>
+      <p class="usluga-desc">Posebno opremljena ordinacija za djecu s animiranim videima na stropu. Gradimo pozitivan odnos prema zubarima od prvog posjeta — to traje cijeli život.</p>
+      <a href="#booking" class="usluga-cta">Naručite dijete <span>→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- TIM -->
+<section class="tim" id="tim">
+  <div class="tim-header">
+    <div>
+      <div class="s-eyebrow">Naš tim</div>
+      <h2 class="s-title">Ljudi iza <em>osmijeha</em></h2>
+      <p class="s-desc" style="margin-top:12px">U Zagrebu se ne ide "brendu" — ide se čovjeku. Upoznajte tim koji će brinuti o vašim zubima.</p>
+    </div>
+  </div>
+  <div class="tim-grid">
+    <div class="doktor-card featured fade-up">
+      <img class="doktor-photo" src="https://images.unsplash.com/photo-1683349370055-7eba66a404c6?w=700&q=85&auto=format&fit=crop" alt="Dr. Ana Matić">
+      <div class="doktor-body">
+        <div class="doktor-name">Dr. Ana Matić, dr. med. dent.</div>
+        <div class="doktor-title">Osnivačica · Implantolog</div>
+        <p class="doktor-bio">Diplomirala na Stomatološkom fakultetu u Zagrebu 2008. Specijalizacija iz implantologije u Berlinu (2013). Od 2016. vodi vlastitu praksu s fokusom na estetiku i bezbolne metode liječenja.</p>
+        <div class="doktor-certs">
+          <span class="doktor-cert">EAO Implantolog</span>
+          <span class="doktor-cert">Invisalign Provider</span>
+          <span class="doktor-cert">15 god. iskustva</span>
+        </div>
+      </div>
+    </div>
+    <div class="doktor-card fade-up" style="transition-delay:.12s">
+      <img class="doktor-photo" src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=500&q=85&auto=format&fit=crop" alt="Dr. Marko Petrović">
+      <div class="doktor-body">
+        <div class="doktor-name">Dr. Marko Petrović</div>
+        <div class="doktor-title">Oralni kirurg</div>
+        <p class="doktor-bio">Specijalist oralne kirurgije s 8 godina iskustva. Ekspert za vađenje zuba mudrosti i složene kirurške zahvate.</p>
+        <div class="doktor-certs">
+          <span class="doktor-cert">Oralni kirurg</span>
+          <span class="doktor-cert">Laser kirurgija</span>
+        </div>
+      </div>
+    </div>
+    <div class="doktor-card fade-up" style="transition-delay:.24s">
+      <img class="doktor-photo" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=500&q=85&auto=format&fit=crop" alt="Dr. Petra Novak">
+      <div class="doktor-body">
+        <div class="doktor-name">Dr. Petra Novak</div>
+        <div class="doktor-title">Dječja stomatologinja</div>
+        <p class="doktor-bio">Specijalistica dječje stomatologije. Njezin pristup djeci je nadaleko poznat — mali pacijenti se ne boje posjeta.</p>
+        <div class="doktor-certs">
+          <span class="doktor-cert">Pedijatrijska stoma.</span>
+          <span class="doktor-cert">Sedacija N₂O</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="gallery" id="galerija">
+  <div class="gallery-header">
+    <div>
+      <div class="s-eyebrow">Naši radovi</div>
+      <h2 class="s-title" style="color:var(--off-white)">Stvarni <em style="color:var(--gold-light)">rezultati</em><br>naših pacijenata</h2>
+      <p class="s-desc" style="margin-top:12px;max-width:440px">Svaka fotografija je pravi rad iz naše ordinacije. Bez stock slika, bez retuša.</p>
+    </div>
+    <div class="gallery-tabs">
+      <button class="gallery-tab active" onclick="filterBA('svi',this)">Svi radovi</button>
+      <button class="gallery-tab" onclick="filterBA('estetika',this)">Estetika</button>
+      <button class="gallery-tab" onclick="filterBA('implantati',this)">Implantati</button>
+      <button class="gallery-tab" onclick="filterBA('ortodoncija',this)">Ortodoncija</button>
+    </div>
+  </div>
+  <div class="ba-grid">
+    <div class="ba-item show" data-cat="estetika">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=400&q=80&auto=format&fit=crop" alt="Prije"></div>
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1570612861542-284f4c12e75f?w=400&q=80&auto=format&fit=crop" alt="Poslije"></div>
+          <span class="ba-label before">Prije</span>
+          <span class="ba-label after">Poslije</span>
+        </div>
+        <div class="ba-body">
+          <div class="ba-procedure">Keramičke ljuskice (6 komada)</div>
+          <div class="ba-detail">Dizajn osmijeha · Trajanje: 3 tjedna · 2 posjeta</div>
+          <div class="ba-patient">
+            <div class="ba-av"><div style="width:100%;height:100%;background:var(--forest-2);display:flex;align-items:center;justify-content:center;color:var(--gold-pale);font-family:'Fraunces',serif;font-size:14px">M</div></div>
+            <div><div class="ba-pat-name">Martina, 31 god.</div><div class="ba-pat-sub">Pacijentica od 2023.</div></div>
+            <div class="ba-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-item show" data-cat="implantati">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=400&q=80&auto=format&fit=crop" alt="Prije"></div>
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80&auto=format&fit=crop" alt="Poslije"></div>
+          <span class="ba-label before">Prije</span>
+          <span class="ba-label after">Poslije</span>
+        </div>
+        <div class="ba-body">
+          <div class="ba-procedure">Dentalni implantat + krunica</div>
+          <div class="ba-detail">Swiss implantat · Trajanje: 4 mjeseca · Bez vidljive razlike od prirodnog zuba</div>
+          <div class="ba-patient">
+            <div class="ba-av"><div style="width:100%;height:100%;background:var(--forest-2);display:flex;align-items:center;justify-content:center;color:var(--gold-pale);font-family:'Fraunces',serif;font-size:14px">I</div></div>
+            <div><div class="ba-pat-name">Ivan, 47 god.</div><div class="ba-pat-sub">Pacijent od 2022.</div></div>
+            <div class="ba-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-item show" data-cat="ortodoncija">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&q=80&auto=format&fit=crop" alt="Prije"></div>
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1593022356706-f3c2c4238cbb?w=400&q=80&auto=format&fit=crop" alt="Poslije"></div>
+          <span class="ba-label before">Prije</span>
+          <span class="ba-label after">Poslije</span>
+        </div>
+        <div class="ba-body">
+          <div class="ba-procedure">Invisalign — nevidljivi aparatić</div>
+          <div class="ba-detail">14 udlaga · Trajanje: 8 mjeseci · Bez metala, bez boli</div>
+          <div class="ba-patient">
+            <div class="ba-av"><div style="width:100%;height:100%;background:var(--forest-2);display:flex;align-items:center;justify-content:center;color:var(--gold-pale);font-family:'Fraunces',serif;font-size:14px">A</div></div>
+            <div><div class="ba-pat-name">Ana, 26 god.</div><div class="ba-pat-sub">Pacijentica od 2024.</div></div>
+            <div class="ba-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-item show" data-cat="estetika">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?w=400&q=80&auto=format&fit=crop" alt="Prije"></div>
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1528750997573-59b89d56f4f7?w=400&q=80&auto=format&fit=crop" alt="Poslije"></div>
+          <span class="ba-label before">Prije</span>
+          <span class="ba-label after">Poslije</span>
+        </div>
+        <div class="ba-body">
+          <div class="ba-procedure">Profesionalno izbjeljivanje</div>
+          <div class="ba-detail">Zoom izbjeljivanje + kućna traka · 1 posjet · Efekt do 8 nijansi</div>
+          <div class="ba-patient">
+            <div class="ba-av"><div style="width:100%;height:100%;background:var(--forest-2);display:flex;align-items:center;justify-content:center;color:var(--gold-pale);font-family:'Fraunces',serif;font-size:14px">K</div></div>
+            <div><div class="ba-pat-name">Katarina, 29 god.</div><div class="ba-pat-sub">Pacijentica od 2024.</div></div>
+            <div class="ba-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-item show" data-cat="implantati">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400&q=80&auto=format&fit=crop" alt="Prije"></div>
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=400&q=80&auto=format&fit=crop" alt="Poslije"></div>
+          <span class="ba-label before">Prije</span>
+          <span class="ba-label after">Poslije</span>
+        </div>
+        <div class="ba-body">
+          <div class="ba-procedure">All-on-4 — cjelovita obnova osmijeha</div>
+          <div class="ba-detail">4 implantata · Fiksni zubi isti dan · Trajanje: 6 mj.</div>
+          <div class="ba-patient">
+            <div class="ba-av"><div style="width:100%;height:100%;background:var(--forest-2);display:flex;align-items:center;justify-content:center;color:var(--gold-pale);font-family:'Fraunces',serif;font-size:14px">J</div></div>
+            <div><div class="ba-pat-name">Josip, 58 god.</div><div class="ba-pat-sub">Pacijent od 2023.</div></div>
+            <div class="ba-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ba-item show" data-cat="ortodoncija">
+      <div class="ba-card">
+        <div class="ba-photos">
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=400&q=80&auto=format&fit=crop" alt="Prije"></div>
+          <div class="ba-photo"><img src="https://images.unsplash.com/photo-1581595219315-a187dd40c322?w=400&q=80&auto=format&fit=crop" alt="Poslije"></div>
+          <span class="ba-label before">Prije</span>
+          <span class="ba-label after">Poslije</span>
+        </div>
+        <div class="ba-body">
+          <div class="ba-procedure">Damon ortodontski aparatić</div>
+          <div class="ba-detail">Samoligurajući bravice · 18 mjeseci · Rezultat za cijeli život</div>
+          <div class="ba-patient">
+            <div class="ba-av"><div style="width:100%;height:100%;background:var(--forest-2);display:flex;align-items:center;justify-content:center;color:var(--gold-pale);font-family:'Fraunces',serif;font-size:14px">L</div></div>
+            <div><div class="ba-pat-name">Luka, 17 god.</div><div class="ba-pat-sub">Pacijent od 2022.</div></div>
+            <div class="ba-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENZIJE -->
+<section class="recenzije" id="recenzije">
+  <div class="recenzije-header">
+    <div>
+      <div class="s-eyebrow">Što kažu pacijenti</div>
+      <h2 class="s-title">Njihove<br>riječi, <em>naš ponos</em></h2>
+    </div>
+    <div>
+      <div class="google-badge">
+        <div class="google-badge-score">4.9</div>
+        <div class="google-badge-right">
+          <div class="google-badge-stars">★★★★★</div>
+          <div class="google-badge-label">214 recenzija<br>na Google Maps-u</div>
+        </div>
+      </div>
+      <p class="s-desc" style="max-width:360px;font-size:13px">Sve recenzije su stvarne i nefiltrirane — direktno s Google Maps-a i portala Najdoktor.hr</p>
+    </div>
+  </div>
+  <div class="rec-grid">
+    <div class="rec-card fade-up">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Godinama sam izbjegavala zubara iz straha. Doktorica Matić je prva za koju mogu reći — nije me niti malo bolilo. Objašnjava svaki korak i pita kako se osjećate. Ne idem više nikamo drugdje."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><div class="rec-av-init">M</div></div>
+        <div><div class="rec-name">Maja Horvat</div><div class="rec-service">Preventivni pregled</div></div>
+        <div class="rec-source">Google</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.1s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Ugradio sam implantat i bio sam iznenađen koliko je jednostavno prošlo. Anesteziolog je bio tu, nije me ni zaboljelo. Šest mjeseci poslije — zub izgleda prirodno, ne razlikujem ga od ostalih."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><div class="rec-av-init">T</div></div>
+        <div><div class="rec-name">Tomislav Babić</div><div class="rec-service">Implantat</div></div>
+        <div class="rec-source">Google</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.2s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Dovela sam kćer od 7 godina koja se bojala zubara. Dr. Petra ju je toliko smiješno uvjerila da 'mali mehaničar popravlja zube' da je na kraju tražila još jedan posjet!"</p>
+      <div class="rec-foot">
+        <div class="rec-av"><div class="rec-av-init">S</div></div>
+        <div><div class="rec-name">Sandra Kovač</div><div class="rec-service">Dječja stomatologija</div></div>
+        <div class="rec-source">Najdoktor.hr</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.3s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Napravila sam Invisalign i presretna sam. Nitko nije primijetio da nosim aparatić, a zubi su se poravnali za 9 mjeseci. Cijela komunikacija je bila online, super organizirano."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><div class="rec-av-init">A</div></div>
+        <div><div class="rec-name">Ana Petrović</div><div class="rec-service">Invisalign ortodoncija</div></div>
+        <div class="rec-source">Google</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.4s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Strahovala sam od liječenja korijena. Dr. Matić je koristila mikroskop i novu tehniku — apsolutno ništa nisam osjetila. Spasila je zub koji sam bila sigurna da će morati van."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><div class="rec-av-init">V</div></div>
+        <div><div class="rec-name">Vesna Marić</div><div class="rec-service">Liječenje korijena</div></div>
+        <div class="rec-source">Najdoktor.hr</div>
+      </div>
+    </div>
+    <div class="rec-card fade-up" style="transition-delay:.5s">
+      <div class="rec-stars">★★★★★</div>
+      <p class="rec-text">"Odlična lokacija u Trešnjevci, parking ispred zgrade. Čekaonica nije kao u bolnici — ugodna, mirna, s kavom. Tim je super ljubazan. Preporučujem svima koje poznajem."</p>
+      <div class="rec-foot">
+        <div class="rec-av"><div class="rec-av-init">D</div></div>
+        <div><div class="rec-name">Darko Šimić</div><div class="rec-service">Redovni pregled</div></div>
+        <div class="rec-source">Google</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CJENIK -->
+<section class="cjenik" id="cjenik">
+  <div class="cjenik-header">
+    <div>
+      <div class="s-eyebrow">Transparentne cijene</div>
+      <h2 class="s-title">Znate cijenu<br><em>prije dolaska</em></h2>
+      <p class="s-desc" style="margin-top:12px">Jedan od najvećih strahova pacijenata je "koliko će me to koštati?". Ovdje nema iznenađenja.</p>
+    </div>
+    <div>
+      <div class="rate-box">
+        <div class="rate-icon">💳</div>
+        <div>
+          <div class="rate-title">Plaćanje na rate — bez kamate</div>
+          <div class="rate-desc">Sve usluge moguće platiti na 12–36 rata bez kamata putem PBZ, Erste i Zaba kreditnih kartica. Pitajte na recepciji.</div>
+        </div>
+      </div>
+      <p class="cjenik-note">Sve navedene cijene su okvirne. Točnu cijenu dobivate pri pregledu i ovise o složenosti zahvata. Pred svaki veći rad izdajemo pisanu ponudu.</p>
+    </div>
+  </div>
+  <div class="cjenik-groups">
+    <div>
+      <div class="cjenik-cat">Preventiva i pregled</div>
+      <div class="cjenik-row fade-up"><div class="cc">Redovni pregled s RTG-om</div><div class="cc price">od 40 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Profesionalno čišćenje (peskiranje + polura)</div><div class="cc price">od 60 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Hitni pregled</div><div class="cc price">od 30 €</div></div>
+    </div>
+    <div style="margin-top:3px">
+      <div class="cjenik-cat">Estetska stomatologija</div>
+      <div class="cjenik-row fade-up"><div class="cc">Izbjeljivanje (Zoom + kućna traka)</div><div class="cc price">od 280 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Keramička ljuskica (po zubu)</div><div class="cc price">od 350 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Kompozitna rekonstrukcija</div><div class="cc price">od 80 €</div></div>
+    </div>
+    <div style="margin-top:3px">
+      <div class="cjenik-cat">Implantati</div>
+      <div class="cjenik-row fade-up"><div class="cc">Dentalni implantat (Swiss) — komplet s krunicom</div><div class="cc price">od 1.100 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Konzultacija i 3D RTG snimanje</div><div class="cc price">Besplatno</div></div>
+    </div>
+    <div style="margin-top:3px">
+      <div class="cjenik-cat">Liječenje i kirurgija</div>
+      <div class="cjenik-row fade-up"><div class="cc">Liječenje korijena (jednokanalni)</div><div class="cc price">od 150 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Vađenje zuba mudrosti</div><div class="cc price">od 120 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Plomba (kompozit)</div><div class="cc price">od 60 €</div></div>
+    </div>
+    <div style="margin-top:3px">
+      <div class="cjenik-cat">Ortodoncija</div>
+      <div class="cjenik-row fade-up"><div class="cc">Invisalign — komplet tretman</div><div class="cc price">od 2.800 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Metalni aparatić</div><div class="cc price">od 1.800 €</div></div>
+      <div class="cjenik-row fade-up"><div class="cc">Besplatna 3D simulacija rezultata</div><div class="cc price">Besplatno</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING / KONTAKT -->
+<section class="booking" id="booking">
+  <div class="s-eyebrow">Naručite se</div>
+  <h2 class="s-title">Zakažite pregled<br><em>u nekoliko klikova</em></h2>
+  <div class="booking-layout">
+    <div class="booking-info">
+      <div class="booking-info-title">Dođite k nama</div>
+      <p class="booking-info-sub">Kratka forma, brz odgovor — nazovemo vas unutar 2 sata s potvrdom termina. Ili nas nazovite direktno.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="ci-icon">📍</div>
+          <div>
+            <div class="ci-label">Adresa</div>
+            <div class="ci-val">Ulica grada Vukovara 100<br>10 000 Zagreb (Trešnjevka)</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">📞</div>
+          <div>
+            <div class="ci-label">Telefon i WhatsApp</div>
+            <div class="ci-val"><a href="tel:011234567">01/123-4567</a> · <a href="tel:0911234567">091 123 4567</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">🕐</div>
+          <div>
+            <div class="ci-label">Radno vrijeme</div>
+            <div class="ci-val">Pon, Sri, Pet: 08:00 – 20:00<br>Uto, Čet: 08:00 – 16:00<br>Sub: 09:00 – 14:00 (po dogovoru)</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="ci-icon">✉️</div>
+          <div>
+            <div class="ci-label">E-mail</div>
+            <div class="ci-val"><a href="mailto:info@ordinaciamatic.hr">info@ordinacijamatic.hr</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="parking-note">
+        🚗 <strong>Parking:</strong> Besplatni parking za pacijente u dvorištu zgrade (ulaz s Vukovarske). Tramvaj br. 6, 7, 11 — stanica "Tehnički muzej".
+      </div>
+    </div>
+    <div class="booking-form">
+      <div class="form-title">Naručite se na pregled</div>
+      <p class="form-sub">Ispunite formu — odgovaramo unutar 2 sata</p>
+      <form id="dentalForm" onsubmit="submitDental(event)">
+        <div class="frow">
+          <div class="fg">
+            <label>Ime i prezime</label>
+            <input type="text" placeholder="Marija Horvat" required>
+          </div>
+          <div class="fg">
+            <label>Telefon</label>
+            <input type="tel" placeholder="091 234 5678" required>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Razlog posjeta</label>
+          <select required>
+            <option value="" disabled selected>Odaberite</option>
+            <option>Redovni pregled i čišćenje</option>
+            <option>Bol ili hitni problem</option>
+            <option>Konzultacija za implantat</option>
+            <option>Konzultacija za Invisalign</option>
+            <option>Estetska stomatologija (ljuskice, izbjeljivanje)</option>
+            <option>Dječji pregled</option>
+            <option>Ostalo</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Kratak opis (opcionalno)</label>
+          <textarea rows="3" placeholder="npr. Boli me gornji lijevi zub tjedan dana, ili: zanima me cijena implantata..." style="resize:vertical"></textarea>
+        </div>
+        <div class="fg">
+          <label>Preferenci termin</label>
+          <select>
+            <option value="" disabled selected>Odaberite</option>
+            <option>Jutro (08–12h) — bilo koji dan</option>
+            <option>Poslijepodne (13–17h) — bilo koji dan</option>
+            <option>Večer (17–20h) — pon/sri/pet</option>
+            <option>Subota ujutro</option>
+            <option>Hitno — što prije</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-form-submit">Pošalji upit →</button>
+        <p class="form-note">Odgovaramo unutar 2h · Bez obveze · Privatnost zajamčena (GDPR)</p>
+      </form>
+      <div class="form-success" id="dentalSuccess">
+        <span class="form-success-icon">🦷</span>
+        <h3>Upit primljen!</h3>
+        <p>Javit ćemo vam se unutar 2 sata<br>s potvrdom termina.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="f-logo">
+        <div class="f-logo-mark">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H8l4-8v4h3l-4 8z"/></svg>
+        </div>
+        <div class="f-logo-name">Ordinacija Matić</div>
+      </div>
+      <p class="f-desc">Dentalna ordinacija u Trešnjevki, Zagreb. Bezbolne metode, transparentne cijene, topao pristup svakom pacijentu od 2009. godine.</p>
+      <div class="f-soc">
+        <a href="#" class="fsoc">ig</a>
+        <a href="#" class="fsoc">fb</a>
+        <a href="#" class="fsoc">g</a>
+      </div>
+    </div>
+    <div>
+      <div class="f-col-title">Usluge</div>
+      <ul class="f-links">
+        <li><a href="#">Preventiva i pregledi</a></li>
+        <li><a href="#">Estetska stomatologija</a></li>
+        <li><a href="#">Implantati</a></li>
+        <li><a href="#">Invisalign</a></li>
+        <li><a href="#">Dječja stomatologija</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-col-title">Ordinacija</div>
+      <ul class="f-links">
+        <li><a href="#">O nama i timu</a></li>
+        <li><a href="#">Galerija radova</a></li>
+        <li><a href="#">Cjenik</a></li>
+        <li><a href="#">Recenzije</a></li>
+        <li><a href="#">Karijere</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-col-title">Kontakt</div>
+      <ul class="f-links">
+        <li><a href="#">01/123-4567</a></li>
+        <li><a href="#">info@ordinacijamatic.hr</a></li>
+        <li><a href="#">Vukovarska 100, Zagreb</a></li>
+        <li><a href="#">Pon-Pet 08–20h</a></li>
+        <li><a href="#">Sub 09–14h</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="f-copy">© 2025 Dentalna ordinacija Matić · Sva prava pridržana</p>
+    <p class="f-copy">Politika privatnosti · GDPR · Kolačići</p>
+  </div>
+</footer>
+
+<script>
+  // Sticky nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Fade up
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Before/After filter
+  function filterBA(cat, btn) {
+    document.querySelectorAll('.gallery-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.ba-item').forEach(item => {
+      if(cat === 'svi' || item.dataset.cat === cat) {
+        item.classList.add('show');
+      } else {
+        item.classList.remove('show');
+      }
+    });
+  }
+
+  // Form submit
+  function submitDental(e) {
+    e.preventDefault();
+    document.getElementById('dentalForm').style.display = 'none';
+    document.getElementById('dentalSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>
