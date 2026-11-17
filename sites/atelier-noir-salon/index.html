@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atelier Noir — Frizerski Salon Zagreb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --noir: #0a0a0a;
+    --off-noir: #111111;
+    --deep: #1a1714;
+    --gold: #c9a96e;
+    --gold-light: #e8cc99;
+    --gold-pale: #f5e9d0;
+    --cream: #f8f3ec;
+    --warm-white: #fdfaf6;
+    --mid: #888077;
+    --border: rgba(201,169,110,0.2);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--noir);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 32px; height: 32px;
+    border: 1px solid rgba(201,169,110,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.15s ease;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(0px);
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(20px);
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--warm-white);
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 44px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--noir);
+    background: var(--gold);
+    padding: 12px 28px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 160px 80px 80px 60px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .hero-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 5.5vw, 82px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    color: var(--warm-white);
+    margin-bottom: 12px;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mid);
+    margin-bottom: 56px;
+    line-height: 1.5;
+    max-width: 380px;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .btn-primary {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--noir);
+    background: var(--gold);
+    padding: 18px 44px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-light);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(136,128,119,0.4);
+    padding-bottom: 2px;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 3px;
+  }
+  .hero-img {
+    overflow: hidden;
+    position: relative;
+  }
+  .hero-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%) contrast(1.1);
+    transition: transform 0.8s ease, filter 0.5s;
+  }
+  .hero-img:hover img { transform: scale(1.05); filter: grayscale(0%) contrast(1.0); }
+  .hero-img:nth-child(1) { grid-row: 1 / 3; }
+  .hero-img:nth-child(2) { }
+  .hero-img:nth-child(3) { }
+  .hero-img:nth-child(4) { grid-column: 1 / 3; }
+
+  /* Gradient overlay over grid */
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--noir) 0%, transparent 15%),
+                linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, transparent 20%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    z-index: 2;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 48px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; height: 48px; }
+    50% { opacity: 1; height: 64px; }
+  }
+
+  /* MARQUEE */
+  .marquee-strip {
+    background: var(--gold);
+    padding: 14px 0;
+    overflow: hidden;
+    display: flex;
+  }
+  .marquee-inner {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+  }
+  .marquee-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--noir);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .marquee-item::after {
+    content: '✦';
+    font-style: normal;
+    font-size: 10px;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION GENERIC */
+  section { padding: 120px 60px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::before {
+    content: '';
+    width: 32px; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 58px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--warm-white);
+    margin-bottom: 20px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.7;
+    max-width: 540px;
+  }
+
+  /* USLUGE / SERVICES */
+  .services { background: var(--off-noir); }
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 72px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--deep);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: #1e1b18; }
+  .service-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: rgba(201,169,110,0.08);
+    line-height: 1;
+    margin-bottom: 24px;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-num { color: rgba(201,169,110,0.15); }
+  .service-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 12px;
+    letter-spacing: 0.01em;
+  }
+  .service-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .service-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--gold);
+  }
+  .service-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--mid);
+    margin-left: 4px;
+  }
+
+  /* GALLERY */
+  .gallery { background: var(--noir); padding: 0; }
+  .gallery-header { padding: 100px 60px 60px; }
+  .gallery-masonry {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 320px 220px 280px;
+    gap: 3px;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(20%);
+    transition: transform 0.7s ease, filter 0.5s;
+  }
+  .gallery-item:hover img { transform: scale(1.08); filter: grayscale(0%); }
+  .gallery-item:nth-child(1) { grid-column: 1; grid-row: 1 / 3; }
+  .gallery-item:nth-child(5) { grid-column: 4; grid-row: 2 / 4; }
+  .gallery-item:nth-child(7) { grid-column: 2 / 4; grid-row: 3; }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+  }
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+  .gallery-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: rgba(201,169,110,0.2);
+    padding: 6px 14px;
+    backdrop-filter: blur(4px);
+  }
+
+  /* CJENIK */
+  .cjenik { background: var(--deep); }
+  .cjenik-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .price-cat {
+    background: var(--off-noir);
+    padding: 48px 40px;
+    position: relative;
+  }
+  .price-cat.featured {
+    background: var(--noir);
+    border: 1px solid var(--border);
+  }
+  .price-cat.featured::before {
+    content: 'NAJPOPULARNIJE';
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--noir);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    padding: 6px 20px;
+  }
+  .price-cat-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 8px;
+  }
+  .price-cat-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--mid);
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+  .price-list { list-style: none; }
+  .price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(201,169,110,0.07);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--cream);
+  }
+  .price-item:last-child { border-bottom: none; }
+  .price-item .price-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--gold);
+    white-space: nowrap;
+    margin-left: 16px;
+  }
+  .price-duration {
+    font-size: 10px;
+    color: var(--mid);
+    margin-left: 6px;
+  }
+
+  /* BOOKING */
+  .booking { background: var(--noir); }
+  .booking-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 64px;
+  }
+  .booking-info p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+  .booking-details { display: flex; flex-direction: column; gap: 20px; }
+  .booking-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .booking-detail:last-child { border-bottom: none; }
+  .detail-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+  .detail-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .detail-val {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.6;
+  }
+
+  /* BOOKING FORM */
+  .booking-form {
+    background: var(--off-noir);
+    padding: 48px;
+    border: 1px solid var(--border);
+  }
+  .form-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 8px;
+  }
+  .form-sub {
+    font-size: 12px;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--noir);
+    border: 1px solid rgba(201,169,110,0.2);
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+  .form-group input::placeholder { color: rgba(136,128,119,0.5); }
+  .form-group select option { background: var(--noir); }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-submit {
+    width: 100%;
+    background: var(--gold);
+    border: none;
+    padding: 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--noir);
+    cursor: pointer;
+    margin-top: 12px;
+    transition: background 0.3s;
+  }
+  .form-submit:hover { background: var(--gold-light); }
+  .form-note {
+    font-size: 11px;
+    color: var(--mid);
+    text-align: center;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--deep); }
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 64px;
+  }
+  .testimonial-card {
+    background: var(--off-noir);
+    padding: 44px 40px;
+    position: relative;
+  }
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px;
+    line-height: 0.8;
+    color: var(--gold);
+    opacity: 0.3;
+    margin-bottom: 16px;
+    user-select: none;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--cream);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .author-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .author-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(30%);
+  }
+  .author-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--warm-white);
+    letter-spacing: 0.05em;
+  }
+  .author-detail {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-top: 2px;
+  }
+  .stars {
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--noir);
+    border-top: 1px solid var(--border);
+    padding: 80px 60px 40px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 64px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--warm-white);
+    margin-bottom: 16px;
+  }
+  .footer-brand-name span { color: var(--gold); }
+  .footer-brand-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--mid);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+  .social-btn {
+    width: 40px; height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--mid);
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .footer-col-title {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 12px; }
+  .footer-links a {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(136,128,119,0.5);
+    letter-spacing: 0.05em;
+  }
+  .footer-legal {
+    display: flex;
+    gap: 28px;
+  }
+  .footer-legal a {
+    font-size: 11px;
+    color: rgba(136,128,119,0.4);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.3s;
+  }
+  .footer-legal a:hover { color: var(--mid); }
+
+  /* BOOKING SUCCESS */
+  .booking-success {
+    display: none;
+    text-align: center;
+    padding: 32px;
+  }
+  .booking-success .success-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  .booking-success h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .booking-success p {
+    font-size: 14px;
+    color: var(--mid);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 17px;
+  }
+
+  /* MOBILE */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .hamburger span {
+    width: 24px; height: 1px;
+    background: var(--gold);
+    transition: all 0.3s;
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 16px 24px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { grid-template-columns: 1fr; min-height: 100svh; }
+    .hero-left { padding: 120px 24px 60px; }
+    .hero-right { height: 55vw; position: relative; }
+
+    .services-header { flex-direction: column; align-items: flex-start; gap: 24px; }
+    .services-grid { grid-template-columns: 1fr; }
+    section { padding: 80px 24px; }
+
+    .gallery-masonry { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gallery-item { grid-column: auto !important; grid-row: auto !important; height: 180px; }
+
+    .cjenik-grid { grid-template-columns: 1fr; }
+
+    .booking-container { grid-template-columns: 1fr; }
+    .booking-form { padding: 32px 24px; }
+    .form-row { grid-template-columns: 1fr; }
+
+    .testimonials-grid { grid-template-columns: 1fr; }
+
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  /* FADE IN ANIMATION */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">Atelier <span>Noir</span></div>
+  <ul class="nav-links">
+    <li><a href="#usluge">Usluge</a></li>
+    <li><a href="#galerija">Galerija</a></li>
+    <li><a href="#cjenik">Cjenik</a></li>
+    <li><a href="#booking">Rezervacija</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta"><span>Rezerviraj termin</span></a>
+  <div class="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Zagreb — Ilica 42 — Od 2018.</div>
+    <h1 class="hero-h1">
+      Gdje stil<br>postaje <em>iden&shy;titet</em>
+    </h1>
+    <p class="hero-sub">Luksuzni frizerski salon posvećen preciznosti, estetici i osobnom pristupu svakom gostu.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary"><span>Rezerviraj termin</span></a>
+      <a href="#galerija" class="btn-ghost">Pogledaj radove</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-grid">
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80" alt="Frizura 1">
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Salon">
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=400&q=80" alt="Frizura 2">
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1607301406259-dfb186e15de8?w=800&q=80" alt="Frizura 3">
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Skrolaj</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-inner">
+    <div class="marquee-item">Balayage & Ombre</div>
+    <div class="marquee-item">Keratin tretman</div>
+    <div class="marquee-item">Šišanje & Oblikovanje</div>
+    <div class="marquee-item">Boja & Highlights</div>
+    <div class="marquee-item">Wedding styling</div>
+    <div class="marquee-item">Nadogradnja kose</div>
+    <div class="marquee-item">Balayage & Ombre</div>
+    <div class="marquee-item">Keratin tretman</div>
+    <div class="marquee-item">Šišanje & Oblikovanje</div>
+    <div class="marquee-item">Boja & Highlights</div>
+    <div class="marquee-item">Wedding styling</div>
+    <div class="marquee-item">Nadogradnja kose</div>
+  </div>
+</div>
+
+<!-- USLUGE -->
+<section class="services" id="usluge">
+  <div class="services-header">
+    <div>
+      <div class="section-label">Naše usluge</div>
+      <h2 class="section-title">Svaka usluga,<br><em>savršeno izvedena</em></h2>
+    </div>
+    <p class="section-desc">Naš tim majstora kombinira godinama iskustvo s najnovijim tehnikama kako bi svaki posjet bio iskustvo za pamćenje.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-num">01</div>
+      <div class="service-name">Šišanje & Styling</div>
+      <p class="service-desc">Precizno šišanje prilagođeno obliku lica i strukturi kose. Uključuje pranje, tretman i styling.</p>
+      <div class="service-price">od 45 € <span>/ 60 min</span></div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:0.1s">
+      <div class="service-num">02</div>
+      <div class="service-name">Bojanje & Balayage</div>
+      <p class="service-desc">Moderni balayage, ombre i klasično bojanje. Koristimo isključivo Wella & Schwarzkopf pigmente.</p>
+      <div class="service-price">od 80 € <span>/ 90–120 min</span></div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:0.2s">
+      <div class="service-num">03</div>
+      <div class="service-name">Keratin tretman</div>
+      <p class="service-desc">Dubinska rekonstrukcija kose koja eliminira kovrdže i daje svilenkastu glatkoću do 5 mjeseci.</p>
+      <div class="service-price">od 150 € <span>/ 180 min</span></div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:0.3s">
+      <div class="service-num">04</div>
+      <div class="service-name">Highlights</div>
+      <p class="service-desc">Klasični i moderni highlights tehnikom folija ili free-hand za prirodan, posvijetljeni efekt.</p>
+      <div class="service-price">od 70 € <span>/ 90 min</span></div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:0.4s">
+      <div class="service-num">05</div>
+      <div class="service-name">Wedding Styling</div>
+      <p class="service-desc">Bridal paket s probnom frizurom, danom vjenčanja i šminkom. Dostupan na lokaciji.</p>
+      <div class="service-price">od 200 € <span>/ paket</span></div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:0.5s">
+      <div class="service-num">06</div>
+      <div class="service-name">Nadogradnja kose</div>
+      <p class="service-desc">Tape-in i keratinska nadogradnja s prirodnom ili slavenskom kosom. Konzultacija uključena.</p>
+      <div class="service-price">od 300 € <span>/ konzultacija</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galerija">
+  <div class="gallery-header">
+    <div class="section-label">Portfolio radova</div>
+    <h2 class="section-title">Naši <em>radovi</em></h2>
+  </div>
+  <div class="gallery-masonry">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80" alt="Balayage">
+      <div class="gallery-overlay"><div class="gallery-tag">Balayage</div></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&q=80" alt="Highlights">
+      <div class="gallery-overlay"><div class="gallery-tag">Highlights</div></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1492106087820-71f1a00d2b11?w=600&q=80" alt="Styling">
+      <div class="gallery-overlay"><div class="gallery-tag">Styling</div></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?w=600&q=80" alt="Bob">
+      <div class="gallery-overlay"><div class="gallery-tag">Bob cut</div></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" alt="Salon">
+      <div class="gallery-overlay"><div class="gallery-tag">Naš salon</div></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80" alt="Bojanje">
+      <div class="gallery-overlay"><div class="gallery-tag">Bojanje</div></div>
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=800&q=80" alt="Wedding">
+      <div class="gallery-overlay"><div class="gallery-tag">Wedding</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CJENIK -->
+<section class="cjenik" id="cjenik">
+  <div>
+    <div class="section-label">Transparentne cijene</div>
+    <h2 class="section-title">Cjenik <em>usluga</em></h2>
+  </div>
+  <div class="cjenik-grid">
+    <div class="price-cat fade-up">
+      <div class="price-cat-name">Šišanje</div>
+      <div class="price-cat-sub">Za sve duljine i vrste kose</div>
+      <ul class="price-list">
+        <li class="price-item">Šišanje (kratka kosa) <span class="price-val">45 €<span class="price-duration">45 min</span></span></li>
+        <li class="price-item">Šišanje (srednja kosa) <span class="price-val">55 €<span class="price-duration">60 min</span></span></li>
+        <li class="price-item">Šišanje (duga kosa) <span class="price-val">65 €<span class="price-duration">75 min</span></span></li>
+        <li class="price-item">Pranje & blow-dry <span class="price-val">30 €<span class="price-duration">30 min</span></span></li>
+        <li class="price-item">Dječje šišanje <span class="price-val">25 €<span class="price-duration">30 min</span></span></li>
+      </ul>
+    </div>
+    <div class="price-cat featured fade-up" style="transition-delay:0.15s">
+      <div class="price-cat-name">Bojanje</div>
+      <div class="price-cat-sub">Premium pigmenti, dugotrajni rezultati</div>
+      <ul class="price-list">
+        <li class="price-item">Punobojanje (kratka) <span class="price-val">80 €<span class="price-duration">90 min</span></span></li>
+        <li class="price-item">Punobojanje (duga) <span class="price-val">120 €<span class="price-duration">120 min</span></span></li>
+        <li class="price-item">Balayage <span class="price-val">130 €<span class="price-duration">150 min</span></span></li>
+        <li class="price-item">Highlights (folije) <span class="price-val">70 €<span class="price-duration">90 min</span></span></li>
+        <li class="price-item">Toning & glossing <span class="price-val">45 €<span class="price-duration">45 min</span></span></li>
+      </ul>
+    </div>
+    <div class="price-cat fade-up" style="transition-delay:0.3s">
+      <div class="price-cat-name">Tretmani</div>
+      <div class="price-cat-sub">Obnova i njega kose</div>
+      <ul class="price-list">
+        <li class="price-item">Keratin (kratka) <span class="price-val">150 €<span class="price-duration">150 min</span></span></li>
+        <li class="price-item">Keratin (duga) <span class="price-val">200 €<span class="price-duration">180 min</span></span></li>
+        <li class="price-item">Botox kose <span class="price-val">100 €<span class="price-duration">90 min</span></span></li>
+        <li class="price-item">Olaplex tretman <span class="price-val">60 €<span class="price-duration">60 min</span></span></li>
+        <li class="price-item">Nadogradnja (od) <span class="price-val">300 €<span class="price-duration">konzultacija</span></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking" id="booking">
+  <div>
+    <div class="section-label">Online naručivanje</div>
+    <h2 class="section-title">Rezerviraj <em>termin</em></h2>
+  </div>
+  <div class="booking-container">
+    <div class="booking-info">
+      <p>Rezervirajte termin online u samo nekoliko klikova. Potvrdu ćete primiti na e-mail ili SMS unutar 30 minuta.</p>
+      <div class="booking-details">
+        <div class="booking-detail">
+          <div class="detail-icon">🕐</div>
+          <div>
+            <div class="detail-label">Radno vrijeme</div>
+            <div class="detail-val">Pon – Pet: 9:00 – 20:00<br>Sub: 9:00 – 17:00<br>Ned: zatvoreno</div>
+          </div>
+        </div>
+        <div class="booking-detail">
+          <div class="detail-icon">📍</div>
+          <div>
+            <div class="detail-label">Lokacija</div>
+            <div class="detail-val">Ilica 42, Zagreb<br>2. kat (lift dostupan)</div>
+          </div>
+        </div>
+        <div class="booking-detail">
+          <div class="detail-icon">📞</div>
+          <div>
+            <div class="detail-label">Direktni kontakt</div>
+            <div class="detail-val">+385 1 234 5678<br>salon@ateliernoir.hr</div>
+          </div>
+        </div>
+        <div class="booking-detail">
+          <div class="detail-icon">ℹ️</div>
+          <div>
+            <div class="detail-label">Napomena</div>
+            <div class="detail-val">Otkazivanje moguće do 24h prije termina bez naknade.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-form">
+      <div class="form-title">Rezerviraj termin</div>
+      <div class="form-sub">Ispunite obrazac — odgovaramo u roku 30 minuta</div>
+      <form id="bookingForm" onsubmit="submitBooking(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ime i prezime</label>
+            <input type="text" placeholder="Ana Horvat" required>
+          </div>
+          <div class="form-group">
+            <label>Broj telefona</label>
+            <input type="tel" placeholder="+385 91 234 5678" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mail adresa</label>
+          <input type="email" placeholder="ana@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Usluga</label>
+          <select required>
+            <option value="" disabled selected>Odaberite uslugu</option>
+            <optgroup label="Šišanje">
+              <option>Šišanje (kratka kosa) — 45 €</option>
+              <option>Šišanje (srednja kosa) — 55 €</option>
+              <option>Šišanje (duga kosa) — 65 €</option>
+            </optgroup>
+            <optgroup label="Bojanje">
+              <option>Balayage — od 130 €</option>
+              <option>Punobojanje — od 80 €</option>
+              <option>Highlights — od 70 €</option>
+            </optgroup>
+            <optgroup label="Tretmani">
+              <option>Keratin tretman — od 150 €</option>
+              <option>Botox kose — 100 €</option>
+              <option>Olaplex tretman — 60 €</option>
+            </optgroup>
+            <optgroup label="Posebno">
+              <option>Wedding styling — od 200 €</option>
+              <option>Nadogradnja kose — konzultacija</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Željeni datum</label>
+            <input type="date" required>
+          </div>
+          <div class="form-group">
+            <label>Željeno vrijeme</label>
+            <select required>
+              <option value="" disabled selected>Odaberite termin</option>
+              <option>09:00</option><option>09:30</option>
+              <option>10:00</option><option>10:30</option>
+              <option>11:00</option><option>11:30</option>
+              <option>12:00</option><option>13:00</option>
+              <option>14:00</option><option>14:30</option>
+              <option>15:00</option><option>15:30</option>
+              <option>16:00</option><option>17:00</option>
+              <option>18:00</option><option>19:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Napomena (opcionalno)</label>
+          <textarea rows="3" placeholder="Npr. duga kosa, prethodno bojena, alergije..." style="resize:vertical"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Pošalji rezervaciju →</button>
+        <p class="form-note">Potvrda dolazi na email/SMS unutar 30 min · Otkazivanje do 24h ranije</p>
+      </form>
+      <div class="booking-success" id="bookingSuccess">
+        <div class="success-icon">✦</div>
+        <h3>Rezervacija primljena</h3>
+        <p>Javit ćemo vam se unutar 30 minuta s potvrdom termina.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Iskustva gostiju</div>
+  <h2 class="section-title">Što kažu <em>naši gosti</em></h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Dolazim već tri godine i svaki put odem zadovoljna. Balayage koji rade je savršen — prirodan i dugotrajnanog efekta. Ne idem nikamo drugdje.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&q=80" alt="Maja">
+        </div>
+        <div>
+          <div class="author-name">Maja Kovačević</div>
+          <div class="author-detail">Redovna gošća · 3 godine</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up" style="transition-delay:0.15s">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Napravili su mi cijelu pripremu za vjenčanje — proba, styling, šminka. Sve savršeno organizirano, bez stresa. Izgledala sam točno onako kako sam sanjala.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Petra">
+        </div>
+        <div>
+          <div class="author-name">Petra Marić</div>
+          <div class="author-detail">Bridal styling</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up" style="transition-delay:0.3s">
+      <div class="testimonial-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">Keratin tretman je promijenio moj život. Kosa je za 5 razreda ljepša, bez kovrdži, svilenkasta. Uložila sam u to i ne žalim ni cent.</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt="Iva">
+        </div>
+        <div>
+          <div class="author-name">Iva Blažević</div>
+          <div class="author-detail">Keratin klient · 2 godine</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontakt">
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Atelier <span>Noir</span></div>
+      <p class="footer-brand-desc">Luksuzni frizerski salon u srcu Zagreba. Posvećeni preciznosti, estetici i osobnom pristupu od 2018. godine.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn">in</a>
+        <a href="#" class="social-btn">ig</a>
+        <a href="#" class="social-btn">fb</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Usluge</div>
+      <ul class="footer-links">
+        <li><a href="#usluge">Šišanje & Styling</a></li>
+        <li><a href="#usluge">Bojanje & Balayage</a></li>
+        <li><a href="#usluge">Keratin tretman</a></li>
+        <li><a href="#usluge">Wedding styling</a></li>
+        <li><a href="#usluge">Nadogradnja kose</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Informacije</div>
+      <ul class="footer-links">
+        <li><a href="#galerija">Galerija radova</a></li>
+        <li><a href="#cjenik">Cjenik</a></li>
+        <li><a href="#booking">Rezervacija</a></li>
+        <li><a href="#">O nama</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Kontakt</div>
+      <ul class="footer-links">
+        <li><a href="tel:+38512345678">+385 1 234 5678</a></li>
+        <li><a href="mailto:salon@ateliernoir.hr">salon@ateliernoir.hr</a></li>
+        <li><a href="#">Ilica 42, Zagreb</a></li>
+        <li><a href="#">Pon–Pet: 9–20h</a></li>
+        <li><a href="#">Sub: 9–17h</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Atelier Noir · Sva prava pridržana</p>
+    <div class="footer-legal">
+      <a href="#">Politika privatnosti</a>
+      <a href="#">Uvjeti korištenja</a>
+      <a href="#">GDPR</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  (function animateRing() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+    requestAnimationFrame(animateRing);
+  })();
+
+  document.querySelectorAll('a, button, .service-card, .gallery-item').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+      ring.style.borderColor = 'rgba(201,169,110,0.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.transform = 'translate(-50%,-50%) scale(1)';
+      ring.style.borderColor = 'rgba(201,169,110,0.5)';
+    });
+  });
+
+  // Sticky nav
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Fade up on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Set min date for booking
+  const dateInput = document.querySelector('input[type="date"]');
+  if (dateInput) {
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    dateInput.min = today.toISOString().split('T')[0];
+  }
+
+  // Booking submit
+  function submitBooking(e) {
+    e.preventDefault();
+    document.getElementById('bookingForm').style.display = 'none';
+    document.getElementById('bookingSuccess').style.display = 'block';
+  }
+
+  // Mobile menu
+  function toggleMobileMenu() {
+    const links = document.querySelector('.nav-links');
+    if (links) {
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '80px';
+      links.style.left = '0'; links.style.right = '0';
+      links.style.background = 'rgba(10,10,10,0.98)';
+      links.style.padding = '24px';
+      links.style.gap = '20px';
+    }
+  }
+</script>
+</body>
+</html>

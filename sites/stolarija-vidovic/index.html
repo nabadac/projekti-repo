@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stolarija Vidović — namještaj po mjeri | Samobor, od 1994.</title>
+<meta name="description" content="Obiteljska stolarija iz Samobora. Kuhinje, ormari i namještaj po mjeri, izrađeni rukama koje to rade preko 30 godina. Zatražite ponudu." />
+
+<!-- Fontovi: svi imaju punu podršku za hrvatske dijakritike (č ć š ž đ) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#F2ECE0;
+    --paper-2:#E8DECC;
+    --walnut:#33271F;
+    --walnut-2:#241A14;
+    --ink:#241B13;
+    --ink-soft:#5C4F42;
+    --oak:#C8A06A;
+    --oak-deep:#A87C44;
+    --green:#2E4A3A;
+    --green-2:#3D5C49;
+    --rust:#A24E2C;
+    --line-dark:rgba(242,236,224,.16);
+    --line-light:rgba(36,27,20,.14);
+
+    --serif:"Newsreader",Georgia,serif;
+    --disp:"Bricolage Grotesque",system-ui,sans-serif;
+    --mono:"Spline Sans Mono",ui-monospace,monospace;
+
+    --maxw:1180px;
+    --pad:clamp(20px,5vw,72px);
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:clamp(16px,1.05vw,18px);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.74rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--oak-deep);
+  }
+  h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.02;letter-spacing:-.02em}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:.55em;
+    font-family:var(--disp);font-weight:600;font-size:1rem;
+    padding:.85em 1.5em;border-radius:2px;border:1.5px solid transparent;
+    text-decoration:none;cursor:pointer;transition:transform .15s ease,background .2s ease,color .2s ease;
+    line-height:1;
+  }
+  .btn-primary{background:var(--oak);color:var(--walnut-2)}
+  .btn-primary:hover{background:#d8b27d;transform:translateY(-2px)}
+  .btn-ghost{background:transparent;border-color:var(--line-dark);color:var(--paper)}
+  .btn-ghost:hover{border-color:var(--oak);color:var(--oak)}
+  .btn-dark{background:var(--green);color:var(--paper)}
+  .btn-dark:hover{background:var(--green-2);transform:translateY(-2px)}
+  .btn svg{width:1.05em;height:1.05em}
+
+  /* ---------- Header ---------- */
+  header.site{
+    position:absolute;top:0;left:0;right:0;z-index:30;
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding-top:26px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--paper)}
+  .brand .mark{width:42px;height:42px;flex:0 0 auto}
+  .brand b{font-family:var(--disp);font-weight:700;font-size:1.18rem;letter-spacing:-.01em;line-height:1}
+  .brand small{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--oak);margin-top:3px}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--paper);opacity:.82;transition:opacity .2s}
+  .nav-links a:hover{opacity:1;color:var(--oak)}
+  .nav .btn{padding:.7em 1.25em;font-size:.9rem}
+  @media(max-width:860px){ .nav-links a:not(.btn){display:none} }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;background:var(--walnut);color:var(--paper);
+    padding-top:clamp(140px,16vw,190px);padding-bottom:clamp(60px,8vw,110px);
+    overflow:hidden;
+  }
+  .hero::after{ /* topla svjetlost radionice */
+    content:"";position:absolute;right:-10%;top:-20%;width:60%;height:120%;
+    background:radial-gradient(circle at 60% 40%,rgba(200,160,106,.20),transparent 60%);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,64px);align-items:center;position:relative;z-index:2}
+  .hero h1{font-size:clamp(2.6rem,6.4vw,5rem);font-weight:800}
+  .hero h1 .alt{font-family:var(--serif);font-weight:400;font-style:italic;letter-spacing:-.01em}
+  .hero-lead{font-size:clamp(1.05rem,1.6vw,1.3rem);color:#e6dccb;max-width:46ch;margin-top:1.5rem}
+  .hero-eyebrow{margin-bottom:1.4rem}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:2.2rem}
+  .hero-phone{display:inline-flex;align-items:center;gap:.5em;font-family:var(--mono);font-size:.9rem;color:#e6dccb;text-decoration:none;align-self:center}
+  .hero-phone:hover{color:var(--oak)}
+  .hero-phone svg{width:1.1em;height:1.1em}
+
+  .hero-figure{position:relative}
+  .hero-img{aspect-ratio:4/5;border-radius:3px}
+  .hero-stamp{position:absolute;right:-18px;bottom:-22px;width:122px;height:122px;filter:drop-shadow(0 10px 24px rgba(0,0,0,.35))}
+  @media(max-width:860px){
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .hero-figure{max-width:420px}
+    .hero-stamp{width:96px;height:96px;right:-6px;bottom:-14px}
+  }
+
+  /* ---------- Trust strip ---------- */
+  .trust{background:var(--walnut-2);color:var(--paper);border-top:1px solid var(--line-dark)}
+  .trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-top:30px;padding-bottom:30px}
+  .stat .n{font-family:var(--disp);font-weight:800;font-size:clamp(1.7rem,3vw,2.4rem);color:var(--oak);line-height:1}
+  .stat .l{font-family:var(--mono);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#cdbfa9;margin-top:.5rem}
+  @media(max-width:680px){ .trust .wrap{grid-template-columns:1fr 1fr;gap:28px 24px} }
+
+  /* ---------- Section base ---------- */
+  section.blk{padding-top:clamp(64px,9vw,118px);padding-bottom:clamp(64px,9vw,118px)}
+  .sec-head{max-width:60ch;margin-bottom:clamp(36px,5vw,58px)}
+  .sec-head h2{font-size:clamp(2rem,4.4vw,3.2rem);margin-top:1rem}
+  .sec-head p{color:var(--ink-soft);margin-top:1.1rem;font-size:1.12rem;max-width:52ch}
+
+  /* ---------- Story / values ---------- */
+  .story{background:var(--paper)}
+  .story-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(36px,6vw,80px);align-items:start}
+  .story-body p{margin-bottom:1.15rem;color:#3a3026}
+  .story-body p:last-child{margin-bottom:0}
+  .pull{font-family:var(--disp);font-weight:600;font-size:clamp(1.3rem,2.4vw,1.85rem);line-height:1.25;letter-spacing:-.01em;color:var(--green);border-left:3px solid var(--oak);padding-left:1.1rem;margin:0 0 1.8rem}
+  .values{list-style:none;display:grid;gap:2px}
+  .values li{padding:1.1rem 0;border-top:1px solid var(--line-light);display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:baseline}
+  .values li:last-child{border-bottom:1px solid var(--line-light)}
+  .values .vk{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;color:var(--oak-deep)}
+  .values .vt{font-family:var(--disp);font-weight:600;font-size:1.05rem;color:var(--ink)}
+  .values .vd{grid-column:2;color:var(--ink-soft);font-size:.98rem;margin-top:.25rem}
+  @media(max-width:820px){ .story-grid{grid-template-columns:1fr;gap:40px} }
+
+  /* ---------- Work / gallery ---------- */
+  .work{background:var(--paper-2)}
+  .gal{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .card{position:relative;border-radius:3px;overflow:hidden;background:var(--walnut)}
+  .card .ph{width:100%;height:100%}
+  .card figcaption{
+    position:absolute;left:0;right:0;bottom:0;padding:16px 16px 14px;
+    background:linear-gradient(to top,rgba(20,15,11,.82),transparent);
+    color:var(--paper);
+  }
+  .card figcaption .t{font-family:var(--disp);font-weight:600;font-size:1.02rem;line-height:1.1}
+  .card figcaption .m{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--oak);margin-top:.35rem}
+  .card{transition:transform .3s ease}
+  .card:hover{transform:translateY(-4px)}
+  /* raspored: prve dvije velike, ostale male */
+  .c1{grid-column:span 3;aspect-ratio:3/2.3}
+  .c2{grid-column:span 3;aspect-ratio:3/2.3}
+  .c3{grid-column:span 2;aspect-ratio:1/1}
+  .c4{grid-column:span 2;aspect-ratio:1/1}
+  .c5{grid-column:span 2;aspect-ratio:1/1}
+  @media(max-width:820px){
+    .gal{grid-template-columns:1fr 1fr;gap:12px}
+    .c1,.c2{grid-column:span 2;aspect-ratio:3/2}
+    .c3,.c4,.c5{grid-column:span 1}
+  }
+
+  /* ---------- Process ---------- */
+  .process{background:var(--walnut);color:var(--paper)}
+  .process .sec-head h2{color:var(--paper)}
+  .process .sec-head .eyebrow{color:var(--oak)}
+  .process .sec-head p{color:#cdbfa9}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark)}
+  .step{background:var(--walnut);padding:30px 26px 34px}
+  .step .num{font-family:var(--mono);font-size:.78rem;color:var(--oak);letter-spacing:.14em}
+  .step h3{font-size:1.3rem;margin:1.4rem 0 .7rem;color:var(--paper)}
+  .step p{color:#cbbda7;font-size:.98rem}
+  @media(max-width:820px){ .steps{grid-template-columns:1fr 1fr} }
+  @media(max-width:480px){ .steps{grid-template-columns:1fr} }
+
+  /* ---------- Testimonials ---------- */
+  .says{background:var(--paper)}
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .quote{background:var(--paper-2);border:1px solid var(--line-light);border-radius:3px;padding:30px 28px;display:flex;flex-direction:column}
+  .quote .stars{color:var(--oak-deep);font-family:var(--mono);letter-spacing:.2em;font-size:.85rem}
+  .quote blockquote{font-family:var(--serif);font-size:1.1rem;line-height:1.5;margin:1rem 0 1.4rem;color:var(--ink)}
+  .quote .who{margin-top:auto;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .quote .who b{display:block;font-family:var(--disp);font-size:.98rem;letter-spacing:normal;text-transform:none;color:var(--ink)}
+  @media(max-width:820px){ .quotes{grid-template-columns:1fr} }
+
+  /* ---------- CTA + form ---------- */
+  .cta{background:var(--green);color:var(--paper)}
+  .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,80px);align-items:start}
+  .cta h2{color:var(--paper);font-size:clamp(2.1rem,4.6vw,3.4rem)}
+  .cta .eyebrow{color:var(--oak)}
+  .cta-lead{color:#dfe7df;margin-top:1.2rem;font-size:1.12rem;max-width:42ch}
+  .contact-rows{margin-top:2.2rem;display:grid;gap:2px}
+  .crow{display:flex;align-items:center;gap:14px;padding:14px 0;border-top:1px solid var(--line-dark);text-decoration:none;color:var(--paper)}
+  .crow:last-child{border-bottom:1px solid var(--line-dark)}
+  .crow svg{width:20px;height:20px;color:var(--oak);flex:0 0 auto}
+  .crow .ck{font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#bcd0c0}
+  .crow .cv{font-family:var(--disp);font-weight:600;font-size:1.05rem}
+  .crow.link:hover .cv{color:var(--oak)}
+
+  .form-card{background:var(--paper);color:var(--ink);border-radius:4px;padding:clamp(26px,3vw,38px)}
+  .form-card h3{font-size:1.5rem;color:var(--ink)}
+  .form-card .sub{color:var(--ink-soft);font-size:.96rem;margin-top:.4rem;margin-bottom:1.6rem}
+  .field{margin-bottom:1.05rem}
+  .field label{display:block;font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.5rem}
+  .field input,.field select,.field textarea{
+    width:100%;font-family:var(--serif);font-size:1rem;color:var(--ink);
+    background:var(--paper-2);border:1.5px solid var(--line-light);border-radius:3px;
+    padding:.8em .9em;transition:border-color .2s,background .2s;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--green);background:#fff}
+  .field textarea{resize:vertical;min-height:96px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .form-card .btn-dark{width:100%;justify-content:center;margin-top:.4rem;background:var(--green)}
+  .form-card .btn-dark:hover{background:var(--green-2)}
+  .form-note{font-family:var(--mono);font-size:.68rem;color:var(--ink-soft);margin-top:1rem;text-align:center;letter-spacing:.04em}
+  .form-success{display:none;text-align:center;padding:2rem 0}
+  .form-success.show{display:block}
+  .form-success .ok{width:58px;height:58px;margin:0 auto 1rem;color:var(--green)}
+  .form-success h3{margin-bottom:.5rem}
+  .form-success p{color:var(--ink-soft)}
+  @media(max-width:860px){ .cta-grid{grid-template-columns:1fr;gap:40px} .two{grid-template-columns:1fr} }
+
+  /* ---------- Footer ---------- */
+  footer.site{background:var(--walnut-2);color:#cdbfa9;padding-top:56px;padding-bottom:40px}
+  .foot-grid{display:flex;flex-wrap:wrap;gap:30px;justify-content:space-between;align-items:flex-start}
+  .foot-brand b{font-family:var(--disp);color:var(--paper);font-size:1.2rem}
+  .foot-brand p{max-width:32ch;margin-top:.7rem;font-size:.95rem}
+  .foot-col h4{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--oak);margin-bottom:1rem}
+  .foot-col a,.foot-col p{display:block;text-decoration:none;color:#cdbfa9;font-size:.95rem;margin-bottom:.55rem}
+  .foot-col a:hover{color:var(--paper)}
+  .foot-bottom{margin-top:42px;padding-top:22px;border-top:1px solid var(--line-dark);display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;color:#8c7e6c}
+
+  /* ---------- Sticky CTA ---------- */
+  .sticky{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    background:var(--walnut-2);border-top:1px solid var(--oak);
+    transform:translateY(110%);transition:transform .35s ease;
+    padding:12px var(--pad);
+  }
+  .sticky.show{transform:translateY(0)}
+  .sticky .in{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .sticky .txt{color:var(--paper);font-family:var(--disp);font-weight:600;font-size:1rem}
+  .sticky .txt span{display:block;font-family:var(--mono);font-weight:400;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--oak);margin-top:2px}
+  .sticky .acts{display:flex;gap:10px}
+  .sticky .btn{padding:.7em 1.2em;font-size:.9rem}
+  @media(max-width:560px){ .sticky .txt{font-size:.9rem} .sticky .btn{padding:.65em .9em;font-size:.82rem} .sticky .acts .ghost-sm{display:none} }
+
+  /* ---------- Wood-grain placeholder ---------- */
+  .ph{
+    background:
+      repeating-linear-gradient(92deg,rgba(0,0,0,.05) 0 2px,transparent 2px 7px),
+      repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 14px),
+      linear-gradient(120deg,var(--g1),var(--g2));
+    position:relative;
+  }
+  .ph.oak{--g1:#b98a4f;--g2:#8c6232}
+  .ph.walnut{--g1:#5a4030;--g2:#3a2719}
+  .ph.green{--g1:#456b54;--g2:#2c4537}
+  .ph.pine{--g1:#d8b87f;--g2:#b48b50}
+  .ph::before{ /* suptilni "čvor" u drvu */
+    content:"";position:absolute;width:38%;height:55%;left:12%;top:22%;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(0,0,0,.12),transparent 70%);
+  }
+
+  /* ---------- Reveal animation ---------- */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn:hover,.card:hover{transform:none}
+  }
+
+  :focus-visible{outline:2.5px solid var(--oak);outline-offset:3px;border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#vrh" aria-label="Stolarija Vidović — početak">
+      <!-- Žig / maker's mark (mali) -->
+      <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="47" fill="none" stroke="#C8A06A" stroke-width="2"/>
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#C8A06A" stroke-width="1" opacity=".5"/>
+        <text x="50" y="60" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="34" fill="#C8A06A">SV</text>
+      </svg>
+      <span><b>Stolarija Vidović</b><small>Samobor · od 1994.</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Glavna navigacija">
+      <a href="#prica">Priča</a>
+      <a href="#radovi">Radovi</a>
+      <a href="#proces">Kako radimo</a>
+      <a class="btn btn-primary" href="#upit">Zatražite ponudu</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="vrh">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <p class="eyebrow hero-eyebrow">Stolarija · Samobor · od 1994.</p>
+      <h1>Namještaj po mjeri,<br>izrađen <span class="alt">rukama</span><br>koje to rade 30 godina.</h1>
+      <p class="hero-lead">Obiteljski obrt iz Samobora. Kuhinje, ugradbeni ormari i namještaj koji se radi pažljivo, jednom — i traje. Mali tim, veliko poštovanje prema svakom poslu.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#upit">Zatražite besplatnu ponudu</a>
+        <a class="hero-phone" href="tel:+385912345678">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          091 234 5678
+        </a>
+      </div>
+    </div>
+
+    <figure class="hero-figure reveal">
+      <!-- ZAMIJENI: ovdje ide hero fotografija (Unsplash URL). Npr:
+           <img class="hero-img" src="TVOJ_UNSPLASH_URL" alt="Kuhinja od masivnog hrasta izrađena po mjeri"> -->
+      <div class="hero-img ph oak" role="img" aria-label="Fotografija namještaja po mjeri (placeholder)"></div>
+
+      <!-- Veliki žig — potpisni element -->
+      <svg class="hero-stamp" viewBox="0 0 200 200" aria-hidden="true">
+        <defs><path id="ring" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs>
+        <circle cx="100" cy="100" r="92" fill="#241A14"/>
+        <circle cx="100" cy="100" r="92" fill="none" stroke="#C8A06A" stroke-width="2"/>
+        <circle cx="100" cy="100" r="58" fill="none" stroke="#C8A06A" stroke-width="1" opacity=".55"/>
+        <text font-family="Spline Sans Mono, monospace" font-size="11" letter-spacing="3" fill="#C8A06A">
+          <textPath href="#ring" startOffset="0">· STOLARIJA VIDOVIĆ · SAMOBOR · IZRAĐENO PO MJERI ·</textPath>
+        </text>
+        <text x="100" y="96" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="46" fill="#F2ECE0">SV</text>
+        <text x="100" y="120" text-anchor="middle" font-family="Spline Sans Mono, monospace" font-size="11" letter-spacing="4" fill="#C8A06A">1994</text>
+      </svg>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<div class="trust">
+  <div class="wrap">
+    <div class="stat"><div class="n">30+</div><div class="l">godina iskustva</div></div>
+    <div class="stat"><div class="n">1200+</div><div class="l">završenih projekata</div></div>
+    <div class="stat"><div class="n">4</div><div class="l">majstora u timu</div></div>
+    <div class="stat"><div class="n">Samobor</div><div class="l">Zagreb i okolica</div></div>
+  </div>
+</div>
+
+<!-- ============ STORY / VALUES ============ -->
+<section class="blk story" id="prica">
+  <div class="wrap story-grid">
+    <div class="story-copy reveal">
+      <p class="eyebrow">Naša priča</p>
+      <h2 style="font-size:clamp(2rem,4.4vw,3.2rem);margin-top:1rem">Tri desetljeća iste ruke, isti standard.</h2>
+      <div class="story-body" style="margin-top:1.6rem">
+        <p class="pull">Ne radimo brzo. Radimo dobro — i zato nas zovu ljudi kojima je prvi put bilo zadovoljstvo.</p>
+        <p>Ante Vidović otvorio je radionicu u Samoboru 1994. s jednom blanjom, jednom stolicom i pravilom kojeg se i danas držimo: napravi to kako bi napravio za svoju kuću. Danas uz njega rade sin Marko i tim majstora — i dalje smo mali obrt, i to nam je namjerno.</p>
+        <p>Ne tražimo stotinu poslova mjesečno. Tražimo poslove koje možemo napraviti pošteno, sa svojom pažnjom na svakom rubu i spoju. Svaki klijent kod nas razgovara s čovjekom koji će njegov namještaj i izraditi — ne s prodavačem.</p>
+      </div>
+    </div>
+
+    <ul class="values reveal" aria-label="Naše vrijednosti">
+      <li><span class="vk">01</span><span class="vt">Predanost</span><span class="vd">Svaki komad radimo do kraja, bez prečaca — i kad nas nitko ne gleda.</span></li>
+      <li><span class="vk">02</span><span class="vt">Pažnja prema svakom klijentu</span><span class="vd">Dođemo, izmjerimo, poslušamo. Rješenje krojimo za vaš prostor i život.</span></li>
+      <li><span class="vk">03</span><span class="vt">Poštena riječ</span><span class="vd">Dogovorena cijena i rok su dogovor. Bez skrivenih troškova i izmišljanja.</span></li>
+      <li><span class="vk">04</span><span class="vt">Domaći materijal, domaća ruka</span><span class="vd">Radimo s provjerenim hrvatskim dobavljačima i masivnim drvom koje traje.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ WORK / GALLERY ============ -->
+<section class="blk work" id="radovi">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Naši radovi</p>
+      <h2>Pogledajte što izlazi iz naše radionice.</h2>
+      <p>Izbor projekata iz domova i prostora diljem Zagreba i okolice. Svaki je krojen po mjeri prostora i želja.</p>
+    </div>
+
+    <!-- ZAMIJENI fotografije: svaki .ph div zamijeni s
+         <img class="ph" src="TVOJ_UNSPLASH_URL" alt="opis"> (zadrži figcaption) -->
+    <div class="gal reveal">
+      <figure class="card c1"><div class="ph oak" role="img" aria-label="Kuhinja po mjeri (placeholder)"></div>
+        <figcaption><div class="t">Kuhinja od masivnog hrasta</div><div class="m">Kuhinje · Samobor</div></figcaption></figure>
+
+      <figure class="card c2"><div class="ph walnut" role="img" aria-label="Ugradbeni ormar (placeholder)"></div>
+        <figcaption><div class="t">Ugradbeni ormar s kliznim vratima</div><div class="m">Ormari · Zagreb</div></figcaption></figure>
+
+      <figure class="card c3"><div class="ph pine" role="img" aria-label="Stol po mjeri (placeholder)"></div>
+        <figcaption><div class="t">Blagovaonski stol</div><div class="m">Namještaj · Sveta Nedelja</div></figcaption></figure>
+
+      <figure class="card c4"><div class="ph green" role="img" aria-label="Drvene stepenice (placeholder)"></div>
+        <figcaption><div class="t">Unutarnje stepenice</div><div class="m">Interijer · Bregana</div></figcaption></figure>
+
+      <figure class="card c5"><div class="ph oak" role="img" aria-label="Uredski namještaj (placeholder)"></div>
+        <figcaption><div class="t">Recepcija lokala</div><div class="m">Poslovni prostor · Zagreb</div></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="blk process" id="proces">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Kako radimo</p>
+      <h2>Od prvog poziva do gotovog namještaja.</h2>
+      <p>Jednostavno i bez iznenađenja. Točno znate što slijedi i kada.</p>
+    </div>
+    <div class="steps reveal">
+      <div class="step"><div class="num">KORAK 01</div><h3>Upit i razgovor</h3><p>Javite se preko forme ili telefona. Saslušamo što vam treba i odgovorimo iskreno je li to za nas.</p></div>
+      <div class="step"><div class="num">KORAK 02</div><h3>Dolazak i mjerenje</h3><p>Dođemo na lokaciju, sve izmjerimo i posavjetujemo oko materijala i rješenja.</p></div>
+      <div class="step"><div class="num">KORAK 03</div><h3>Nacrt i ponuda</h3><p>Dobijete jasan prijedlog, nacrt i fiksnu ponudu s rokom. Bez sitnih slova.</p></div>
+      <div class="step"><div class="num">KORAK 04</div><h3>Izrada i ugradnja</h3><p>Izradimo u radionici i uredno ugradimo. Za sobom čistimo i ostavljamo gotov posao.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="blk says">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Riječ klijenata</p>
+      <h2>Najviše posla dolazi nam preporukom.</h2>
+    </div>
+    <div class="quotes reveal">
+      <figure class="quote">
+        <div class="stars" aria-label="Ocjena 5 od 5">★★★★★</div>
+        <blockquote>„Kuhinju su napravili točno po mjeri našeg malog prostora i u dogovorenom roku. Marko je došao tri puta dok nije bilo savršeno. Preporuka od srca.”</blockquote>
+        <figcaption class="who"><b>Ivana K.</b>Samobor</figcaption>
+      </figure>
+      <figure class="quote">
+        <div class="stars" aria-label="Ocjena 5 od 5">★★★★★</div>
+        <blockquote>„Tražio sam ozbiljnog majstora za ugradbene ormare. Dobio sam poštenu cijenu, čist rad i ljude na koje se može osloniti. Vidi se 30 godina iskustva.”</blockquote>
+        <figcaption class="who"><b>Davor M.</b>Zagreb</figcaption>
+      </figure>
+      <figure class="quote">
+        <div class="stars" aria-label="Ocjena 5 od 5">★★★★★</div>
+        <blockquote>„Renovirali smo kuću i njima povjerili stepenice i stolove. Sve dogovoreno na riječ i sve ispoštovano. Rijetkost danas.”</blockquote>
+        <figcaption class="who"><b>Petra B.</b>Bregana</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA + FORM ============ -->
+<section class="blk cta" id="upit">
+  <div class="wrap cta-grid">
+    <div class="cta-copy reveal">
+      <p class="eyebrow">Zatražite ponudu</p>
+      <h2>Imate ideju? Recite nam.</h2>
+      <p class="cta-lead">Ostavite par podataka i javljamo se u roku jednog radnog dana — bez obaveze. Najbrže je da nazovete ili pišete na WhatsApp.</p>
+
+      <div class="contact-rows">
+        <a class="crow link" href="tel:+385912345678">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span><span class="ck">Telefon</span><span class="cv">091 234 5678</span></span>
+        </a>
+        <a class="crow link" href="https://wa.me/385912345678" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.67c2.2 0 4.27.86 5.83 2.41a8.2 8.2 0 0 1 2.42 5.83c0 4.55-3.7 8.25-8.26 8.25a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.39c0-4.55 3.7-8.25 8.26-8.25zm4.52 11.43c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.48-.02s-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
+          <span><span class="ck">WhatsApp</span><span class="cv">Pišite nam poruku</span></span>
+        </a>
+        <div class="crow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span><span class="ck">Radionica</span><span class="cv">Bobovica 00, Samobor</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FORMA ===== -->
+    <div class="form-card reveal">
+      <div id="form-view">
+        <h3>Pošaljite upit</h3>
+        <p class="sub">Ispunite ukratko — dovoljno je ime i broj telefona.</p>
+
+        <!-- Netlify Forms: kad se stranica deploya na Netlify, svi upiti automatski
+             stižu u Netlify dashboard + e-mail notifikacija. Bez backenda. -->
+        <form name="upit" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="lead-form">
+          <input type="hidden" name="form-name" value="upit" />
+          <p style="display:none"><label>Ne ispunjavati: <input name="bot-field" /></label></p>
+
+          <div class="two">
+            <div class="field">
+              <label for="ime">Ime i prezime</label>
+              <input id="ime" name="ime" type="text" required autocomplete="name" />
+            </div>
+            <div class="field">
+              <label for="tel">Telefon</label>
+              <input id="tel" name="telefon" type="tel" required autocomplete="tel" placeholder="091 ..." />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="tip">Što vas zanima?</label>
+            <select id="tip" name="tip_projekta">
+              <option>Kuhinja po mjeri</option>
+              <option>Ugradbeni ormar</option>
+              <option>Namještaj po mjeri</option>
+              <option>Stepenice</option>
+              <option>Poslovni prostor / lokal</option>
+              <option>Nešto drugo</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="poruka">Ukratko o projektu <span style="text-transform:none;letter-spacing:0">(neobavezno)</span></label>
+            <textarea id="poruka" name="poruka" placeholder="Npr. kuhinja ~3 m, hrast, Samobor, do jeseni..."></textarea>
+          </div>
+
+          <button class="btn btn-dark" type="submit">Pošalji upit</button>
+          <p class="form-note">Javljamo se unutar 1 radnog dana · bez obaveze</p>
+        </form>
+      </div>
+
+      <!-- Uspjeh (prikaže se nakon slanja) -->
+      <div class="form-success" id="form-ok" aria-live="polite">
+        <svg class="ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m22 4-10 10.01L9 11"/></svg>
+        <h3>Upit zaprimljen — hvala!</h3>
+        <p>Javljamo vam se u najkraćem roku, najčešće isti ili sljedeći radni dan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <b>Stolarija Vidović</b>
+        <p>Obiteljski stolarski obrt iz Samobora. Namještaj po mjeri od 1994.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Usluge</h4>
+        <a href="#radovi">Kuhinje po mjeri</a>
+        <a href="#radovi">Ugradbeni ormari</a>
+        <a href="#radovi">Namještaj po mjeri</a>
+        <a href="#radovi">Stepenice i interijeri</a>
+      </div>
+      <div class="foot-col">
+        <h4>Kontakt</h4>
+        <a href="tel:+385912345678">091 234 5678</a>
+        <a href="mailto:upiti@stolarija-vidovic.hr">upiti@stolarija-vidovic.hr</a>
+        <p>Bobovica 00, Samobor</p>
+        <p>Pon–Pet 8–16 · Sub po dogovoru</p>
+      </div>
+      <div class="foot-col">
+        <h4>Brzo</h4>
+        <a href="#prica">Naša priča</a>
+        <a href="#proces">Kako radimo</a>
+        <a href="#upit">Zatražite ponudu</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> Obrt Stolarija Vidović, Samobor · OIB: 00000000000</span>
+      <span>Izrada: Velpo</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ STICKY CTA ============ -->
+<div class="sticky" id="sticky">
+  <div class="in">
+    <div class="txt">Trebate namještaj po mjeri?<span>Besplatna ponuda, bez obaveze</span></div>
+    <div class="acts">
+      <a class="btn btn-ghost ghost-sm" href="tel:+385912345678">Nazovite</a>
+      <a class="btn btn-primary" href="#upit">Zatražite ponudu</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Godina u footeru
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Sticky CTA — pojavi se nakon heroa, sakrij kad smo na formi
+  const sticky = document.getElementById('sticky');
+  const hero = document.getElementById('vrh');
+  const upit = document.getElementById('upit');
+  function onScroll(){
+    const pastHero = window.scrollY > hero.offsetHeight - 120;
+    const atForm = upit.getBoundingClientRect().top < window.innerHeight*0.7;
+    sticky.classList.toggle('show', pastHero && !atForm);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // Forma: pokušaj Netlify slanje, u svakom slučaju prikaži potvrdu (za demo)
+  const form = document.getElementById('lead-form');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if(!form.ime.value.trim() || !form.telefon.value.trim()){
+      form.reportValidity(); return;
+    }
+    const data = new URLSearchParams(new FormData(form)).toString();
+    fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data})
+      .catch(()=>{}) // na lokalnom pregledu fetch ne uspije — to je ok za demo
+      .finally(()=>{
+        document.getElementById('form-view').style.display='none';
+        document.getElementById('form-ok').classList.add('show');
+        document.getElementById('form-ok').scrollIntoView({behavior:'smooth', block:'center'});
+      });
+  });
+</script>
+</body>
+</html>
