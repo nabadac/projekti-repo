@@ -98,18 +98,39 @@ async function record(a, tmp) {
   const depth = Math.max(0, Math.min(total, a.maxScroll ?? total));
   const moveS = 1.1;
   const endHold = 1.6;
-  // Broj koraka tako da svaki (skrol + pauza) traje barem ~2.6 s; duga stranica = veći koraci
+  // Broj koraka tako da svaki (skrol + pauza) traje barem ~2.6 s
   const maxSteps = Math.max(1, Math.floor((a.duration - a.hold - endHold + 1.5) / 2.6));
-  const steps = Math.max(1, Math.min(maxSteps, Math.ceil(depth / (a.height * 0.85))));
-  const stepPx = depth / steps;
-  const hold = Math.max(0.6, (a.duration - a.hold - endHold - steps * moveS) / Math.max(1, steps - 1));
+  // Skrol se zaustavlja točno na vrhu sekcije (section/footer/djeca od main i body),
+  // da u kadru ne ostane komad prethodne sekcije. Kod duge stranice neke se sekcije preskaču.
+  const steps = await page.evaluate(({ depth, maxSteps }) => {
+    const vh = innerHeight, vw = innerWidth;
+    const top = (el) => el.getBoundingClientRect().top + scrollY;
+    const cands = [...new Set(document.querySelectorAll('section, footer, main > *, body > *'))]
+      .filter((el) => { const r = el.getBoundingClientRect(); return r.height >= vh * 0.3 && r.width >= vw * 0.6; })
+      .map((el) => ({ el, t: Math.min(depth, top(el)) }))
+      .filter((c) => c.t > vh * 0.25)
+      .sort((x, y) => x.t - y.t);
+    const uniq = [];
+    for (const c of cands) if (!uniq.length || c.t - uniq.at(-1).t > vh * 0.25) uniq.push(c);
+    let chosen = uniq;
+    if (uniq.length > maxSteps) // ravnomjerno, uvijek sa zadnjom (kraj stranice)
+      chosen = Array.from({ length: maxSteps }, (_, i) => uniq[Math.round((i + 1) * uniq.length / maxSteps) - 1]);
+    window.__snap = chosen.map((c) => c.el);
+    return chosen.length;
+  }, { depth, maxSteps });
+  // Bez prepoznatih sekcija: ravnomjerni koraci po ~85% visine
+  const fallbackSteps = Math.max(1, Math.min(maxSteps, Math.ceil(depth / (a.height * 0.85))));
+  const nSteps = steps || fallbackSteps;
+  const targetAt = async (s) => steps
+    ? page.evaluate(({ s, depth }) => Math.round(Math.min(depth, window.__snap[s].getBoundingClientRect().top + scrollY)), { s, depth })
+    : Math.round((s + 1) * depth / nSteps);
+  const hold = Math.max(0.6, (a.duration - a.hold - endHold - nSteps * moveS) / Math.max(1, nSteps - 1));
   const start = Date.now();
 
   await sleep(a.hold * 1000);
-  let done = 0;
-  for (let s = 0; s < steps; s++) {
-    const target = Math.round((s + 1) * stepPx);
-    const dist = target - done;
+  for (let s = 0; s < nSteps; s++) {
+    const target = await targetAt(s); // mjeri se uživo (lazy slike mogu pomaknuti raspored)
+    const dist = target - await page.evaluate(() => scrollY);
     // Kotačić miša s ease-in-out po stvarnom vremenu — radi i s Lenisom/GSAP ScrollTriggerom
     const t0 = Date.now();
     let sent = 0;
@@ -122,8 +143,11 @@ async function record(a, tmp) {
       if (p >= 1) break;
       await sleep(12);
     }
-    done = target;
-    await sleep((s === steps - 1 ? endHold : hold) * 1000);
+    // dotjeraj ako je stranica (smooth scroll, Lenis, lazy sadržaj) stala malo pored cilja
+    await sleep(250);
+    const off = (await targetAt(s)) - await page.evaluate(() => scrollY);
+    if (Math.abs(off) > 2) await page.mouse.wheel(0, off);
+    await sleep((s === nSteps - 1 ? endHold : hold) * 1000 - 250);
   }
   // zadnja sličica do kraja
   const recorded = (Date.now() - start) / 1000;
