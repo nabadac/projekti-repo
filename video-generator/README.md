@@ -3,6 +3,7 @@
 Iz bilo koje web stranice radi vertikalni video **1080×1920, 60 fps**. Stranica se glatko skrola u zaobljenoj kartici na sredini ekrana, iza nje je pozadina preko cijelog ekrana, a ispod je glazba. Format je isti kao u referentnom videu:
 
 - kartica zauzima ~88 % širine i stoji na sredini visine, sa zaobljenim rubovima i mekom sjenom,
+- svaki skrol staje točno na vrhu sekcije, a u pauzi miš prijeđe preko elemenata da se pokrenu hover animacije (kursor se vidi u videu),
 - prvo se ~2 s drži hero, zatim slijedi 5–7 mirnih skrolova s pauzom na svakoj sekciji, a na kraju se drži footer,
 - ukupno traje ~22 s, a glazba se na kraju stiša.
 
@@ -32,6 +33,10 @@ node video-generator/make-video.mjs --url http://localhost:8080/sites/zdd-zagreb
 | `--title` | Naslov iznad kartice, npr. `"Redizajn #3 · konzum.hr"`. |
 | `--disclaimer` | Sitni tekst ispod kartice. Zadano je „Neslužbeni koncept redizajna“, a `""` ga isključuje. |
 | `--duration` | Ciljano trajanje (zadano 22 s). |
+| `--sections` | Točno ove sekcije, ovim redom (CSS selektori), npr. `".intro,.winter,.menus,footer"`. |
+| `--skip` | Preskoči ove sekcije, npr. `".crew"`. |
+| `--no-hover` | Ne prelazi mišem preko elemenata. Zadano miš u svakoj pauzi prijeđe preko elemenata s `:hover` efektom. |
+| `--no-cursor` | Ne crtaj kursor u videu. |
 | `--max-scroll` | Koliko px duboko skrolati, za kraći video koji pokazuje samo vrh stranice. |
 | `--width`/`--height` | Veličina preglednika (zadano 1600×1000). |
 
