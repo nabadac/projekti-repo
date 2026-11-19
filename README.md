@@ -10,6 +10,7 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 | Zagrebačko dijabetičko društvo | [`sites/zdd-zagreb/`](sites/zdd-zagreb/) | Koncept redizajna zadi.hr po uzoru na zadani referentni dizajn: hero s fotografijom s Obiteljskog kampa, brojke u pločicama, bento pogodnosti članstva, tabovi pet klubova, carousel za članove, citati obitelji, novosti. Stvarni sadržaj i brand ZDD-a. |
 | Batak | [`sites/batak/`](sites/batak/) | Koncept službene stranice lanca grill restorana po uzoru na zadani referentni dizajn: hero s iskrama, priča i ekipa, zimska sekcija sa snijegom (Zimska plata s točkama, sarma, buncek, jetrica, zimski termometar), jelovnici, 31 lokacija s filterom, rezervacija. Stvarni sadržaj i brand Batka, uz dodani žar i mraz. |
 | Autoservis Kovač | [`sites/autoservis-kovac/`](sites/autoservis-kovac/) | Novi dizajn za autoservis u Zagrebu po referentnom videu (svijetli editorial stil, tamnoplave sekcije, serifni naslovi), usmjeren na zakazivanje: brzi termin u heroju, rezervacija iz svake usluge i cjenika, obrazac u 3 koraka, mobilna traka Nazovi / Naruči. |
+| STRUG tokarska radionica | [`sites/strug-tokarska-radionica/`](sites/strug-tokarska-radionica/) | Koncept za tokarsku radionicu po zadanom industrijskom referentnom dizajnu: vlastite SVG sheme tokarilice, radioničkog crteža, CNC putanje alata, brušenja i kontrole; Archivo (uski) + IBM Plex Mono. |
 | Kolnik Logistika | [`sites/kolnik-logistika/`](sites/kolnik-logistika/) | Landing stranica za gradsku dostavu i međunarodnu špediciju iz Svete Nedelje (HR/SL/SR), s GSAP animacijama. |
 | Autoservis Kovač (izvorni demo) | [`sites/autoservis-kovac-demo/`](sites/autoservis-kovac-demo/) | Prva verzija stranice autoservisa u Zagrebu: tamni industrijski stil, usluge, odabir marke, cjenik, obrazac za narudžbu, recenzije. |
 | IRONGATE Gym | [`sites/irongate-gym/`](sites/irongate-gym/) | Demo stranica teretane u Zagrebu. |
@@ -46,6 +47,7 @@ i otvorite:
 - <http://localhost:8080/sites/atelier-noir-salon/>
 - <http://localhost:8080/sites/stolarija-vidovic/>
 - <http://localhost:8080/sites/ordinacija-matic/>
+- <http://localhost:8080/sites/strug-tokarska-radionica/>
 
 ## Izvorne grane
 
