@@ -1,0 +1,91 @@
+# Nova stranica u sites/ → snimi TikTok video → spremi ga u GitHub izdanje → zakaži u tiktok/raspored.json
+name: TikTok video za novu stranicu
+
+on:
+  push:
+    branches: [main]
+    paths: ['sites/**']
+  workflow_dispatch:
+    inputs:
+      stranice:
+        description: 'Mape iz sites/ odvojene zarezom (npr. batak,zdd-zagreb). Ponovno snimanje zamjenjuje video koji još čeka.'
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tiktok-raspored
+  cancel-in-progress: false
+
+jobs:
+  video:
+    # raspored i izdanja vode se samo s main grane
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Pronađi nove stranice
+        id: nove
+        env:
+          PRIJE: ${{ github.event.before }}
+          POSLIJE: ${{ github.sha }}
+          STRANICE: ${{ inputs.stranice }}
+        run: node tiktok/nove-stranice.mjs
+
+      - name: Instaliraj ffmpeg, font i Playwright
+        if: steps.nove.outputs.stranice != '[]'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-inter
+          npm install --no-save --no-package-lock playwright@1.63.0
+          npx playwright install --with-deps chromium
+
+      - name: Snimi, objavi izdanje i zakaži
+        if: steps.nove.outputs.stranice != '[]'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          STRANICE_JSON: ${{ steps.nove.outputs.stranice }}
+        run: |
+          python3 -m http.server 8080 >/dev/null 2>&1 &
+          sleep 2
+          echo "### Novi TikTok videi" >> "$GITHUB_STEP_SUMMARY"
+          for s in $(echo "$STRANICE_JSON" | jq -r '.[]'); do
+            node tiktok/snimi.mjs "$s"
+            tag="tiktok-$s"
+            opis=$(jq -r .opis "tiktok/out/$s.json")
+            if gh release view "$tag" >/dev/null 2>&1; then
+              gh release upload "$tag" "tiktok/out/$s.mp4" --clobber
+            else
+              gh release create "$tag" "tiktok/out/$s.mp4" --prerelease --latest=false \
+                --title "TikTok · $s" --notes "$opis"
+            fi
+            node tiktok/zakazi.mjs "$s" "$tag"
+          done
+
+      - name: Spremi raspored
+        if: steps.nove.outputs.stranice != '[]'
+        env:
+          STRANICE_JSON: ${{ steps.nove.outputs.stranice }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tiktok/raspored.json
+          git commit -m "TikTok: zakazani videi ($(echo "$STRANICE_JSON" | jq -r 'join(", ")'))"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && break; sleep 5; done
+
+      - name: Video kao artefakt (za brzi pregled)
+        if: steps.nove.outputs.stranice != '[]'
+        uses: actions/upload-artifact@v4
+        with:
+          name: tiktok-videi
+          path: tiktok/out/*.mp4
+          retention-days: 14

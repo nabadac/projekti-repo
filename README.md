@@ -27,6 +27,10 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 
 [`video-generator/`](video-generator/) od bilo koje stranice radi vertikalni 9:16 video sa skrolanjem u kartici preko pozadine. Upute su u [`video-generator/README.md`](video-generator/README.md).
 
+## TikTok videi
+
+Svaka nova stranica na `main` automatski dobiva TikTok video (`video-generator/`), koji se zakazuje za utorak, četvrtak ili subotu u 18:00 i u terminu stiže u TikTok inbox kao skica. Postavljanje i upute: [`tiktok/README.md`](tiktok/README.md).
+
 ## Lokalni pregled
 
 U rootu repozitorija pokrenite:

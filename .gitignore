@@ -2,3 +2,7 @@
 .claude/skills/impeccable/scripts/bin/
 .impeccable/
 **/.impeccable/
+
+# TikTok workflow: lokalni videi i ovisnosti
+tiktok/out/
+node_modules/
