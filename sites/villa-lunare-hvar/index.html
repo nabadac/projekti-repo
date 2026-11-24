@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hr">
+<html lang="hr" class="pre hold">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,142 +94,296 @@ nav.scrolled .nav-links a:hover { color: var(--sea); }
 .nav-reserve:hover { background: transparent; border-color: var(--sand); color: var(--warm-white); }
 nav.scrolled .nav-reserve:hover { color: var(--sea); border-color: var(--sea); }
 
-/* ── HERO ── */
-.hero {
-  height: 100vh; min-height: 700px;
-  position: relative; overflow: hidden;
+/* ── HERO STAGE (dvostanjska scena: hero → sobe) ── */
+html { scrollbar-gutter: stable; background: var(--ink); }
+html.hold { overflow: hidden; }
+html.hold body { overscroll-behavior: none; }
+
+.stage {
+  --u: min(calc(100vw / 1440), calc(100vh / 810));
+  --s: calc(100vw / 1440);
+  --mb: 0px;
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --tint: rgba(253,251,247,.86);
+  position: relative;
+  height: 100vh; height: 100svh;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--warm-white);
+}
+.stage a { color: inherit; text-decoration: none; }
+
+.plate {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transform-origin: center;
+  will-change: transform;
+}
+.plate-s2 { opacity: 0; }
+.pre .plate-h1 { transform: scale(1.3); }
+
+.shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(26,24,20,.72) 0%, rgba(26,24,20,.18) 22%,
+    rgba(26,24,20,0) 40%, rgba(26,24,20,0) 75%, rgba(26,24,20,.35) 100%);
+}
+.s2-shade {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background:
+    linear-gradient(90deg, rgba(26,24,20,.78) 0%, rgba(26,24,20,.45) 30%, rgba(26,24,20,0) 56%),
+    linear-gradient(0deg, rgba(26,24,20,.6) 0%, rgba(26,24,20,0) 42%);
+}
+
+/* Foreground: velika riječ iza kamenih gromada */
+.fg {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: calc(810 * var(--s));
+  overflow: hidden; pointer-events: none;
+}
+.word {
+  position: absolute;
+  left: calc(-26 * var(--s)); top: calc(420 * var(--s));
+  font-family: 'Cinzel', serif; font-weight: 500;
+  font-size: calc(352 * var(--s));
+  line-height: 1; letter-spacing: -.02em;
+  color: var(--warm-white);
+  white-space: nowrap;
+  text-shadow: 0 0 calc(60 * var(--s)) rgba(196,112,74,.25);
+}
+.word > span { display: inline-block; transform: scaleX(1.05); transform-origin: top left; }
+.word i { display: inline-block; font-style: normal; }
+.mounds {
+  position: absolute; bottom: 0;
+  width: 50%;
+  height: calc(810 * var(--s) * .64 + var(--mb));
+  display: block; overflow: visible;
+  will-change: transform;
+}
+.mound-l { left: 0; }
+.mound-r { right: 0; }
+
+/* Glyph stupac */
+.glyphs {
+  position: absolute; z-index: 4;
+  left: calc(32 * var(--u)); top: calc(240 * var(--u));
+  display: flex; flex-direction: column; gap: calc(13.8 * var(--u));
+  color: rgba(253,251,247,.8);
+}
+.glyphs svg { width: max(11px, calc(17 * var(--u))); height: auto; display: block; }
+
+/* ── HERO STANJE ── */
+.h1 { position: absolute; inset: 0; pointer-events: none; }
+.h1 > * { pointer-events: auto; }
+.h-title {
+  position: absolute;
+  left: calc(38 * var(--u)); top: calc(128 * var(--u));
+  overflow: hidden; padding-top: .12em;
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: calc(66 * var(--u)); line-height: 1.1;
+  letter-spacing: .01em; white-space: nowrap;
+  color: #fff;
+}
+.h-title > span { display: block; padding-bottom: .16em; }
+.h-title em { font-style: italic; color: var(--sand); }
+.h-body {
+  position: absolute;
+  left: calc(1166 * var(--u)); top: calc(140 * var(--u));
+  width: calc(236 * var(--u));
+  overflow: hidden;
+  font-family: 'Jost', sans-serif; font-weight: 300;
+  font-size: max(11px, calc(13 * var(--u))); line-height: 1.6;
+  color: var(--tint);
+}
+.h-body > span { display: block; padding-bottom: .3em; }
+.vcard {
+  position: absolute;
+  left: calc(92 * var(--u)); top: calc(240 * var(--u));
+  width: calc(164 * var(--u)); height: calc(114 * var(--u));
+  border: 1px solid rgba(253,251,247,.22);
+  background: var(--sea-deep) center / cover no-repeat;
+  overflow: hidden;
   display: flex; align-items: center; justify-content: center;
 }
-.hero-slides {
-  position: absolute; inset: 0;
+.vcard::before { content: ''; position: absolute; inset: 0; background: rgba(26,24,20,.22); transition: background .4s; }
+.vcard:hover::before { background: rgba(26,24,20,.05); }
+.vcard svg { position: relative; width: max(16px, calc(26 * var(--u))); height: auto; }
+.vcard-label {
+  position: absolute; left: calc(10 * var(--u)); bottom: calc(8 * var(--u));
+  font-size: max(11px, calc(10 * var(--u))); font-weight: 400;
+  letter-spacing: .22em; text-transform: uppercase;
 }
-.hero-slide {
-  position: absolute; inset: 0;
-  opacity: 0;
-  transition: opacity 1.4s ease;
-}
-.hero-slide.active { opacity: 1; }
-.hero-slide img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transform: scale(1.05);
-  animation: kenBurns 10s ease-in-out forwards;
-}
-@keyframes kenBurns {
-  from { transform: scale(1.06); }
-  to   { transform: scale(1.0); }
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(26,24,20,0.25) 0%,
-    rgba(26,24,20,0.1) 40%,
-    rgba(26,24,20,0.55) 100%
-  );
-}
-.hero-content {
-  position: relative; z-index: 2;
-  text-align: center;
-  padding: 0 40px;
-  max-width: 820px;
-}
-.hero-eyebrow {
-  font-family: 'Jost', sans-serif;
-  font-size: 10px; font-weight: 400;
-  letter-spacing: 0.45em; text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-  margin-bottom: 24px;
-  display: flex; align-items: center; justify-content: center; gap: 20px;
-}
-.hero-eyebrow::before,
-.hero-eyebrow::after {
-  content: '';
-  width: 44px; height: 1px;
-  background: rgba(255,255,255,0.35);
-}
-.hero-h1 {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(64px, 9vw, 128px);
-  font-weight: 400;
-  line-height: 0.95;
-  color: #fff;
-  letter-spacing: 0.02em;
-  margin-bottom: 28px;
-  text-shadow: 0 2px 40px rgba(0,0,0,0.2);
-}
-.hero-tagline {
-  font-family: 'Jost', sans-serif;
-  font-size: 15px; font-weight: 200;
-  font-style: italic;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.8);
-  margin-bottom: 52px;
-  line-height: 1.7;
-}
-.hero-btns {
-  display: flex; gap: 16px;
-  justify-content: center; flex-wrap: wrap;
-}
-.btn-light {
-  font-family: 'Jost', sans-serif;
-  font-size: 10px; font-weight: 500;
-  letter-spacing: 0.28em; text-transform: uppercase;
-  color: var(--ink);
-  background: rgba(253,251,247,0.95);
-  padding: 16px 44px;
-  text-decoration: none;
-  transition: all 0.3s;
-  display: inline-block;
-}
-.btn-light:hover { background: #fff; }
-.btn-ghost-light {
-  font-family: 'Jost', sans-serif;
-  font-size: 10px; font-weight: 400;
-  letter-spacing: 0.28em; text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-  border: 1px solid rgba(255,255,255,0.4);
-  padding: 16px 44px;
-  text-decoration: none;
-  transition: all 0.3s;
-  display: inline-block;
-}
-.btn-ghost-light:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.7); }
 
-/* Slide indicators */
-.hero-indicators {
-  position: absolute; bottom: 40px; left: 50%;
-  transform: translateX(-50%);
-  display: flex; gap: 8px; z-index: 3;
+.caps { position: absolute; left: 0; right: 0; bottom: calc(14 * var(--u)); height: calc(44 * var(--u)); }
+.cap { position: absolute; bottom: 0; overflow: hidden; }
+.cap:nth-child(1) { left: calc(37 * var(--u)); }
+.cap:nth-child(2) { left: calc(411 * var(--u)); }
+.cap:nth-child(3) { left: calc(786 * var(--u)); }
+.cap:nth-child(4) { left: calc(1173 * var(--u)); }
+.mi { display: flex; align-items: center; gap: calc(14 * var(--u)); }
+.mi .num {
+  font-family: 'Cinzel', serif; font-weight: 400;
+  font-size: calc(30 * var(--u)); line-height: 1;
 }
-.indicator {
-  width: 24px; height: 2px;
-  background: rgba(255,255,255,0.35);
-  cursor: pointer;
-  transition: all 0.3s;
+.mi .ct {
+  border-left: 1px solid rgba(253,251,247,.4);
+  padding-left: calc(12 * var(--u));
+  font-size: max(11px, calc(11.6 * var(--u))); line-height: 1.35;
+  letter-spacing: .04em;
+  color: rgba(253,251,247,.82);
 }
-.indicator.active { background: #fff; width: 40px; }
 
-/* Scroll hint */
-.scroll-hint {
-  position: absolute; bottom: 40px; right: 64px;
-  z-index: 3;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
+/* ── SOBE STANJE ── */
+.s2 { position: absolute; inset: 0; pointer-events: none; }
+.s2 > * { position: absolute; opacity: 0; pointer-events: auto; }
+.s2-head { left: calc(74 * var(--u)); top: calc(140 * var(--u)); }
+.s2-eyebrow {
+  font-size: max(11px, calc(10.5 * var(--u))); font-weight: 400;
+  letter-spacing: .4em; text-transform: uppercase;
+  color: var(--sand);
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: calc(18 * var(--u));
 }
-.scroll-hint-line {
-  width: 1px; height: 56px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
-  animation: scrollDrop 2s ease-in-out infinite;
+.s2-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--sand); }
+.s2-title {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: calc(54 * var(--u)); line-height: 1.04;
+  letter-spacing: .01em; color: #fff;
 }
-@keyframes scrollDrop {
-  0%,100% { opacity:0.4; transform: scaleY(0.8); }
-  50%      { opacity:1;   transform: scaleY(1); }
+.s2-title em { font-style: italic; color: var(--sand); }
+.s2-p {
+  left: calc(74 * var(--u)); top: calc(362 * var(--u));
+  width: calc(290 * var(--u));
+  font-size: max(11px, calc(14.2 * var(--u))); line-height: 1.7;
+  color: var(--tint);
 }
-.scroll-hint-text {
-  font-size: 9px; font-weight: 400;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  writing-mode: vertical-rl;
+.s2-arrow {
+  left: calc(73 * var(--u)); top: calc(560 * var(--u));
+  display: flex; align-items: center; gap: 14px;
+  font-size: max(11px, calc(10.5 * var(--u))); font-weight: 500;
+  letter-spacing: .24em; text-transform: uppercase;
+  transition: color .3s;
+}
+.s2-arrow svg { width: max(24px, calc(26 * var(--u))); height: auto; transition: transform .5s var(--ease-out); }
+.s2-arrow:hover { color: var(--terracotta); }
+.s2-arrow:hover svg { transform: translate(3px,-3px); }
+.cards { left: calc(704 * var(--u)); top: calc(452 * var(--u)); display: flex; gap: calc(19 * var(--u)); }
+.card {
+  position: relative; display: block;
+  width: calc(216 * var(--u)); height: calc(280 * var(--u));
+  background: var(--sea-deep);
+  border: 1px solid rgba(253,251,247,.14);
+  overflow: hidden;
+}
+.card .ci {
+  position: absolute; inset: 0;
+  background: center / cover no-repeat;
+  transition: transform .9s var(--ease-out);
+}
+.card:hover .ci { transform: scale(1.05); }
+.card::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(26,24,20,0) 45%, rgba(26,24,20,.72) 100%);
+}
+.card .cl { position: absolute; z-index: 1; left: calc(16 * var(--u)); right: calc(16 * var(--u)); bottom: calc(14 * var(--u)); }
+.card .cn {
+  font-family: 'Cormorant Garamond', serif; font-weight: 400;
+  font-size: max(16px, calc(24 * var(--u))); line-height: 1.1; color: #fff;
+}
+.card .cp {
+  margin-top: 4px;
+  font-size: max(11px, calc(10.5 * var(--u))); font-weight: 400;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(253,251,247,.78);
+}
+.card .ctag {
+  position: absolute; z-index: 1; top: calc(14 * var(--u)); left: calc(14 * var(--u));
+  font-size: max(9px, calc(9 * var(--u))); font-weight: 500;
+  letter-spacing: .26em; text-transform: uppercase;
+  background: var(--sea); color: var(--warm-white);
+  padding: 5px 10px;
+}
+
+/* Stanja */
+.pre .stage .h1 > *, .pre .stage .fg, .pre .glyphs,
+.pre .nav-links a, .pre .nav-reserve, .pre .hamburger, .pre .nav-logo { opacity: 0; }
+.nav-links li { overflow: hidden; }
+.nav-links a { display: inline-block; padding: 6px 0; }
+.is-s2 .h1 > * { opacity: 0; pointer-events: none; }
+.is-s2 .s2 > * { opacity: 1; }
+.is-s2 .plate-s2, .is-s2 .s2-shade { opacity: 1; }
+.rm.is-s2 .fg { opacity: 0; }
+.rm .card .ci { transition: none; }
+
+/* ── Mobitel i portret ── */
+@media (max-width: 820px), (max-aspect-ratio: 1/1) {
+  .stage { --u: calc(100vw / 390); --mb: 96px; --ts: min(34px, 8.4vw); }
+  .shade {
+    background: linear-gradient(to bottom,
+      rgba(26,24,20,.9) 0%, rgba(26,24,20,.62) 30%, rgba(26,24,20,.25) 48%,
+      rgba(26,24,20,0) 60%, rgba(26,24,20,.45) 100%);
+  }
+  .h-title { left: 18px; right: 18px; top: 108px; white-space: normal; font-size: var(--ts); line-height: 1.12; }
+  .h-body { left: 18px; top: calc(116px + 3 * 1.12 * var(--ts) + 20px); width: min(230px, 56vw); font-size: 12.5px; }
+  .vcard { left: auto; right: 18px; top: calc(116px + 3 * 1.12 * var(--ts) + 24px); width: min(120px, 28vw); height: min(84px, 20vw); }
+  .vcard-label { display: none; }
+  .glyphs { left: 18px; top: 88px; flex-direction: row; gap: 12px; }
+  .glyphs svg { width: 13px; }
+  .caps { left: 18px; right: 18px; bottom: 16px; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cap { position: static; }
+  .mi { gap: 10px; }
+  .mi .num { font-size: 22px; }
+  .mi .ct { font-size: 11px; padding-left: 10px; }
+  .fg { height: calc(100vw * 810 / 1440 + 192px); }
+
+  .s2-head { left: 18px; right: 18px; top: 120px; }
+  .s2-title { font-size: min(34px, 8.6vw); line-height: 1.08; }
+  .s2-eyebrow { margin-bottom: 12px; }
+  .s2-p { left: 18px; top: calc(120px + 30px + 3 * 1.08 * min(34px, 8.6vw) + 18px); width: min(340px, calc(100vw - 36px)); font-size: 13px; line-height: 1.65; }
+  .cards { left: 18px; right: 18px; top: auto; bottom: 20px; gap: 8px; }
+  .card { width: calc((100vw - 52px) / 3); height: calc((100vw - 52px) / 3 * 280 / 216); }
+  .card .cl { left: 10px; right: 8px; bottom: 10px; }
+  .card .cn { font-size: 16px; }
+  .card .cp { font-size: 9.5px; letter-spacing: .12em; }
+  .card .ctag { display: none; }
+  .s2-arrow { left: 18px; top: auto; bottom: calc(20px + (100vw - 52px) / 3 * 280 / 216 + 18px); }
+}
+/* Tablet portret */
+@media (min-width: 600px) and (max-aspect-ratio: 1/1) {
+  .stage { --u: calc(100vw / 760); --mb: 76px; --ts: min(52px, 6.6vw); }
+  .h-title { top: 136px; }
+  .h-body { top: calc(136px + 3 * 1.12 * var(--ts) + 24px); width: 300px; font-size: 14px; }
+  .vcard { top: calc(136px + 3 * 1.12 * var(--ts) + 28px); width: 200px; height: 140px; }
+  .glyphs { top: 100px; }
+  .caps { grid-template-columns: repeat(4, 1fr); }
+  .fg { height: calc(100vw * 810 / 1440 + 152px); }
+  .s2-title { font-size: min(52px, 6.6vw); }
+  .s2-p { top: calc(120px + 30px + 3 * 1.08 * min(52px, 6.6vw) + 24px); font-size: 14px; }
+  .cards { gap: 14px; }
+  .card { width: calc((100vw - 64px) / 3); height: calc((100vw - 64px) / 3 * 280 / 216); }
+  .s2-arrow { bottom: calc(20px + (100vw - 64px) / 3 * 280 / 216 + 22px); }
+}
+/* Nizak landscape (mobitel položen) */
+@media (max-height: 520px) and (min-aspect-ratio: 1/1) {
+  .stage { --u: calc(100vh / 470); --s: calc(100vh / 720); --mb: 36px; }
+  .h-title { top: 74px; left: 20px; white-space: normal; width: 58vw; font-size: clamp(18px, 3.2vw, 30px); }
+  .h-body { top: 78px; left: auto; right: 20px; width: 26vw; font-size: 11px; }
+  .vcard, .glyphs, .s2-arrow { display: none; }
+  .caps { left: 20px; right: 20px; bottom: 8px; height: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .cap { position: static; }
+  .mi .num { font-size: 18px; }
+  .mi .ct { font-size: 11px; }
+  .fg { height: calc(100vw * 810 / 1440 + 36px); }
+  .s2-head { top: 74px; left: 20px; }
+  .s2-title { font-size: clamp(18px, 3.4vw, 30px); }
+  .s2-eyebrow { margin-bottom: 8px; }
+  .s2-p { top: auto; bottom: 20px; left: 20px; width: 34vw; font-size: 11px; line-height: 1.5; }
+  .cards { left: auto; right: 20px; top: auto; bottom: 20px; gap: 8px; }
+  .card { width: min(150px, 15vw); height: calc(min(150px, 15vw) * 280 / 216); }
+  .card .cn { font-size: 15px; }
+  .card .cp { font-size: 9px; letter-spacing: .1em; }
+  .card .ctag { display: none; }
 }
 
 /* ── STRIP ── */
@@ -820,39 +974,110 @@ nav.scrolled .hamburger span { background: var(--mid); }
   <div class="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-slides">
-    <div class="hero-slide active">
-      <img src="https://images.unsplash.com/photo-1628454512421-af8e9107ffa2?w=1800&q=85&auto=format&fit=crop" alt="Dalmatinska lavanda">
-    </div>
-    <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1511097344333-4e471f5664f2?w=1800&q=85&auto=format&fit=crop" alt="Hvar luka">
-    </div>
-    <div class="hero-slide">
-      <img src="https://images.unsplash.com/photo-1757187750311-f62aba1d76bd?w=1800&q=85&auto=format&fit=crop" alt="Jadranska plaža">
-    </div>
+<!-- HERO STAGE: hero → sobe (jedan scroll mijenja stanje) -->
+<main class="stage" id="stage">
+  <img class="plate plate-h1" src="https://images.unsplash.com/photo-1605703296515-515167084932?w=2000&q=85&auto=format&fit=crop" alt="Hvar u zalasku sunca, pogled s tvrđave" fetchpriority="high" decoding="async">
+  <img class="plate plate-s2" src="https://images.unsplash.com/photo-1628454512421-af8e9107ffa2?w=2000&q=85&auto=format&fit=crop" alt="Hvarska tvrđava i bugenvilija" decoding="async">
+  <div class="shade"></div>
+  <div class="s2-shade"></div>
+
+  <div class="fg" aria-hidden="true">
+    <div class="word"><span><i>L</i><i>U</i><i>N</i><i>A</i><i>R</i><i>E</i></span></div>
+    <svg class="mounds mound-l" viewBox="0 0 720 518" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="stoneL" x1="0" y1="0" x2=".35" y2="1">
+          <stop offset="0" stop-color="#3b342b"/><stop offset=".45" stop-color="#25211b"/><stop offset="1" stop-color="#14120f"/>
+        </linearGradient>
+        <linearGradient id="rimL" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#e8dfc8"/><stop offset=".55" stop-color="#c4704a"/><stop offset="1" stop-color="#c4704a" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="grain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="2" seed="7" stitchTiles="stitch"/>
+          <feColorMatrix values="0 0 0 0 .91  0 0 0 0 .87  0 0 0 0 .78  0 0 0 .16 0"/>
+          <feComposite in2="SourceGraphic" operator="in"/>
+        </filter>
+        <filter id="glow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
+      </defs>
+      <path d="M0,250 L40,236 L82,242 L126,226 L172,234 L214,228 L258,246 L300,258 C360,280 420,320 470,360 L505,384 L528,390 L560,420 C610,452 668,490 720,518 L0,518 Z" fill="url(#stoneL)"/>
+      <path d="M0,250 L40,236 L82,242 L126,226 L172,234 L214,228 L258,246 L300,258 C360,280 420,320 470,360 L505,384 L528,390 L560,420 C610,452 668,490 720,518 L0,518 Z" fill="#000" filter="url(#grain)"/>
+      <path d="M126,226 L172,234 L160,300 L110,318 L82,242 Z" fill="#e8dfc8" opacity=".05"/>
+      <path d="M300,258 C360,280 420,320 470,360 L440,420 L330,370 Z" fill="#c4704a" opacity=".06"/>
+      <path d="M0,320 C120,330 230,320 330,350 M0,400 C160,410 300,400 440,430 M0,470 C200,475 380,470 560,490" fill="none" stroke="#e8dfc8" stroke-opacity=".06" stroke-width="1" vector-effect="non-scaling-stroke"/>
+      <path d="M0,250 L40,236 L82,242 L126,226 L172,234 L214,228 L258,246 L300,258 C360,280 420,320 470,360 L505,384 L528,390 L560,420 C610,452 668,490 720,518" fill="none" stroke="url(#rimL)" stroke-width="7" opacity=".55" filter="url(#glow)"/>
+      <path d="M0,250 L40,236 L82,242 L126,226 L172,234 L214,228 L258,246 L300,258 C360,280 420,320 470,360 L505,384 L528,390 L560,420 C610,452 668,490 720,518" fill="none" stroke="url(#rimL)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <svg class="mounds mound-r" viewBox="0 0 720 518" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="stoneR" x1="1" y1="0" x2=".65" y2="1">
+          <stop offset="0" stop-color="#3b342b"/><stop offset=".45" stop-color="#25211b"/><stop offset="1" stop-color="#14120f"/>
+        </linearGradient>
+        <linearGradient id="rimR" x1="1" y1="0" x2="0" y2="0">
+          <stop offset="0" stop-color="#e8dfc8"/><stop offset=".55" stop-color="#c4704a"/><stop offset="1" stop-color="#c4704a" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <path d="M0,518 C52,490 110,456 160,424 L192,398 L214,394 L250,366 C300,330 360,292 420,268 L462,256 L500,262 L546,244 L592,250 L636,234 L680,240 L720,228 L720,518 Z" fill="url(#stoneR)"/>
+      <path d="M0,518 C52,490 110,456 160,424 L192,398 L214,394 L250,366 C300,330 360,292 420,268 L462,256 L500,262 L546,244 L592,250 L636,234 L680,240 L720,228 L720,518 Z" fill="#000" filter="url(#grain)"/>
+      <path d="M592,250 L636,234 L640,310 L590,330 L546,244 Z" fill="#e8dfc8" opacity=".05"/>
+      <path d="M420,268 L462,256 L480,350 L360,380 C380,330 400,295 420,268 Z" fill="#c4704a" opacity=".06"/>
+      <path d="M720,330 C600,340 500,330 400,360 M720,410 C560,420 420,410 290,440 M720,480 C520,485 340,480 170,500" fill="none" stroke="#e8dfc8" stroke-opacity=".06" stroke-width="1" vector-effect="non-scaling-stroke"/>
+      <path d="M0,518 C52,490 110,456 160,424 L192,398 L214,394 L250,366 C300,330 360,292 420,268 L462,256 L500,262 L546,244 L592,250 L636,234 L680,240 L720,228" fill="none" stroke="url(#rimR)" stroke-width="7" opacity=".55" filter="url(#glow)"/>
+      <path d="M0,518 C52,490 110,456 160,424 L192,398 L214,394 L250,366 C300,330 360,292 420,268 L462,256 L500,262 L546,244 L592,250 L636,234 L680,240 L720,228" fill="none" stroke="url(#rimR)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+    </svg>
   </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Hvar · Dalmacija · 5 zvjezdica</div>
-    <h1 class="hero-h1">Villa<br>Lunare</h1>
-    <p class="hero-tagline">Gdje Jadransko more šapće, a kameni zidovi pamte — <br>boutique hotel utkan u srce starog Hvara.</p>
-    <div class="hero-btns">
-      <a href="#booking" class="btn-light">Rezerviraj smještaj</a>
-      <a href="#rooms" class="btn-ghost-light">Istraži sobe</a>
+
+  <div class="glyphs" aria-hidden="true">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M10.5 2.5a6 6 0 1 0 3 8.6A5 5 0 0 1 10.5 2.5z"/></svg>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="2.6"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6L13 13M13 3l-1.4 1.4M4.4 11.6L3 13"/></svg>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M1 6c2-2 4-2 6 0s4 2 6 0M1 10.5c2-2 4-2 6 0s4 2 6 0"/></svg>
+    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0.5L9.4 6.6 15.5 8 9.4 9.4 8 15.5 6.6 9.4 0.5 8 6.6 6.6z"/></svg>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 1.5L14.5 8 8 14.5 1.5 8z"/></svg>
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><path d="M3 14C6 9 9 6 14 2"/><path d="M6.2 9.6c-2.6.2-3.8-1.6-3.6-3.8 2.4-.2 3.8 1.4 3.6 3.8zM10.2 5.6c-.2-2.6 1.4-3.9 3.6-3.7.2 2.4-1.2 3.9-3.6 3.7z"/></svg>
+    <svg viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="1.6"/><circle cx="8" cy="2.5" r="1"/><circle cx="8" cy="13.5" r="1"/><circle cx="2.5" cy="8" r="1"/><circle cx="13.5" cy="8" r="1"/></svg>
+  </div>
+
+  <section class="h1" id="hero">
+    <h1 class="h-title"><span>Gdje more šapće, <em>a kamen pamti.</em></span></h1>
+    <p class="h-body"><span>Boutique hotel utkan u srce starog Hvara — sedam prostora, kameni zidovi i ritam mora koji usporava vrijeme.</span></p>
+    <a class="vcard" href="#experience" aria-label="Otkrij hvarsko iskustvo" style="background-image:url('https://images.unsplash.com/photo-1511097344333-4e471f5664f2?w=500&q=80&auto=format&fit=crop')">
+      <svg id="play" viewBox="0 0 24 24" fill="none" stroke="#fdfbf7" stroke-width="1.4"><path d="M7 4L19 12 7 20Z" stroke-linejoin="round"/></svg>
+      <span class="vcard-label">Iskustvo</span>
+    </a>
+    <div class="caps">
+      <div class="cap"><div class="mi"><span class="num">01</span><span class="ct">Plaža na tri minute<br>pješice od vile.</span></div></div>
+      <div class="cap"><div class="mi"><span class="num">02</span><span class="ct">Infinity bazen<br>s pogledom na Jadran.</span></div></div>
+      <div class="cap"><div class="mi"><span class="num">03</span><span class="ct">Dalmatinska kuhinja,<br>lokalne namirnice.</span></div></div>
+      <div class="cap"><div class="mi"><span class="num">04</span><span class="ct">Spa u kamenom<br>podrumu vile.</span></div></div>
     </div>
-  </div>
-  <div class="hero-indicators">
-    <div class="indicator active" onclick="goSlide(0)"></div>
-    <div class="indicator" onclick="goSlide(1)"></div>
-    <div class="indicator" onclick="goSlide(2)"></div>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-hint-line"></div>
-    <div class="scroll-hint-text">Otkrij više</div>
-  </div>
-</section>
+  </section>
+
+  <section class="s2" id="sobe" inert>
+    <div class="s2-head">
+      <div class="s2-eyebrow">Smještaj</div>
+      <h2 class="s2-title">Tri sobe,<br>tri priče<br><em>jednog Hvara.</em></h2>
+    </div>
+    <p class="s2-p">Kameni zidovi koji pamte stoljeća, suite s pogledom na stare gradske zidine i vrt s ružmarinom i maslinom. Svaki prostor Ville Lunare spaja dalmatinsku autentičnost s modernim komforom.</p>
+    <a class="s2-arrow" href="#rooms">
+      <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 23L23 3M8 3h15v15"/></svg>
+      Sve sobe i cijene
+    </a>
+    <div class="cards">
+      <a class="card" href="#room-kamena">
+        <span class="ci" style="background-image:url('https://images.unsplash.com/photo-1756906838752-0b514ab37479?w=600&q=80&auto=format&fit=crop')"></span>
+        <span class="cl"><span class="cn">Kamena Soba</span><span class="cp" style="display:block">od 140€ / noć</span></span>
+      </a>
+      <a class="card" href="#room-panorama">
+        <span class="ci" style="background-image:url('https://images.unsplash.com/photo-1748052132379-c547161b0030?w=600&q=80&auto=format&fit=crop')"></span>
+        <span class="ctag">Najpopularnije</span>
+        <span class="cl"><span class="cn">Panorama Suite</span><span class="cp" style="display:block">od 290€ / noć</span></span>
+      </a>
+      <a class="card" href="#room-vrtna">
+        <span class="ci" style="background-image:url('https://images.unsplash.com/photo-1667661910865-f705ddd7a72f?w=600&q=80&auto=format&fit=crop')"></span>
+        <span class="cl"><span class="cn">Vrtna Soba</span><span class="cp" style="display:block">od 110€ / noć</span></span>
+      </a>
+    </div>
+  </section>
+</main>
+
 
 <!-- STRIP -->
 <div class="strip">
@@ -877,7 +1102,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
     <a href="#booking" class="room-cta" style="white-space:nowrap">Provjeri dostupnost →</a>
   </div>
   <div class="rooms-grid">
-    <div class="room-card fade-up">
+    <div id="room-panorama" class="room-card fade-up">
       <div class="room-img">
         <div class="room-tag">Najpopularnije</div>
         <img src="https://images.unsplash.com/photo-1748052132379-c547161b0030?w=700&q=80&auto=format&fit=crop" alt="Panorama Suite">
@@ -900,7 +1125,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
         </div>
       </div>
     </div>
-    <div class="room-card fade-up" style="transition-delay:.12s">
+    <div id="room-kamena" class="room-card fade-up" style="transition-delay:.12s">
       <div class="room-img">
         <img src="https://images.unsplash.com/photo-1756906838752-0b514ab37479?w=600&q=80&auto=format&fit=crop" alt="Kamena soba">
       </div>
@@ -921,7 +1146,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
         </div>
       </div>
     </div>
-    <div class="room-card fade-up" style="transition-delay:.24s">
+    <div id="room-vrtna" class="room-card fade-up" style="transition-delay:.24s">
       <div class="room-img">
         <img src="https://images.unsplash.com/photo-1667661910865-f705ddd7a72f?w=600&q=80&auto=format&fit=crop" alt="Vrtna soba">
       </div>
@@ -1228,22 +1453,233 @@ nav.scrolled .hamburger span { background: var(--mid); }
     document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 80);
   });
 
-  // Hero slideshow
-  let currentSlide = 0;
-  const slides = document.querySelectorAll('.hero-slide');
-  const indicators = document.querySelectorAll('.indicator');
+  // ── HERO STAGE: intro, hero → sobe, sobe → hero ──
+  (() => {
+    const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+    const root = document.documentElement, stage = $('#stage');
+    const plateH = $('.plate-h1'), plateS = $('.plate-s2'), s2shade = $('.s2-shade');
+    const fg = $('.fg'), word = $('.word'), mL = $('.mound-l'), mR = $('.mound-r');
+    const letters = $$('.word i');
+    const navA = $$('.nav-links a'), navLogo = $('.nav-logo'), navMenu = [$('.nav-reserve'), $('.hamburger')];
+    const glyphs = $('.glyphs');
+    const heroSec = $('#hero'), s2Sec = $('#sobe');
+    const hTitle = $('.h-title > span'), hBody = $('.h-body > span'), vcard = $('.vcard'), play = $('#play');
+    const capRows = $$('.cap .mi');
+    const s2Els = [$('.s2-head'), $('.s2-p'), $('.s2-arrow'), ...$$('.card')];
+    const LAG_IN = [0, 100, 100, 0, 150, 300], LAG_OUT = [100, 0, 0, 300, 150, 0];
 
-  function goSlide(n) {
-    slides[currentSlide].classList.remove('active');
-    indicators[currentSlide].classList.remove('active');
-    currentSlide = n;
-    slides[currentSlide].classList.add('active');
-    indicators[currentSlide].classList.add('active');
-  }
+    const QOUT = 'cubic-bezier(.25,1,.5,1)', COUT = 'cubic-bezier(.33,1,.68,1)', CIN = 'cubic-bezier(.32,0,.67,0)';
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // "Kamera": pomak hero kadra i ulaz drugog kadra (zamjena za video prijelaz)
+    const CAM_H = 'scale(1.22) translate3d(-5%,1.5%,0)';
+    const CAM_S0 = 'scale(1.18) translate3d(6%,-1%,0)';
 
-  setInterval(() => {
-    goSlide((currentSlide + 1) % slides.length);
-  }, 5000);
+    let state = 'h1', locked = true, lastNonTop = 0;
+    const anims = new Set();
+    const A = (el, kf, delay, duration, easing) => {
+      const a = el.animate(kf, { delay, duration, easing, fill: 'both' });
+      anims.add(a); return a;
+    };
+    const settle = () => {
+      anims.forEach(a => { try { a.commitStyles(); } catch (e) {} a.cancel(); });
+      anims.clear();
+    };
+    const hold = on => root.classList.toggle('hold', on);
+    const setInert = () => { heroSec.inert = state !== 'h1'; s2Sec.inert = state !== 's2'; };
+
+    history.scrollRestoration = 'manual';
+    root.classList.add('pre', 'hold');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // ── Intro (i replay kod povratka) ──
+    function intro(b, full) {
+      if (full) {
+        A(plateH, [{ transform: 'scale(1.3)' }, { transform: 'none' }], 0, 1350, QOUT);
+        A(navLogo, [{ opacity: 0 }, { opacity: 1 }], 100, 500, 'linear');
+        navA.forEach((a, i) => A(a, [{ transform: 'translateY(-110%)' }, { transform: 'none' }], 100 + i * 100, 300, COUT));
+        navMenu.forEach(m => m && A(m, [{ opacity: 0 }, { opacity: 1 }], 530, 200, 'linear'));
+        A(glyphs, [{ opacity: 0, transform: 'translateX(10px)' }, { opacity: 1, transform: 'none' }], 600, 400, COUT);
+      }
+      A(mR, [{ transform: 'translateX(90%)' }, { transform: 'none' }], b, 1700, QOUT);
+      A(mL, [{ transform: 'translateX(-90%)' }, { transform: 'none' }], b + 40, 1700, QOUT);
+      A(hTitle, [{ transform: 'translateY(-100%)' }, { transform: 'none' }], b + 390, 950, COUT);
+      A(hBody, [{ transform: 'translateY(100%)' }, { transform: 'none' }], b + 450, 900, COUT);
+      A(vcard, [{ opacity: 0 }, { opacity: 1 }], b + 570, 260, 'linear');
+      [0, 100, 270, 240, 200, 370].forEach((d, i) =>
+        A(letters[i], [{ opacity: 0, transform: 'translateY(.06em)' }, { opacity: 1, transform: 'none' }], b + 630 + d, 450, COUT));
+      A(play, [{ opacity: 0 }, { opacity: 1 }], b + 970, 230, 'linear');
+      [730, 870, 970, 1000].forEach((d, i) =>
+        A(capRows[i], [{ transform: 'translateY(100%)' }, { transform: 'none' }], b + d, 220, COUT));
+    }
+
+    // ── Krivulja "smooth scroll": klizanje pa eksponencijalno smirivanje ──
+    function curve(dir) {
+      const H = innerHeight, kf = [];
+      for (let k = 0; k <= 54; k++) {
+        const t = k / 54 * 1.8;
+        let f = t < .47 ? 1 - 1.506 * t : .293 * Math.exp(-(t - .47) / .232);
+        if (k === 54) f = 0;
+        const o = dir > 0 ? f : 1 - f;
+        kf.push({ offset: k / 54, transform: `translateY(${(o * H).toFixed(2)}px)`, opacity: 1 });
+      }
+      return kf;
+    }
+
+    function runCamera(fwd, delay, dur) {
+      if (fwd) {
+        A(plateH, [{ transform: CAM_H }], delay, dur, COUT);
+        A(plateS, [{ opacity: 0, transform: CAM_S0 }, { opacity: 1, offset: .5 }, { opacity: 1, transform: 'none' }], delay, dur, COUT);
+        A(s2shade, [{ opacity: 1 }], delay + dur * .2, dur * .8, 'linear');
+      } else {
+        A(plateH, [{ transform: 'none' }], delay, dur, COUT);
+        A(plateS, [{ opacity: 1, transform: 'none' }, { opacity: 1, offset: .3 }, { opacity: 0, transform: CAM_S0 }], delay, dur, COUT);
+        A(s2shade, [{ opacity: 0 }], delay, dur * .6, 'linear');
+      }
+    }
+
+    const dropD = () => fg.getBoundingClientRect().bottom - word.getBoundingClientRect().top + 8;
+
+    function toS2() {
+      if (locked || state !== 'h1') return;
+      if (RM) { stage.classList.add('is-s2'); state = 's2'; setInert(); hold(false); return; }
+      locked = true; settle();
+      // Hero izlazi
+      A(hTitle, [{ transform: 'translateY(-100%)' }], 0, 280, CIN);
+      A(hBody, [{ transform: 'translateY(100%)' }], 50, 250, CIN);
+      capRows.forEach((r, i) => A(r, [{ transform: 'translateY(100%)' }], i * 20, 260, CIN));
+      A(vcard, [{ opacity: 0 }], 350, 130, 'linear');
+      const D = dropD();
+      letters.forEach((l, i) => A(l, [{ transform: `translateY(${D}px)` }], i * 65, 450, CIN));
+      A(mL, [{ transform: 'translateX(-102%)' }], 20, 560, CIN);
+      A(mR, [{ transform: 'translateX(102%)' }], 150, 450, CIN);
+      // Sobe ulaze
+      const kf = curve(1);
+      s2Els.forEach((el, i) => A(el, kf, 180 + LAG_IN[i], 1800, 'linear'));
+      runCamera(true, 550, 1700);
+      setTimeout(() => {
+        stage.classList.add('is-s2'); state = 's2'; setInert();
+        hold(false); locked = false;
+      }, 2300);
+    }
+
+    function toH1() {
+      if (locked || state !== 's2' || scrollY > 0) return;
+      if (RM) { stage.classList.remove('is-s2'); state = 'h1'; setInert(); hold(true); return; }
+      locked = true; hold(true);
+      stage.classList.remove('is-s2');
+      settle();
+      const kf = curve(-1);
+      s2Els.forEach((el, i) => A(el, kf, LAG_OUT[i], 1800, 'linear'));
+      runCamera(false, 200, 1700);
+      intro(800, false);
+      state = 'h1'; setInert();
+      setTimeout(() => { locked = false; }, 2300);
+    }
+
+    // Trenutni skok u stanje "sobe" (klik na sidro iz hero stanja)
+    function poseS2() {
+      settle();
+      const D = dropD();
+      hTitle.style.transform = 'translateY(-100%)'; hBody.style.transform = 'translateY(100%)';
+      capRows.forEach(r => r.style.transform = 'translateY(100%)');
+      vcard.style.opacity = 0;
+      letters.forEach(l => { l.style.transform = `translateY(${D}px)`; l.style.opacity = 1; });
+      mL.style.transform = 'translateX(-102%)'; mR.style.transform = 'translateX(102%)';
+      plateH.style.transform = RM ? 'none' : CAM_H;
+      Object.assign(plateS.style, { opacity: 1, transform: 'none' });
+      s2shade.style.opacity = 1;
+      s2Els.forEach(e => { e.style.transform = 'none'; e.style.opacity = 1; });
+      [...navA, glyphs].forEach(e => { e.style.transform = 'none'; e.style.opacity = 1; });
+      [navLogo, ...navMenu, play].forEach(e => e && (e.style.opacity = 1));
+      root.classList.remove('pre'); stage.classList.add('is-s2');
+      state = 's2'; setInert(); hold(false); locked = false;
+    }
+
+    // ── Ulazi ──
+    addEventListener('scroll', () => { if (scrollY > 0) lastNonTop = performance.now(); }, { passive: true });
+
+    addEventListener('wheel', e => {
+      if (e.ctrlKey) return;
+      if (locked || state === 'h1') {
+        e.preventDefault();
+        if (!locked && e.deltaY > 4) toS2();
+        return;
+      }
+      if (scrollY <= 0 && e.deltaY < -4) {
+        e.preventDefault();
+        if (performance.now() - lastNonTop > 350) toH1();
+      }
+    }, { passive: false });
+
+    let ty = null;
+    addEventListener('touchstart', e => { ty = e.touches[0].clientY; }, { passive: true });
+    addEventListener('touchmove', e => {
+      if (ty === null) return;
+      const dy = ty - e.touches[0].clientY; // > 0: prst ide gore → dolje po stranici
+      if (locked || state === 'h1') {
+        if (e.cancelable) e.preventDefault();
+        if (!locked && dy > 30) { ty = null; toS2(); }
+        return;
+      }
+      if (scrollY <= 0 && dy < 0) {
+        if (e.cancelable) e.preventDefault();
+        if (dy < -30) { ty = null; toH1(); }
+      }
+    }, { passive: false });
+    addEventListener('touchend', () => { ty = null; }, { passive: true });
+
+    addEventListener('keydown', e => {
+      if (e.target.closest('input, select, textarea, button')) return;
+      const down = ['ArrowDown', 'PageDown', ' '].includes(e.key), up = ['ArrowUp', 'PageUp'].includes(e.key);
+      if (state === 'h1' && (down || up || locked)) {
+        if (down || up) e.preventDefault();
+        if (down) toS2();
+      } else if (state === 's2' && up && scrollY <= 0) {
+        e.preventDefault(); toH1();
+      }
+    });
+
+    // Sidra iz hero stanja: odmah u stanje "sobe", pa skrolaj do cilja
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href');
+      if (id === '#') {
+        e.preventDefault();
+        if (scrollY > 0) window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const t = document.querySelector(id);
+      if (!t || stage.contains(t) && t !== stage) return;
+      if (state === 'h1') {
+        e.preventDefault();
+        poseS2();
+        requestAnimationFrame(() => t.scrollIntoView({ behavior: 'smooth' }));
+      }
+    });
+
+    // ── Start: čekaj fontove i hero kadar (failsafe 2.5 s) ──
+    let started = false;
+    function start() {
+      if (started) return; started = true;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        const target = location.hash && location.hash.length > 1 && document.querySelector(location.hash);
+        if (target && !stage.contains(target)) {
+          poseS2();
+          requestAnimationFrame(() => target.scrollIntoView({ behavior: 'instant' }));
+          return;
+        }
+        if (RM) { stage.classList.add('rm'); root.classList.remove('pre'); locked = false; setInert(); return; }
+        intro(0, true);
+        root.classList.remove('pre');
+        setInert();
+        setTimeout(() => { locked = false; }, 1450);
+      }));
+    }
+    if (RM) stage.classList.add('rm');
+    Promise.all([document.fonts.ready, plateH.decode().catch(() => {})]).then(start, start);
+    setTimeout(start, 2500);
+  })();
 
   // Fade up
   const obs = new IntersectionObserver(entries => {
