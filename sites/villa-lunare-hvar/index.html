@@ -152,10 +152,18 @@ html.hold body { overscroll-behavior: none; }
   color: var(--warm-white);
   white-space: nowrap;
 }
+.word-pre {
+  position: absolute; left: 0; right: 0; top: calc(-6 * var(--s));
+  display: block; text-align: center;
+  font-family: 'Cinzel', serif; font-weight: 400; font-style: normal;
+  font-size: max(11px, calc(34 * var(--s))); line-height: 1;
+  letter-spacing: .9em; text-indent: .9em;
+  color: rgba(253,251,247,.92);
+}
 .word > span { display: inline-block; transform: scaleX(1.05); transform-origin: top left; }
 .word i {
   display: inline-block; font-style: normal;
-  background: linear-gradient(180deg, #fdfbf7 30%, rgba(253,251,247,.55) 62%, rgba(232,223,200,0) 92%);
+  background: linear-gradient(180deg, rgba(253,251,247,1) 16%, rgba(253,251,247,0) 86%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 /* Glyph stupac */
@@ -310,6 +318,7 @@ html.hold body { overscroll-behavior: none; }
   .mi .num { font-size: 22px; }
   .mi .ct { font-size: 11px; padding-left: 10px; }
   .fg { height: calc(100vw * 810 / 1440 + 192px); }
+  .word-pre { top: calc(-6 * var(--s) - 10px); }
 
   .s2-head { left: 18px; right: 18px; top: 120px; }
   .s2-title { font-size: min(34px, 8.6vw); line-height: 1.08; }
@@ -785,7 +794,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
   <div class="s2-shade"></div>
 
   <div class="fg" aria-hidden="true">
-    <div class="word"><span><i>L</i><i>U</i><i>N</i><i>A</i><i>R</i><i>E</i></span></div>
+    <div class="word"><b class="word-pre">VILLA</b><span><i>L</i><i>U</i><i>N</i><i>A</i><i>R</i><i>E</i></span></div>
   </div>
 
   <div class="glyphs" aria-hidden="true">
@@ -1191,7 +1200,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
     const root = document.documentElement, stage = $('#stage');
     const plateH = $('.plate-h1'), plateS = $('.plate-s2'), s2shade = $('.s2-shade');
     const fg = $('.fg'), word = $('.word');
-    const letters = $$('.word i');
+    const letters = $$('.word i'), wordPre = $('.word-pre');
     const navA = $$('.nav-links a'), navLogo = $('.nav-logo'), navMenu = [$('.nav-reserve'), $('.hamburger')];
     const glyphs = $('.glyphs');
     const heroSec = $('#hero'), s2Sec = $('#sobe');
@@ -1236,6 +1245,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
       A(hBody, [{ transform: 'translateY(100%)' }, { transform: 'none' }], b + 450, 900, COUT);
       [0, 100, 270, 240, 200, 370].forEach((d, i) =>
         A(letters[i], [{ opacity: 0, transform: 'translateY(.06em)' }, { opacity: 1, transform: 'none' }], b + 630 + d, 450, COUT));
+      A(wordPre, [{ opacity: 0, transform: 'translateY(.8em)', letterSpacing: '.5em' }, { opacity: 1, transform: 'none', letterSpacing: '.9em' }], b + 560, 900, COUT);
       [730, 870, 970, 1000].forEach((d, i) =>
         A(capRows[i], [{ transform: 'translateY(100%)' }, { transform: 'none' }], b + d, 220, COUT));
     }
@@ -1277,6 +1287,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
       capRows.forEach((r, i) => A(r, [{ transform: 'translateY(100%)' }], i * 20, 260, CIN));
       const D = dropD();
       letters.forEach((l, i) => A(l, [{ transform: `translateY(${D}px)` }], i * 65, 450, CIN));
+      A(wordPre, [{ opacity: 0, transform: 'translateY(1.2em)' }], 0, 320, CIN);
       // Sobe ulaze
       const kf = curve(1);
       s2Els.forEach((el, i) => A(el, kf, 180 + LAG_IN[i], 1800, 'linear'));
@@ -1308,6 +1319,7 @@ nav.scrolled .hamburger span { background: var(--mid); }
       hTitle.style.transform = 'translateY(-100%)'; hBody.style.transform = 'translateY(100%)';
       capRows.forEach(r => r.style.transform = 'translateY(100%)');
       letters.forEach(l => { l.style.transform = `translateY(${D}px)`; l.style.opacity = 1; });
+      wordPre.style.opacity = 0;
       plateH.style.transform = RM ? 'none' : CAM_H;
       Object.assign(plateS.style, { opacity: 1, transform: 'none' });
       s2shade.style.opacity = 1;
