@@ -2,1251 +2,738 @@
 <html lang="hr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IRONGATE — Gym Zagreb</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IRONGATE — Grupni treninzi · Zagreb</title>
+<meta name="description" content="Grupni treninzi u Zagrebu (Trešnjevka): HIIT, snaga, boks, funkcionalni trening i mobilnost u grupama do 12 ljudi. Prvi trening je besplatan.">
+<meta name="theme-color" content="#0b0d0e">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300;1,700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --black: #080808;
-  --off-black: #111010;
-  --panel: #161414;
-  --red: #d42b2b;
-  --red-hot: #ff3333;
-  --red-dim: #8a1c1c;
-  --chalk: #f0ece4;
-  --mid: #6b6560;
-  --border: rgba(212,43,43,0.18);
-  --border-chalk: rgba(240,236,228,0.1);
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--black);
-  color: var(--chalk);
-  font-family: 'Barlow', sans-serif;
-  font-weight: 300;
-  overflow-x: hidden;
-}
-
-/* ── NOISE OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.5;
-}
-
-/* ── NAV ── */
-nav {
-  position: fixed; top:0; left:0; right:0; z-index:100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 24px 56px;
-  transition: all 0.3s;
-}
-nav.scrolled {
-  background: rgba(8,8,8,0.96);
-  border-bottom: 1px solid var(--border);
-  padding: 16px 56px;
-  backdrop-filter: blur(12px);
-}
-.nav-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 28px;
-  letter-spacing: 0.12em;
-  color: var(--chalk);
-  text-decoration: none;
-  display: flex; align-items: center; gap: 10px;
-}
-.logo-bar {
-  width: 4px; height: 28px;
-  background: var(--red);
-  flex-shrink: 0;
-}
-.nav-links { display: flex; gap: 36px; list-style: none; }
-.nav-links a {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--mid); text-decoration: none;
-  transition: color 0.25s;
-}
-.nav-links a:hover { color: var(--red); }
-.nav-cta {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--chalk); background: var(--red);
-  padding: 12px 28px; text-decoration: none;
-  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 100%, 0 100%);
-  transition: background 0.25s;
-}
-.nav-cta:hover { background: var(--red-hot); }
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh;
-  position: relative;
-  overflow: hidden;
-  display: flex; align-items: flex-end;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-}
-.hero-bg img {
-  width: 100%; height: 100%; object-fit: cover;
-  filter: grayscale(60%) contrast(1.2) brightness(0.35);
-}
-.hero-bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to right, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.3) 60%, transparent 100%),
-    linear-gradient(to top, rgba(8,8,8,1) 0%, transparent 50%);
-}
-
-/* Big diagonal number */
-.hero-bignumber {
-  position: absolute;
-  right: -40px; top: 50%;
-  transform: translateY(-50%);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(280px, 28vw, 400px);
-  color: rgba(212,43,43,0.06);
-  line-height: 1;
-  user-select: none;
-  pointer-events: none;
-  letter-spacing: -0.04em;
-}
-
-.hero-content {
-  position: relative; z-index: 2;
-  padding: 0 56px 80px;
-  max-width: 820px;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; font-weight: 600;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--red);
-  margin-bottom: 24px;
-}
-.hero-tag::before {
-  content: '';
-  display: inline-block;
-  width: 28px; height: 2px;
-  background: var(--red);
-}
-.hero-h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(80px, 11vw, 160px);
-  line-height: 0.92;
-  letter-spacing: 0.02em;
-  color: var(--chalk);
-  margin-bottom: 28px;
-}
-.hero-h1 .red { color: var(--red); }
-.hero-sub {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px; font-weight: 300;
-  color: var(--mid); line-height: 1.6;
-  max-width: 480px;
-  margin-bottom: 48px;
-}
-.hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
-.btn-red {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--chalk); background: var(--red);
-  padding: 16px 40px; text-decoration: none;
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
-  transition: background 0.25s, transform 0.2s;
-  display: inline-block;
-}
-.btn-red:hover { background: var(--red-hot); transform: translateX(2px); }
-.btn-outline {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 600;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--chalk);
-  padding: 15px 36px;
-  border: 1px solid rgba(240,236,228,0.25);
-  text-decoration: none;
-  transition: border-color 0.25s, color 0.25s;
-  display: inline-block;
-}
-.btn-outline:hover { border-color: var(--red); color: var(--red); }
-
-/* Stats bar */
-.hero-stats {
-  position: absolute; bottom: 0; right: 0;
-  display: flex;
-  border-top: 1px solid var(--border-chalk);
-  border-left: 1px solid var(--border-chalk);
-  z-index: 2;
-}
-.stat-item {
-  padding: 28px 44px;
-  border-right: 1px solid var(--border-chalk);
-  text-align: center;
-}
-.stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 44px; color: var(--red);
-  line-height: 1;
-}
-.stat-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--mid);
-  margin-top: 4px;
-}
-
-/* ── TICKER ── */
-.ticker {
-  background: var(--red);
-  overflow: hidden;
-  display: flex;
-  padding: 0;
-}
-.ticker-inner {
-  display: flex; white-space: nowrap;
-  animation: ticker 18s linear infinite;
-}
-.ticker-item {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px;
-  letter-spacing: 0.12em;
-  color: var(--chalk);
-  padding: 14px 56px;
-  opacity: 0.9;
-  display: flex; align-items: center; gap: 40px;
-}
-.ticker-item::after {
-  content: '//';
-  color: rgba(255,255,255,0.4);
-  font-size: 14px;
-  margin-left: 16px;
-}
-@keyframes ticker {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* ── PROGRAM ── */
-.program { padding: 120px 56px; background: var(--off-black); }
-.section-label {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 16px;
-  display: flex; align-items: center; gap: 14px;
-}
-.section-label::before {
-  content: '';
-  width: 24px; height: 2px; background: var(--red); flex-shrink: 0;
-}
-.section-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(44px, 5vw, 72px);
-  line-height: 0.95;
-  color: var(--chalk); margin-bottom: 16px;
-  letter-spacing: 0.03em;
-}
-.section-title .red { color: var(--red); }
-.section-desc {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 17px; font-weight: 300;
-  color: var(--mid); max-width: 520px;
-  line-height: 1.7; margin-bottom: 0;
-}
-.program-header {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: end;
-  margin-bottom: 72px;
-}
-.program-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 3px;
-}
-.program-card {
-  background: var(--panel);
-  padding: 48px 44px;
-  position: relative;
-  overflow: hidden;
-  transition: background 0.3s;
-  cursor: pointer;
-}
-.program-card::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 3px;
-  background: var(--red);
-  transform: scaleY(0);
-  transform-origin: bottom;
-  transition: transform 0.4s ease;
-}
-.program-card:hover::before { transform: scaleY(1); }
-.program-card:hover { background: #1b1818; }
-.program-icon {
-  font-size: 36px; margin-bottom: 24px;
-  display: block;
-}
-.program-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px; letter-spacing: 0.05em;
-  color: var(--chalk); margin-bottom: 12px;
-  line-height: 1;
-}
-.program-desc {
-  font-size: 13px; font-weight: 300;
-  color: var(--mid); line-height: 1.8;
-  margin-bottom: 28px;
-}
-.program-meta {
-  display: flex; gap: 20px; flex-wrap: wrap;
-}
-.program-tag {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--red);
-  border: 1px solid var(--border);
-  padding: 5px 14px;
-}
-
-/* ── RASPORED ── */
-.raspored { padding: 0 56px 120px; background: var(--off-black); }
-.schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 2px;
-  margin-top: 64px;
-}
-.schedule-day {
-  background: var(--panel);
-  overflow: hidden;
-}
-.day-header {
-  background: var(--black);
-  padding: 18px 20px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 0.12em;
-  color: var(--red);
-  border-bottom: 1px solid var(--border);
-}
-.day-classes { padding: 8px 0; }
-.class-item {
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  transition: background 0.2s;
-  cursor: pointer;
-}
-.class-item:last-child { border-bottom: none; }
-.class-item:hover { background: rgba(212,43,43,0.07); }
-.class-time {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em;
-  color: var(--red); margin-bottom: 4px;
-}
-.class-name {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px; font-weight: 600;
-  color: var(--chalk); letter-spacing: 0.04em;
-}
-.class-trainer {
-  font-size: 11px; color: var(--mid);
-  margin-top: 2px;
-}
-.class-full {
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--red-dim);
-  margin-top: 4px;
-}
-
-/* ── MEMBERSHIP ── */
-.membership { padding: 120px 56px; background: var(--black); }
-.membership-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3px;
-  margin-top: 64px;
-}
-.membership-card {
-  background: var(--panel);
-  padding: 0;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid transparent;
-  transition: border-color 0.3s;
-}
-.membership-card.featured {
-  border-color: var(--red);
-}
-.membership-badge {
-  display: none;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--chalk); background: var(--red);
-  padding: 8px 20px;
-  text-align: center;
-}
-.membership-card.featured .membership-badge { display: block; }
-.membership-body { padding: 44px 40px; }
-.membership-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px; letter-spacing: 0.06em;
-  color: var(--chalk); margin-bottom: 6px;
-}
-.membership-tagline {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; color: var(--mid);
-  letter-spacing: 0.08em; margin-bottom: 36px;
-  padding-bottom: 36px;
-  border-bottom: 1px solid var(--border-chalk);
-}
-.membership-price {
-  margin-bottom: 36px;
-}
-.price-amount {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 64px; color: var(--red);
-  line-height: 1;
-}
-.price-unit {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; color: var(--mid);
-  letter-spacing: 0.1em; margin-top: 4px;
-}
-.membership-features {
-  list-style: none; margin-bottom: 44px;
-}
-.membership-features li {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px; font-weight: 400;
-  color: var(--chalk);
-  padding: 11px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  display: flex; align-items: center; gap: 12px;
-}
-.membership-features li::before {
-  content: '—';
-  color: var(--red); font-weight: 700;
-  flex-shrink: 0;
-}
-.membership-features li.off {
-  color: var(--mid);
-}
-.membership-features li.off::before { color: var(--mid); }
-.btn-member {
-  display: block; width: 100%;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  text-align: center;
-  padding: 16px;
-  text-decoration: none;
-  transition: all 0.25s;
-}
-.btn-member-outline {
-  color: var(--chalk);
-  border: 1px solid var(--border-chalk);
-}
-.btn-member-outline:hover { border-color: var(--red); color: var(--red); }
-.btn-member-solid {
-  color: var(--chalk); background: var(--red);
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 100%, 0 100%);
-}
-.btn-member-solid:hover { background: var(--red-hot); }
-
-/* ── TRAINERS ── */
-.trainers { padding: 120px 56px; background: var(--off-black); }
-.trainers-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3px;
-  margin-top: 64px;
-}
-.trainer-card {
-  position: relative; overflow: hidden;
-  cursor: pointer;
-}
-.trainer-img {
-  width: 100%;
-  aspect-ratio: 3/4;
-  overflow: hidden;
-}
-.trainer-img img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: grayscale(50%) contrast(1.1);
-  transition: transform 0.6s ease, filter 0.4s;
-}
-.trainer-card:hover .trainer-img img {
-  transform: scale(1.06);
-  filter: grayscale(0%) contrast(1.0);
-}
-.trainer-overlay {
-  position: absolute; left:0; right:0; bottom:0;
-  padding: 0 0 0 0;
-  background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, transparent 60%);
-  padding: 40px 28px 28px;
-}
-.trainer-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px; letter-spacing: 0.06em;
-  color: var(--chalk);
-}
-.trainer-spec {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--red); margin-top: 4px;
-}
-.trainer-exp {
-  font-size: 12px; color: var(--mid); margin-top: 6px;
-}
-.trainer-hover {
-  position: absolute; inset: 0;
-  background: rgba(212,43,43,0.85);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-  flex-direction: column; gap: 8px;
-}
-.trainer-card:hover .trainer-hover { opacity: 1; }
-.trainer-hover-text {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px; letter-spacing: 0.1em;
-  color: var(--chalk);
-}
-
-/* ── GALLERY ── */
-.gallery { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: 260px 200px; gap: 3px; }
-.gallery-item { overflow: hidden; position: relative; }
-.gallery-item img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: grayscale(40%) contrast(1.1);
-  transition: transform 0.6s, filter 0.4s;
-}
-.gallery-item:hover img { transform: scale(1.08); filter: grayscale(0%); }
-.gallery-item:nth-child(1) { grid-column: 1/3; }
-.gallery-item:nth-child(4) { grid-column: 4/6; }
-.gallery-item:nth-child(6) { grid-column: 1/2; }
-.gallery-item:nth-child(8) { grid-column: 4/6; grid-row: 2; }
-
-/* ── BOOKING ── */
-.booking { padding: 120px 56px; background: var(--black); }
-.booking-wrap {
-  display: grid; grid-template-columns: 5fr 7fr;
-  gap: 3px;
-}
-.booking-left {
-  background: var(--red);
-  padding: 64px 52px;
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.booking-left-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(44px, 5vw, 72px);
-  line-height: 0.95; letter-spacing: 0.03em;
-  color: var(--chalk);
-}
-.booking-left-sub {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; font-weight: 300;
-  color: rgba(240,236,228,0.75);
-  line-height: 1.7; margin-top: 24px;
-}
-.booking-perks { list-style: none; margin-top: 48px; }
-.booking-perks li {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px; font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--chalk);
-  padding: 12px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-  display: flex; align-items: center; gap: 14px;
-}
-.booking-perks li::before {
-  content: '✓';
-  font-size: 12px; font-weight: 900;
-  color: var(--chalk);
-}
-.booking-cta-phone {
-  margin-top: 40px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px; letter-spacing: 0.06em;
-  color: var(--chalk);
-}
-.booking-cta-phone span {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11px; font-weight: 600;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: rgba(240,236,228,0.6);
-  margin-bottom: 6px;
-}
-.booking-right {
-  background: var(--panel);
-  padding: 64px 52px;
-}
-.booking-form-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px; letter-spacing: 0.05em;
-  color: var(--chalk); margin-bottom: 6px;
-}
-.booking-form-sub {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; color: var(--mid);
-  letter-spacing: 0.08em; margin-bottom: 40px;
-}
-.form-group { margin-bottom: 18px; }
-.form-group label {
-  display: block;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--red); margin-bottom: 8px;
-}
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%; background: var(--black);
-  border: 1px solid rgba(240,236,228,0.1);
-  padding: 13px 16px;
-  font-family: 'Barlow', sans-serif;
-  font-size: 14px; font-weight: 300;
-  color: var(--chalk); outline: none;
-  transition: border-color 0.25s;
-  appearance: none;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--red);
-}
-.form-group input::placeholder { color: rgba(107,101,96,0.6); }
-.form-group select option { background: var(--off-black); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.form-submit-gym {
-  width: 100%; background: var(--red);
-  border: none; padding: 18px;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 13px; font-weight: 700;
-  letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--chalk); cursor: pointer;
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%);
-  transition: background 0.25s;
-  margin-top: 8px;
-}
-.form-submit-gym:hover { background: var(--red-hot); }
-.booking-success {
-  display: none; text-align: center; padding: 60px 20px;
-}
-.booking-success h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 40px; letter-spacing: 0.06em;
-  color: var(--red); margin-bottom: 12px;
-}
-.booking-success p {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; color: var(--mid);
-}
-
-/* ── FOOTER ── */
-footer {
-  background: var(--off-black);
-  border-top: 2px solid var(--red);
-  padding: 80px 56px 40px;
-}
-.footer-top {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 56px; padding-bottom: 56px;
-  border-bottom: 1px solid var(--border-chalk);
-  margin-bottom: 40px;
-}
-.footer-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px; letter-spacing: 0.1em;
-  color: var(--chalk); display: flex;
-  align-items: center; gap: 10px;
-  margin-bottom: 16px;
-}
-.footer-logo .logo-bar { width: 4px; height: 32px; }
-.footer-desc {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px; font-weight: 300;
-  color: var(--mid); line-height: 1.7;
-  margin-bottom: 28px;
-}
-.footer-socials { display: flex; gap: 10px; }
-.fsocial {
-  width: 38px; height: 38px;
-  border: 1px solid var(--border-chalk);
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; font-weight: 700;
-  color: var(--mid); text-decoration: none;
-  transition: all 0.25s;
-}
-.fsocial:hover { border-color: var(--red); color: var(--red); }
-.footer-col-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 18px; letter-spacing: 0.1em;
-  color: var(--red); margin-bottom: 24px;
-}
-.footer-links { list-style: none; }
-.footer-links li { margin-bottom: 10px; }
-.footer-links a {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14px; font-weight: 400;
-  color: var(--mid); text-decoration: none;
-  transition: color 0.25s;
-}
-.footer-links a:hover { color: var(--chalk); }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center;
-}
-.footer-copy {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px; color: rgba(107,101,96,0.5);
-  letter-spacing: 0.08em;
-}
-
-/* ── FADE UP ── */
-.fade-up {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.65s ease, transform 0.65s ease;
-}
-.fade-up.visible { opacity: 1; transform: translateY(0); }
-
-/* ── MOBILE ── */
-.hamburger {
-  display: none; flex-direction: column;
-  gap: 5px; cursor: pointer;
-}
-.hamburger span { width: 26px; height: 2px; background: var(--red); transition: all 0.3s; }
-
-@media (max-width: 960px) {
-  nav { padding: 18px 20px; }
-  nav.scrolled { padding: 14px 20px; }
-  .nav-links, .nav-cta { display: none; }
-  .hamburger { display: flex; }
-
-  .hero-content { padding: 0 20px 80px; }
-  .hero-stats { position: static; flex-wrap: wrap; }
-  .stat-item { padding: 20px 28px; }
-
-  section, .program, .membership, .trainers, .booking, .raspored {
-    padding-left: 20px !important; padding-right: 20px !important;
-  }
-
-  .program-header { grid-template-columns: 1fr; }
-  .program-grid { grid-template-columns: 1fr; }
-
-  .schedule-grid { grid-template-columns: 1fr 1fr; }
-
-  .membership-grid { grid-template-columns: 1fr; }
-
-  .trainers-grid { grid-template-columns: 1fr 1fr; }
-
-  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-  .gallery-item { grid-column: auto !important; grid-row: auto !important; height: 200px; }
-
-  .booking-wrap { grid-template-columns: 1fr; }
-  .booking-left, .booking-right { padding: 40px 28px; }
-  .form-row { grid-template-columns: 1fr; }
-
-  .footer-top { grid-template-columns: 1fr 1fr; }
-  .footer-bottom { flex-direction: column; gap: 12px; }
-}
-</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Big+Shoulders+Display:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="mainNav">
-  <a class="nav-logo" href="#"><div class="logo-bar"></div>IRONGATE</a>
-  <ul class="nav-links">
-    <li><a href="#program">Programi</a></li>
-    <li><a href="#raspored">Raspored</a></li>
-    <li><a href="#membership">Članarine</a></li>
-    <li><a href="#treneri">Treneri</a></li>
-    <li><a href="#booking">Probni trening</a></li>
-  </ul>
-  <a href="#booking" class="nav-cta">Besplatni probni →</a>
-  <div class="hamburger" onclick="this.nextElementSibling||0"><span></span><span></span><span></span></div>
-</nav>
+<!-- trajna tehnička mreža i mjerna letva napretka -->
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="ruler" aria-hidden="true">
+  <div class="ruler-track"></div>
+  <div class="ruler-cursor"><span class="mono" id="rulerVal">000</span></div>
+</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg">
-    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80" alt="Gym">
-  </div>
-  <div class="hero-bignumber">24/7</div>
-  <div class="hero-content">
-    <div class="hero-tag">Zagreb · Trešnjevka · Otvoreno 24/7</div>
-    <h1 class="hero-h1">FORGE<br>YOUR<br><span class="red">LIMIT</span></h1>
-    <p class="hero-sub">Premium gym centar opremljen najnovijim strojevima, osobnim trenerima i programima za sve razine treniranja.</p>
-    <div class="hero-btns">
-      <a href="#booking" class="btn-red">Besplatni probni trening</a>
-      <a href="#program" class="btn-outline">Pogledaj programe</a>
+<header class="nav" id="nav">
+  <a class="logo" href="#top" aria-label="IRONGATE, na vrh">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="3" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M11 30V10M29 30V10M11 15H29M11 20H29" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="17" y="24" width="6" height="6" fill="#ff5a1f"/></svg>
+    <span>IRONGATE</span>
+  </a>
+  <nav class="nav-links" aria-label="Glavna navigacija">
+    <a href="#programi">Programi</a>
+    <a href="#prvi-tjedan">Prvi tjedan</a>
+    <a href="#raspored">Raspored</a>
+    <a href="#paketi">Paketi</a>
+    <a href="#pitanja">Pitanja</a>
+  </nav>
+  <a class="btn btn-sm btn-acc mag" href="#prijava"><span>Prvi trening 0 €</span></a>
+  <button class="burger" id="burger" aria-label="Otvori izbornik" aria-expanded="false"><span></span><span></span></button>
+</header>
+
+<div class="mnav" id="mnav" aria-hidden="true">
+  <a href="#programi">Programi</a>
+  <a href="#prvi-tjedan">Prvi tjedan</a>
+  <a href="#raspored">Raspored</a>
+  <a href="#paketi">Paketi</a>
+  <a href="#pitanja">Pitanja</a>
+  <a class="btn btn-acc" href="#prijava"><span>Rezerviraj besplatni trening</span></a>
+  <p class="mono">+385 1 555 0199 · Trešnjevački trg 4</p>
+</div>
+
+<main>
+
+<!-- ═════════════ HERO ═════════════ -->
+<section class="hero" id="top">
+  <svg class="bp hero-bp" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs>
+      <pattern id="knurl" width="6" height="6" patternUnits="userSpaceOnUse"><path class="pat" d="M0 0L6 6M6 0L0 6"/></pattern>
+      <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="pat" x1="0" y1="0" x2="0" y2="8"/></pattern>
+      <marker id="ar" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="mk" d="M1 2L11 6L1 10"/></marker>
+      <path id="ring" d="M1200 250A100 100 0 1 1 1400 250A100 100 0 1 1 1200 250"/>
+    </defs>
+
+    <!-- pogled A: ploča sprijeda -->
+    <g class="plate-front">
+      <path class="c" d="M1120 250H1480M1300 70V430"/>
+      <circle class="o a fbg" cx="1300" cy="250" r="150"/>
+      <circle class="th" cx="1300" cy="250" r="138"/>
+      <circle class="m" cx="1300" cy="250" r="62"/>
+      <circle class="th" cx="1300" cy="250" r="48"/>
+      <circle class="o" cx="1300" cy="250" r="16"/>
+      <circle class="th" cx="1355" cy="250" r="4"/><circle class="th" cx="1327.5" cy="297.6" r="4"/><circle class="th" cx="1272.5" cy="297.6" r="4"/>
+      <circle class="th" cx="1245" cy="250" r="4"/><circle class="th" cx="1272.5" cy="202.4" r="4"/><circle class="th" cx="1327.5" cy="202.4" r="4"/>
+      <text class="tring"><textPath href="#ring" textLength="622" lengthAdjust="spacing">IRONGATE · 25 KG · BUMPER · IRONGATE · 25 KG · BUMPER · </textPath></text>
+    </g>
+    <g class="dim">
+      <path d="M1406 144L1440 106H1540"/><circle class="dotf" cx="1406" cy="144" r="3"/>
+      <text x="1446" y="98">Ø450 / Ø50,4</text>
+      <text x="1120" y="92" class="tb">POGLED A</text>
+      <text x="1120" y="110" class="ts">M 1:15</text>
+    </g>
+
+    <!-- nacrt: olimpijska šipka -->
+    <g class="bar-grp">
+      <path class="c" d="M80 640H1520"/>
+      <rect class="o" x="140" y="625" width="249" height="30"/>
+      <rect class="o" x="1211" y="625" width="249" height="30"/>
+      <rect class="o fbg" x="389" y="619" width="18" height="42"/>
+      <rect class="o fbg" x="1193" y="619" width="18" height="42"/>
+      <rect class="o" x="407" y="631.5" width="786" height="17"/>
+      <rect class="kn" x="470" y="632" width="240" height="16" fill="url(#knurl)"/>
+      <rect class="kn" x="890" y="632" width="240" height="16" fill="url(#knurl)"/>
+      <rect class="kn" x="770" y="632" width="60" height="16" fill="url(#knurl)"/>
+    </g>
+    <g class="plates-l">
+      <rect class="o a fbg" x="362" y="505" width="24" height="270" rx="4"/>
+      <rect class="o a fbg" x="336" y="505" width="24" height="270" rx="4"/>
+      <rect class="o fbg" x="314" y="505" width="20" height="270" rx="4"/>
+      <rect class="o fbg" x="300" y="571" width="12" height="138" rx="3"/>
+      <rect class="o fbg" x="280" y="615" width="18" height="50" rx="3"/>
+      <path class="th" d="M362 612H386M362 668H386M336 612H360M336 668H360M314 612H334M314 668H334"/>
+      <path class="m" d="M289 615V588"/><circle class="m" cx="289" cy="582" r="6"/>
+    </g>
+    <g class="plates-r">
+      <rect class="o a fbg" x="1214" y="505" width="24" height="270" rx="4"/>
+      <rect class="o a fbg" x="1240" y="505" width="24" height="270" rx="4"/>
+      <rect class="o fbg" x="1266" y="505" width="20" height="270" rx="4"/>
+      <rect class="o fbg" x="1288" y="571" width="12" height="138" rx="3"/>
+      <rect class="o fbg" x="1302" y="615" width="18" height="50" rx="3"/>
+      <path class="th" d="M1214 612H1238M1214 668H1238M1240 612H1264M1240 668H1264M1266 612H1286M1266 668H1286"/>
+      <path class="m" d="M1311 615V588"/><circle class="m" cx="1311" cy="582" r="6"/>
+    </g>
+    <g class="dim">
+      <path d="M140 662V852M1460 662V852"/>
+      <path d="M140 840H1460" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text x="800" y="830" text-anchor="middle">2200</text>
+      <path d="M407 664V732M1193 664V732"/>
+      <path d="M407 720H1193" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text x="800" y="712" text-anchor="middle">1310 · ZONA HVATA</text>
+      <path d="M1324 505H1534M1324 775H1534"/>
+      <path d="M1515 505V775" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text transform="translate(1503 640) rotate(-90)" text-anchor="middle">Ø450</text>
+      <path d="M600 631L640 560H820"/><circle class="dotf" cx="600" cy="631" r="3"/>
+      <text x="646" y="552">Ø28 · NAREZ 1,2 mm</text>
+      <path d="M348 505L380 455H560"/><circle class="dotf" cx="348" cy="505" r="3"/>
+      <text x="386" y="447" class="ta">BUMPER 25 KG × 2</text>
+    </g>
+  </svg>
+
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="cross" aria-hidden="true"><span class="cx"></span><span class="cy"></span><span class="cread mono">X 0000 · Y 0000</span></div>
+
+  <div class="wrap hero-inner">
+    <p class="eyebrow mono"><span class="led"></span>Grupni treninzi · Trešnjevka, Zagreb</p>
+    <h1 class="hero-title" aria-label="Snaga se kuje u ekipi.">
+      <span class="ln"><span>Snaga se kuje</span></span>
+      <span class="ln"><span>u <span class="acc-out">ekipi.</span></span></span>
+    </h1>
+    <div class="hero-row">
+      <div class="hero-copy">
+        <p class="lead">Treninzi u grupama do 12 ljudi, s trenerom koji zna tvoje ime i tvoj maksimum. Prvi trening je besplatan, a ostaješ zbog ekipe.</p>
+        <div class="ctas">
+          <a class="btn btn-acc btn-lg mag" href="#prijava"><span>Rezerviraj besplatni trening</span><i aria-hidden="true">→</i></a>
+          <a class="btn btn-ghost btn-lg" href="#raspored"><span>Pogledaj raspored</span></a>
+        </div>
+        <div class="proof">
+          <div class="faces" aria-hidden="true"><span>PK</span><span>MR</span><span>IŠ</span><span>+</span></div>
+          <p><b>4,9 ★</b> na Googleu (212 recenzija)<br><span class="mono">340+ članova trenira u grupama</span></p>
+        </div>
+      </div>
+
+      <aside class="next" id="nextClass" aria-live="polite">
+        <div class="next-head mono"><span class="led"></span>Sljedeći termin</div>
+        <div class="next-name" id="ncName">HIIT 45</div>
+        <div class="next-meta mono" id="ncMeta">danas · 18:00 · Sara M.</div>
+        <div class="gauge"><div class="gauge-bar" id="ncBar"></div><div class="gauge-ticks"></div></div>
+        <div class="next-foot mono"><span id="ncSpots">3 / 12 mjesta slobodno</span><a href="#prijava" id="ncBook">Zauzmi →</a></div>
+      </aside>
     </div>
   </div>
-  <div class="hero-stats">
-    <div class="stat-item">
-      <div class="stat-num">1200<span style="font-size:28px">m²</span></div>
-      <div class="stat-label">Površina teretane</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">18</div>
-      <div class="stat-label">Osobnih trenera</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">340+</div>
-      <div class="stat-label">Aktivnih članova</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">24/7</div>
-      <div class="stat-label">Radno vrijeme</div>
-    </div>
+
+  <div class="titleblock mono" aria-hidden="true">
+    <div><span>PROJEKT</span>IRONGATE · GRUPE</div>
+    <div><span>LIST</span>01 / 08</div>
+    <div><span>PREDMET</span>OLIMPIJSKA ŠIPKA 20 KG</div>
+    <div><span>M</span>1:10</div>
   </div>
+  <a class="scroll-cue mono" href="#zasto" aria-label="Skrolaj dalje"><span></span>Skrolaj</a>
 </section>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <div class="ticker-item">POWERLIFTING</div>
-    <div class="ticker-item">HIIT KLASE</div>
-    <div class="ticker-item">OSOBNI TRENING</div>
-    <div class="ticker-item">CROSSFIT</div>
-    <div class="ticker-item">YOGA & MOBILITY</div>
-    <div class="ticker-item">BOXING</div>
-    <div class="ticker-item">NUTRITION COACHING</div>
-    <div class="ticker-item">POWERLIFTING</div>
-    <div class="ticker-item">HIIT KLASE</div>
-    <div class="ticker-item">OSOBNI TRENING</div>
-    <div class="ticker-item">CROSSFIT</div>
-    <div class="ticker-item">YOGA & MOBILITY</div>
-    <div class="ticker-item">BOXING</div>
-    <div class="ticker-item">NUTRITION COACHING</div>
+<!-- traka -->
+<div class="tape" aria-hidden="true">
+  <div class="tape-row" id="tape">
+    <span>HIIT 45</span><b>◆</b><span>Barbell Club</span><b>◆</b><span>Box Fit</span><b>◆</b><span>Functional WOD</span><b>◆</b><span>Mobility &amp; Core</span><b>◆</b><span>Start 30</span><b>◆</b>
+    <span>HIIT 45</span><b>◆</b><span>Barbell Club</span><b>◆</b><span>Box Fit</span><b>◆</b><span>Functional WOD</span><b>◆</b><span>Mobility &amp; Core</span><b>◆</b><span>Start 30</span><b>◆</b>
   </div>
 </div>
 
-<!-- PROGRAMI -->
-<section class="program" id="program">
-  <div class="program-header">
-    <div>
-      <div class="section-label">Naši programi</div>
-      <h2 class="section-title">TRENING<br><span class="red">BEZ KOMPROMISA</span></h2>
+<!-- ═════════════ ZAŠTO GRUPA ═════════════ -->
+<section class="sec why" id="zasto">
+  <div class="wrap">
+    <div class="sec-head mono"><span>§ 02 — Zašto grupa</span><span>LIST 02 / 08</span></div>
+    <div class="why-grid">
+      <h2 class="title split">Sam odustaneš u veljači. <em>S ekipom ne.</em></h2>
+      <p class="why-lead reveal">Teretana je puna ljudi koji su se upisali u siječnju i nestali do ožujka. Nije problem u volji, nego u sustavu. U grupi imaš termin u kalendaru, trenera koji primijeti da te nema i deset ljudi koji te pitaju gdje si bio.</p>
     </div>
-    <p class="section-desc">Svaki program je dizajniran od strane certificiranih trenera s ciljem maksimalnih rezultata — bez obzira jesi li početnik ili napredni sportaš.</p>
-  </div>
-  <div class="program-grid">
-    <div class="program-card fade-up">
-      <span class="program-icon">🏋️</span>
-      <div class="program-name">Powerlifting & Snaga</div>
-      <p class="program-desc">Strukturirani program periodizacije za maksimalni razvoj snage. Uključuje deadlift, čučanj i bench press uz video analizu tehnike.</p>
-      <div class="program-meta">
-        <div class="program-tag">3–5×/tjedno</div>
-        <div class="program-tag">Sve razine</div>
-        <div class="program-tag">Oprema uključena</div>
-      </div>
-    </div>
-    <div class="program-card fade-up" style="transition-delay:.1s">
-      <span class="program-icon">⚡</span>
-      <div class="program-name">HIIT & Kondicioniranje</div>
-      <p class="program-desc">Intenzivni intervalni treninzi u skupinama do 12 osoba. Sagorijevaj mast, gradi kondiciju, pomiči granice.</p>
-      <div class="program-meta">
-        <div class="program-tag">45 min</div>
-        <div class="program-tag">Grupi trening</div>
-        <div class="program-tag">Svaki dan</div>
-      </div>
-    </div>
-    <div class="program-card fade-up" style="transition-delay:.2s">
-      <span class="program-icon">🥊</span>
-      <div class="program-name">Boxing & Kickboxing</div>
-      <p class="program-desc">Tehnički i kondicionalni boks. Od osnovnih kretnji do sparinga. Odličan stres-relief i full-body workout.</p>
-      <div class="program-meta">
-        <div class="program-tag">Početnički</div>
-        <div class="program-tag">Napredni</div>
-        <div class="program-tag">Vreće uključene</div>
-      </div>
-    </div>
-    <div class="program-card fade-up" style="transition-delay:.3s">
-      <span class="program-icon">🧘</span>
-      <div class="program-name">Yoga & Mobility</div>
-      <p class="program-desc">Restaurativni programi za fleksibilnost, ravnotežu i oporavak. Idealno kao dopuna jakim treninzima.</p>
-      <div class="program-meta">
-        <div class="program-tag">Jutarnji</div>
-        <div class="program-tag">Večernji</div>
-        <div class="program-tag">Prostirke osigurane</div>
-      </div>
+
+    <div class="specs">
+      <article class="spec reveal">
+        <div class="spec-no mono">A-01</div>
+        <h3>Trener na svakom ponavljanju</h3>
+        <p>Najviše 12 ljudi po treningu, 8 na treningu snage. Trener ispravlja tehniku dok radiš, a ne nakon što se ozlijediš.</p>
+        <div class="spec-val"><b data-count="12">0</b><span class="mono">ljudi max. po grupi</span></div>
+      </article>
+      <article class="spec reveal">
+        <div class="spec-no mono">A-02</div>
+        <h3>Plan koji se slaže sam</h3>
+        <p>Programi idu u ciklusima od 6 tjedana. Ne moraš znati što radiš danas: dođeš, a trening je već isplaniran i skaliran za tvoju razinu.</p>
+        <div class="spec-val"><b data-count="46">0</b><span class="mono">termina tjedno</span></div>
+      </article>
+      <article class="spec reveal">
+        <div class="spec-no mono">A-03</div>
+        <h3>Ekipa koja te čeka</h3>
+        <p>Isti ljudi, isti termini, isti trener. Nakon tri tjedna više ne dolaziš zbog sebe, nego zato što te ekipa čeka u 18:00.</p>
+        <div class="spec-val"><b data-count="87" data-suffix="%">0</b><span class="mono">ostaje nakon 1. mjeseca</span></div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- RASPORED -->
-<section class="raspored" id="raspored" style="padding:0 56px 120px; background:var(--off-black)">
-  <div class="section-label">Tjedni plan</div>
-  <h2 class="section-title">RASPORED <span class="red">KLASA</span></h2>
-  <div class="schedule-grid">
-    <div class="schedule-day">
-      <div class="day-header">PON</div>
-      <div class="day-classes">
-        <div class="class-item"><div class="class-time">07:00</div><div class="class-name">HIIT Morning</div><div class="class-trainer">Marko T.</div></div>
-        <div class="class-item"><div class="class-time">12:00</div><div class="class-name">Yoga Restore</div><div class="class-trainer">Ana B.</div></div>
-        <div class="class-item"><div class="class-time">18:00</div><div class="class-name">Boxing Basics</div><div class="class-trainer">Ivan K.</div></div>
-        <div class="class-item"><div class="class-time">19:30</div><div class="class-name">Powerlifting</div><div class="class-trainer">Luka D.</div><div class="class-full">POPUNJENO</div></div>
-      </div>
-    </div>
-    <div class="schedule-day">
-      <div class="day-header">UTO</div>
-      <div class="day-classes">
-        <div class="class-item"><div class="class-time">06:30</div><div class="class-name">HIIT Cardio</div><div class="class-trainer">Sara M.</div></div>
-        <div class="class-item"><div class="class-time">10:00</div><div class="class-name">Mobility Flow</div><div class="class-trainer">Ana B.</div></div>
-        <div class="class-item"><div class="class-time">17:30</div><div class="class-name">CrossFit WOD</div><div class="class-trainer">Marko T.</div></div>
-        <div class="class-item"><div class="class-time">20:00</div><div class="class-name">Boxing Adv.</div><div class="class-trainer">Ivan K.</div></div>
-      </div>
-    </div>
-    <div class="schedule-day">
-      <div class="day-header">SRI</div>
-      <div class="day-classes">
-        <div class="class-item"><div class="class-time">07:00</div><div class="class-name">HIIT Morning</div><div class="class-trainer">Luka D.</div></div>
-        <div class="class-item"><div class="class-time">13:00</div><div class="class-name">Yoga & Stretch</div><div class="class-trainer">Ana B.</div></div>
-        <div class="class-item"><div class="class-time">18:00</div><div class="class-name">Powerlifting</div><div class="class-trainer">Marko T.</div><div class="class-full">POPUNJENO</div></div>
-        <div class="class-item"><div class="class-time">19:30</div><div class="class-name">HIIT Advanced</div><div class="class-trainer">Sara M.</div></div>
-      </div>
-    </div>
-    <div class="schedule-day">
-      <div class="day-header">ČET</div>
-      <div class="day-classes">
-        <div class="class-item"><div class="class-time">06:30</div><div class="class-time">06:30</div><div class="class-name">HIIT Burn</div><div class="class-trainer">Ivan K.</div></div>
-        <div class="class-item"><div class="class-time">11:00</div><div class="class-name">Mobility Flow</div><div class="class-trainer">Ana B.</div></div>
-        <div class="class-item"><div class="class-time">17:00</div><div class="class-name">Boxing All Lvl</div><div class="class-trainer">Ivan K.</div></div>
-        <div class="class-item"><div class="class-time">19:00</div><div class="class-name">Squat Clinic</div><div class="class-trainer">Luka D.</div></div>
-      </div>
-    </div>
-    <div class="schedule-day">
-      <div class="day-header">PET</div>
-      <div class="day-classes">
-        <div class="class-item"><div class="class-time">07:00</div><div class="class-name">HIIT Morning</div><div class="class-trainer">Marko T.</div></div>
-        <div class="class-item"><div class="class-time">12:00</div><div class="class-name">Yoga Friday</div><div class="class-trainer">Ana B.</div></div>
-        <div class="class-item"><div class="class-time">18:30</div><div class="class-name">CrossFit WOD</div><div class="class-trainer">Sara M.</div></div>
-        <div class="class-item"><div class="class-time">20:00</div><div class="class-name">Powerlifting</div><div class="class-trainer">Luka D.</div></div>
-      </div>
-    </div>
-    <div class="schedule-day">
-      <div class="day-header">SUB</div>
-      <div class="day-classes">
-        <div class="class-item"><div class="class-time">09:00</div><div class="class-name">Weekend HIIT</div><div class="class-trainer">Marko T.</div><div class="class-full">POPUNJENO</div></div>
-        <div class="class-item"><div class="class-time">10:30</div><div class="class-name">Boxing Open</div><div class="class-trainer">Ivan K.</div></div>
-        <div class="class-item"><div class="class-time">12:00</div><div class="class-name">Yoga Relax</div><div class="class-trainer">Ana B.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ═════════════ PROGRAMI ═════════════ -->
+<section class="sec programs" id="programi">
+  <svg class="bp bg-draw kb-draw" viewBox="0 0 600 720" aria-hidden="true">
+    <path class="c" d="M300 80V660M120 440H480"/>
+    <path class="o" d="M200 330C170 230 180 130 250 120H350C420 130 430 230 400 330"/>
+    <path class="m" d="M240 300C222 230 228 170 262 162H338C372 170 378 230 360 300"/>
+    <path class="o a fbg" d="M220 590A170 170 0 1 1 380 590Z"/>
+    <path class="th" d="M150 470A150 150 0 0 0 200 560"/>
+    <g class="dim">
+      <path d="M400 120H540M380 600H540"/>
+      <path d="M525 120V600" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text transform="translate(513 360) rotate(-90)" text-anchor="middle">H 285</text>
+      <path d="M130 600V680M470 440V680"/>
+      <path d="M130 668H470" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text x="300" y="660" text-anchor="middle">Ø 210</text>
+      <text x="40" y="60" class="tb">KB-24 · 24 KG</text>
+      <text x="40" y="78" class="ts">LIJEVANO ŽELJEZO · LIST 03</text>
+    </g>
+  </svg>
 
-<!-- MEMBERSHIP -->
-<section class="membership" id="membership">
-  <div class="section-label">Cijene i planovi</div>
-  <h2 class="section-title">ODABERI <span class="red">PLAN</span></h2>
-  <div class="membership-grid">
-    <div class="membership-card fade-up">
-      <div class="membership-badge">_</div>
-      <div class="membership-body">
-        <div class="membership-name">STARTER</div>
-        <div class="membership-tagline">Za početnike i povremene posjetitelje</div>
-        <div class="membership-price">
-          <div class="price-amount">29€</div>
-          <div class="price-unit">/mjesečno · bez ugovora</div>
+  <div class="wrap">
+    <div class="sec-head mono"><span>§ 03 — Programi</span><span>LIST 03 / 08</span></div>
+    <div class="prog-top">
+      <h2 class="title split">Šest programa. <em>Jedna ekipa.</em></h2>
+      <p class="reveal">Svaki program ima svoju specifikaciju: trajanje, intenzitet, veličinu grupe. Odaberi prema cilju ili kombiniraj, jer s paketom Grupe ∞ dolaziš na sve.</p>
+    </div>
+
+    <div class="cards" id="cards">
+      <article class="card" data-prog="start">
+        <div class="card-flag mono">Najbolji prvi korak</div>
+        <div class="card-top">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M6 56H18V44H30V32H42V20H58"/><path d="M50 12L58 20L50 28"/><path d="M6 60H58" class="t"/></svg>
+          <span class="mono card-id">P-06</span>
         </div>
-        <ul class="membership-features">
-          <li>Pristup teretani (6–22h)</li>
-          <li>Besplatni parking</li>
-          <li>Svlačionice & tuševi</li>
-          <li>1× grupna klasa/tjedan</li>
-          <li class="off">Personalizirani plan treninga</li>
-          <li class="off">Nutrition coaching</li>
-          <li class="off">Pristup 24/7</li>
-        </ul>
-        <a href="#booking" class="btn-member btn-member-outline">Počni odmah</a>
-      </div>
-    </div>
-    <div class="membership-card featured fade-up" style="transition-delay:.15s">
-      <div class="membership-badge">NAJPOPULARNIJE</div>
-      <div class="membership-body">
-        <div class="membership-name">PRO</div>
-        <div class="membership-tagline">Za ozbiljne sportaše i redovne posjete</div>
-        <div class="membership-price">
-          <div class="price-amount">59€</div>
-          <div class="price-unit">/mjesečno · bez ugovora</div>
+        <h3>Start 30</h3>
+        <p>Za potpune početnike. Četiri tjedna, osam treninga, grupa od šest ljudi. Učiš čučanj, potisak, mrtvo dizanje i disanje, bez žurbe i bez treme.</p>
+        <dl class="sheet mono">
+          <div><dt>Trajanje</dt><dd>4 tj. · 2× 50 min</dd></div>
+          <div><dt>Grupa</dt><dd>max. 6</dd></div>
+          <div><dt>Razina</dt><dd>0 iskustva</dd></div>
+          <div><dt>Intenzitet</dt><dd><span class="int" data-v="2"></span></dd></div>
+        </dl>
+        <a class="card-cta" href="#prijava" data-pick="start">Upiši me u Start 30 <i>→</i></a>
+      </article>
+
+      <article class="card" data-prog="hiit">
+        <div class="card-top">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="36" r="20"/><path d="M28 8H36M32 8V16M32 36L42 27M47 18L50 15"/><path class="t" d="M32 20V23M48 36H45M32 52V49M16 36H19"/></svg>
+          <span class="mono card-id">P-01</span>
         </div>
-        <ul class="membership-features">
-          <li>Pristup teretani 24/7</li>
-          <li>Besplatni parking</li>
-          <li>Svlačionice & tuševi</li>
-          <li>Neograničene grupne klase</li>
-          <li>Personalizirani plan treninga</li>
-          <li>Månačna konzultacija s trenerom</li>
-          <li class="off">Nutrition coaching</li>
-        </ul>
-        <a href="#booking" class="btn-member btn-member-solid">Počni odmah</a>
-      </div>
-    </div>
-    <div class="membership-card fade-up" style="transition-delay:.3s">
-      <div class="membership-badge">_</div>
-      <div class="membership-body">
-        <div class="membership-name">ELITE</div>
-        <div class="membership-tagline">Sve uključeno — bez kompromisa</div>
-        <div class="membership-price">
-          <div class="price-amount">99€</div>
-          <div class="price-unit">/mjesečno · bez ugovora</div>
+        <h3>HIIT 45</h3>
+        <p>Intervali koji te isprazne za 45 minuta. Kondicija, sagorijevanje i glazba glasnija nego što bi htio. Svaka vježba ima lakšu i težu verziju.</p>
+        <dl class="sheet mono">
+          <div><dt>Trajanje</dt><dd>45 min</dd></div>
+          <div><dt>Grupa</dt><dd>max. 12</dd></div>
+          <div><dt>Potrošnja</dt><dd>~550 kcal</dd></div>
+          <div><dt>Intenzitet</dt><dd><span class="int" data-v="5"></span></dd></div>
+        </dl>
+        <a class="card-cta" href="#prijava" data-pick="hiit">Probaj HIIT besplatno <i>→</i></a>
+      </article>
+
+      <article class="card" data-prog="snaga">
+        <div class="card-top">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M4 32H60"/><rect x="12" y="14" width="6" height="36" rx="1"/><rect x="46" y="14" width="6" height="36" rx="1"/><rect x="19" y="22" width="4" height="20" rx="1"/><rect x="41" y="22" width="4" height="20" rx="1"/></svg>
+          <span class="mono card-id">P-02</span>
         </div>
-        <ul class="membership-features">
-          <li>Pristup teretani 24/7</li>
-          <li>Besplatni parking</li>
-          <li>Svlačionice & tuševi</li>
-          <li>Neograničene grupne klase</li>
-          <li>Tjedni 1-na-1 trening</li>
-          <li>Nutrition & recovery coaching</li>
-          <li>Prioritetna rezervacija klasa</li>
-        </ul>
-        <a href="#booking" class="btn-member btn-member-outline">Počni odmah</a>
+        <h3>Barbell Club</h3>
+        <p>Snaga u maloj grupi. Čučanj, mrtvo dizanje i bench po planu periodizacije, s video analizom tehnike i dnevnikom rekorda.</p>
+        <dl class="sheet mono">
+          <div><dt>Trajanje</dt><dd>60 min</dd></div>
+          <div><dt>Grupa</dt><dd>max. 8</dd></div>
+          <div><dt>Ciklus</dt><dd>6 tjedana</dd></div>
+          <div><dt>Intenzitet</dt><dd><span class="int" data-v="4"></span></dd></div>
+        </dl>
+        <a class="card-cta" href="#prijava" data-pick="snaga">Dođi na prvi trening snage <i>→</i></a>
+      </article>
+
+      <article class="card" data-prog="box">
+        <div class="card-top">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4V12M32 12L22 18M32 12L42 18"/><rect x="20" y="18" width="24" height="40" rx="7"/><path class="t" d="M20 26H44M20 50H44"/></svg>
+          <span class="mono card-id">P-03</span>
+        </div>
+        <h3>Box Fit</h3>
+        <p>Tehnika boksa, rad na vreći i u paru, kondicija za cijelo tijelo. Bez sparinga ako ga ne želiš. Rukavice i bandaže posuđujemo.</p>
+        <dl class="sheet mono">
+          <div><dt>Trajanje</dt><dd>50 min</dd></div>
+          <div><dt>Grupa</dt><dd>max. 12</dd></div>
+          <div><dt>Oprema</dt><dd>uključena</dd></div>
+          <div><dt>Intenzitet</dt><dd><span class="int" data-v="4"></span></dd></div>
+        </dl>
+        <a class="card-cta" href="#prijava" data-pick="box">Udari prvu rundu <i>→</i></a>
+      </article>
+
+      <article class="card" data-prog="wod">
+        <div class="card-top">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="M22 28C18 18 21 9 28 8H36C43 9 46 18 42 28"/><path d="M23 58A17 17 0 1 1 41 58Z"/><path class="t" d="M27 26C26 20 28 15 30 14H34C36 15 38 20 37 26"/></svg>
+          <span class="mono card-id">P-04</span>
+        </div>
+        <h3>Functional WOD</h3>
+        <p>Trening dana: girje, veslač, sanjke, gimnastika i olimpijska dizanja u kombinacijama koje se ne ponavljaju. Svaki put drugačije, uvijek mjerljivo.</p>
+        <dl class="sheet mono">
+          <div><dt>Trajanje</dt><dd>50 min</dd></div>
+          <div><dt>Grupa</dt><dd>max. 12</dd></div>
+          <div><dt>Razina</dt><dd>skalirano</dd></div>
+          <div><dt>Intenzitet</dt><dd><span class="int" data-v="4"></span></dd></div>
+        </dl>
+        <a class="card-cta" href="#prijava" data-pick="wod">Odradi svoj prvi WOD <i>→</i></a>
+      </article>
+
+      <article class="card" data-prog="mob">
+        <div class="card-top">
+          <svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><ellipse cx="14" cy="34" rx="6" ry="12"/><ellipse cx="50" cy="34" rx="6" ry="12"/><path d="M14 22H50M14 46H50"/><path class="t" d="M26 22V46M38 22V46"/></svg>
+          <span class="mono card-id">P-05</span>
+        </div>
+        <h3>Mobility &amp; Core</h3>
+        <p>Pokretljivost kukova i ramena, stabilnost trupa i disanje. Idealna dopuna teškim treninzima i spas za leđa nakon osam sati za stolom.</p>
+        <dl class="sheet mono">
+          <div><dt>Trajanje</dt><dd>45 min</dd></div>
+          <div><dt>Grupa</dt><dd>max. 14</dd></div>
+          <div><dt>Razina</dt><dd>sve razine</dd></div>
+          <div><dt>Intenzitet</dt><dd><span class="int" data-v="2"></span></dd></div>
+        </dl>
+        <a class="card-cta" href="#prijava" data-pick="mob">Rezerviraj mobilnost <i>→</i></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ PRVI TJEDAN (pinned) ═════════════ -->
+<section class="sec steps" id="prvi-tjedan">
+  <div class="steps-pin">
+    <div class="wrap steps-grid">
+      <div class="steps-left">
+        <div class="sec-head mono"><span>§ 04 — Prvi tjedan</span><span>LIST 04 / 08</span></div>
+        <h2 class="title title-s split">Od prvog klika do <em>tvoje ekipe.</em></h2>
+        <ol class="step-list" id="stepList">
+          <li class="step is-on">
+            <span class="step-no mono">01</span>
+            <div><h3>Rezerviraj termin</h3><p>Odabereš program i termin online, za 60 sekundi. Bez kartice, bez ugovora, bez upisnine.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-no mono">02</span>
+            <div><h3>Upoznaj trenera</h3><p>Dođeš 15 minuta ranije. Kratak razgovor o cilju i ozljedama, plus besplatno mjerenje sastava tijela.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-no mono">03</span>
+            <div><h3>Odradi prvi trening</h3><p>Trener ti prilagodi svaku vježbu. Nitko ne gleda tebe, svi rade svoje. Nakon 45 minuta znaš je li to za tebe.</p></div>
+          </li>
+          <li class="step">
+            <span class="step-no mono">04</span>
+            <div><h3>Uđi u ekipu</h3><p>Dobiješ svoje fiksne termine, mjesto u grupi na Viberu i mjerenje napretka svaka četiri tjedna.</p></div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="steps-right">
+        <svg class="bp rack" viewBox="0 0 800 820" aria-hidden="true">
+          <defs><pattern id="hatch2" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="pat" x1="0" y1="0" x2="0" y2="8"/></pattern></defs>
+          <path class="c" d="M400 30V800"/>
+          <g class="st st1">
+            <rect x="40" y="774" width="720" height="14" fill="url(#hatch2)" class="kn"/>
+            <path class="th" d="M40 774H760"/>
+            <rect class="o" x="90" y="740" width="620" height="24"/>
+            <rect class="m" x="120" y="764" width="100" height="10"/>
+            <rect class="m" x="580" y="764" width="100" height="10"/>
+            <path class="th" d="M400 752L440 702H520"/>
+            <circle class="bub" cx="536" cy="702" r="15"/><text x="536" y="707" text-anchor="middle">01</text>
+          </g>
+          <g class="st st2">
+            <rect class="o fbg" x="160" y="110" width="34" height="630"/>
+            <rect class="o fbg" x="606" y="110" width="34" height="630"/>
+            <g class="holes" id="rackHoles"></g>
+            <path class="m" d="M194 690L254 740M606 690L546 740"/>
+            <path class="th" d="M194 420L262 396H300"/>
+            <circle class="bub" cx="316" cy="396" r="15"/><text x="316" y="401" text-anchor="middle">02</text>
+          </g>
+          <g class="st st3">
+            <rect class="o fbg" x="160" y="80" width="480" height="30"/>
+            <path class="o" d="M120 56H680M200 80V56M600 80V56"/>
+            <circle class="m" cx="120" cy="56" r="5"/><circle class="m" cx="680" cy="56" r="5"/>
+            <path class="o" d="M194 336H218V306H226V344H194Z"/>
+            <path class="o" d="M606 336H582V306H574V344H606Z"/>
+            <rect class="m fbg" x="194" y="560" width="412" height="12"/>
+            <circle class="m" cx="177" cy="566" r="8"/><circle class="m" cx="623" cy="566" r="8"/>
+            <path class="th" d="M300 110L322 162H362"/>
+            <circle class="bub" cx="378" cy="162" r="15"/><text x="378" y="167" text-anchor="middle">03</text>
+          </g>
+          <g class="st st4">
+            <rect class="o fbg a" x="40" y="320" width="720" height="12"/>
+            <rect class="o fbg a" x="70" y="210" width="22" height="234" rx="3"/>
+            <rect class="o fbg a" x="94" y="210" width="22" height="234" rx="3"/>
+            <rect class="o fbg a" x="684" y="210" width="22" height="234" rx="3"/>
+            <rect class="o fbg a" x="708" y="210" width="22" height="234" rx="3"/>
+            <path class="th" d="M708 210L684 172H604"/>
+            <circle class="bub" cx="588" cy="172" r="15"/><text x="588" y="177" text-anchor="middle">04</text>
+            <g class="dim">
+              <path d="M690 56H790M712 774H790"/>
+              <path d="M775 56V774" marker-start="url(#ar)" marker-end="url(#ar)"/>
+              <text transform="translate(763 415) rotate(-90)" text-anchor="middle">2290</text>
+              <path d="M160 790V812M640 790V812"/>
+              <path d="M160 804H640" marker-start="url(#ar)" marker-end="url(#ar)"/>
+              <text x="400" y="798" text-anchor="middle">1220</text>
+            </g>
+          </g>
+          <text x="40" y="26" class="tb">SKLOP: POWER RACK · 4 POZICIJE</text>
+        </svg>
+        <div class="rack-label mono" id="rackLabel">POZ. 01 / 04 — POSTOLJE</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TRAINERS -->
-<section class="trainers" id="treneri">
-  <div class="section-label">Naš tim</div>
-  <h2 class="section-title">NAŠI <span class="red">TRENERI</span></h2>
-  <div class="trainers-grid">
-    <div class="trainer-card">
-      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80" alt="Marko"></div>
-      <div class="trainer-overlay">
-        <div class="trainer-name">Marko Tomić</div>
-        <div class="trainer-spec">Powerlifting · HIIT</div>
-        <div class="trainer-exp">8 godina iskustva</div>
-      </div>
-      <div class="trainer-hover">
-        <div class="trainer-hover-text">REZERVIRAJ TRENING</div>
-      </div>
+<!-- ═════════════ RASPORED ═════════════ -->
+<section class="sec sched" id="raspored">
+  <svg class="bp bg-draw bag-draw" viewBox="0 0 400 900" aria-hidden="true">
+    <rect x="110" y="4" width="180" height="16" fill="url(#hatch)" class="kn"/>
+    <path class="th" d="M110 20H290"/>
+    <g class="bag-swing">
+      <rect class="m" x="185" y="20" width="30" height="14"/>
+      <ellipse class="m" cx="200" cy="50" rx="8" ry="13"/><rect class="m" x="198.5" y="62" width="3" height="22"/>
+      <ellipse class="m" cx="200" cy="96" rx="8" ry="13"/><rect class="m" x="198.5" y="108" width="3" height="22"/>
+      <circle class="m" cx="200" cy="140" r="9"/>
+      <path class="th" d="M200 149L120 252M200 149L170 252M200 149L230 252M200 149L280 252"/>
+      <rect class="o a fbg" x="110" y="252" width="180" height="560" rx="30"/>
+      <path class="th" d="M110 304H290M110 760H290"/>
+      <path class="hid" d="M200 304V760"/>
+      <g class="dim">
+        <path d="M300 252H360M300 812H360"/>
+        <path d="M345 252V812" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <text transform="translate(333 532) rotate(-90)" text-anchor="middle">1200</text>
+        <path d="M110 822V870M290 822V870"/>
+        <path d="M110 858H290" marker-start="url(#ar)" marker-end="url(#ar)"/>
+        <text x="200" y="850" text-anchor="middle">Ø350</text>
+      </g>
+    </g>
+  </svg>
+
+  <div class="wrap">
+    <div class="sec-head mono"><span>§ 05 — Raspored</span><span>LIST 05 / 08</span></div>
+    <div class="sched-top">
+      <h2 class="title split">46 termina tjedno. <em>Jedan je tvoj.</em></h2>
+      <p class="reveal">Odaberi dan i program. Termin s narančastim brojačem se puni, a kad piše <b>popunjeno</b>, otvaramo listu čekanja.</p>
     </div>
-    <div class="trainer-card">
-      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=500&q=80" alt="Luka"></div>
-      <div class="trainer-overlay">
-        <div class="trainer-name">Luka Đorđić</div>
-        <div class="trainer-spec">Snaga · CrossFit</div>
-        <div class="trainer-exp">6 godina iskustva</div>
+
+    <div class="sched-ui reveal">
+      <div class="days" role="tablist" aria-label="Dan u tjednu" id="days"></div>
+      <div class="filters" id="filters" aria-label="Filtar programa">
+        <button class="chip is-on" data-f="all">Svi</button>
+        <button class="chip" data-f="start">Start 30</button>
+        <button class="chip" data-f="hiit">HIIT 45</button>
+        <button class="chip" data-f="snaga">Barbell Club</button>
+        <button class="chip" data-f="box">Box Fit</button>
+        <button class="chip" data-f="wod">Functional WOD</button>
+        <button class="chip" data-f="mob">Mobility</button>
       </div>
-      <div class="trainer-hover">
-        <div class="trainer-hover-text">REZERVIRAJ TRENING</div>
-      </div>
-    </div>
-    <div class="trainer-card">
-      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500&q=80" alt="Sara"></div>
-      <div class="trainer-overlay">
-        <div class="trainer-name">Sara Matić</div>
-        <div class="trainer-spec">HIIT · Kardio</div>
-        <div class="trainer-exp">5 godina iskustva</div>
-      </div>
-      <div class="trainer-hover">
-        <div class="trainer-hover-text">REZERVIRAJ TRENING</div>
-      </div>
-    </div>
-    <div class="trainer-card">
-      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=500&q=80" alt="Ana"></div>
-      <div class="trainer-overlay">
-        <div class="trainer-name">Ana Blažević</div>
-        <div class="trainer-spec">Yoga · Mobility</div>
-        <div class="trainer-exp">7 godina iskustva</div>
-      </div>
-      <div class="trainer-hover">
-        <div class="trainer-hover-text">REZERVIRAJ TRENING</div>
-      </div>
+      <div class="slots" id="slots" role="tabpanel"></div>
     </div>
   </div>
 </section>
 
-<!-- GALLERY -->
-<div class="gallery">
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Gym 1"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=80" alt="Training"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=500&q=80" alt="Boxing"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=500&q=80" alt="Weights"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=500&q=80" alt="Fitness"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=500&q=80" alt="Group"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1609899537878-4ac6e8fd4e7d?w=800&q=80" alt="Yoga"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=600&q=80" alt="Dumbbell"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1507398941214-572c25f4b1dc?w=500&q=80" alt="Coach"></div>
-  <div class="gallery-item"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=500&q=80" alt="Cardio"></div>
-</div>
+<!-- ═════════════ PAKETI ═════════════ -->
+<section class="sec pricing" id="paketi">
+  <svg class="bp bg-draw db-draw" viewBox="0 0 900 340" aria-hidden="true">
+    <path class="c" d="M90 160H810M235 30V290M665 30V290"/>
+    <rect class="o" x="330" y="140" width="240" height="40"/>
+    <rect class="kn" x="360" y="141" width="180" height="38" fill="url(#knurl)"/>
+    <rect class="o a fbg" x="140" y="50" width="190" height="220" rx="4"/>
+    <rect class="o a fbg" x="570" y="50" width="190" height="220" rx="4"/>
+    <path class="th" d="M140 105H330M140 215H330M570 105H760M570 215H760"/>
+    <g class="dim">
+      <path d="M140 272V320M760 272V320"/>
+      <path d="M140 308H760" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text x="450" y="300" text-anchor="middle">460</text>
+      <path d="M138 50H90M138 270H90"/>
+      <path d="M104 50V270" marker-start="url(#ar)" marker-end="url(#ar)"/>
+      <text transform="translate(94 160) rotate(-90)" text-anchor="middle">S 150</text>
+      <text x="790" y="40" text-anchor="end" class="tb">HEX 22,5 KG · LIST 06</text>
+    </g>
+  </svg>
 
-<!-- BOOKING -->
-<section class="booking" id="booking">
-  <div class="section-label">Probni trening</div>
-  <h2 class="section-title" style="margin-bottom:48px">BESPLATNI <span class="red">PROBNI TRENING</span></h2>
-  <div class="booking-wrap">
-    <div class="booking-left">
+  <div class="wrap">
+    <div class="sec-head mono"><span>§ 06 — Paketi</span><span>LIST 06 / 08</span></div>
+    <div class="price-top">
+      <h2 class="title split">Plati treninge, <em>ne ugovor.</em></h2>
+      <div class="toggle reveal" role="group" aria-label="Razdoblje plaćanja">
+        <button class="is-on" data-per="m">Mjesečno</button>
+        <button data-per="q">3 mjeseca <span>−15 %</span></button>
+        <span class="toggle-knob"></span>
+      </div>
+    </div>
+
+    <div class="offer reveal">
+      <div class="offer-tape" aria-hidden="true"></div>
+      <div class="offer-body">
+        <p class="mono offer-k">Zimski start</p>
+        <p class="offer-t">Upiši se do 31. 12. i <b>ne plaćaš upisninu (25 €)</b>, a uz prvi paket dobivaš IRONGATE majicu.</p>
+      </div>
+      <div class="countdown mono" id="countdown" aria-label="Preostalo vrijeme ponude">
+        <div><b data-cd="d">00</b><span>dana</span></div>
+        <div><b data-cd="h">00</b><span>sati</span></div>
+        <div><b data-cd="m">00</b><span>min</span></div>
+        <div><b data-cd="s">00</b><span>sek</span></div>
+      </div>
+    </div>
+
+    <div class="plans">
+      <article class="plan reveal">
+        <div class="plan-id mono">PK-00</div>
+        <h3>Probni</h3>
+        <p class="plan-sub">Jedan trening, bez obveze</p>
+        <div class="price"><b>0</b><span>€</span></div>
+        <p class="per mono">jednokratno</p>
+        <ul>
+          <li>1 grupni trening po izboru</li>
+          <li>Mjerenje sastava tijela</li>
+          <li>Razgovor s trenerom</li>
+          <li class="no">Fiksni termini</li>
+        </ul>
+        <a class="btn btn-ghost" href="#prijava" data-plan="Probni"><span>Rezerviraj probni</span></a>
+      </article>
+
+      <article class="plan reveal">
+        <div class="plan-id mono">PK-08</div>
+        <h3>Grupe 8</h3>
+        <p class="plan-sub">Dva treninga tjedno</p>
+        <div class="price"><b data-m="45" data-q="38">45</b><span>€</span></div>
+        <p class="per mono" data-pm="mjesečno · otkaži kad želiš" data-pq="mjesečno · plaćanje 114 € / 3 mj.">mjesečno · otkaži kad želiš</p>
+        <ul>
+          <li>8 grupnih treninga mjesečno</li>
+          <li>Svih 6 programa</li>
+          <li>Rezervacija u aplikaciji</li>
+          <li>Mjerenje napretka svaka 4 tjedna</li>
+        </ul>
+        <a class="btn btn-ghost" href="#prijava" data-plan="Grupe 8"><span>Počni s Grupe 8</span></a>
+      </article>
+
+      <article class="plan plan-hot reveal">
+        <div class="plan-flag mono">Najčešći izbor · 62 % članova</div>
+        <div class="plan-id mono">PK-∞</div>
+        <h3>Grupe ∞</h3>
+        <p class="plan-sub">Neograničeno, za one koji ozbiljno misle</p>
+        <div class="price"><b data-m="59" data-q="50">59</b><span>€</span></div>
+        <p class="per mono" data-pm="mjesečno · otkaži kad želiš" data-pq="mjesečno · plaćanje 150 € / 3 mj.">mjesečno · otkaži kad želiš</p>
+        <ul>
+          <li>Neograničeni grupni treninzi</li>
+          <li>Prioritetna rezervacija 48 h ranije</li>
+          <li>Slobodni trening u teretani 6–22 h</li>
+          <li>Mjesečna konzultacija s trenerom</li>
+        </ul>
+        <a class="btn btn-acc mag" href="#prijava" data-plan="Grupe ∞"><span>Uzmi Grupe ∞</span><i>→</i></a>
+      </article>
+
+      <article class="plan reveal">
+        <div class="plan-id mono">PK-24</div>
+        <h3>Grupe + 24/7</h3>
+        <p class="plan-sub">Sve, plus teretana bez sata</p>
+        <div class="price"><b data-m="79" data-q="67">79</b><span>€</span></div>
+        <p class="per mono" data-pm="mjesečno · otkaži kad želiš" data-pq="mjesečno · plaćanje 201 € / 3 mj.">mjesečno · otkaži kad želiš</p>
+        <ul>
+          <li>Sve iz paketa Grupe ∞</li>
+          <li>Teretana 24/7 s karticom</li>
+          <li>Plan prehrane od nutricionista</li>
+          <li>1 osobni trening mjesečno</li>
+        </ul>
+        <a class="btn btn-ghost" href="#prijava" data-plan="Grupe + 24/7"><span>Odaberi 24/7</span></a>
+      </article>
+    </div>
+
+    <div class="guarantee reveal">
+      <svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="34"/><circle cx="40" cy="40" r="26" class="t"/><path d="M28 41L36 49L53 31"/></svg>
       <div>
-        <div class="booking-left-title">Dođi.<br>Vidi.<br>Osjeti.</div>
-        <p class="booking-left-sub">Prvi trening je na nas. Bez obveze, bez ugovora. Dođi, provjeri opremu, upoznaj tim i odluči sam je li Irongate za tebe.</p>
-      </div>
-      <ul class="booking-perks">
-        <li>Besplatan ulaz + obilazak centra</li>
-        <li>Probni grupni trening po izboru</li>
-        <li>Razgovor s osobnim trenerom</li>
-        <li>Besplatna analiza sastava tijela</li>
-        <li>Bez obveze — odlučuješ sam</li>
-      </ul>
-      <div class="booking-cta-phone">
-        <span>Ili nas nazovi direktno</span>
-        +385 1 555 0199
-      </div>
-    </div>
-    <div class="booking-right">
-      <div class="booking-form-title">Rezerviraj probni</div>
-      <div class="booking-form-sub">Ispuni obrazac · Javljamo se unutar 2 sata</div>
-      <form id="gymForm" onsubmit="submitGym(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Ime i prezime</label>
-            <input type="text" placeholder="Pero Perić" required>
-          </div>
-          <div class="form-group">
-            <label>Telefon</label>
-            <input type="tel" placeholder="+385 91 123 4567" required>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>E-mail</label>
-          <input type="email" placeholder="pero@email.com" required>
-        </div>
-        <div class="form-group">
-          <label>Zanima me</label>
-          <select required>
-            <option value="" disabled selected>Odaberi program</option>
-            <option>Powerlifting & Snaga</option>
-            <option>HIIT & Kondicioniranje</option>
-            <option>Boxing & Kickboxing</option>
-            <option>Yoga & Mobility</option>
-            <option>CrossFit</option>
-            <option>Osobni trening (1-na-1)</option>
-            <option>Samo slobodni trening</option>
-          </select>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Željeni datum</label>
-            <input type="date" required>
-          </div>
-          <div class="form-group">
-            <label>Iskustvo</label>
-            <select>
-              <option>Početnik (0–1 god.)</option>
-              <option>Srednji (1–3 god.)</option>
-              <option>Napredni (3+ god.)</option>
-            </select>
-          </div>
-        </div>
-        <button type="submit" class="form-submit-gym">Rezerviraj besplatni trening →</button>
-      </form>
-      <div class="booking-success" id="gymSuccess">
-        <h3>REZERVACIJA POTVRĐENA!</h3>
-        <p>Javit ćemo ti se unutar 2 sata s detaljima. Vidimo se na treningu 💪</p>
+        <h3>Jamstvo 30 dana</h3>
+        <p>Ako ti nakon prvog mjeseca grupni treninzi ne sjednu, vraćamo ti cijelu članarinu. Bez objašnjavanja i bez sitnih slova.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo"><div class="logo-bar"></div>IRONGATE</div>
-      <p class="footer-desc">Premium gym centar u srcu Trešnjevke. Otvoreni 24/7, opremljeni za ozbiljan trening — za početnike i profesionalce.</p>
-      <div class="footer-socials">
-        <a href="#" class="fsocial">IG</a>
-        <a href="#" class="fsocial">FB</a>
-        <a href="#" class="fsocial">YT</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-title">Programi</div>
-      <ul class="footer-links">
-        <li><a href="#">Powerlifting</a></li>
-        <li><a href="#">HIIT Klase</a></li>
-        <li><a href="#">Boxing</a></li>
-        <li><a href="#">Yoga & Mobility</a></li>
-        <li><a href="#">Osobni trening</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Info</div>
-      <ul class="footer-links">
-        <li><a href="#">Raspored klasa</a></li>
-        <li><a href="#">Cijene & planovi</a></li>
-        <li><a href="#">Naši treneri</a></li>
-        <li><a href="#">Galerija</a></li>
-        <li><a href="#">Blog</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Kontakt</div>
-      <ul class="footer-links">
-        <li><a href="#">+385 1 555 0199</a></li>
-        <li><a href="#">info@irongate.hr</a></li>
-        <li><a href="#">Trešnjevački trg 4</a></li>
-        <li><a href="#">10 000 Zagreb</a></li>
-        <li><a href="#">Otvoreno 24/7</a></li>
-      </ul>
+<!-- ═════════════ TRENERI ═════════════ -->
+<section class="sec coaches" id="treneri">
+  <div class="wrap">
+    <div class="sec-head mono"><span>§ 07 — Treneri</span><span>LIST 07 / 08</span></div>
+    <h2 class="title split">Ljudi koji te <em>vode kroz grupu.</em></h2>
+    <div class="coach-grid">
+      <article class="coach reveal"><div class="coach-plate"><span class="mono">TR-01</span><b>MT</b><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M2 14V2H14M86 2H98V14M98 86V98H86M14 98H2V86"/></svg></div><h3>Marko Tomić</h3><p class="mono">HIIT 45 · Functional WOD</p><p>8 godina iskustva, bivši atletičar. Vodi najglasnije jutarnje termine u Zagrebu.</p></article>
+      <article class="coach reveal"><div class="coach-plate"><span class="mono">TR-02</span><b>LĐ</b><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M2 14V2H14M86 2H98V14M98 86V98H86M14 98H2V86"/></svg></div><h3>Luka Đorđić</h3><p class="mono">Barbell Club</p><p>Državni prvak u powerliftingu (93 kg). Tvoj prvi čisti mrtvi dizaj prolazi kroz njega.</p></article>
+      <article class="coach reveal"><div class="coach-plate"><span class="mono">TR-03</span><b>SM</b><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M2 14V2H14M86 2H98V14M98 86V98H86M14 98H2V86"/></svg></div><h3>Sara Matić</h3><p class="mono">Start 30 · HIIT 45</p><p>Kineziologinja koja je u grupe uvela više od 400 početnika. Strpljiva do zadnjeg ponavljanja.</p></article>
+      <article class="coach reveal"><div class="coach-plate"><span class="mono">TR-04</span><b>IK</b><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M2 14V2H14M86 2H98V14M98 86V98H86M14 98H2V86"/></svg></div><h3>Ivan Kovač</h3><p class="mono">Box Fit</p><p>10 godina u ringu, licencirani trener boksa. Nauči te udarac prije nego što te nauči umoru.</p></article>
+      <article class="coach reveal"><div class="coach-plate"><span class="mono">TR-05</span><b>AB</b><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M2 14V2H14M86 2H98V14M98 86V98H86M14 98H2V86"/></svg></div><h3>Ana Blažević</h3><p class="mono">Mobility &amp; Core</p><p>Fizioterapeutkinja. Pazi na leđa, koljena i ramena cijele ekipe, i ne pušta te da preskočiš zagrijavanje.</p></article>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Irongate Gym · Sva prava pridržana</p>
-    <p class="footer-copy">Politika privatnosti · GDPR</p>
+</section>
+
+<!-- ═════════════ ISKUSTVA ═════════════ -->
+<section class="sec stories" id="iskustva">
+  <div class="wrap">
+    <div class="sec-head mono"><span>§ 08 — Iskustva</span><span>Mjerni izvještaj</span></div>
+    <h2 class="title split">Brojke ne lažu. <em>Ni ekipa.</em></h2>
+    <div class="story-grid">
+      <figure class="story reveal">
+        <div class="story-metric mono"><span>Čučanj</span><b>0 → 70 kg</b><span>14 mj.</span></div>
+        <blockquote>„Mjesec dana sam se bojala ući. Na Start 30 bilo nas je šestero i nitko nije znao čučnuti. Danas sam ja ta koja novima pokazuje gdje su utezi.”</blockquote>
+        <figcaption><b>Petra K.</b>, 34 · Start 30 → Barbell Club</figcaption>
+      </figure>
+      <figure class="story reveal">
+        <div class="story-metric mono"><span>Tjelesna masa</span><b>−11 kg</b><span>7 mj.</span></div>
+        <blockquote>„Sam sam se tri puta upisivao u teretanu i tri puta odustao. U HIIT grupi u 7:00 ne mogu izostati, jer Marko u 7:05 pošalje poruku.”</blockquote>
+        <figcaption><b>Mario R.</b>, 41 · HIIT 45</figcaption>
+      </figure>
+      <figure class="story reveal">
+        <div class="story-metric mono"><span>Dolasci</span><b>3,2× tjedno</b><span>2 god.</span></div>
+        <blockquote>„Došla sam zbog leđa, ostala zbog ljudi. Nakon treninga idemo na kavu, a u ljeto smo zajedno trčale polumaraton.”</blockquote>
+        <figcaption><b>Iva Š.</b>, 29 · Mobility &amp; Box Fit</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ PITANJA ═════════════ -->
+<section class="sec faq" id="pitanja">
+  <div class="wrap faq-grid">
+    <div>
+      <div class="sec-head mono"><span>§ 09 — Pitanja</span><span>Prije prvog treninga</span></div>
+      <h2 class="title split">Što te <em>još muči?</em></h2>
+      <p class="reveal faq-side">Nisi našao odgovor? Nazovi na <a href="tel:+38515550199">+385 1 555 0199</a> ili nam piši na Viber. Odgovaramo unutar sat vremena, svaki dan od 7 do 22.</p>
+    </div>
+    <div class="acc" id="faqList">
+      <details class="reveal"><summary>Nisam u formi. Mogu li uopće pratiti grupu?<i></i></summary><div class="acc-body"><p>Možeš. Svaka vježba ima tri razine, a trener ti na prvom treningu pokaže koju radiš. Ako krećeš od nule, preporučujemo Start 30: grupa od šest početnika i četiri tjedna učenja osnova.</p></div></details>
+      <details class="reveal"><summary>Koliko je ljudi na treningu?<i></i></summary><div class="acc-body"><p>Najviše 12 na HIIT-u, Box Fitu i Functional WOD-u, 8 na Barbell Clubu, 6 na Start 30. Kad se termin popuni, otvara se lista čekanja, a ne dodatna mjesta.</p></div></details>
+      <details class="reveal"><summary>Što trebam ponijeti na prvi trening?<i></i></summary><div class="acc-body"><p>Tenisice za unutra, ručnik i bocu vode. Lokot za ormarić, rukavice za boks i bandaže posuđujemo. Tuševi i fen su u svlačionici.</p></div></details>
+      <details class="reveal"><summary>Potpisujem li ugovor?<i></i></summary><div class="acc-body"><p>Ne. Članarina se plaća mjesečno ili za tri mjeseca unaprijed i možeš je otkazati kad želiš. Uz to vrijedi jamstvo 30 dana: ako ti ne sjedne, vraćamo novac.</p></div></details>
+      <details class="reveal"><summary>Mogu li zamrznuti članarinu?<i></i></summary><div class="acc-body"><p>Da, do 30 dana godišnje bez naknade (godišnji, bolest, poslovni put). Javiš se na recepciji ili u aplikaciji.</p></div></details>
+      <details class="reveal"><summary>Ima li parkinga?<i></i></summary><div class="acc-body"><p>Imamo 40 besplatnih mjesta u dvorištu, a tramvajska stanica Trešnjevački trg je na dvije minute hoda.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════ PRIJAVA ═════════════ -->
+<section class="sec signup" id="prijava">
+  <svg class="bp bg-draw gear-draw" viewBox="0 0 600 600" aria-hidden="true">
+    <path class="c" d="M60 300H540M300 60V540"/>
+    <circle class="o a" cx="300" cy="300" r="220"/>
+    <circle class="th" cx="300" cy="300" r="204"/>
+    <circle class="m" cx="300" cy="300" r="92"/>
+    <circle class="o" cx="300" cy="300" r="26"/>
+    <circle class="th" cx="300" cy="300" r="150" stroke-dasharray="3 9"/>
+    <text x="300" y="560" text-anchor="middle" class="tb">PLOČA 20 KG · POGLED A</text>
+  </svg>
+
+  <div class="wrap signup-grid">
+    <div class="signup-copy">
+      <div class="sec-head mono"><span>§ 10 — Prijava</span><span>Radni nalog</span></div>
+      <h2 class="title split">Prvi trening <em>je na nas.</em></h2>
+      <ul class="incl">
+        <li><b>01</b> Grupni trening po izboru</li>
+        <li><b>02</b> Mjerenje sastava tijela (InBody)</li>
+        <li><b>03</b> Razgovor s trenerom o cilju</li>
+        <li><b>04</b> Obilazak centra i svlačionica</li>
+        <li><b>05</b> Bez obveze, bez kartice</li>
+      </ul>
+      <p class="mono signup-call">Radije telefonom? <a href="tel:+38515550199">+385 1 555 0199</a></p>
+    </div>
+
+    <form class="order" id="order" novalidate>
+      <div class="order-head">
+        <div><span class="mono">RADNI NALOG</span><b>Besplatni probni trening</b></div>
+        <div class="order-steps mono"><span class="is-on">01 Program</span><span>02 Termin</span><span>03 Kontakt</span></div>
+        <div class="order-prog"><div id="orderBar"></div></div>
+      </div>
+
+      <div class="order-pane is-on" data-step="1">
+        <p class="q">Što želiš probati?</p>
+        <div class="opts" id="progOpts"></div>
+        <p class="hint mono">Ne znaš? Odaberi <b>Start 30</b>, napravljen je upravo za to.</p>
+      </div>
+
+      <div class="order-pane" data-step="2">
+        <p class="q">Odaberi termin <span class="mono" id="termFor"></span></p>
+        <div class="terms" id="terms"></div>
+      </div>
+
+      <div class="order-pane" data-step="3">
+        <p class="q">Kome šaljemo potvrdu?</p>
+        <div class="fields">
+          <label class="f"><span>Ime i prezime</span><input name="ime" autocomplete="name" required></label>
+          <label class="f"><span>Mobitel</span><input name="tel" type="tel" inputmode="tel" autocomplete="tel" required placeholder="09x xxx xxxx"></label>
+          <label class="f f-wide"><span>E-mail <em>(nije obavezno)</em></span><input name="email" type="email" autocomplete="email"></label>
+          <label class="chk f-wide"><input type="checkbox" name="gdpr" required><span>Slažem se da me IRONGATE kontaktira u vezi s probnim treningom.</span></label>
+        </div>
+        <p class="sum mono" id="sum"></p>
+      </div>
+
+      <div class="order-done" id="done" hidden>
+        <div class="stamp mono">POTVRĐENO</div>
+        <p class="mono" id="ticketNo">NALOG #IG-0000</p>
+        <h3>Vidimo se na treningu!</h3>
+        <p id="doneTxt">Poslali smo ti SMS s detaljima. Dođi 15 minuta ranije na recepciju.</p>
+      </div>
+
+      <div class="order-nav" id="orderNav">
+        <button type="button" class="btn btn-ghost" id="back" hidden><span>← Natrag</span></button>
+        <button type="button" class="btn btn-acc" id="next" disabled><span>Dalje</span><i>→</i></button>
+      </div>
+      <p class="err mono" id="err" role="alert"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-big" aria-hidden="true">IRONGATE</div>
+    <div class="foot-grid">
+      <div><p class="mono k">Adresa</p><p>Trešnjevački trg 4<br>10000 Zagreb</p></div>
+      <div><p class="mono k">Kontakt</p><p><a href="tel:+38515550199">+385 1 555 0199</a><br><a href="mailto:info@irongate.hr">info@irongate.hr</a></p></div>
+      <div><p class="mono k">Recepcija</p><p>Pon–pet 6–22 h<br>Sub–ned 8–14 h<br>Teretana 24/7</p></div>
+      <div><p class="mono k">Prati nas</p><p><a href="#" aria-label="Instagram">Instagram</a><br><a href="#" aria-label="Facebook">Facebook</a><br><a href="#" aria-label="YouTube">YouTube</a></p></div>
+    </div>
+    <div class="foot-bot mono"><span>© 2026 IRONGATE Gym · Koncept stranice</span><span>Politika privatnosti · Kolačići</span></div>
   </div>
 </footer>
 
-<script>
-  // Sticky nav
-  window.addEventListener('scroll', () => {
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
-  });
+<a class="mcta" id="mcta" href="#prijava"><span>Prvi trening besplatno</span><b>→</b></a>
 
-  // Fade up
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-  // Min date
-  const d = document.querySelector('input[type="date"]');
-  if(d){ const t=new Date(); t.setDate(t.getDate()+1); d.min=t.toISOString().split('T')[0]; }
-
-  // Form
-  function submitGym(e){
-    e.preventDefault();
-    document.getElementById('gymForm').style.display='none';
-    document.getElementById('gymSuccess').style.display='block';
-  }
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
 </body>
 </html>

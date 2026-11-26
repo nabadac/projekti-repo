@@ -13,7 +13,7 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 | STRUG tokarska radionica | [`sites/strug-tokarska-radionica/`](sites/strug-tokarska-radionica/) | Koncept za tokarsku radionicu po zadanom industrijskom referentnom dizajnu: vlastite SVG sheme tokarilice, radioničkog crteža, CNC putanje alata, brušenja i kontrole; Archivo (uski) + IBM Plex Mono. |
 | Kolnik Logistika | [`sites/kolnik-logistika/`](sites/kolnik-logistika/) | Landing stranica za gradsku dostavu i međunarodnu špediciju iz Svete Nedelje (HR/SL/SR), s GSAP animacijama. |
 | Autoservis Kovač (izvorni demo) | [`sites/autoservis-kovac-demo/`](sites/autoservis-kovac-demo/) | Prva verzija stranice autoservisa u Zagrebu: tamni industrijski stil, usluge, odabir marke, cjenik, obrazac za narudžbu, recenzije. |
-| IRONGATE Gym | [`sites/irongate-gym/`](sites/irongate-gym/) | Demo stranica teretane u Zagrebu. |
+| IRONGATE Gym | [`sites/irongate-gym/`](sites/irongate-gym/) | Redizajn teretane u industrijskom blueprint stilu, usmjeren na prodaju grupnih treninga: tehnički crteži šipke, girje, vreće, bučice i power racka koji se iscrtavaju na skrol, živi "sljedeći termin", interaktivni raspored, paketi s odbrojavanjem ponude, prijava na besplatni trening u 3 koraka. GSAP + Lenis. |
 | Villa Lunare | [`sites/villa-lunare-hvar/`](sites/villa-lunare-hvar/) | Demo stranica boutique hotela na Hvaru. |
 | Atelier Noir | [`sites/atelier-noir-salon/`](sites/atelier-noir-salon/) | Demo stranica frizerskog salona u Zagrebu. |
 | Stolarija Vidović | [`sites/stolarija-vidovic/`](sites/stolarija-vidovic/) | Obiteljska stolarija iz Samobora od 1994.: kuhinje, ormari i namještaj po mjeri, upit za ponudu. |
