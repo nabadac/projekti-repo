@@ -414,7 +414,7 @@ main { overflow-x: clip; }
   .svc__row .pinned { width: min(78%, 320px); margin: 8px 0 0 12px; }
   .gallery { grid-template-columns: repeat(2, 1fr); gap: 26px 14px; }
   .gallery:not(.is-filtered) li.is-feature { grid-row: span 1; }
-  .gallery:not(.is-filtered) li.is-feature .g img { aspect-ratio: 4 / 3; flex: none; }
+  .gallery:not(.is-filtered) li.is-feature .g img { aspect-ratio: 4 / 3.4; flex: none; object-position: 50% 8%; }
   .g { padding: 5px 5px 0; }
   .g::before { width: 60px; height: 20px; margin-left: -30px; top: -10px; }
   .g__cap { font-size: .9375rem; padding: 8px 2px 9px; }
