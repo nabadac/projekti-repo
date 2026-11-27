@@ -4,11 +4,18 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
-  /* Hero: pokreni ulaz kad se fotografija učita (ili najkasnije nakon 1.2 s) */
-  const heroImg = $('.hero__media img');
+  /* Hero: naslov izlazi, zatim se traka odlijepi i folija spadne */
+  const heroCover = $('[data-peel="hero"]');
+  const heroImg = $('img', heroCover);
   let started = false;
-  const start = () => { if (started) return; started = true; requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('is-in'))); };
-  if (heroImg && !heroImg.complete) { heroImg.addEventListener('load', start, { once: true }); heroImg.addEventListener('error', start, { once: true }); setTimeout(start, 1200); }
+  const start = () => {
+    if (started) return; started = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      root.classList.add('is-in');
+      setTimeout(() => heroCover.classList.add('is-peeled'), reduce ? 0 : 650);
+    }));
+  };
+  if (heroImg && !heroImg.complete) { heroImg.addEventListener('load', start, { once: true }); heroImg.addEventListener('error', start, { once: true }); setTimeout(start, 1400); }
   else start();
 
   /* Glatko skrolanje */
@@ -16,36 +23,39 @@
   const hdr = $('#hdr');
   const hdrOffset = () => -(hdr ? hdr.offsetHeight : 0) + 1;
   const initLenis = () => {
-    if (reduce || !window.Lenis) return;
-    lenis = new Lenis({ duration: 1.1, easing: t => 1 - Math.pow(1 - t, 4), smoothWheel: true });
+    if (reduce || !window.Lenis || lenis) return;
+    lenis = new Lenis({ duration: 1.1, easing: t => 1 - Math.pow(1 - t, 4) });
     const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
   };
   if (window.Lenis) initLenis(); else window.addEventListener('load', initLenis, { once: true });
 
   const scrollToHash = hash => {
-    const el = hash === '#top' ? document.body : $(hash);
-    if (!el) return;
-    if (lenis) lenis.scrollTo(hash === '#top' ? 0 : el, { offset: hdrOffset() });
-    else window.scrollTo({ top: hash === '#top' ? 0 : el.getBoundingClientRect().top + scrollY + hdrOffset(), behavior: reduce ? 'auto' : 'smooth' });
+    const top = hash === '#top';
+    const el = top ? null : $(hash);
+    if (!top && !el) return;
+    if (lenis) lenis.scrollTo(top ? 0 : el, { offset: hdrOffset() });
+    else window.scrollTo({ top: top ? 0 : el.getBoundingClientRect().top + scrollY + hdrOffset(), behavior: reduce ? 'auto' : 'smooth' });
   };
 
   /* Izbornik */
   const burger = $('#burger'), menu = $('#menu');
+  const isOpen = () => burger.getAttribute('aria-expanded') === 'true';
   const setMenu = open => {
     burger.setAttribute('aria-expanded', open);
     burger.setAttribute('aria-label', open ? 'Zatvori izbornik' : 'Otvori izbornik');
+    hdr.classList.toggle('is-menu', open);
     if (open) { menu.hidden = false; requestAnimationFrame(() => menu.classList.add('is-open')); lenis && lenis.stop(); }
-    else { menu.classList.remove('is-open'); lenis && lenis.start(); setTimeout(() => { if (!menu.classList.contains('is-open')) menu.hidden = true; }, 500); }
+    else { menu.classList.remove('is-open'); lenis && lenis.start(); setTimeout(() => { if (!isOpen()) menu.hidden = true; }, 500); }
   };
-  burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') { setMenu(false); burger.focus(); } });
+  burger.addEventListener('click', () => setMenu(!isOpen()));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setMenu(false); burger.focus(); } });
 
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
     const hash = a.getAttribute('href');
     if (hash.length < 2) return;
     e.preventDefault();
-    if (burger.getAttribute('aria-expanded') === 'true') setMenu(false);
+    if (isOpen()) setMenu(false);
     scrollToHash(hash);
     history.replaceState(null, '', hash);
   }));
@@ -56,87 +66,57 @@
   const onScroll = () => {
     const y = scrollY;
     hdr.classList.toggle('is-solid', y > 24);
-    const menuOpen = burger.getAttribute('aria-expanded') === 'true';
-    hdr.classList.toggle('is-hidden', !menuOpen && y > lastY && y > 400);
+    hdr.classList.toggle('is-hidden', !isOpen() && y > lastY && y > 400);
     lastY = y;
-    if (mbar) {
-      const pastHero = y > heroEl.offsetHeight * 0.6;
-      const qr = quoteSec.getBoundingClientRect();
-      const inQuote = qr.top < innerHeight && qr.bottom > 0;
-      mbar.classList.toggle('is-on', pastHero && !inQuote);
-    }
-    parallax();
+    const qr = quoteSec.getBoundingClientRect();
+    mbar.classList.toggle('is-on', y > heroEl.offsetHeight * 0.5 && !(qr.top < innerHeight && qr.bottom > 0));
     ticking = false;
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
-  /* Blagi parallax na velikoj fotografiji */
-  const px = $('[data-parallax]');
-  function parallax() {
-    if (!px || reduce) return;
-    const r = px.parentElement.getBoundingClientRect();
-    if (r.bottom < 0 || r.top > innerHeight) return;
-    const p = (r.top + r.height) / (innerHeight + r.height);
-    px.style.transform = `translate3d(0, ${(-p * 16).toFixed(2)}%, 0)`;
-  }
-
-  /* Otkrivanje pri skrolanju, s kratkim razmakom unutar iste grupe */
-  /* Elementi odrezani clip-pathom ne javljaju presjek, pa za njih promatramo roditelja */
-  const targets = new Map();
+  /* Otkrivanje: tekst lagano izlazi, a folija se skida kad je fotografija dobrano u kadru */
   const revealIO = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (!en.isIntersecting) return;
-      (targets.get(en.target) || []).forEach(el => el.classList.add('is-seen'));
+      en.target.classList.add('is-seen');
       revealIO.unobserve(en.target);
     });
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
-  const watch = el => {
-    const t = el.dataset.reveal === 'wipe' ? el.parentElement : el;
-    if (!targets.has(t)) targets.set(t, []);
-    targets.get(t).push(el);
-    revealIO.observe(t);
-  };
+  }, { rootMargin: '0px 0px -10% 0px' });
 
   const groups = new Map();
-  $$('[data-reveal]').forEach(el => {
+  const reveal = (el, step = 70, max = 280) => {
     const parent = el.parentElement;
     const i = groups.get(parent) || 0;
     groups.set(parent, i + 1);
-    if (i) el.style.setProperty('--d', `${Math.min(i * 70, 280)}ms`);
-    watch(el);
-  });
+    if (i) el.style.setProperty('--d', `${Math.min(i * step, max)}ms`);
+    revealIO.observe(el);
+  };
+  $$('[data-reveal]').forEach(el => reveal(el));
 
-  /* Galerija: zavjesa po stupcima kad uđe u kadar */
+  const peelIO = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('is-peeled');
+      peelIO.unobserve(en.target);
+    });
+  }, { threshold: 0.45 });
+  $$('[data-peel]:not([data-peel="hero"])').forEach(el => peelIO.observe(el));
+
+  /* Galerija: fotografije se "zalijepe" na zid jedna za drugom */
   const gallery = $('#gallery');
   const items = $$('li', gallery);
   items.forEach((li, i) => {
     const g = $('.g', li);
-    g.dataset.reveal = 'wipe';
+    g.setAttribute('data-reveal', '');
     g.style.setProperty('--d', `${(i % 3) * 90}ms`);
     li.style.viewTransitionName = `g${i}`;
-    watch(g);
+    revealIO.observe(g);
   });
 
-  /* Usluge: fotografija se mijenja s odabranom uslugom */
-  const svcItems = $$('.svc__item');
-  const svcImgs = $$('#svc-media img');
-  const setSvc = item => {
-    const n = +item.dataset.img;
-    svcItems.forEach(x => x.classList.toggle('is-active', x === item));
-    svcImgs.forEach((img, i) => img.classList.toggle('is-active', i === n));
-  };
-  svcItems.forEach(item => {
-    const btn = $('.svc__btn', item);
-    btn.addEventListener('mouseenter', () => matchMedia('(hover: hover)').matches && setSvc(item));
-    btn.addEventListener('focus', () => setSvc(item));
-    btn.addEventListener('click', () => setSvc(item));
-  });
-
-  /* Filtar radova */
   const chips = $$('.chip');
   const applyFilter = f => {
     items.forEach(li => li.classList.toggle('is-out', f !== 'sve' && !li.dataset.cat.split(' ').includes(f)));
-    items.forEach(li => { const g = $('.g', li); if (!li.classList.contains('is-out')) g.classList.add('is-seen'); });
+    items.forEach(li => { if (!li.classList.contains('is-out')) $('.g', li).classList.add('is-seen'); });
   };
   chips.forEach(chip => chip.addEventListener('click', () => {
     if (chip.classList.contains('is-on')) return;
@@ -161,7 +141,11 @@
     };
     if (swap && !reduce) {
       lbImg.classList.add('is-swap');
-      setTimeout(() => { set(); const done = () => lbImg.classList.remove('is-swap'); lbImg.complete ? requestAnimationFrame(done) : lbImg.addEventListener('load', done, { once: true }); }, 180);
+      setTimeout(() => {
+        set();
+        const done = () => lbImg.classList.remove('is-swap');
+        lbImg.complete ? requestAnimationFrame(done) : lbImg.addEventListener('load', done, { once: true });
+      }, 180);
     } else set();
   };
   items.forEach(li => $('.g', li).addEventListener('click', e => {
@@ -188,15 +172,14 @@
     tx = null;
   });
 
-  /* Obrazac: provjera i priprema e-poruke */
+  /* Obrazac */
   const form = $('#form');
   const rules = [['f-ime', v => v.trim().length > 1], ['f-tel', v => v.replace(/\D/g, '').length >= 6], ['f-msg', v => v.trim().length > 2]];
   const check = (id, ok) => {
-    const input = $('#' + id), field = input.closest('.field');
+    const input = $('#' + id), field = input.closest('.field'), err = $('.field__err', field);
     const valid = ok(input.value);
     field.classList.toggle('has-err', !valid);
     input.setAttribute('aria-invalid', !valid);
-    const err = $('.field__err', field);
     if (!valid) input.setAttribute('aria-describedby', err.id); else input.removeAttribute('aria-describedby');
     return valid;
   };
@@ -206,8 +189,7 @@
     const results = rules.map(([id, ok]) => check(id, ok));
     if (results.includes(false)) { $('#' + rules[results.indexOf(false)][0]).focus(); return; }
     const d = new FormData(form);
-    const radovi = d.getAll('radovi').join(', ') || 'nije odabrano';
-    const body = `Ime i prezime: ${d.get('ime')}\nTelefon: ${d.get('telefon')}\nRadovi: ${radovi}\nLokacija: ${d.get('lokacija') || '-'}\nPovršina: ${d.get('povrsina') || '-'}\n\n${d.get('poruka')}`;
+    const body = `Ime i prezime: ${d.get('ime')}\nTelefon: ${d.get('telefon')}\nProstor: ${d.get('prostor')}\nRadovi: ${d.getAll('radovi').join(', ') || 'nije odabrano'}\n\n${d.get('poruka')}`;
     location.href = `mailto:info@soboslikanjevivid.hr?subject=${encodeURIComponent('Upit za ponudu: ' + d.get('ime'))}&body=${encodeURIComponent(body)}`;
     $('#form-ok').hidden = false;
   });
