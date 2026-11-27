@@ -4,6 +4,14 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
+  const peelIO = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('is-peeled');
+      peelIO.unobserve(en.target);
+    });
+  }, { threshold: 0.45 });
+
   /* Hero: naslov izlazi, zatim se traka odlijepi i folija spadne */
   const heroCover = $('[data-peel="hero"]');
   const heroImg = $('img', heroCover);
@@ -12,7 +20,8 @@
     if (started) return; started = true;
     requestAnimationFrame(() => requestAnimationFrame(() => {
       root.classList.add('is-in');
-      setTimeout(() => heroCover.classList.add('is-peeled'), reduce ? 0 : 650);
+      /* Zapečaćeno stanje traje dok naslov ne sjedne; folija se skida tek kad je fotografija u kadru */
+      setTimeout(() => peelIO.observe(heroCover), reduce ? 0 : 1200);
     }));
   };
   if (heroImg && !heroImg.complete) { heroImg.addEventListener('load', start, { once: true }); heroImg.addEventListener('error', start, { once: true }); setTimeout(start, 1400); }
@@ -93,13 +102,6 @@
   };
   $$('[data-reveal]').forEach(el => reveal(el));
 
-  const peelIO = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-      if (!en.isIntersecting) return;
-      en.target.classList.add('is-peeled');
-      peelIO.unobserve(en.target);
-    });
-  }, { threshold: 0.45 });
   $$('[data-peel]:not([data-peel="hero"])').forEach(el => peelIO.observe(el));
 
   /* Galerija: fotografije se "zalijepe" na zid jedna za drugom */
@@ -115,6 +117,7 @@
 
   const chips = $$('.chip');
   const applyFilter = f => {
+    gallery.classList.toggle('is-filtered', f !== 'sve');
     items.forEach(li => li.classList.toggle('is-out', f !== 'sve' && !li.dataset.cat.split(' ').includes(f)));
     items.forEach(li => { if (!li.classList.contains('is-out')) $('.g', li).classList.add('is-seen'); });
   };

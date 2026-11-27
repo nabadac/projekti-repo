@@ -19,7 +19,7 @@ Stranica je pripremljeno radilište. Sadržaj čeka ispod mliječne zaštitne fo
 3. **O nama** i tri prednosti.
 4. **Što radimo** na tamnoplavom zidu, uz fotografije zalijepljene trakom.
 5. **Dom ili dućan**: dvije vrste klijenata, svaka s fotografijom pod folijom koja se skida pri skrolanju.
-6. **S naših radilišta**: 16 stvarnih fotografija zalijepljenih na zid, filter (View Transitions) i lightbox.
+6. **S naših radilišta**: 15 stvarnih fotografija zalijepljenih na zid, filter (View Transitions) i lightbox.
 7. **Kako radimo** u četiri koraka na trakama.
 8. **Tim**: fotografija ekipe, uloge i recenzija s Trebam.hr.
 9. **Upit za ponudu**: list zalijepljen na tamnoplavi zid; obrazac priprema e-poruku za info@soboslikanjevivid.hr.
