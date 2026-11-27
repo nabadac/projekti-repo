@@ -1,22 +1,30 @@
 # Vivid soboslikanje · rekonstrukcija web stranice
 
-Neslužbena rekonstrukcija stranice [soboslikanjevivid.hr](https://www.soboslikanjevivid.hr/) (Forever Green d.o.o., Zagreb). Sadržaj, kontakti, logotip, referenca i fotografije radova preuzeti su s izvorne stranice. Unsplash fotografije (besplatna licenca) koriste se samo za atmosferu u heroju i sekciji predaha, ne u galeriji radova.
+Neslužbena rekonstrukcija stranice [soboslikanjevivid.hr](https://www.soboslikanjevivid.hr/) (Forever Green d.o.o., Zagreb). Sadržaj, kontakti, logotip, referenca i fotografije radova preuzeti su s izvorne stranice. Unsplash fotografija (besplatna licenca) koristi se samo kao ilustracija stana, nikad u galeriji radova.
 
-## Smjer
+## Smjer: traka i folija
 
-Skandinavski minimalizam: topla bijela (`#f5f3ee`), lan (`#ebe7df`), tinta (`#1b2230`) i tamnoplava iz logotipa (`#003060`) kao jedini naglasak. Fontovi Familjen Grotesk (naslovi) i Hanken Grotesk (tekst).
+Stranica je pripremljeno radilište. Sadržaj čeka ispod mliječne zaštitne folije koju drži plava maskirna traka. Traka se odlijepi, folija spadne i ostane gotov zid. Time se pokazuje da firma radi uredno, umjesto da se to samo tvrdi.
+
+| | |
+|---|---|
+| Boje | zid `#f6f6f3`, tamnoplava iz logotipa `#003060` (cijele sekcije), duboka plava `#00223f`, plava traka `#6fa8e2`, tinta `#0d1b2e` |
+| Fontovi | Archivo (široki rez 125 % za naslove, kao "VIVID" i natpis na radnim majicama), Kalam (natpisi markerom na traci) |
+| Materijali | tekstura valjka (SVG šum), folija (backdrop-filter + nabori), traka s nazubljenim rubovima (SVG maska), fotografije zalijepljene trakom |
 
 ## Sekcije
 
-1. **Hero**: naslov izlazi iz maske, a tamnoplavi „valjak” prelazi preko fotografije i nanosi je (clip-path + transform, isti easing).
-2. **O nama**: tekst s izvorne stranice i tri prednosti.
-3. **Usluge**: strojno/ručno soboslikanje, gletanje, knauf i dekorativne tehnike; fotografija se mijenja s odabranom uslugom.
-4. **Proces**: četiri koraka od poziva do čistog prostora.
-5. **Galerija radova**: 17 stvarnih fotografija, filter (View Transitions) i lightbox (tipkovnica, prevlačenje).
-6. **Tim**: obiteljska fotografija tima, uloge i recenzija s Trebam.hr.
-7. **Ponuda**: obrazac s provjerom polja koji priprema e-poruku za info@soboslikanjevivid.hr; kontakti i društvene mreže.
+1. **Hero**: "Zid gotov. Pod čist.", poziv i ponuda; fotografija s radilišta je pod folijom, a traka se odlijepi i folija spadne.
+2. **Traka** preko cijele širine s uslugama.
+3. **O nama** i tri prednosti.
+4. **Što radimo** na tamnoplavom zidu, uz fotografije zalijepljene trakom.
+5. **Dom ili dućan**: dvije vrste klijenata, svaka s fotografijom pod folijom koja se skida pri skrolanju.
+6. **S naših radilišta**: 16 stvarnih fotografija zalijepljenih na zid, filter (View Transitions) i lightbox.
+7. **Kako radimo** u četiri koraka na trakama.
+8. **Tim**: fotografija ekipe, uloge i recenzija s Trebam.hr.
+9. **Upit za ponudu**: list zalijepljen na tamnoplavi zid; obrazac priprema e-poruku za info@soboslikanjevivid.hr.
 
-Animacije pri skrolanju okidaju se jednom. Poštuje se `prefers-reduced-motion` (ostaju samo blagi prijelazi prozirnosti), a bez JavaScripta sav sadržaj je vidljiv.
+Poštuje se `prefers-reduced-motion` (folija samo izblijedi, traka miruje). Bez JavaScripta sav sadržaj je vidljiv, bez folije.
 
 ## Tehnologija
 

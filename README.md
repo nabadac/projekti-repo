@@ -4,7 +4,7 @@ Zbirka demo web stranica. Svaka stranica je u svojoj mapi unutar `sites/`, s vla
 
 | Stranica | Mapa | Opis |
 |---|---|---|
-| Vivid soboslikanje | [`sites/vivid-soboslikanje/`](sites/vivid-soboslikanje/) | Neslužbena rekonstrukcija soboslikanjevivid.hr (Zagreb) u skandinavskom minimalizmu: valjak koji otkriva hero fotografiju, galerija stvarnih radova s filterom i lightboxom, usluge, tim, referenca i obrazac za ponudu. Lenis za glatko skrolanje. |
+| Vivid soboslikanje | [`sites/vivid-soboslikanje/`](sites/vivid-soboslikanje/) | Neslužbena rekonstrukcija soboslikanjevivid.hr (Zagreb) u smjeru "traka i folija": sadržaj pod zaštitnom folijom koju drži plava maskirna traka i koja se skida pri skrolanju, galerija stvarnih radova s filterom i lightboxom, tim, referenca i obrazac za ponudu. |
 | Poliklinika Lipa | [`sites/poliklinika-lipa/`](sites/poliklinika-lipa/) | Koncept landing stranice za izmišljenu privatnu polikliniku u Zagrebu: GSAP i Lenis animacije, prikvačeni tabovi, carousel, responzivno. |
 | Fuga atelier | [`sites/fuga-atelier/`](sites/fuga-atelier/) | Koncept stranice za premium keramičara koji radi od obale do Zagreba: uredničke sekcije, pinned poglavlje, karta rute, slider materijala, upit. |
 | SOS Dječje selo Hrvatska | [`sites/sos-djecje-selo/`](sites/sos-djecje-selo/) | Koncept stranice za neprofitnu udrugu sa selima u Lekeniku i Ladimirevcima: slaganje kartica četiriju načela, tabovi sela, carousel priča, galerija na valu, donacijski obrazac, GSAP i Lenis. |
